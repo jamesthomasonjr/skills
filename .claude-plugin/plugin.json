@@ -1,0 +1,20 @@
+{
+  "name": "jamesthomasonjr-skills",
+  "version": "0.1.0",
+  "description": "James Thomason Jr's personal agent skills for Cursor, Claude Code, and other coding agents.",
+  "author": {
+    "name": "James Thomason Jr",
+    "url": "https://github.com/jamesthomasonjr"
+  },
+  "homepage": "https://github.com/jamesthomasonjr/skills",
+  "repository": "https://github.com/jamesthomasonjr/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "cursor",
+    "claude-code",
+    "engineering",
+    "productivity"
+  ],
+  "skills": []
+}
