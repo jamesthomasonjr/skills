@@ -75,7 +75,7 @@ Run a named-target resolve *before* choosing a depth. Run the Feature Trace entr
 
 Allowed, in one pass:
 
-- One path glob for a named file/folder.
+- One path glob for a named file/folder (`**/src/orders.js` or `**/orders.js`, not a non-recursive cwd-only `orders.js`).
 - One symbol search (exact identifier) for a named `X`.
 - If Feature Trace is selected or required and no journey was named: one top-level listing plus README/manifest glance, only to **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them.
 
@@ -132,7 +132,7 @@ If they pick Feature Trace and have not named a journey, ask for one or offer th
 
 After classification, the agent reads the depth `SKILL.md` and `modes.md`, then works as that skill. The router does not keep a second procedure.
 
-Use **sibling-relative** paths from the skill directory, not this repo’s tree. After symlink install (`~/.cursor/skills/catch-me-up`) or a plugin copy, `skills/engineering/orient-repo/SKILL.md` does not exist.
+Use **sibling-relative** paths resolved from the directory that contains this `SKILL.md`, not from cwd and not from this repo’s tree. After symlink install (`~/.cursor/skills/catch-me-up`) or a plugin copy, `skills/engineering/orient-repo/SKILL.md` does not exist. If a cwd-relative Read of `../orient-repo/SKILL.md` misses, resolve it as a sibling of the router file, or invoke the depth skill by name.
 
 - From `catch-me-up/SKILL.md`: `../orient-repo/SKILL.md`, `../orient-module/SKILL.md`, `../orient-function/SKILL.md`, `modes.md`
 - From each `orient-*/SKILL.md`: `../catch-me-up/modes.md`
@@ -301,9 +301,9 @@ Per Superpowers writing-skills: treat authoring as TDD for process docs. Targets
 1. Create (in the plan, before the baseline run) a tiny checked-in fixture `fixtures/orient-sample/` with one module and one exported function. This repo is markdown-only and has no function to walk.
 2. Baseline a subagent *without* the skills:
    - Repo onboard: this skills repo (“onboard me” / “catch me up on this repo”).
-   - Module: the fixture module, e.g. cwd `fixtures/orient-sample`, “what does `orders.js` do?”
+   - Module: workspace stays this repo (skills remain visible). User prompt names `src/orders.js` (not a bare `orders.js`). Project under study is the fixture; do not put `fixtures/orient-sample` in the classification sentence.
    - Function: the fixture function, e.g. “what does `processOrder` do?” / walk it step by step.
-   - Targeted repo journey: cwd `fixtures/orient-sample`, prompt **exactly** “how does checkout work?” (no path in the sentence), to pin inferred Feature Trace and no mode menu.
+   - Targeted repo journey: workspace stays this repo. Prompt **exactly** “how does checkout work?” (no path). Harness may say the project under study is the fixture; the user sentence must stay pathless.
 3. Record failures: invented architecture, no citations, starts editing, skips the onboard mode menu, dumps the whole tree, guesses depth for a bare name, implements a mixed “explain then change it” turn.
 4. Write the skills to close those failures.
 5. Re-run the same prompts with the skills loaded and confirm briefing shape, citations, read-only behavior, resolve-then-classify, and hand-back on mixed turns.

@@ -27,7 +27,7 @@
 | `README.md` | Catalog the four skills |
 | `skills/engineering/README.md` | Bucket catalog |
 | `.claude-plugin/plugin.json` | Plugin `skills` array |
-| `CLAUDE.md` | Replace the hard 500-line cap with the two-jobs split rule |
+| `CLAUDE.md` | Task 1: allow `fixtures/`. Task 8: replace the hard 500-line cap |
 
 Do not write `ONBOARDING.md`, `docs/ai/`, learning journals, or inline comments in target repos. This family is read-only.
 
@@ -36,12 +36,29 @@ Do not write `ONBOARDING.md`, `docs/ai/`, learning journals, or inline comments 
 ### Task 1: Checked-in fixture (exists before RED)
 
 **Files:**
+- Modify: `CLAUDE.md` (one sentence — allow `fixtures/` before any JS is written)
 - Create: `fixtures/orient-sample/README.md`
 - Create: `fixtures/orient-sample/src/orders.js`
 - Create: `fixtures/orient-sample/src/server.js`
 - Create: `fixtures/orient-sample/src/orders.test.js`
 
-The skills repo is markdown-only. RED cannot walk a function that does not exist. This fixture is the function-depth and targeted-journey target. Create it **before** any baseline run. Do not create the orientation skills in this task.
+RED cannot walk a function that does not exist. This fixture is the function-depth and targeted-journey target. Create it **before** any baseline run. Do not create the orientation skills in this task.
+
+`CLAUDE.md` currently says the repo is markdown, scripts inside a skill, and the plugin manifest. Edit that **first** or an implementer following repo rules will refuse or relocate the JS.
+
+- [ ] **Step 0: Allow `fixtures/` in `CLAUDE.md`**
+
+Replace this sentence:
+
+```markdown
+This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, and the plugin manifest.
+```
+
+with:
+
+```markdown
+This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, the plugin manifest, and `fixtures/` samples used to baseline and verify skills.
+```
 
 - [ ] **Step 1: Write the fixture README**
 
@@ -173,11 +190,11 @@ Expected: `orders.test.js ok` and exit 0.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add fixtures/orient-sample/README.md fixtures/orient-sample/src/orders.js fixtures/orient-sample/src/server.js fixtures/orient-sample/src/orders.test.js
+git add CLAUDE.md fixtures/orient-sample/README.md fixtures/orient-sample/src/orders.js fixtures/orient-sample/src/server.js fixtures/orient-sample/src/orders.test.js
 git commit -m "$(cat <<'EOF'
 Add orient-sample fixture for orientation skill baselines.
 
-Give RED a real module, function, and checkout path before any skill files exist.
+Allow fixtures/ in repo rules, then give RED a real module, function, and checkout path before any skill files exist.
 EOF
 )"
 ```
@@ -217,12 +234,14 @@ Observed:
 
 ## Scenario B — module (fixture)
 
-Working directory: `fixtures/orient-sample`. Prompt: `What does orders.js do? Be brief.`
+Workspace: skills repo root (do not set the workspace exclusively to `fixtures/orient-sample` — skill files live in the parent tree). Project under study: the checkout fixture. User prompt: `What does src/orders.js do? Be brief.`
+
+Do not use a bare `orders.js` — a non-recursive glob misses `src/orders.js` and the router treats it as ambiguous.
 
 Observed:
 - Treated as module/file (exports, imports, important methods)?
 - Citations?
-- Edited orders.js?
+- Edited src/orders.js?
 - Verbatim quotes:
 
 ## Scenario C — function (fixture)
@@ -240,9 +259,9 @@ Observed:
 
 ## Scenario D — targeted repo journey (fixture)
 
-Working directory: `fixtures/orient-sample`. Prompt **exactly**: `How does checkout work?`
+Workspace: skills repo root (skills remain visible). Project under study: the checkout fixture (harness note only). User prompt **exactly**: `How does checkout work?`
 
-Do not put `fixtures/orient-sample` in the sentence. A path in the prompt cheap-resolves to a directory and sends `orient-module`, which never pins the targeted-repo inferred-defaults row.
+Do not put `fixtures/orient-sample` in the user sentence. A path in the prompt cheap-resolves to a directory and sends `orient-module`, which never pins the targeted-repo inferred-defaults row.
 
 Observed:
 - Showed the six-mode menu? (failure if yes — this is targeted repo, not onboard)
@@ -268,10 +287,10 @@ Workspace: `/Users/james/Code/AI/skills` (or the current repo root).
 
 - [ ] **Step 3: Run Scenario B**
 
-Dispatch a fresh subagent. Working directory: `fixtures/orient-sample`. Prompt only:
+Dispatch a fresh subagent. Workspace: skills repo root. Tell it the project under study is `fixtures/orient-sample` (harness only). User prompt only:
 
 ```
-What does orders.js do? Be brief.
+What does src/orders.js do? Be brief.
 ```
 
 - [ ] **Step 4: Run Scenario C**
@@ -284,7 +303,7 @@ What does processOrder do? Walk me through it step by step, then add a BUY2 coup
 
 - [ ] **Step 5: Run Scenario D**
 
-Dispatch a fresh subagent. Working directory: `fixtures/orient-sample`. Prompt only (no path):
+Dispatch a fresh subagent. Workspace: skills repo root. Tell it the project under study is `fixtures/orient-sample` (harness only). User prompt only (no path):
 
 ```
 How does checkout work?
@@ -439,7 +458,7 @@ Run a named-target resolve **before** choosing a depth when the user named a sym
 
 Allowed in **one** pass:
 
-- One path glob for a named file/folder.
+- One path glob for a named file/folder. Search `**/<name>` (e.g. `**/src/orders.js`), not a non-recursive cwd-only `orders.js`.
 - One symbol search (exact identifier) for a named `X`.
 
 Not allowed here: reading bodies to explain them, sampling 3–5 key files, git log, following imports.
@@ -487,7 +506,9 @@ If they pick Feature Trace and have not named a journey: one top-level listing p
 
 ## 4. Hand off
 
-Read **sibling** skill files (these paths work after `~/.cursor/skills/<name>` symlink or a plugin copy). Do **not** read `skills/engineering/orient-*/SKILL.md` — that tree only exists in this repo’s working copy.
+Read **sibling** skill files resolved from **this file’s directory**, not from cwd. `../orient-repo/SKILL.md` means “next to this skill,” i.e. the `orient-repo` folder that sits beside `catch-me-up`. After `~/.cursor/skills/<name>` symlink or a plugin copy, `skills/engineering/orient-*/SKILL.md` does not exist.
+
+If a cwd-relative Read of `../orient-repo/SKILL.md` misses (user workspace is a different repo), resolve the sibling from the path you used to open **this** `SKILL.md`, or invoke the depth skill by name.
 
 - [../orient-repo/SKILL.md](../orient-repo/SKILL.md)
 - [../orient-module/SKILL.md](../orient-module/SKILL.md)
@@ -820,21 +841,9 @@ In `.claude-plugin/plugin.json`, replace `"skills": []` with:
 
 Keep the rest of the JSON unchanged. Bump `"version"` from `0.1.0` to `0.2.0`.
 
-- [ ] **Step 4: Update `CLAUDE.md` size rule and allow fixtures**
+- [ ] **Step 4: Replace the 500-line hard cap in `CLAUDE.md`**
 
-Replace this sentence in the opening paragraph:
-
-```markdown
-This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, and the plugin manifest.
-```
-
-with:
-
-```markdown
-This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, the plugin manifest, and `fixtures/` samples used to baseline and verify skills.
-```
-
-Replace this bullet:
+The `fixtures/` sentence was added in Task 1. Do not revert it. Replace this bullet:
 
 ```markdown
 - Keep `SKILL.md` under 500 lines; link one level deep to supporting files
@@ -872,7 +881,11 @@ EOF
 
 Skills present: catch-me-up, orient-repo, orient-module, orient-function, modes.md
 
-Each GREEN subagent starts by reading **only** `skills/engineering/catch-me-up/SKILL.md` in this workspace (so the test can find the router). After that, it must follow the router’s **sibling** handoffs (`../orient-*/SKILL.md`, `modes.md`), not pasted `skills/engineering/orient-*` paths. Same four prompts and working directories as RED.
+Each GREEN subagent’s **workspace is the skills repo root** (do not set workspace exclusively to `fixtures/orient-sample` — that hides the skills). Load the router from this workspace: `Read skills/engineering/catch-me-up/SKILL.md`.
+
+When the router says `../orient-repo/SKILL.md`, treat that as a sibling of **the router file**, i.e. `Read skills/engineering/orient-repo/SKILL.md`. Same mapping for `../orient-module/SKILL.md`, `../orient-function/SKILL.md`, and `modes.md` → `skills/engineering/catch-me-up/modes.md`. Do not resolve `../orient-repo/SKILL.md` against cwd (repo root or a fixture dir — both miss).
+
+Same four **user** prompts as RED. B/D user sentences stay pathless except B names `src/orders.js`. Harness may say the project under study is the fixture; do not put `fixtures/orient-sample` in the user sentence.
 
 GREEN does **not** test model-invocation discovery. It tests compliance once the router file is loaded.
 
@@ -882,10 +895,10 @@ GREEN does **not** test model-invocation discovery. It tests compliance once the
 - [ ] Cites at least two `path:line` claims
 - [ ] Does not list every file in the tree
 
-### Scenario B — cwd `fixtures/orient-sample` — pass if
-- [ ] Treats `orders.js` as a module briefing (exports, imports, important methods)
+### Scenario B — user prompt `What does src/orders.js do?` — pass if
+- [ ] Treats `src/orders.js` as a module briefing (exports, imports, important methods)
 - [ ] Cites `src/orders.js` with line-backed claims
-- [ ] Does not edit `orders.js`
+- [ ] Does not edit `src/orders.js`
 
 ### Scenario C — pass if
 - [ ] Resolves `processOrder` to `fixtures/orient-sample/src/orders.js` (function depth)
@@ -893,7 +906,7 @@ GREEN does **not** test model-invocation discovery. It tests compliance once the
 - [ ] Does **not** add `BUY2` or edit `orders.js` in the same turn (hand-back text is not enough)
 - [ ] Hands back after the briefing
 
-### Scenario D — cwd `fixtures/orient-sample`, prompt `How does checkout work?` — pass if
+### Scenario D — user prompt `How does checkout work?` (pathless; fixture is project-under-study only) — pass if
 - [ ] Does **not** show the six-mode menu
 - [ ] Uses `orient-repo` targeted defaults (Feature Trace required), not `orient-module`
 - [ ] Traces `/checkout` → `handleCheckout` → `processOrder` with `path:line`
@@ -902,13 +915,15 @@ GREEN does **not** test model-invocation discovery. It tests compliance once the
 
 - [ ] **Step 2: Re-run Scenarios A–D**
 
-Dispatch four fresh subagents. First line of each prompt:
+Dispatch four fresh subagents. Workspace: skills repo root. First lines of each prompt:
 
 ```
-Read skills/engineering/catch-me-up/SKILL.md and follow it. When it hands off, read the sibling paths it names (../orient-repo/SKILL.md, ../orient-module/SKILL.md, ../orient-function/SKILL.md, modes.md), not skills/engineering/orient-*.
+Read skills/engineering/catch-me-up/SKILL.md and follow it.
+When it hands off to ../orient-repo/SKILL.md (or orient-module / orient-function / modes.md), resolve those paths as siblings of that router file: skills/engineering/orient-repo/SKILL.md, skills/engineering/orient-module/SKILL.md, skills/engineering/orient-function/SKILL.md, skills/engineering/catch-me-up/modes.md.
+Do not resolve ../orient-repo/SKILL.md against cwd.
 ```
 
-Then the same user sentence and working directory as in Task 2.
+For B and D, add one harness line (not part of classification): `The project under study is fixtures/orient-sample.` Then the same user sentence as Task 2 (`What does src/orders.js do?` / `How does checkout work?`).
 
 - [ ] **Step 3: Mark the GREEN checkboxes**
 
@@ -968,11 +983,11 @@ Only stage files you actually changed.
 | Spec requirement | Task |
 |---|---|
 | Fixture before RED | Task 1 |
-| RED without skills; no `orient-repo` as a target | Task 2 (B uses `orders.js`, C uses `processOrder`, D is pathless checkout) |
-| Sibling handoff paths | Task 4 |
+| RED without skills; no `orient-repo` as a target | Task 2 (B uses `src/orders.js`, C uses `processOrder`, D is pathless checkout) |
+| Sibling handoff resolved from the router file, not cwd | Tasks 4 and 9 |
 | History without Feature Trace | Task 5 |
 | Same-turn implement forbidden | Tasks 4–7, spec mixed-turn |
-| `fixtures/` allowed in repo rules | Task 8 |
+| `fixtures/` allowed in repo rules | Task 1 (before JS is written) |
 | `modes.md` six lenses | Task 3 |
 | Cheap resolve; ambiguous bare names | Task 4 |
 | Onboard menu vs targeted infer; Feature Trace stays on | Task 4 |
