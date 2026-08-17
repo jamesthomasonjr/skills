@@ -1,7 +1,7 @@
 # Codebase orientation skill family
 
 Date: 2026-08-17
-Status: draft for review
+Status: draft for review (revised: resolve-then-classify, targeted-repo modes, RED fixtures)
 Repo: jamesthomasonjr/skills
 
 ## Problem
@@ -41,7 +41,7 @@ This family exists to build the **user’s** mental model. It is not an agent me
 
 ## Architecture
 
-Four promoted engineering skills. One sequential agent. The router classifies and (on repo onboard) asks which modes to run. It then reads the matching depth skill and `modes.md` and works as that skill.
+Four promoted engineering skills. One sequential agent. The router does a cheap resolve when a name is given, classifies depth, then either asks modes (repo onboard) or infers them (targeted asks). It then reads the matching depth skill and `modes.md` and works as that skill.
 
 ```
 skills/engineering/
@@ -63,49 +63,79 @@ Hard rules for the whole family:
 - If a claim cannot be pointed at, say so. Do not invent architecture.
 - Prefer “the code does X” over “this looks like it should do X.”
 - Explain before suggesting any change. Do not implement.
+- Mixed turn (“explain this, then change it”): finish the briefing, then **hand back**. Do not implement inside this family. **Do not edit in the same turn even if the user already asked for a change** — that message is the briefing request, not permission to implement. They must send a **new message** after the briefing. The change request is not discarded; it is out of scope until that later turn.
 
 ## Router (`catch-me-up`)
 
-Does not explore the repo itself. Classifies, optionally asks, hands off.
+Classifies, optionally asks, hands off. It does **not** produce the briefing and does **not** walk call graphs. It **may** run one cheap resolve so classification is not a guess.
+
+### Cheap resolve (allowed)
+
+Run a named-target resolve *before* choosing a depth. Run the Feature Trace entry-path glance *after* modes are known (menu or inferred) and *before* handoff, only if Feature Trace is on and no journey was named.
+
+Allowed, in one pass:
+
+- One path glob for a named file/folder.
+- One symbol search (exact identifier) for a named `X`.
+- If Feature Trace is selected or required and no journey was named: one top-level listing plus README/manifest glance, only to **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them.
+
+Not allowed in the router: reading bodies to explain them, sampling 3–5 key files, git log, following imports. That is the depth skill’s job after handoff.
+
+**Resolve outcomes**
+
+| Result | Action |
+|---|---|
+| Path to a file or directory | `orient-module` |
+| Type / class / module symbol | `orient-module` |
+| Function or method symbol | `orient-function` |
+| Hits of more than one kind (file *and* function, etc.) | ask once which they meant |
+| Journey phrase, no code locus (“how does checkout work?”) | `orient-repo` (targeted, not onboard) |
+| Zero hits, or a bare name with no resolve | **ambiguous** — ask once for a path, symbol, or depth. Do not guess `orient-module`. |
+
+“What does `X` do?” is not a depth signal by itself. Resolve `X`, then classify. “Walk me through `foo`” / “step by step” still prefers `orient-function` after resolve confirms a function; if resolve finds a type, use `orient-module`.
 
 ### Depth classification
 
+Apply after resolve (or immediately when there is no name to resolve).
+
 | User signal | Depth skill |
 |---|---|
-| “onboard me”, “catch me up on this repo”, “how is this project structured”, no target named | `orient-repo` |
-| a file, folder, module, class, or “what does X do?” where X is a type/module | `orient-module` |
-| a function/method, “walk me through `foo`”, “what does this function do step by step” | `orient-function` |
-| a feature or user journey (“how does checkout work”) | `orient-repo` if no locus yet, else `orient-module` at the entry of that flow, with Feature Trace required |
-| ambiguous | ask once: repo / module / function, then continue |
+| “onboard me”, “catch me up on this repo”, “how is this project structured”, no target named | `orient-repo` (**onboard**) |
+| Resolved file, folder, module, or type | `orient-module` |
+| Resolved function or method | `orient-function` |
+| Feature or user journey, no resolved locus (“how does checkout work?”) | `orient-repo` (**targeted**) |
+| Journey plus a resolved entry module | `orient-module` at that entry, Feature Trace required |
+| Ambiguous after resolve | ask once: repo / module / function (and path/symbol if needed), then continue |
 
-### Mode menu
+### Mode menu vs inferred modes
 
-Shown on repo onboard. Inferred on targeted asks.
+The six modes: Architecture, Convention, Feature Trace, Syntax / API, Testing, History.
 
-1. Architecture
-2. Convention
-3. Feature Trace
-4. Syntax / API
-5. Testing
-6. History
-
-Repo onboard prompt, every time:
+**Onboard** = `orient-repo` and the user did not name a target or journey. Show the menu every time:
 
 > Which modes? Architecture / Convention / Feature Trace / Syntax / Testing / History
 > (You can pick several. I’ll stay read-only and brief you.)
 
-If they pick Feature Trace and have not named a journey, ask for one, or offer the main path already visible (CLI, HTTP entry, test runner).
+If they pick Feature Trace and have not named a journey, ask for one or offer the 1–3 candidates from cheap resolve. Do not start the trace in the router.
 
-### Inferred defaults (no menu)
+**Targeted** = a named symbol, path, or journey. Infer modes. Do **not** show the menu. The user may add modes; they may not turn off a required lens for that turn.
+
+### Inferred defaults (targeted asks only)
 
 | Depth | Default modes |
 |---|---|
-| module/class/file | Architecture (local) + Convention + Syntax. Add Feature Trace if they asked “how does it work”. Add Testing/History only if asked or needed to explain a surprising shape. |
+| repo (targeted journey) | Feature Trace **required, stays on** + Architecture + Testing. Convention / Syntax / History only if asked or needed to explain a surprising shape. |
+| module/class/file | Architecture (local) + Convention + Syntax. Add Feature Trace if they asked “how does it work” (required, stays on). Add Testing/History only if asked or needed to explain a surprising shape. |
 | function | Syntax (step-by-step I/O and edge cases) + Testing. History only if the body is otherwise inexplicable. |
 
 ### Handoff
 
-After classification, the agent reads the depth `SKILL.md` and `catch-me-up/modes.md`, then works as that skill. The router does not keep a second procedure.
+After classification, the agent reads the depth `SKILL.md` and `modes.md`, then works as that skill. The router does not keep a second procedure.
+
+Use **sibling-relative** paths from the skill directory, not this repo’s tree. After symlink install (`~/.cursor/skills/catch-me-up`) or a plugin copy, `skills/engineering/orient-repo/SKILL.md` does not exist.
+
+- From `catch-me-up/SKILL.md`: `../orient-repo/SKILL.md`, `../orient-module/SKILL.md`, `../orient-function/SKILL.md`, `modes.md`
+- From each `orient-*/SKILL.md`: `../catch-me-up/modes.md`
 
 ### Invocation
 
@@ -127,7 +157,7 @@ Always gather (even if only some modes are selected):
 
 Then apply selected modes. Architecture fills: entry points, key functions, class/data-model hierarchy, architectural pattern, public interfaces, state, existing tests, constraints/assumptions.
 
-Sampling: do not swallow the repo. Architecture samples top-level + depth-two across **3–5 key files**. Feature Trace follows one path as far as the path needs and does not detour. History is `git log` / blame on those same files, not the whole tree.
+Sampling: do not swallow the repo. Architecture samples top-level + depth-two across **3–5 key files**. Feature Trace follows one path as far as the path needs and does not detour. History is its own mode: `git log` / blame on files already in the Architecture sample (not only when Feature Trace is on), last ~15 commits or the introducing commit, not the whole tree.
 
 Briefing: purpose → map (tree or table) → entry points and data flow → selected mode sections → “read these next” (3–7 pointers) → open questions / unverified claims.
 
@@ -204,7 +234,7 @@ Report: the decision and the edge case it was solving, in 3–6 bullets. No biog
 ## Failure and thin evidence
 
 - No repo / empty tree: say so and stop.
-- Target not found: search once, then ask for a path or symbol.
+- Target not found after cheap resolve: treat as ambiguous; ask for a path or symbol. Do not search again in the router.
 - Mode has no signal: one line, skip that section.
 - Conflict between README and code: prefer code, note the mismatch.
 - Huge monorepo: stay inside the current workspace root; say if you only mapped a package.
@@ -266,12 +296,17 @@ Suggested one-liners for the catalog (final copy during implementation):
 
 ## Testing the skills (implementation phase)
 
-Per Superpowers writing-skills: treat authoring as TDD for process docs. Before calling the family done:
+Per Superpowers writing-skills: treat authoring as TDD for process docs. Targets must **exist at RED**, before any of these skills are written. Do not baseline “explain `orient-repo`” — that path does not exist yet and the run will only hit “target not found.”
 
-1. Baseline a subagent *without* the skills on a fixture repo (this skills repo is fine) for: onboard, explain `orient-repo`, walk through a small function.
-2. Record failures: invented architecture, no citations, starts editing, skips the mode menu, dumps the whole tree.
-3. Write the skills to close those failures.
-4. Re-run the same prompts with the skills loaded and confirm the briefing shape, citations, and read-only behavior.
+1. Create (in the plan, before the baseline run) a tiny checked-in fixture `fixtures/orient-sample/` with one module and one exported function. This repo is markdown-only and has no function to walk.
+2. Baseline a subagent *without* the skills:
+   - Repo onboard: this skills repo (“onboard me” / “catch me up on this repo”).
+   - Module: the fixture module, e.g. cwd `fixtures/orient-sample`, “what does `orders.js` do?”
+   - Function: the fixture function, e.g. “what does `processOrder` do?” / walk it step by step.
+   - Targeted repo journey: cwd `fixtures/orient-sample`, prompt **exactly** “how does checkout work?” (no path in the sentence), to pin inferred Feature Trace and no mode menu.
+3. Record failures: invented architecture, no citations, starts editing, skips the onboard mode menu, dumps the whole tree, guesses depth for a bare name, implements a mixed “explain then change it” turn.
+4. Write the skills to close those failures.
+5. Re-run the same prompts with the skills loaded and confirm briefing shape, citations, read-only behavior, resolve-then-classify, and hand-back on mixed turns.
 
 ## Open decisions (resolved in design)
 
@@ -279,8 +314,10 @@ Per Superpowers writing-skills: treat authoring as TDD for process docs. Before 
 |---|---|
 | Primary job | Conversational briefing only |
 | Topology | Router + 3 depth skills; modes as lenses |
-| Repo onboard modes | Ask every time |
-| Targeted-ask modes | Infer (table above) |
+| Repo onboard modes | Ask every time (onboard only) |
+| Targeted-ask modes | Infer (table includes repo journey; Feature Trace stays on) |
+| Router resolve | One cheap path/symbol search (and entry-path glance for unnamed Feature Trace); unresolved names are ambiguous |
+| Mixed explain+change | Brief this turn; implement only on a later user message |
 | Execution | One sequential agent |
 | Persist / tutor / comments | Out of scope |
 | Size | Functionality over line budget; Superpowers bands as preference |
