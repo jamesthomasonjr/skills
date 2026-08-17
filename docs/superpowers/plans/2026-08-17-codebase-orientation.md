@@ -234,9 +234,9 @@ Observed:
 
 ## Scenario B — module (fixture)
 
-Workspace: skills repo root (do not set the workspace exclusively to `fixtures/orient-sample` — skill files live in the parent tree). Project under study: the checkout fixture. User prompt: `What does src/orders.js do? Be brief.`
+Workspace: skills repo root. Prompt: `What does src/orders.js do? Be brief.`
 
-Do not use a bare `orders.js` — a non-recursive glob misses `src/orders.js` and the router treats it as ambiguous.
+Do not use a bare `orders.js` — a non-recursive glob misses `src/orders.js` and the router treats it as ambiguous. Do not mention `fixtures/orient-sample` in the prompt.
 
 Observed:
 - Treated as module/file (exports, imports, important methods)?
@@ -259,9 +259,9 @@ Observed:
 
 ## Scenario D — targeted repo journey (fixture)
 
-Workspace: skills repo root (skills remain visible). Project under study: the checkout fixture (harness note only). User prompt **exactly**: `How does checkout work?`
+Workspace: skills repo root. Prompt **exactly**: `How does checkout work?`
 
-Do not put `fixtures/orient-sample` in the user sentence. A path in the prompt cheap-resolves to a directory and sends `orient-module`, which never pins the targeted-repo inferred-defaults row.
+Do not mention `fixtures/orient-sample` anywhere in the message. A named directory cheap-resolves to `orient-module` (journey plus a locus). Pathless “how does checkout work?” at repo root is targeted `orient-repo`; Feature Trace can find `/checkout` in the fixture. Architecture may map this skills repo — that is expected, not a fail.
 
 Observed:
 - Showed the six-mode menu? (failure if yes — this is targeted repo, not onboard)
@@ -287,7 +287,7 @@ Workspace: `/Users/james/Code/AI/skills` (or the current repo root).
 
 - [ ] **Step 3: Run Scenario B**
 
-Dispatch a fresh subagent. Workspace: skills repo root. Tell it the project under study is `fixtures/orient-sample` (harness only). User prompt only:
+Dispatch a fresh subagent. Workspace: skills repo root. Message is only:
 
 ```
 What does src/orders.js do? Be brief.
@@ -303,7 +303,7 @@ What does processOrder do? Walk me through it step by step, then add a BUY2 coup
 
 - [ ] **Step 5: Run Scenario D**
 
-Dispatch a fresh subagent. Workspace: skills repo root. Tell it the project under study is `fixtures/orient-sample` (harness only). User prompt only (no path):
+Dispatch a fresh subagent. Workspace: skills repo root. Message is only:
 
 ```
 How does checkout work?
@@ -885,7 +885,7 @@ Each GREEN subagent’s **workspace is the skills repo root** (do not set worksp
 
 When the router says `../orient-repo/SKILL.md`, treat that as a sibling of **the router file**, i.e. `Read skills/engineering/orient-repo/SKILL.md`. Same mapping for `../orient-module/SKILL.md`, `../orient-function/SKILL.md`, and `modes.md` → `skills/engineering/catch-me-up/modes.md`. Do not resolve `../orient-repo/SKILL.md` against cwd (repo root or a fixture dir — both miss).
 
-Same four **user** prompts as RED. B/D user sentences stay pathless except B names `src/orders.js`. Harness may say the project under study is the fixture; do not put `fixtures/orient-sample` in the user sentence.
+Same four **user** prompts as RED. B names `src/orders.js`. D is exactly `How does checkout work?`. Never put `fixtures/orient-sample` in a GREEN message — the router has no harness exception and will classify that directory as `orient-module`.
 
 GREEN does **not** test model-invocation discovery. It tests compliance once the router file is loaded.
 
@@ -906,10 +906,10 @@ GREEN does **not** test model-invocation discovery. It tests compliance once the
 - [ ] Does **not** add `BUY2` or edit `orders.js` in the same turn (hand-back text is not enough)
 - [ ] Hands back after the briefing
 
-### Scenario D — user prompt `How does checkout work?` (pathless; fixture is project-under-study only) — pass if
+### Scenario D — user prompt `How does checkout work?` (pathless) — pass if
 - [ ] Does **not** show the six-mode menu
 - [ ] Uses `orient-repo` targeted defaults (Feature Trace required), not `orient-module`
-- [ ] Traces `/checkout` → `handleCheckout` → `processOrder` with `path:line`
+- [ ] Feature Trace finds `/checkout` → `handleCheckout` → `processOrder` with `path:line` (Architecture may map this skills repo)
 - [ ] Stays read-only
 ```
 
@@ -923,7 +923,7 @@ When it hands off to ../orient-repo/SKILL.md (or orient-module / orient-function
 Do not resolve ../orient-repo/SKILL.md against cwd.
 ```
 
-For B and D, add one harness line (not part of classification): `The project under study is fixtures/orient-sample.` Then the same user sentence as Task 2 (`What does src/orders.js do?` / `How does checkout work?`).
+Then the same user sentence as Task 2 only (`What does src/orders.js do?` / `How does checkout work?`). Do not add a project-under-study line.
 
 - [ ] **Step 3: Mark the GREEN checkboxes**
 

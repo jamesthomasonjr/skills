@@ -301,9 +301,9 @@ Per Superpowers writing-skills: treat authoring as TDD for process docs. Targets
 1. Create (in the plan, before the baseline run) a tiny checked-in fixture `fixtures/orient-sample/` with one module and one exported function. This repo is markdown-only and has no function to walk.
 2. Baseline a subagent *without* the skills:
    - Repo onboard: this skills repo (“onboard me” / “catch me up on this repo”).
-   - Module: workspace stays this repo (skills remain visible). User prompt names `src/orders.js` (not a bare `orders.js`). Project under study is the fixture; do not put `fixtures/orient-sample` in the classification sentence.
+   - Module: workspace stays this repo. Prompt names `src/orders.js` (not a bare `orders.js`). Do not mention `fixtures/orient-sample` in the prompt.
    - Function: the fixture function, e.g. “what does `processOrder` do?” / walk it step by step.
-   - Targeted repo journey: workspace stays this repo. Prompt **exactly** “how does checkout work?” (no path). Harness may say the project under study is the fixture; the user sentence must stay pathless.
+   - Targeted repo journey: workspace stays this repo. Prompt **exactly** “how does checkout work?” with no path and no fixture mention. That is targeted `orient-repo`; Feature Trace can find `/checkout` in the fixture. Architecture may map this skills repo.
 3. Record failures: invented architecture, no citations, starts editing, skips the onboard mode menu, dumps the whole tree, guesses depth for a bare name, implements a mixed “explain then change it” turn.
 4. Write the skills to close those failures.
 5. Re-run the same prompts with the skills loaded and confirm briefing shape, citations, read-only behavior, resolve-then-classify, and hand-back on mixed turns.
