@@ -1,6 +1,6 @@
 # Working on this repo
 
-This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, and the plugin manifest.
+This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, the plugin manifest, and `fixtures/` samples used to baseline and verify skills.
 
 ## Buckets
 
