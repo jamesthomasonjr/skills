@@ -1,7 +1,7 @@
 # Work sizing skill family
 
 Date: 2026-08-18
-Status: draft for review
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 ## Problem
