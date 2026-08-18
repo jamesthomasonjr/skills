@@ -156,7 +156,7 @@ Tracker-agnostic. The shaped charter, inventory, or brief is the portable artifa
 
 1. **Default — conversation only.** Do not write files or create tracker items unless asked.
 2. **Named sink.** If the user names a destination (markdown path, GitHub issues, beads, tk, Linear, etc.), publish there in that sink’s native shape after shaping. Do not invent a tracker or require setup.
-3. **Tracker skill / prompt.** If they want a dedicated publish skill or prompt, finish shaping first, then hand off — do not publish in this turn unless they also named a sink.
+3. **Tracker skill / prompt.** Only when they asked for a dedicated publish skill or prompt: finish shaping, then hand off. Do not treat “no sink named” as a tracker handoff. Do not publish in this turn unless they also named a sink.
 
 Markdown under `docs/work/<level>/YYYY-MM-DD-<slug>.md` is only a sink when they ask for files (or that path).
 
