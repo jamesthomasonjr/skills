@@ -13,7 +13,7 @@ Daily code-work skills. Promoted: listed in the root README and shipped in the C
 - **[shape-epic](./shape-epic/SKILL.md)** — Epic brief and feature inventory.
 - **[shape-feature](./shape-feature/SKILL.md)** — Feature brief and user-story inventory.
 - **[shape-story](./shape-story/SKILL.md)** — Spec-ready user-story brief.
-- **[shape-task](./shape-task/SKILL.md)** — Atomic engineering-task brief (chores, tech debt, known bugs).
+- **[shape-task](./shape-task/SKILL.md)** — Atomic task brief (chores, tech debt, known bugs, spikes).
 
 ### Model-invoked
 

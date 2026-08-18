@@ -35,7 +35,7 @@ Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills
 - **[shape-epic](./skills/engineering/shape-epic/SKILL.md)** — Epic brief and feature inventory.
 - **[shape-feature](./skills/engineering/shape-feature/SKILL.md)** — Feature brief and user-story inventory.
 - **[shape-story](./skills/engineering/shape-story/SKILL.md)** — Spec-ready user-story brief for a later specify step.
-- **[shape-task](./skills/engineering/shape-task/SKILL.md)** — Atomic engineering-task brief for chores, tech debt, or known bugs (no fake user story).
+- **[shape-task](./skills/engineering/shape-task/SKILL.md)** — Atomic task / chore / known-bug / spike brief (no fake user story).
 
 ### Productivity
 

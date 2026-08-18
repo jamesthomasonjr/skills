@@ -22,7 +22,7 @@ Task        ──► Brief only
 | Epic | One coherent outcome over weeks–months, made of several capabilities |
 | Feature | One user-perceivable capability that can ship on its own |
 | User story | One user journey / value slice; after this family, ready to specify |
-| Task | Atomic engineering chore or known bugfix; no meaningful user-facing story of its own |
+| Task | Atomic engineering chore, known bug fix, or time-boxed spike; no meaningful user-facing story of its own |
 
 ## Classification signals
 
@@ -32,8 +32,9 @@ Task        ──► Brief only
 | Named outcome with several capabilities under it; “epic”; multi-week | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable) | Feature |
 | As a / I want / so that; one journey; “user story”; user-framed bug fix (“so that errors are clear”) | User story |
-| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus | Task |
+| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus; spike / research with one clear question | Task |
 | Vague or intermittent failure (“something’s broken,” “flaky sometimes,” no locus) | **Out of family** — see Bugs and chores |
+| Foggy multi-question exploration (“figure out notifications,” “research the space”) | **Out of family** — see Spikes and research |
 
 ## Bugs and chores
 
@@ -48,6 +49,18 @@ Bugs and chores are **kinds** of work, not extra hierarchy levels. Route by grai
 | Systemic reliability theme (“fix all of notifications”) | Classify on **scope** (epic/feature), not on the word “bug” |
 
 Never wrap a one-line fix in a fake As a / I want / so that. Never force a 3–9 story inventory for a single known bug.
+
+## Spikes and research
+
+Spikes and research are **kinds** of work, not extra hierarchy levels. A spike’s success is a **decision or learning**, not a shipped capability.
+
+| Signal | Route |
+|---|---|
+| Time-boxed question with one clear decision (“Can Stripe idempotency keys cover our retry model in 1 day?”); “spike”; “research X” | `shape-task` (spike flavor) |
+| Foggy multi-question exploration; destination unclear | **Stop.** Hand off to wayfinder / research / grill skills. Do not invent an epic or story inventory. |
+| “Build a prototype to decide” | Still spike grain here; after the brief, hand off to a prototype skill to build — do not implement the prototype in this family |
+
+Never emit a feature/story inventory for a spike. Never let a spike silently become production implementation in the sizing turn.
 
 ## Ambiguity
 
