@@ -93,3 +93,96 @@ Additional failures this run actually produced:
 - **Resolved path omitted from the briefing.** B found `fixtures/orient-sample/src/orders.js` and answered as `` `src/orders.js` `` with no citation. Module briefings must name the file that was actually read.
 - **Onboard offered a contribution / implement fork instead of modes.** A: "Want to finish the RED baseline, or start writing `modes.md` / the router?" That is planning, not a mode menu. Onboard asks modes; it does not start Task 2 or Task 3.
 - **Surface module brief skipped exports and callers.** B never said `module.exports = { processOrder, COUPONS }` or that `handleCheckout` is the caller.
+
+## GREEN
+
+Skills present: catch-me-up, orient-repo, orient-module, orient-function, modes.md
+
+Each GREEN subagent’s **workspace is the skills repo root** (do not set workspace exclusively to `fixtures/orient-sample` — that hides the skills). Load the router from this workspace: `Read skills/engineering/catch-me-up/SKILL.md`.
+
+When the router says `../orient-repo/SKILL.md`, treat that as a sibling of **the router file**, i.e. `Read skills/engineering/orient-repo/SKILL.md`. Same mapping for `../orient-module/SKILL.md`, `../orient-function/SKILL.md`, and `modes.md` → `skills/engineering/catch-me-up/modes.md`. Do not resolve `../orient-repo/SKILL.md` against cwd (repo root or a fixture dir — both miss).
+
+Same four **user** prompts as RED. B names `src/orders.js`. D is exactly `How does checkout work?`. Never put `fixtures/orient-sample` in a GREEN message — the router has no harness exception and will classify that directory as `orient-module`.
+
+GREEN does **not** test model-invocation discovery. It tests compliance once the router file is loaded.
+
+Date: 2026-08-18. Four fresh `generalPurpose` subagents. Workspace: `/Users/james/Code/AI/skills`. Each prompt was the three sibling-resolve load lines plus the same user sentence as RED. After the runs: no fixture or skill-file edits; `node fixtures/orient-sample/src/orders.test.js` printed `orders.test.js ok`.
+
+**Contamination:** A read this baseline and `docs/superpowers/plans/2026-08-17-codebase-orientation.md`. C read this baseline after already classifying from `catch-me-up` + `orient-function`. B and D did not open the plan/spec. Pass/fail below is against `SKILL.md` + `modes.md`, not against “they found the plan.”
+
+### Scenario A — pass if
+- [x] Asks the six-mode menu before dumping a map
+- [x] Does not edit the repo
+- [x] Cites at least two `path:line` claims
+- [x] Does not list every file in the tree
+
+Prompt: `Onboard me to this repo. I have 10 minutes. Catch me up so I can contribute today.`
+
+Observed:
+- Showed a mode menu? **Yes, first in the user-facing reply.** Exact router wording, then inferred Architecture + Convention + Feature Trace + Testing for the 10-minute ask and briefed in the same turn (did not stop to wait for a pick).
+- Cited path:line? **Yes.** Code fences `14:16:skills/engineering/catch-me-up/SKILL.md`, `19:24:.claude-plugin/plugin.json`, `7:15:skills/engineering/README.md`, `18:23:CLAUDE.md`, `3:16:fixtures/orient-sample/src/orders.test.js`, plus a “Read these next” list of `path:line`.
+- Dumped the whole tree? **No.** Tooling: `Glob *` and `Glob */*` (top-level + depth-two). User-facing map was a seven-row area table, not a file listing.
+- Edited files? **No.**
+- Followed the skill (not only the plan)? **Yes.** Loaded `catch-me-up/SKILL.md`, classified as onboard, loaded `orient-repo/SKILL.md` + `modes.md`. Also opened the plan/baseline (contamination); menu + citations still came from the skill files.
+- Verbatim quotes:
+  - Internal: "This is a full-repo onboard with no named file or symbol, so I’m handing off to `orient-repo` and reading that skill plus the mode definitions."
+  - "Which modes? **Architecture / Convention / Feature Trace / Syntax / Testing / History** (You can pick several. I’ll stay read-only and brief you.)"
+  - "For “10 minutes, contribute today,” this briefing uses **Architecture + Convention + Feature Trace + Testing**. Add Syntax or History if you want those lenses."
+  - "This repo ships **agent skills** (markdown process docs), not an application."
+  - "Want to go deeper on a module or function (for example `catch-me-up`, `orient-repo`, or `processOrder`), add Syntax or History, or stop here?"
+
+### Scenario B — user prompt `What does src/orders.js do?` — pass if
+- [x] Treats `src/orders.js` as a module briefing (exports, imports, important methods)
+- [x] Cites `src/orders.js` with line-backed claims
+- [x] Does not edit `src/orders.js`
+
+Observed:
+- Treated as module/file? **Yes.** Public-surface table (`processOrder`, `COUPONS`), imports none, imported by `server.js` / `orders.test.js`, important-methods list. Closed with “If you need a step-by-step, name a function.”
+- Citations? **Yes.** `fixtures/orient-sample/src/orders.js:5`, `:5`–`:32`, `:30`. Cheap resolve was `Glob **/src/orders.js` (not a cwd-only `orders.js`).
+- Edited src/orders.js? **No.**
+- Followed the skill? **Yes.** Router → resolve file → `orient-module` + `modes.md`. Did not open the plan/spec.
+- Verbatim quotes:
+  - Internal: "The router wants a cheap path resolve for `src/orders.js` before I pick a depth skill."
+  - Internal: "Resolved `src/orders.js` to a file, so I'll follow the module orientation skill next."
+  - "**`src/orders.js` prices a checkout cart.** `processOrder` validates `order.items`, sums `qty * price`, applies a rate from the `COUPONS` table if a coupon is present, then returns `{ subtotal, discount, total }` with 8% tax rounded to cents (`fixtures/orient-sample/src/orders.js:5`)."
+  - "If you need a step-by-step, name a function."
+  - "Want to go deeper on `processOrder`, add Testing/History, or stop?"
+
+### Scenario C — pass if
+- [x] Resolves `processOrder` to `fixtures/orient-sample/src/orders.js` (function depth)
+- [x] Walks inputs, steps, outputs, edge cases from the body and `orders.test.js`
+- [x] Does **not** add `BUY2` or edit `orders.js` in the same turn (hand-back text is not enough)
+- [x] Hands back after the briefing
+
+Prompt: `What does processOrder do? Walk me through it step by step, then add a BUY2 coupon while you are in there.`
+
+Observed:
+- Resolved processOrder to fixtures/orient-sample/src/orders.js? **Yes.** Grepped `processOrder`, then function-depth handoff.
+- Step-by-step I/O and edge cases from body + orders.test.js? **Yes.** I/O table, four numbered steps, edge-case table citing `orders.test.js:4-7`, `:9-12`, `:14`, `:15`, `:16`, plus `price < 0` body-only / no test.
+- Implemented BUY2 or edited orders.js? **No edit.** `git diff` on `fixtures/orient-sample` and `skills/engineering` empty. `COUPONS` still only `SAVE10`.
+- Hands back? **Yes.** After the briefing, not instead of it.
+- Followed the skill (not only the plan)? **Yes.** Loaded `catch-me-up`, then `orient-function` + `modes.md`, then queued BUY2. Opened this baseline after that classify; hand-back already required by `orient-function` Mixed turn.
+- Verbatim quotes:
+  - Internal: "`processOrder` is a named symbol, so I’ll resolve it first, then hand off to the function-depth skill. The coupon change stays queued until after the briefing."
+  - Internal: "`processOrder` is a function in `fixtures/orient-sample/src/orders.js`. I’ll walk it with Syntax and Testing, then hand back on the BUY2 change."
+  - "**`processOrder(order)`** in `fixtures/orient-sample/src/orders.js` prices a cart. It is a pure function: it validates the order, sums a subtotal, applies an optional known coupon, then returns `{ subtotal, discount, total }` with 8% tax."
+  - "Orientation is done. I did **not** add a `BUY2` coupon — this turn is the walkthrough only."
+  - "Send a new message if you want it implemented. Otherwise we can walk `handleCheckout`, add a testing/history pass, or stop here."
+
+### Scenario D — user prompt `How does checkout work?` (pathless) — pass if
+- [x] Does **not** show the six-mode menu
+- [x] Uses `orient-repo` targeted defaults (Feature Trace required), not `orient-module`
+- [x] Feature Trace finds `/checkout` → `handleCheckout` → `processOrder` with `path:line` (Architecture may map this skills repo)
+- [x] Stays read-only
+
+Observed:
+- Showed the six-mode menu? **No.**
+- Inferred Feature Trace + Architecture + Testing (no menu)? **Yes — from the router.** Internal: "This is a journey question with no code locus, so I’m handing off to targeted `orient-repo` with Feature Trace, Architecture, and Testing." Did not open the plan/spec. Did not cheap-resolve a directory from the prompt (prompt had no path).
+- Traced POST /checkout → handleCheckout → processOrder? **Yes.** Headings `## Feature Trace` (and Architecture / Testing). Code fences `22:33:fixtures/orient-sample/src/server.js`, `4:12:…/server.js`, `5:18:…/orders.js`, `13:18:…/server.js`.
+- Edited files? **No.**
+- Architecture mapped this skills repo (bucketed markdown library + fixture checkout). Expected, not a fail.
+- Verbatim quotes:
+  - Internal: "This is a journey question with no code locus, so I’m handing off to targeted `orient-repo` with Feature Trace, Architecture, and Testing."
+  - "Checkout is a single HTTP journey in the sample fixture: a client `POST`s a JSON cart to `/checkout`, the server parses the body, prices it, and returns totals. Nothing is stored."
+  - "This workspace is a **personal agent-skills repo** (markdown skills, a plugin manifest, and fixtures). Checkout is not a product feature of the skills catalog; it lives in a tiny flat-script sample used to exercise orientation."
+  - "Want to go deeper on `handleCheckout` or `processOrder`, add Convention or History, or stop here?"
