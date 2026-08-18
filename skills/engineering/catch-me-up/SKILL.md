@@ -63,6 +63,8 @@ Six modes: Architecture, Convention, Feature Trace, Syntax / API, Testing, Histo
 > Which modes? Architecture / Convention / Feature Trace / Syntax / Testing / History
 > (You can pick several. I’ll stay read-only and brief you.)
 
+Onboard: ask the menu, then **stop**. Do not infer modes, do not hand off, do not gather the map until the user answers.
+
 If they pick Feature Trace and have not named a journey: one top-level listing plus README/manifest glance, **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them.
 
 **Targeted** (named symbol, path, or journey): infer. Do **not** show the menu. User may add modes. User may not turn off a required lens this turn.
