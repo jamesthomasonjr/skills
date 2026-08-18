@@ -36,7 +36,7 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 
 | Excuse | Reality |
 |---|---|
-| “Server-side validation isn’t a story” | Fold into a shopper/admin story’s later spec, or note as constraint — don’t list raw tasks as children. |
+| “Server-side validation isn’t a story” | Fold into a shopper/admin story’s later spec, or list it under **Constraints** — don’t list raw tasks as children. |
 | “They asked to break into work” | Children are stories. Specs come later per story. |
 | “Acceptance scenarios help” | Belong in `shape-story` / real specify — not here. |
 

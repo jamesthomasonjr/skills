@@ -129,7 +129,7 @@ Same shape at epic grain; **Feature inventory** instead of epics. No stories. No
 
 ### `shape-feature`
 
-Feature brief (problem, who benefits, outcome, out of scope) + **User story inventory** (title + “As a… I want… so that…” one-liner each). No full acceptance scenarios. No technical design. Close: pick a story to deepen, or stop.
+Feature brief (problem, who benefits, outcome, boundaries, constraints for non-story dependencies) + **User story inventory** (title + “As a… I want… so that…” one-liner each). No full acceptance scenarios. No technical design. Close: pick a story to deepen, or stop.
 
 ### `shape-story`
 
