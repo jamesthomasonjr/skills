@@ -82,9 +82,9 @@ Prefer the **largest** level that still fits. Explicit user labels win (“this 
 |---|---|
 | Program / theme / “platform,” multiple products or teams, quarters+, several distinct outcomes | Initiative |
 | Named outcome with multiple capabilities underneath; “epic”; weeks–months of work | Epic |
-| One capability users can name; “feature”; shippable alone | Feature |
+| One capability users can name; “feature”; “add X to the product” (user-perceivable); shippable alone | Feature |
 | As-a / I-want / so-that; one journey; “story”; small vertical slice | User story |
-| Migrate, rename, wire CI, fix typo in config; no user-facing value alone | Task |
+| Migrate, rename, wire CI, “add a retry|index|log”; no user-facing value alone | Task |
 | Ambiguous between two adjacent levels | Ask once with a recommendation |
 
 ### One-level rule

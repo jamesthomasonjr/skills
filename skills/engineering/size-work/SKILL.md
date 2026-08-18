@@ -27,12 +27,12 @@ Use [levels.md](levels.md). Explicit labels from the user win.
 |---|---|
 | Multi-outcome theme, platform bet, year/quarter, several pillars | `shape-initiative` |
 | Coherent multi-capability outcome; “epic” | `shape-epic` |
-| One shippable capability; “feature”; “add X” | `shape-feature` |
+| One **user-perceivable** capability; “feature”; “add X to the product” | `shape-feature` |
 | As a / I want / so that; one journey; “story” | `shape-story` |
-| Rename / migrate / chore; no user-facing value alone | `shape-task` |
+| Rename / migrate / wire CI / “add a retry|index|log|guard”; no user-facing value alone | `shape-task` |
 | Two adjacent levels both fit | ask once (see below) |
 
-Prefer the **largest** fitting level.
+Prefer the **largest** fitting level. Bare “add X” is **not** enough for a feature — only when X is a user-perceivable product capability. Engineering “add …” chores are tasks.
 
 ## 2. Ambiguity
 
@@ -62,3 +62,4 @@ Then follow that shape skill. Do not keep a second shaping procedure here.
 - Opening with a Spec Kit / Superpowers plan template
 - Implementing because “the breakdown is obvious”
 - Picking feature for every request
+- Treating “add a retry/index/log” as a feature because the sentence starts with “add”

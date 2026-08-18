@@ -30,9 +30,9 @@ Task        ──► Brief only
 |---|---|
 | Platform / program / “become the X,” multiple pillars or products, year/quarter planning | Initiative |
 | Named outcome with several capabilities under it; “epic”; multi-week | Epic |
-| One capability users can name; “feature”; “add X to the product” | Feature |
+| One capability users can name; “feature”; “add X to the product” (user-perceivable) | Feature |
 | As a / I want / so that; one journey; “user story” | User story |
-| Rename, migrate, wire CI, expand-contract chore; no user value alone | Task |
+| Rename, migrate, wire CI, expand-contract; “add a retry|index|log|guard”; no user value alone | Task |
 
 ## Ambiguity
 
