@@ -22,7 +22,7 @@ Task        ──► Brief only
 | Epic | One coherent outcome over weeks–months, made of several capabilities |
 | Feature | One user-perceivable capability that can ship on its own |
 | User story | One user journey / value slice; after this family, ready to specify |
-| Task | Atomic engineering chore with no meaningful user-facing story of its own |
+| Task | Atomic engineering chore or known bugfix; no meaningful user-facing story of its own |
 
 ## Classification signals
 
@@ -31,8 +31,23 @@ Task        ──► Brief only
 | Platform / program / “become the X,” multiple pillars or products, year/quarter planning | Initiative |
 | Named outcome with several capabilities under it; “epic”; multi-week | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable) | Feature |
-| As a / I want / so that; one journey; “user story” | User story |
-| Rename, migrate, wire CI, expand-contract; “add a retry|index|log|guard”; no user value alone | Task |
+| As a / I want / so that; one journey; “user story”; user-framed bug fix (“so that errors are clear”) | User story |
+| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus | Task |
+| Vague or intermittent failure (“something’s broken,” “flaky sometimes,” no locus) | **Out of family** — see Bugs and chores |
+
+## Bugs and chores
+
+Bugs and chores are **kinds** of work, not extra hierarchy levels. Route by grain:
+
+| Signal | Route |
+|---|---|
+| Chore, cleanup, tech debt, rename, migrate, wire CI, expand-contract | `shape-task` |
+| Known bug with a clear locus (file, error, repro) | `shape-task` |
+| User-visible failure framed as value (As a / I want / so that) | `shape-story` |
+| Vague / intermittent / undiagnosed (“something’s broken”) | **Stop.** Hand off to diagnosing or triage skills (e.g. mattpocock `diagnosing-bugs` / `triage`). Do not invent an epic or fake story inventory. |
+| Systemic reliability theme (“fix all of notifications”) | Classify on **scope** (epic/feature), not on the word “bug” |
+
+Never wrap a one-line fix in a fake As a / I want / so that. Never force a 3–9 story inventory for a single known bug.
 
 ## Ambiguity
 

@@ -2,8 +2,8 @@
 name: shape-story
 description: >-
   Produce a spec-ready user-story brief. Use when size-work hands off a
-  user story, or the user wants enough context for a future agent to write
-  a spec without writing the spec yet.
+  user story (including a user-framed bug fix), or the user wants enough
+  context for a future agent to write a spec without writing the spec yet.
 disable-model-invocation: true
 ---
 
