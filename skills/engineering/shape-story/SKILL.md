@@ -1,0 +1,43 @@
+---
+name: shape-story
+description: >-
+  Produce a spec-ready user-story brief. Use when size-work hands off a
+  user story, or the user wants enough context for a future agent to write
+  a spec without writing the spec yet.
+disable-model-invocation: true
+---
+
+# Shape story
+
+Produce a **spec-ready brief** for one user story. Not a spec. Not an implementation.
+
+**REQUIRED:** Follow [../size-work/levels.md](../size-work/levels.md).
+
+## Hard rules
+
+- Do not write a full Spec Kit `spec.md`, Superpowers design doc, or implementation plan.
+- Do not implement or scaffold.
+- Do not silently split into tasks; if the story is too large, say so and offer split stories or `shape-task` for pure chores.
+- Mixed-turn build request: finish this brief, then hand back.
+
+## Output contract (in order)
+
+1. **Title**
+2. **User story** — As a / I want / so that
+3. **Problem & context** — enough for a stranger agent (what exists, what hurts). Cite real code paths only if you inspected them.
+4. **Scope** — in / out
+5. **Acceptance sketch** — 3–7 bullets of expected behavior (not a full Given/When/Then suite)
+6. **Edge cases to explore later** — bullets
+7. **Dependencies / assumptions**
+8. **Suggested next step** — name one: brainstorming, Spec Kit `/speckit.specify`, or mattpocock `/to-spec`. Do **not** run it in this turn unless the user sends a **new** message asking for that after the brief.
+9. **Close** — confirm the brief is enough, or ask one clarifying question if a blocker remains
+
+## Thin-brief test
+
+If another agent could not start a spec from this brief alone, add context. If you wrote the full spec, delete the spec sections and leave the sketch.
+
+## Failures
+
+- Full functional-requirements catalog or prioritized GWT suites
+- Implementation in this turn
+- Empty “add the thing” brief with no problem/context/acceptance sketch
