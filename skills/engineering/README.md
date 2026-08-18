@@ -18,4 +18,4 @@ Daily code-work skills. Promoted: listed in the root README and shipped in the C
 ### Model-invoked
 
 - **[catch-me-up](./catch-me-up/SKILL.md)** — Router for codebase orientation. Use when onboarding, catching up on a repo, or asking what a file, class, or function does.
-- **[size-work](./size-work/SKILL.md)** — Router for work sizing across initiative → epic → feature → story → task.
+- **[size-work](./size-work/SKILL.md)** — Router for work sizing across initiative → epic → feature → story → task (also chores, bugs, spikes).

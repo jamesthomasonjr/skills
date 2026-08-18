@@ -72,7 +72,7 @@ Hard rules for the whole family:
 | Epic | Coherent outcome over weeks–months; several capabilities | Features | Brief + ordered feature list (title + one-liner each) |
 | Feature | User-perceivable capability; one shippable chunk | User stories | Brief + ordered story list (title + user-value one-liner) |
 | User story | One user journey / value slice | Spec later (or tasks if necessary) | Spec-ready brief |
-| Task | Atomic engineering chore, tech debt, known bug fix, or time-boxed spike; non-user-facing or too small for a story | — | Spec-ready / implement-ready or decide-ready brief |
+| Task | Atomic chore, known bug/flake fix, or spike with one clear decision question (time box optional) | — | Spec-ready / implement-ready or decide-ready brief |
 
 ### Classification signals (router)
 
@@ -83,19 +83,19 @@ Prefer the **largest** level that still fits. Explicit user labels win (“this 
 | Program / theme / “platform,” multiple products or teams, quarters+, several distinct outcomes | Initiative |
 | Named outcome with multiple capabilities underneath; “epic”; weeks–months of work | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable); shippable alone | Feature |
-| As-a / I-want / so-that; one journey; “story”; user-framed bug fix | User story |
-| Chore / cleanup / tech debt; migrate, rename, wire CI, “add a retry\|index\|log”; known bug with clear locus **and no As-a framing**; spike with one clear decision question | Task |
-| Vague / intermittent / no locus (“something’s broken”) | Out of family — diagnosing/triage handoff |
-| Foggy multi-question exploration (“figure out X,” “research the space,” bare “research …” with no sharp question) | Out of family — wayfinder/research/grill handoff |
+| As-a / I-want / so-that; one journey; “story”; user-framed bug fix **with known locus** | User story |
+| Chore / cleanup / tech debt; migrate, rename, wire CI, “add a retry\|index\|log”; known bug/flake with clear locus **and no As-a framing**; spike with one clear decision question | Task |
+| Vague / intermittent with **no** actionable locus (“something’s broken,” “flaky sometimes” alone) | Out of family — diagnosing/triage handoff |
+| Foggy multi-question exploration (“figure out notifications,” “research the space,” bare “figure out X” / “research …” with no sharp A-or-B question) | Out of family — wayfinder/research/grill handoff |
 | Ambiguous between two adjacent levels | Ask once with a recommendation |
 
 ### Bugs and chores
 
-Not extra hierarchy levels. Route by grain: chore or known bug **without** As-a framing → `shape-task`; user-framed fix (As a / I want / so that) → `shape-story` (**wins** when both match); vague undiagnosed failure → stop and hand off to diagnosing/triage; systemic “fix all of X” → classify on scope (epic/feature), not the word “bug”. No fake As-a wrappers for one-line fixes; no story inventory for a single known bug.
+Not extra hierarchy levels. Route by grain: chore or known bug/flake **without** As-a framing → `shape-task`; user-framed fix with locus → `shape-story` (**wins** over locus→task); clear locus including named flaky file (**wins** over intermittent→diagnosing); vague/intermittent with **no** locus → diagnosing; thin As-a with **no** locus → diagnosing (**wins** over story); systemic “fix all of X” → classify on scope. No fake As-a wrappers for one-line fixes; no story inventory for a single known bug.
 
 ### Spikes and research
 
-Not extra hierarchy levels. Single clear decision question (time box optional — propose one if missing) → `shape-task` (spike flavor: question, time box, done-when = decision). Bare or multi-question “research …” / “figure out X” / “research the space” → stop and hand off to wayfinder/research/grill (foggy wins when the question is not sharp). Prototype-to-decide stays spike grain here; hand off to a prototype skill after the brief. No feature/story inventory for a spike; no production implementation in the sizing turn.
+Not extra hierarchy levels. Single clear decision question (time box optional — propose one if missing; includes “figure out whether A or B”) → `shape-task` (spike flavor). Bare or multi-question “research …” / “figure out X” / “research the space” → stop and hand off to wayfinder/research/grill (foggy wins when the question is not sharp). Prototype-to-decide stays spike grain here; hand off to a prototype skill after the brief. No feature/story inventory for a spike; no production implementation in the sizing turn.
 
 ### One-level rule
 

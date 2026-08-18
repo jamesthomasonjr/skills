@@ -30,7 +30,7 @@ Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills
 - **[orient-repo](./skills/engineering/orient-repo/SKILL.md)** — Whole-repo map: structure, entry points, architecture, selected Catch Me Up modes.
 - **[orient-module](./skills/engineering/orient-module/SKILL.md)** — File, module, or class: purpose, public surface, important methods.
 - **[orient-function](./skills/engineering/orient-function/SKILL.md)** — One function or method: step-by-step I/O, side effects, edge cases.
-- **[size-work](./skills/engineering/size-work/SKILL.md)** — Router for work sizing. Use when classifying or breaking down initiatives, epics, features, stories, or tasks.
+- **[size-work](./skills/engineering/size-work/SKILL.md)** — Router for work sizing (initiative → epic → feature → story → task), including chores, bugs, and spikes.
 - **[shape-initiative](./skills/engineering/shape-initiative/SKILL.md)** — Initiative charter and epic inventory (one level down).
 - **[shape-epic](./skills/engineering/shape-epic/SKILL.md)** — Epic brief and feature inventory.
 - **[shape-feature](./skills/engineering/shape-feature/SKILL.md)** — Feature brief and user-story inventory.

@@ -22,7 +22,7 @@ Task        ──► Brief only
 | Epic | One coherent outcome over weeks–months, made of several capabilities |
 | Feature | One user-perceivable capability that can ship on its own |
 | User story | One user journey / value slice; after this family, ready to specify |
-| Task | Atomic engineering chore, known bug fix, or time-boxed spike; no meaningful user-facing story of its own |
+| Task | Atomic engineering chore, known bug/flake fix (with or without user-visible impact), or spike with one clear decision question (time box optional) |
 
 ## Classification signals
 
@@ -31,10 +31,10 @@ Task        ──► Brief only
 | Platform / program / “become the X,” multiple pillars or products, year/quarter planning | Initiative |
 | Named outcome with several capabilities under it; “epic”; multi-week | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable) | Feature |
-| As a / I want / so that; one journey; “user story”; user-framed bug fix (“so that errors are clear”) | User story |
-| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus **and no As-a framing**; spike with **one clear decision question** | Task |
-| Vague or intermittent failure (“something’s broken,” “flaky sometimes,” no locus) | **Out of family** — see Bugs and chores |
-| Foggy multi-question exploration (“figure out notifications,” “research the space,” bare “research …” with no sharp question) | **Out of family** — see Spikes and research |
+| As a / I want / so that; one journey; “user story”; user-framed bug fix **with a known locus** | User story |
+| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug/flake with a clear locus **and no As-a framing**; spike with **one clear decision question** (time box optional) | Task |
+| Vague or intermittent failure with **no** actionable locus (“something’s broken,” “flaky sometimes” with no file/error/repro) | **Out of family** — see Bugs and chores |
+| Foggy multi-question exploration (“figure out notifications,” “research the space,” bare “research …” / bare “figure out X” with no sharp A-or-B question) | **Out of family** — see Spikes and research |
 
 ## Bugs and chores
 
@@ -43,9 +43,10 @@ Bugs and chores are **kinds** of work, not extra hierarchy levels. Route by grai
 | Signal | Route |
 |---|---|
 | Chore, cleanup, tech debt, rename, migrate, wire CI, expand-contract | `shape-task` |
-| User-visible failure framed as value (As a / I want / so that) | `shape-story` — **wins** over known-locus → task when both match |
-| Known bug with a clear locus (file, error, repro) and **no** As-a framing | `shape-task` |
-| Vague / intermittent / undiagnosed (“something’s broken”) | **Stop.** Hand off to diagnosing or triage skills (e.g. mattpocock `diagnosing-bugs` / `triage`). Do not invent an epic or fake story inventory. |
+| User-visible failure framed as value (As a / I want / so that) **and** a known locus | `shape-story` — **wins** over known-locus → task when both match |
+| Known bug or flake with a clear locus (file, error, repro), including “flaky sometimes” **when that locus is named** | `shape-task` — **wins** over intermittent → diagnosing when both match |
+| Vague / intermittent / undiagnosed with **no** actionable locus (“something’s broken,” “flaky sometimes” alone) | **Stop.** Hand off to diagnosing or triage skills (e.g. mattpocock `diagnosing-bugs` / `triage`). Do not invent an epic or fake story inventory. |
+| Thin As-a wrapping an **undiagnosed** failure (As-a present, **no** locus) | **Stop** / diagnosing — **wins** over `shape-story`. Do not brief a story you cannot point at. |
 | Systemic reliability theme (“fix all of notifications”) | Classify on **scope** (epic/feature), not on the word “bug” |
 
 Never wrap a one-line fix in a fake As a / I want / so that. Never force a 3–9 story inventory for a single known bug.
@@ -60,7 +61,7 @@ Spikes and research are **kinds** of work, not extra hierarchy levels. A spike�
 | Foggy multi-question exploration; bare “research …” / “research the space” with **no** sharp question; destination unclear | **Stop.** Hand off to wayfinder / research / grill skills. Do not invent an epic or story inventory. Foggy wins when the question is not already sharp. |
 | “Build a prototype to decide” | Still spike grain here; after the brief, hand off to a prototype skill to build — do not implement the prototype in this family |
 
-Never emit a feature/story inventory for a spike. Never let a spike silently become production implementation in the sizing turn. Bare “research X” is **not** enough for spike flavor unless X is already a single clear decision question.
+Never emit a feature/story inventory for a spike. Never let a spike silently become production implementation in the sizing turn. Bare “research X” or bare “figure out X” is **not** enough for spike flavor unless X is already a single clear decision question (e.g. “figure out whether A or B”).
 
 ## Ambiguity
 
