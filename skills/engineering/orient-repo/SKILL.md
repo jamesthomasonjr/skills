@@ -12,11 +12,13 @@ disable-model-invocation: true
 
 Read-only briefing of the current workspace. Apply only the modes the router passed. Lenses: [../catch-me-up/modes.md](../catch-me-up/modes.md).
 
-If you were invoked directly with no mode list: treat as **onboard** and ask the six-mode menu before gathering.
+If you have no mode list (direct invoke, or a leaked empty handoff): treat as **onboard**. Ask the six-mode menu, then **stop**. Do not gather. Do not list the tree, entry points, or test command. After the user picks modes, run Always gather and brief.
 
 ## Always gather
 
-Even if only some modes are selected:
+Do not run this section when the mode list is empty. Empty is unanswered onboard, not “some modes.”
+
+Once at least one mode is selected:
 
 1. What the project is (README, manifests, one-line purpose). Prefer code if README conflicts.
 2. Directory layout: top-level + depth-two. Skip vendor/build/`.git`.
@@ -64,6 +66,7 @@ If the router passed a change request: finish this briefing, then hand back. Do 
 
 ## Failures
 
+- No modes yet: menu, then stop. Gathering before a pick is a failed run.
 - Empty tree: say so and stop.
 - Monorepo: stay in the workspace root; say if you only mapped a package.
 - Mode has no signal: one line, skip.

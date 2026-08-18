@@ -3,17 +3,20 @@ name: catch-me-up
 description: >-
   Router for codebase orientation. Use when the user wants to onboard,
   catch me up on a repo, explain a file/module/class/function, walk through
-  a symbol, or asks how a feature works. Classifies depth, selects Catch Me Up
-  modes, and hands off. Read-only; does not implement.
+  a symbol, or asks how a feature works. Read-only; does not implement.
 ---
 
 # Catch Me Up
 
 Build the **user’s** mental model. Do not implement. Do not write files.
 
-This skill does **not** produce the briefing and does **not** walk call graphs. Resolve, classify, pick modes, hand off.
+This skill does **not** produce the briefing and does **not** walk call graphs.
 
-Then read the matching depth `SKILL.md` and [modes.md](modes.md) and work as that skill.
+**Unanswered onboard** (`orient-repo` onboard, no mode pick yet): print the six-mode menu, then **stop this turn**. Do not read a depth skill. Do not work as a depth skill. Do not infer modes from time pressure. Skip §4.
+
+**Mode reply after that menu:** re-enter at §3 with those modes, then §4. The router still does not brief.
+
+**Targeted, or onboard with modes already picked:** resolve (if needed), classify, keep/infer modes, then §4. Read the matching depth `SKILL.md` and [modes.md](modes.md) and work as that skill.
 
 ## Hard rules
 
@@ -58,14 +61,19 @@ Not allowed here: reading bodies to explain them, sampling 3–5 key files, git 
 
 Six modes: Architecture, Convention, Feature Trace, Syntax / API, Testing, History.
 
-**Onboard** (`orient-repo` and no target or journey): ask every time:
+**Onboard** (`orient-repo` and no target or journey), modes not yet picked:
 
 > Which modes? Architecture / Convention / Feature Trace / Syntax / Testing / History
 > (You can pick several. I’ll stay read-only and brief you.)
 
-Onboard: ask the menu, then **stop**. Do not infer modes, do not hand off, do not gather the map until the user answers.
+Then **stop**. Skip §4. Do not infer modes. Do not read `orient-repo`. Do not gather the map. “10 minutes” / “contribute today” is not a mode pick.
 
-If they pick Feature Trace and have not named a journey: one top-level listing plus README/manifest glance, **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them.
+**Resume** (the next user message names modes, “all”, or a subset):
+
+Do not print the menu again. Do not brief. Those picks are the selected modes. Then:
+
+1. If Feature Trace is selected and no journey was named: one top-level listing plus README/manifest glance, **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them.
+2. Go to §4. Hand off `orient-repo` **onboard** with those modes.
 
 **Targeted** (named symbol, path, or journey): infer. Do **not** show the menu. User may add modes. User may not turn off a required lens this turn.
 
@@ -76,6 +84,10 @@ If they pick Feature Trace and have not named a journey: one top-level listing p
 | function | Syntax + Testing. History only if the body is otherwise inexplicable. |
 
 ## 4. Hand off
+
+**Skip this entire section** when onboard is unanswered (no mode pick yet). The turn ends after the menu.
+
+When modes are known (onboard resume, or targeted infer):
 
 Read **sibling** skill files resolved from **this file’s directory**, not from cwd. `../orient-repo/SKILL.md` means “next to this skill,” i.e. the `orient-repo` folder that sits beside `catch-me-up`. After `~/.cursor/skills/<name>` symlink or a plugin copy, `skills/engineering/orient-*/SKILL.md` does not exist.
 

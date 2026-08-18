@@ -41,12 +41,12 @@ This family exists to build the **user’s** mental model. It is not an agent me
 
 ## Architecture
 
-Four promoted engineering skills. One sequential agent. The router does a cheap resolve when a name is given, classifies depth, then either asks modes (repo onboard) or infers them (targeted asks). It then reads the matching depth skill and `modes.md` and works as that skill.
+Four promoted engineering skills. One sequential agent. The router does a cheap resolve when a name is given, classifies depth, then either asks modes and **stops** (repo onboard) or infers them (targeted asks). Unanswered onboard never hands off. After modes are known, it reads the matching depth skill and `modes.md` and works as that skill.
 
 ```
 skills/engineering/
   catch-me-up/
-    SKILL.md          # router: classify, ask modes, hand off
+    SKILL.md          # router: classify, ask or infer modes, stop on unanswered onboard, hand off
     modes.md          # six lens playbooks (single source)
   orient-repo/
     SKILL.md          # whole-repo onboard + architecture
@@ -67,7 +67,7 @@ Hard rules for the whole family:
 
 ## Router (`catch-me-up`)
 
-Classifies, optionally asks, hands off. It does **not** produce the briefing and does **not** walk call graphs. It **may** run one cheap resolve so classification is not a guess.
+Classifies, optionally asks (and **stops** on unanswered onboard), hands off when modes are known. It does **not** produce the briefing and does **not** walk call graphs. It **may** run one cheap resolve so classification is not a guess.
 
 ### Cheap resolve (allowed)
 
@@ -111,12 +111,12 @@ Apply after resolve (or immediately when there is no name to resolve).
 
 The six modes: Architecture, Convention, Feature Trace, Syntax / API, Testing, History.
 
-**Onboard** = `orient-repo` and the user did not name a target or journey. Show the menu every time:
+**Onboard** = `orient-repo` and the user did not name a target or journey. Show the menu every time, then **stop**. Do not infer modes. Do not read a depth skill. Do not gather the map. Time pressure is not a mode pick.
 
 > Which modes? Architecture / Convention / Feature Trace / Syntax / Testing / History
 > (You can pick several. I’ll stay read-only and brief you.)
 
-If they pick Feature Trace and have not named a journey, ask for one or offer the 1–3 candidates from cheap resolve. Do not start the trace in the router.
+**Resume:** the next user message that names modes (or “all” / a subset) re-enters the router. Do not print the menu again. If they pick Feature Trace and have not named a journey, offer the 1–3 candidates from cheap resolve. Do not start the trace in the router. Then hand off `orient-repo` onboard with those modes. The router still does not brief.
 
 **Targeted** = a named symbol, path, or journey. Infer modes. Do **not** show the menu. The user may add modes; they may not turn off a required lens for that turn.
 
@@ -130,7 +130,9 @@ If they pick Feature Trace and have not named a journey, ask for one or offer th
 
 ### Handoff
 
-After classification, the agent reads the depth `SKILL.md` and `modes.md`, then works as that skill. The router does not keep a second procedure.
+Handoff runs only when modes are known. Unanswered onboard skips it; the turn ends after the menu.
+
+After modes are known (onboard resume, or targeted infer), the agent reads the depth `SKILL.md` and `modes.md`, then works as that skill. The router does not keep a second procedure.
 
 Use **sibling-relative** paths resolved from the directory that contains this `SKILL.md`, not from cwd and not from this repo’s tree. After symlink install (`~/.cursor/skills/catch-me-up`) or a plugin copy, `skills/engineering/orient-repo/SKILL.md` does not exist. If a cwd-relative Read of `../orient-repo/SKILL.md` misses, resolve it as a sibling of the router file, or invoke the depth skill by name.
 
@@ -148,7 +150,9 @@ Use **sibling-relative** paths resolved from the directory that contains this `S
 
 Job: mental map of the whole project. Hello Interview’s “Understanding the project structure” is the default map.
 
-Always gather (even if only some modes are selected):
+If invoked with no mode list: ask the six-mode menu, then **stop**. Do not gather until the user picks modes. Empty is unanswered onboard, not “some modes.”
+
+Always gather (once at least one mode is selected):
 
 - What the project is (README, manifests, one-line purpose)
 - Directory layout (top-level + depth-two; skip vendor/build noise)
@@ -314,7 +318,7 @@ Per Superpowers writing-skills: treat authoring as TDD for process docs. Targets
 |---|---|
 | Primary job | Conversational briefing only |
 | Topology | Router + 3 depth skills; modes as lenses |
-| Repo onboard modes | Ask every time (onboard only) |
+| Repo onboard modes | Ask every time, then stop; resume + hand off after the pick |
 | Targeted-ask modes | Infer (table includes repo journey; Feature Trace stays on) |
 | Router resolve | One cheap path/symbol search (and entry-path glance for unnamed Feature Trace); unresolved names are ambiguous |
 | Mixed explain+change | Brief this turn; implement only on a later user message |

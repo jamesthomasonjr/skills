@@ -4,7 +4,7 @@
 
 **Goal:** Ship a read-only Catch Me Up family (`catch-me-up` router + `orient-repo` / `orient-module` / `orient-function`) that briefs a human on a repo, module, or function using the six exploration modes.
 
-**Architecture:** One sequential agent. The router does a cheap path/symbol resolve, classifies onboard vs targeted depth, asks modes only on repo onboard, then hands off to a depth skill that applies lenses from shared `modes.md`. Skills are markdown process docs; the only executable code is a tiny JS fixture used to baseline and verify them.
+**Architecture:** One sequential agent. The router does a cheap path/symbol resolve, classifies onboard vs targeted depth, asks modes only on repo onboard and **stops** until a pick, then hands off to a depth skill that applies lenses from shared `modes.md`. Skills are markdown process docs; the only executable code is a tiny JS fixture used to baseline and verify them.
 
 **Tech Stack:** Agent skills (`SKILL.md` + `modes.md`), this repo’s catalog (`README.md`, `skills/engineering/README.md`, `.claude-plugin/plugin.json`), a Node-free-to-run JavaScript fixture under `fixtures/orient-sample/`. Spec: `docs/superpowers/specs/2026-08-17-codebase-orientation-design.md`.
 
@@ -885,15 +885,22 @@ Each GREEN subagent’s **workspace is the skills repo root** (do not set worksp
 
 When the router says `../orient-repo/SKILL.md`, treat that as a sibling of **the router file**, i.e. `Read skills/engineering/orient-repo/SKILL.md`. Same mapping for `../orient-module/SKILL.md`, `../orient-function/SKILL.md`, and `modes.md` → `skills/engineering/catch-me-up/modes.md`. Do not resolve `../orient-repo/SKILL.md` against cwd (repo root or a fixture dir — both miss).
 
-Same four **user** prompts as RED. B names `src/orders.js`. D is exactly `How does checkout work?`. Never put `fixtures/orient-sample` in a GREEN message — the router has no harness exception and will classify that directory as `orient-module`.
+Same four **user** prompts as RED, plus A-resume. B names `src/orders.js`. D is exactly `How does checkout work?`. Never put `fixtures/orient-sample` in a GREEN message — the router has no harness exception and will classify that directory as `orient-module`.
 
 GREEN does **not** test model-invocation discovery. It tests compliance once the router file is loaded.
 
 ### Scenario A — pass if
-- [ ] Asks the six-mode menu before dumping a map
+- [ ] Asks the six-mode menu
+- [ ] Stops this turn: does not infer modes, does not read `orient-repo`, does not produce a map
 - [ ] Does not edit the repo
+
+### Scenario A-resume — user replies `Architecture and Feature Trace` — pass if
+- [ ] Does not show the menu again
+- [ ] Re-enters the router and hands off `orient-repo` onboard with those modes (router does not brief)
+- [ ] Runs the Feature Trace candidate glance (1–3 entry paths) before handoff
 - [ ] Cites at least two `path:line` claims
 - [ ] Does not list every file in the tree
+- [ ] Does not edit the repo
 
 ### Scenario B — user prompt `What does src/orders.js do?` — pass if
 - [ ] Treats `src/orders.js` as a module briefing (exports, imports, important methods)
@@ -911,6 +918,11 @@ GREEN does **not** test model-invocation discovery. It tests compliance once the
 - [ ] Uses `orient-repo` targeted defaults (Feature Trace required), not `orient-module`
 - [ ] Feature Trace finds `/checkout` → `handleCheckout` → `processOrder` with `path:line` (Architecture may map this skills repo)
 - [ ] Stays read-only
+
+### Scenario E — direct `orient-repo` with no mode list — pass if
+- [ ] Asks the six-mode menu
+- [ ] Stops this turn: does not list the tree, entry points, or test command
+- [ ] Does not edit the repo
 ```
 
 - [ ] **Step 2: Re-run Scenarios A–D**

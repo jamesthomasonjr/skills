@@ -110,11 +110,13 @@ Date: 2026-08-18. Four fresh `generalPurpose` subagents. Workspace: `/Users/jame
 
 **Contamination:** A read this baseline and `docs/superpowers/plans/2026-08-17-codebase-orientation.md`. C read this baseline after already classifying from `catch-me-up` + `orient-function`. B and D did not open the plan/spec. Pass/fail below is against `SKILL.md` + `modes.md`, not against “they found the plan.”
 
-### Scenario A — pass if
+### Scenario A — pass if (criteria later corrected — see re-run below)
 - [x] Asks the six-mode menu before dumping a map
 - [x] Does not edit the repo
 - [x] Cites at least two `path:line` claims
 - [x] Does not list every file in the tree
+
+These boxes recorded a **same-turn briefing** as a pass. The stop rule was not in the skill yet; this run is not evidence the gate holds.
 
 Prompt: `Onboard me to this repo. I have 10 minutes. Catch me up so I can contribute today.`
 
@@ -186,3 +188,62 @@ Observed:
   - "Checkout is a single HTTP journey in the sample fixture: a client `POST`s a JSON cart to `/checkout`, the server parses the body, prices it, and returns totals. Nothing is stored."
   - "This workspace is a **personal agent-skills repo** (markdown skills, a plugin manifest, and fixtures). Checkout is not a product feature of the skills catalog; it lives in a tiny flat-script sample used to exercise orientation."
   - "Want to go deeper on `handleCheckout` or `processOrder`, add Convention or History, or stop here?"
+
+## GREEN (2026-08-18 re-run: onboard stop + resume)
+
+Skills present: same family, after the unanswered-onboard skip-handoff / resume rewrite.
+
+Workspace: `/Users/james/Code/AI/skills`. Fresh `generalPurpose` subagents. Harness: sibling-resolve load lines; do not open `docs/superpowers`. After the runs: no fixture or skill-file edits; `node fixtures/orient-sample/src/orders.test.js` printed `orders.test.js ok`.
+
+### Scenario A — pass if
+- [x] Asks the six-mode menu
+- [x] Stops this turn: does not infer modes, does not read `orient-repo`, does not produce a map
+- [x] Does not edit the repo
+
+Prompt: `Onboard me to this repo. I have 10 minutes. Catch me up so I can contribute today.`
+
+Observed:
+- Showed a mode menu? **Yes.** Exact router wording. Stopped.
+- Inferred a 10-minute mode set? **No.**
+- Loaded `orient-repo` / produced a map this turn? **No.** User-facing reply was the menu only.
+- Edited files? **No.**
+- Verbatim quotes:
+  - "Which modes? Architecture / Convention / Feature Trace / Syntax / Testing / History"
+  - "(You can pick several. I’ll stay read-only and brief you.)"
+
+### Scenario A-resume — user replies `Architecture and Feature Trace` — pass if
+- [x] Does not show the menu again
+- [x] Re-enters the router and hands off `orient-repo` onboard with those modes (router does not brief)
+- [x] Runs the Feature Trace candidate glance (1–3 entry paths) before handoff
+- [x] Cites at least two `path:line` claims
+- [x] Does not list every file in the tree
+- [x] Does not edit the repo
+
+Observed:
+- Menu again? **No.**
+- Briefing shape? **Yes — `orient-repo`:** purpose, map (top-level + depth-two table), entry points, Architecture, Feature Trace, Read these next, open questions. Router did not write a second procedure.
+- Feature Trace glance? **Yes.** Offered three candidates; did not walk a path (no named journey): `catch-me-up` router, `plugin.json` catalog, fixture `POST /checkout` → `handleCheckout` → `processOrder`.
+- Citations? **Yes.** `CLAUDE.md:16-23`, `CLAUDE.md:25`, `CLAUDE.md:40`, `CLAUDE.md:43-45`, `catch-me-up/SKILL.md:13`, `README.md:48-56`, `fixtures/orient-sample/README.md:7`.
+- Whole-tree dump? **No.**
+- Edited files? **No.**
+- Verbatim quotes:
+  - "No named journey, so this is not walked. Closest entry paths:"
+  - "Fixture HTTP — `fixtures/orient-sample/src/server.js` (`POST /checkout` → `handleCheckout` → `processOrder`)."
+  - "Want to go deeper on `catch-me-up` or `orient-repo`, add Convention/Testing, or stop here?"
+
+### Scenario E — direct `orient-repo` with no mode list — pass if
+- [x] Asks the six-mode menu
+- [x] Stops this turn: does not list the tree, entry points, or test command
+- [x] Does not edit the repo
+
+Prompt: invoked as `orient-repo` with no mode list, then `Onboard me to this repo.`
+
+Observed:
+- Showed all six modes? **Yes.** Asked for a pick, then stopped.
+- Listed tree / entry points / test command this turn? **No.**
+- Edited files? **No.**
+- Verbatim quotes:
+  - "This is a whole-repo **onboard**. Pick the lenses you want, then I’ll gather and brief."
+  - "Reply with the numbers or names (for example: `1, 2, 6` or `Architecture + Convention`)."
+
+Residual (unchanged): Scenario D still only proves pathless “how does checkout work?” at this repo root, not a workspace that actually has a `checkout/` module (journey-plus-locus → `orient-module`).
