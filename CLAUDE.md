@@ -1,6 +1,6 @@
 # Working on this repo
 
-This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, and the plugin manifest.
+This repository is a personal collection of agent skills. Skills are the product. Keep the repo itself small: markdown, optional scripts inside a skill, the plugin manifest, and `fixtures/` samples used to baseline and verify skills.
 
 ## Buckets
 
@@ -36,7 +36,7 @@ skill-name/
 
 - `name`: lowercase letters, numbers, and hyphens; max 64 characters
 - `description`: third person; include what the skill does and when to use it
-- Keep `SKILL.md` under 500 lines; link one level deep to supporting files
+- Split a skill when a file is doing two jobs (procedure vs playbook), not when it crosses a line count. Prefer Superpowers-sized bands (router ~70–160, process ~150–370) but do not truncate procedure to hit a budget. Link one level deep to supporting files.
 - Default new skills to user-invoked (`disable-model-invocation: true`) unless the agent should pick them up from ambient context
 - Write project-agnostic and agent-agnostic instructions unless the skill is in `personal/`
 
