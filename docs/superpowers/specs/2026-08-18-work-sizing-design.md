@@ -84,9 +84,9 @@ Prefer the **largest** level that still fits. Explicit user labels win (“this 
 | Named outcome with multiple capabilities underneath; “epic”; weeks–months of work | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable); shippable alone | Feature |
 | As-a / I-want / so-that; one journey; “story”; user-framed bug fix | User story |
-| Chore / cleanup / tech debt; migrate, rename, wire CI, “add a retry\|index\|log”; known bug with clear locus; spike / research with one clear question | Task |
+| Chore / cleanup / tech debt; migrate, rename, wire CI, “add a retry\|index\|log”; known bug with clear locus **and no As-a framing**; spike with one clear decision question | Task |
 | Vague / intermittent / no locus (“something’s broken”) | Out of family — diagnosing/triage handoff |
-| Foggy multi-question exploration (“figure out X”) | Out of family — wayfinder/research/grill handoff |
+| Foggy multi-question exploration (“figure out X,” “research the space,” bare “research …” with no sharp question) | Out of family — wayfinder/research/grill handoff |
 | Ambiguous between two adjacent levels | Ask once with a recommendation |
 
 ### Bugs and chores
