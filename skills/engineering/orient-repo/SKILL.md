@@ -42,7 +42,9 @@ When Architecture is on, fill:
 
 ## Feature Trace
 
-When Feature Trace is on: follow one path as far as the path needs. Do not detour.
+When Feature Trace is on and a journey or entry path was passed: follow that one path as far as the path needs. Do not detour.
+
+When Feature Trace is on and no journey was passed: do **not** walk. Do not pick a candidate and start a trace. List the 1–3 candidate entry paths from the handoff (or glance top-level + README/manifest if you have none). Ask which to walk. Walking or inventing a path is a failed run.
 
 ## History
 
@@ -67,6 +69,7 @@ If the router passed a change request: finish this briefing, then hand back. Do 
 ## Failures
 
 - No modes yet: menu, then stop. Gathering before a pick is a failed run.
+- Feature Trace on, no journey: candidates only. Do not walk.
 - Empty tree: say so and stop.
 - Monorepo: stay in the workspace root; say if you only mapped a package.
 - Mode has no signal: one line, skip.

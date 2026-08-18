@@ -72,8 +72,8 @@ Then **stop**. Skip §4. Do not infer modes. Do not read `orient-repo`. Do not g
 
 Do not print the menu again. Do not brief. Those picks are the selected modes. Then:
 
-1. If Feature Trace is selected and no journey was named: one top-level listing plus README/manifest glance, **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them.
-2. Go to §4. Hand off `orient-repo` **onboard** with those modes.
+1. If Feature Trace is selected and no journey was named: one top-level listing plus README/manifest glance, **offer** 1–3 candidate entry paths (CLI, HTTP, test runner). Do not walk them. Pass `journey: none` and those candidates.
+2. Go to §4. Hand off `orient-repo` **onboard** with those modes. The depth skill must not walk Feature Trace when `journey` is none.
 
 **Targeted** (named symbol, path, or journey): infer. Do **not** show the menu. User may add modes. User may not turn off a required lens this turn.
 
@@ -98,6 +98,6 @@ If a cwd-relative Read of `../orient-repo/SKILL.md` misses (user workspace is a 
 - [../orient-function/SKILL.md](../orient-function/SKILL.md)
 - [modes.md](modes.md)
 
-Pass: depth, target path/symbol, onboard vs targeted, selected/inferred modes, mixed-turn change request if any.
+Pass: depth, target path/symbol, onboard vs targeted, selected/inferred modes, journey or none, Feature Trace candidate paths if offered, mixed-turn change request if any.
 
 Then follow that depth skill. Do not keep a second briefing procedure here.

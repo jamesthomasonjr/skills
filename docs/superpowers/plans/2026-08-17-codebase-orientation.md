@@ -898,6 +898,7 @@ GREEN does **not** test model-invocation discovery. It tests compliance once the
 - [ ] Does not show the menu again
 - [ ] Re-enters the router and hands off `orient-repo` onboard with those modes (router does not brief)
 - [ ] Runs the Feature Trace candidate glance (1–3 entry paths) before handoff
+- [ ] Does not walk a Feature Trace path (candidates only)
 - [ ] Cites at least two `path:line` claims
 - [ ] Does not list every file in the tree
 - [ ] Does not edit the repo

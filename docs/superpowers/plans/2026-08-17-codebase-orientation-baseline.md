@@ -215,6 +215,7 @@ Observed:
 - [x] Does not show the menu again
 - [x] Re-enters the router and hands off `orient-repo` onboard with those modes (router does not brief)
 - [x] Runs the Feature Trace candidate glance (1–3 entry paths) before handoff
+- [x] Does not walk a Feature Trace path (candidates only)
 - [x] Cites at least two `path:line` claims
 - [x] Does not list every file in the tree
 - [x] Does not edit the repo
@@ -247,3 +248,19 @@ Observed:
   - "Reply with the numbers or names (for example: `1, 2, 6` or `Architecture + Convention`)."
 
 Residual (unchanged): Scenario D still only proves pathless “how does checkout work?” at this repo root, not a workspace that actually has a `checkout/` module (journey-plus-locus → `orient-module`).
+
+## GREEN (2026-08-18: Feature Trace no-journey)
+
+Same family, after Bugbot: onboard Feature Trace with `journey: none` was walking a path because `orient-repo` said “follow one path” with no no-journey case.
+
+Prompt: handed off as `orient-repo` onboard, modes Architecture + Feature Trace, `journey: none`, three candidate paths already offered.
+
+### Pass if
+- [x] Does not walk a Feature Trace path
+- [x] Lists the candidate entry paths and asks which to walk
+- [x] Still produces the Architecture / map briefing
+- [x] Does not edit the repo
+
+Observed:
+- RED (before the no-journey rule): walked `POST /checkout` → `handleCheckout` → `processOrder` in the same turn. Quote: “No journey was named, so Feature Trace walks **`POST /checkout`**.”
+- GREEN (after): Architecture map + Feature Trace section lists the three candidates and asks which to walk. Did not open `server.js` / `orders.js` as a trace. Quote: “No journey was named (`journey: none`), so this turn does **not** walk a path.”

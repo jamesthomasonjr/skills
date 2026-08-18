@@ -116,7 +116,7 @@ The six modes: Architecture, Convention, Feature Trace, Syntax / API, Testing, H
 > Which modes? Architecture / Convention / Feature Trace / Syntax / Testing / History
 > (You can pick several. I’ll stay read-only and brief you.)
 
-**Resume:** the next user message that names modes (or “all” / a subset) re-enters the router. Do not print the menu again. If they pick Feature Trace and have not named a journey, offer the 1–3 candidates from cheap resolve. Do not start the trace in the router. Then hand off `orient-repo` onboard with those modes. The router still does not brief.
+**Resume:** the next user message that names modes (or “all” / a subset) re-enters the router. Do not print the menu again. If they pick Feature Trace and have not named a journey, offer the 1–3 candidates from cheap resolve. Do not start the trace in the router. Then hand off `orient-repo` onboard with those modes, `journey: none`, and the candidate list. The router still does not brief. The depth skill must not walk Feature Trace until a journey is named.
 
 **Targeted** = a named symbol, path, or journey. Infer modes. Do **not** show the menu. The user may add modes; they may not turn off a required lens for that turn.
 
@@ -161,7 +161,7 @@ Always gather (once at least one mode is selected):
 
 Then apply selected modes. Architecture fills: entry points, key functions, class/data-model hierarchy, architectural pattern, public interfaces, state, existing tests, constraints/assumptions.
 
-Sampling: do not swallow the repo. Architecture samples top-level + depth-two across **3–5 key files**. Feature Trace follows one path as far as the path needs and does not detour. History is its own mode: `git log` / blame on files already in the Architecture sample (not only when Feature Trace is on), last ~15 commits or the introducing commit, not the whole tree.
+Sampling: do not swallow the repo. Architecture samples top-level + depth-two across **3–5 key files**. Feature Trace follows one path as far as the path needs and does not detour, **only when a journey was named**. If Feature Trace is on and no journey was named, list the candidate entry paths and do not walk. History is its own mode: `git log` / blame on files already in the Architecture sample (not only when Feature Trace is on), last ~15 commits or the introducing commit, not the whole tree.
 
 Briefing: purpose → map (tree or table) → entry points and data flow → selected mode sections → “read these next” (3–7 pointers) → open questions / unverified claims.
 
