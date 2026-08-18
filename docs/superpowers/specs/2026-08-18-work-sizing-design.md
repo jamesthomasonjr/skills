@@ -150,11 +150,15 @@ Optional: if the story is still too large or mixes unrelated chores, offer to sp
 
 Use only when the work has no meaningful user-facing story, or the user explicitly asked for a task. Brief: goal, why, steps sketch, done-when, risks. Close: ready for implement / writing-plans — do not implement here.
 
-## Artifacts
+## Artifacts / Outcomes
 
-Default: conversation only.
+Tracker-agnostic. The shaped charter, inventory, or brief is the portable artifact.
 
-Optional save (only if user asks): `docs/work/<level>/YYYY-MM-DD-<slug>.md` with the same sections. Do not create tracker issues.
+1. **Default — conversation only.** Do not write files or create tracker items unless asked.
+2. **Named sink.** If the user names a destination (markdown path, GitHub issues, beads, tk, Linear, etc.), publish there in that sink’s native shape after shaping. Do not invent a tracker or require setup.
+3. **Tracker skill / prompt.** If they want a dedicated publish skill or prompt, finish shaping first, then hand off — do not publish in this turn unless they also named a sink.
+
+Markdown under `docs/work/<level>/YYYY-MM-DD-<slug>.md` is only a sink when they ask for files (or that path).
 
 ## Failure modes this family must prevent
 

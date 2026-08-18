@@ -19,6 +19,7 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 - Do not emit admin/platform chores as bare tasks in the inventory. If a chore has no user value, note it under Constraints as a dependency — or leave it for `shape-task` after stories exist.
 - Do not write a full spec, Given/When/Then catalog, or implementation plan.
 - Do not implement.
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** (conversation default; named sink only; else hand off to tracker skill/prompt).
 - Mixed-turn build request: finish this shape, then hand back.
 
 ## Output contract (in order)
@@ -30,7 +31,7 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 5. **Constraints** — dependencies and non-user-facing chores that must not appear as inventory children (or “None”)
 6. **User-story inventory** — 3–9 stories; each: short title + As a / I want / so that + priority. No acceptance scenarios yet.
 7. **Open questions** — decisions a later spec must settle (bullets)
-8. **Close** — ask which story to deepen with `shape-story`, or stop
+8. **Close** — ask which story to deepen with `shape-story`, or stop. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
 
 ## Rationalizations
 

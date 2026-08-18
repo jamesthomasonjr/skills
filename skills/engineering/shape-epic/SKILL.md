@@ -17,6 +17,7 @@ Turn an epic-scale description into a brief and a **feature inventory**. One lev
 - Emit **features** (title + one-liner + order). Do not emit stories, tasks, or specs.
 - Do not write implementation plans or file-path task lists.
 - Do not implement.
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** (conversation default; named sink only; else hand off to tracker skill/prompt).
 - Mixed-turn build request: finish this shape, then hand back.
 
 ## Output contract (in order)
@@ -27,7 +28,7 @@ Turn an epic-scale description into a brief and a **feature inventory**. One lev
 4. **Success signals**
 5. **Constraints / dependencies**
 6. **Feature inventory** — 3–9 features; each: title, one-liner, priority/order. No nested stories.
-7. **Close** — ask which feature to shape next (`shape-feature`), or stop
+7. **Close** — ask which feature to shape next (`shape-feature`), or stop. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
 
 ## Rationalizations
 

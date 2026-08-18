@@ -18,6 +18,7 @@ Produce a **spec-ready brief** for one user story. Not a spec. Not an implementa
 - Do not write a full Spec Kit `spec.md`, Superpowers design doc, or implementation plan.
 - Do not implement or scaffold.
 - Do not silently split into tasks; if the story is too large, say so and offer split stories or `shape-task` for pure chores.
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** (conversation default; named sink only; else hand off to tracker skill/prompt).
 - Mixed-turn build request: finish this brief, then hand back.
 
 ## Output contract (in order)
@@ -30,7 +31,7 @@ Produce a **spec-ready brief** for one user story. Not a spec. Not an implementa
 6. **Edge cases to explore later** — bullets
 7. **Dependencies / assumptions**
 8. **Suggested next step** — name one: brainstorming, Spec Kit `/speckit.specify`, or mattpocock `/to-spec`. Do **not** run it in this turn unless the user sends a **new** message asking for that after the brief.
-9. **Close** — confirm the brief is enough, or ask one clarifying question if a blocker remains
+9. **Close** — confirm the brief is enough, or ask one clarifying question if a blocker remains. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
 
 ## Thin-brief test
 

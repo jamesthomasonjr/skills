@@ -18,6 +18,7 @@ Produce an **implement-ready brief** for an atomic engineering chore. Not a user
 - Do **not** wrap the chore in a fake As a / I want / so that.
 - Do not implement or edit application code in this turn — even if the user said “then start doing it.”
 - Do not inflate into a feature or epic.
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** (conversation default; named sink only; else hand off to tracker skill/prompt).
 - Mixed-turn build request: finish this brief, then **hand back**. They must send a new message to implement.
 
 ## Output contract (in order)
@@ -28,7 +29,7 @@ Produce an **implement-ready brief** for an atomic engineering chore. Not a user
 4. **Done when** — 3–7 concrete checks
 5. **Steps sketch** — ordered bullets (no full patch)
 6. **Risks** — blast radius, expand-contract needs, missing targets
-7. **Close** — hand back; offer implement / writing-plans on a **new** message
+7. **Close** — hand back; offer implement / writing-plans on a **new** message. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
 
 ## If the target does not exist
 

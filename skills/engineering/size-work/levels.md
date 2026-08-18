@@ -45,3 +45,13 @@ If two adjacent levels both fit: recommend one in a single sentence, ask once, t
 | Initiative / Epic / Feature | Full specs, design docs, implementation plans, Given/When/Then catalogs, file-path task lists, skipping to grandchildren |
 | User story | Full Spec Kit `spec.md`, Superpowers design doc, implementation, scaffolding |
 | Task | Fake “As a…” wrapper, implementation in the sizing turn |
+
+## Outcomes
+
+The shaped charter, inventory, or brief **is** the portable artifact. This family is tracker-agnostic.
+
+1. **Default — conversation only.** Do not write files or create tracker items unless asked.
+2. **Named sink.** If the user names a destination (markdown path, GitHub issues, beads, tk, Linear, etc.), publish **there** in that sink’s native shape after shaping. Do not invent a tracker or require setup.
+3. **Tracker skill / prompt.** If they want a dedicated publish skill or prompt, finish shaping first, then **hand off** — do not publish in this turn unless they also named a sink.
+
+Never invent tickets, issues, or `docs/work/` dumps unprompted. Markdown under `docs/work/<level>/YYYY-MM-DD-<slug>.md` is only a sink when they ask for files (or that path).
