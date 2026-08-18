@@ -27,9 +27,10 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 2. **Problem** — who hurts and why (2–4 sentences)
 3. **Outcome** — what “shipped” means for users
 4. **Boundaries** — in / out
-5. **User-story inventory** — 3–9 stories; each: short title + As a / I want / so that + priority. No acceptance scenarios yet.
-6. **Open questions** — decisions a later spec must settle (bullets)
-7. **Close** — ask which story to deepen with `shape-story`, or stop
+5. **Constraints** — dependencies and non-user-facing chores that must not appear as inventory children (or “None”)
+6. **User-story inventory** — 3–9 stories; each: short title + As a / I want / so that + priority. No acceptance scenarios yet.
+7. **Open questions** — decisions a later spec must settle (bullets)
+8. **Close** — ask which story to deepen with `shape-story`, or stop
 
 ## Rationalizations
 
