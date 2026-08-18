@@ -95,7 +95,7 @@ Not extra hierarchy levels. Route by grain: chore or known bug **without** As-a 
 
 ### Spikes and research
 
-Not extra hierarchy levels. Single clear time-boxed question → `shape-task` (spike flavor: question, time box, done-when = decision). Foggy multi-question exploration → stop and hand off to wayfinder/research/grill. Prototype-to-decide stays spike grain here; hand off to a prototype skill after the brief. No feature/story inventory for a spike; no production implementation in the sizing turn.
+Not extra hierarchy levels. Single clear decision question (time box optional — propose one if missing) → `shape-task` (spike flavor: question, time box, done-when = decision). Bare or multi-question “research …” / “figure out X” / “research the space” → stop and hand off to wayfinder/research/grill (foggy wins when the question is not sharp). Prototype-to-decide stays spike grain here; hand off to a prototype skill after the brief. No feature/story inventory for a spike; no production implementation in the sizing turn.
 
 ### One-level rule
 

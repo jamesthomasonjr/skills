@@ -32,12 +32,12 @@ Use [levels.md](levels.md). Explicit labels from the user win.
 | Coherent multi-capability outcome; “epic” | `shape-epic` |
 | One **user-perceivable** capability; “feature”; “add X to the product” | `shape-feature` |
 | As a / I want / so that; one journey; “story”; user-framed bug fix | `shape-story` |
-| Chore / cleanup / tech debt; rename / migrate / wire CI / “add a retry\|index\|log\|guard”; known bug with clear locus **and no As-a framing**; spike / research with one clear question | `shape-task` |
+| Chore / cleanup / tech debt; rename / migrate / wire CI / “add a retry\|index\|log\|guard”; known bug with clear locus **and no As-a framing**; spike with **one clear decision question** | `shape-task` |
 | Vague / intermittent / no locus (“something’s broken”) | **Stop** — hand off to diagnosing/triage; do not shape |
-| Foggy multi-question exploration (“figure out X,” “research the space”) | **Stop** — hand off to wayfinder/research/grill; do not shape |
+| Foggy multi-question exploration (“figure out X,” “research the space,” bare “research …” with no sharp question) | **Stop** — hand off to wayfinder/research/grill; do not shape |
 | Two adjacent levels both fit | ask once (see below) |
 
-Prefer the **largest** fitting level. Bare “add X” is **not** enough for a feature — only when X is a user-perceivable product capability. Engineering “add …” chores and single-question spikes are tasks. **Known bugfixes:** As a / I want / so that (user-framed) → `shape-story`; otherwise a clear locus → `shape-task`. User-framed wins when both match.
+Prefer the **largest** fitting level. Bare “add X” is **not** enough for a feature — only when X is a user-perceivable product capability. Engineering “add …” chores and spikes with one clear decision question are tasks. **Known bugfixes:** As a / I want / so that (user-framed) → `shape-story`; otherwise a clear locus → `shape-task`. User-framed wins when both match. **Research:** a sharp single question → spike flavor; bare or multi-question “research …” → out-of-family handoff (foggy wins when the question is not sharp).
 
 ## 2. Ambiguity
 
@@ -47,7 +47,7 @@ Do not start shaping while the level is unresolved.
 
 ## 3. Announce and hand off
 
-One line: which level and why (short). Pass `flavor: spike` when the work is a time-boxed investigation.
+One line: which level and why (short). Pass `flavor: spike` when the work is a spike or single-question research investigation (a stated time box is optional).
 
 **Out of family (vague bug or foggy research):** say so in one or two sentences, name diagnosing/triage or wayfinder/research/grill as the next step, and **stop**. Do not read a shape skill.
 

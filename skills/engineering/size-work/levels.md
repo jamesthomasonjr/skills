@@ -32,9 +32,9 @@ Task        ──► Brief only
 | Named outcome with several capabilities under it; “epic”; multi-week | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable) | Feature |
 | As a / I want / so that; one journey; “user story”; user-framed bug fix (“so that errors are clear”) | User story |
-| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus **and no As-a framing**; spike / research with one clear question | Task |
+| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus **and no As-a framing**; spike with **one clear decision question** | Task |
 | Vague or intermittent failure (“something’s broken,” “flaky sometimes,” no locus) | **Out of family** — see Bugs and chores |
-| Foggy multi-question exploration (“figure out notifications,” “research the space”) | **Out of family** — see Spikes and research |
+| Foggy multi-question exploration (“figure out notifications,” “research the space,” bare “research …” with no sharp question) | **Out of family** — see Spikes and research |
 
 ## Bugs and chores
 
@@ -56,11 +56,11 @@ Spikes and research are **kinds** of work, not extra hierarchy levels. A spike�
 
 | Signal | Route |
 |---|---|
-| Time-boxed question with one clear decision (“Can Stripe idempotency keys cover our retry model in 1 day?”); “spike”; “research X” | `shape-task` (spike flavor) |
-| Foggy multi-question exploration; destination unclear | **Stop.** Hand off to wayfinder / research / grill skills. Do not invent an epic or story inventory. |
+| One clear decision question (with or without an explicit time box); labeled “spike” | `shape-task` (spike flavor) |
+| Foggy multi-question exploration; bare “research …” / “research the space” with **no** sharp question; destination unclear | **Stop.** Hand off to wayfinder / research / grill skills. Do not invent an epic or story inventory. Foggy wins when the question is not already sharp. |
 | “Build a prototype to decide” | Still spike grain here; after the brief, hand off to a prototype skill to build — do not implement the prototype in this family |
 
-Never emit a feature/story inventory for a spike. Never let a spike silently become production implementation in the sizing turn.
+Never emit a feature/story inventory for a spike. Never let a spike silently become production implementation in the sizing turn. Bare “research X” is **not** enough for spike flavor unless X is already a single clear decision question.
 
 ## Ambiguity
 

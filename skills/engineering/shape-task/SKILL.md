@@ -37,16 +37,16 @@ Produce an **implement-ready or decide-ready brief** for an atomic engineering c
 
 ## Output contract — spike flavor
 
-Use when the router passed `flavor: spike`, or the description is clearly a time-boxed investigation.
+Use when the router passed `flavor: spike`, or the description is a spike / single-question investigation (a stated time box is **not** required).
 
 1. **Title** — `Spike: …`
 2. **Question** — the single decision or learning this spike must answer
-3. **Time box** — hours or days
+3. **Time box** — hours or days; if the user did not give one, **propose** a default (e.g. half-day or 1 day) and proceed
 4. **Why** — which story, feature, or epic this answer unblocks
 5. **Done when** — written answer, options considered, and a recommendation (not “code shipped”)
 6. **Out of scope** — no production feature work inside the spike
 7. **Approach sketch** — how you’ll learn (read code/docs, spike branch, prototype) — bullets only
-8. **Close** — hand back; next message may run the spike, a prototype skill, or writing-plans. If they named a sink, publish per Outcomes.
+8. **Close** — hand back; next message may run the spike, a prototype skill, or writing-plans. Do **not** offer “implement the feature” as the default close. If they named a sink, publish per Outcomes.
 
 ## If the target does not exist
 
