@@ -32,7 +32,7 @@ Task        ──► Brief only
 | Named outcome with several capabilities under it; “epic”; multi-week | Epic |
 | One capability users can name; “feature”; “add X to the product” (user-perceivable) | Feature |
 | As a / I want / so that; one journey; “user story”; user-framed bug fix (“so that errors are clear”) | User story |
-| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus; spike / research with one clear question | Task |
+| Chore / cleanup / tech debt / expand-contract; rename, migrate, wire CI; “add a retry\|index\|log\|guard”; known bug with a clear locus **and no As-a framing**; spike / research with one clear question | Task |
 | Vague or intermittent failure (“something’s broken,” “flaky sometimes,” no locus) | **Out of family** — see Bugs and chores |
 | Foggy multi-question exploration (“figure out notifications,” “research the space”) | **Out of family** — see Spikes and research |
 
@@ -43,8 +43,8 @@ Bugs and chores are **kinds** of work, not extra hierarchy levels. Route by grai
 | Signal | Route |
 |---|---|
 | Chore, cleanup, tech debt, rename, migrate, wire CI, expand-contract | `shape-task` |
-| Known bug with a clear locus (file, error, repro) | `shape-task` |
-| User-visible failure framed as value (As a / I want / so that) | `shape-story` |
+| User-visible failure framed as value (As a / I want / so that) | `shape-story` — **wins** over known-locus → task when both match |
+| Known bug with a clear locus (file, error, repro) and **no** As-a framing | `shape-task` |
 | Vague / intermittent / undiagnosed (“something’s broken”) | **Stop.** Hand off to diagnosing or triage skills (e.g. mattpocock `diagnosing-bugs` / `triage`). Do not invent an epic or fake story inventory. |
 | Systemic reliability theme (“fix all of notifications”) | Classify on **scope** (epic/feature), not on the word “bug” |
 

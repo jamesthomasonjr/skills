@@ -91,7 +91,7 @@ Prefer the **largest** level that still fits. Explicit user labels win (“this 
 
 ### Bugs and chores
 
-Not extra hierarchy levels. Route by grain: chore or known bug → `shape-task`; user-framed fix → `shape-story`; vague undiagnosed failure → stop and hand off to diagnosing/triage; systemic “fix all of X” → classify on scope (epic/feature), not the word “bug”. No fake As-a wrappers for one-line fixes; no story inventory for a single known bug.
+Not extra hierarchy levels. Route by grain: chore or known bug **without** As-a framing → `shape-task`; user-framed fix (As a / I want / so that) → `shape-story` (**wins** when both match); vague undiagnosed failure → stop and hand off to diagnosing/triage; systemic “fix all of X” → classify on scope (epic/feature), not the word “bug”. No fake As-a wrappers for one-line fixes; no story inventory for a single known bug.
 
 ### Spikes and research
 
