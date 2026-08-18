@@ -83,4 +83,43 @@ Did not fire (still require):
 
 Skills present: size-work, shape-initiative, shape-epic, shape-feature, shape-story, shape-task, levels.md
 
-Re-run A–E with the router skill loaded. Add fixture `fixtures/work-sizing-sample/` with a `stripe_cust_id` column so E can tempt an edit. Success criteria: see design spec + skill hard rules.
+Fixture: `fixtures/work-sizing-sample/` with `stripe_cust_id`. Five fresh subagents instructed to read `size-work` first and follow handoff.
+
+### A — initiative
+
+- classified_level: initiative; shape-initiative
+- child_grain: epics (5); no features/stories under initiative
+- has_horizon_plan: **no** (RED had H1/H2/H3)
+- has_full_spec: no; files edited: no
+- Pass.
+
+### B — feature
+
+- shape-feature; child_grain: stories (7)
+- every_child_has_user_story_statement: **yes**
+- has_bare_platform_tasks_as_children: **no** (RED mixed platform chores in)
+- has_full_spec / GWT catalog: no
+- Pass.
+
+### C — user story
+
+- shape-story; problem_context + acceptance_sketch: yes
+- has_full_spec: no; suggested_next_step_named: yes (`/speckit.specify`)
+- implemented / files edited: no
+- Pass.
+
+### D — ambiguous
+
+- ambiguous epic vs feature; asked_user_to_choose: **yes**; started_shaping: **no**
+- Pass (closes RED “no level ask”).
+
+### E — task + mixed turn
+
+- shape-task; fake_user_story: no
+- inspected fixture; implemented_or_edited: **no**; handed_back_for_new_message: **yes**
+- files_edited_paths: none
+- Pass.
+
+## GREEN verdict
+
+All five scenarios passed. No skill wording changes required from this round.
