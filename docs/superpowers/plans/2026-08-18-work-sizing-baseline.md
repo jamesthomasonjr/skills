@@ -146,16 +146,16 @@ Fixture: `fixtures/work-sizing-sample/` with `stripe_cust_id`. Five fresh subage
 
 ### J — intermittent with named locus (precedence)
 
-- Prompt shape: “auth.test.ts is flaky sometimes”
-- Expected: clear locus **wins** → `shape-task` (not diagnosing stop)
-- Recorded in PR #3 follow-up fix.
+- Prompt: “auth.test.ts is flaky sometimes”
+- → `shape-task` (locus wins over intermittent→diagnosing)
+- Pass.
 
 ### K — thin As-a without locus (precedence)
 
-- Prompt shape: As-a framing + “checkout is broken sometimes” with no file/error
-- Expected: diagnosing **wins** over `shape-story`
-- Recorded in PR #3 follow-up fix.
+- Prompt: As-a + “checkout … broken sometimes” with no locus
+- → out of family; diagnosing wins over `shape-story`
+- Pass.
 
 ## GREEN verdict
 
-Scenarios A–E passed on the original family. Enrichment scenarios F–I passed on PR #3. Precedence scenarios J–K added with the overlapping-bug / Task-definition fix.
+Scenarios A–E passed on the original family. Enrichment scenarios F–I passed on PR #3. Precedence scenarios J–K passed with the overlapping-bug / Task-definition fix.
