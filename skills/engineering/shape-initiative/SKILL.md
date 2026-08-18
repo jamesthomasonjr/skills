@@ -18,7 +18,7 @@ Turn an initiative-scale description into a charter and an **epic inventory**. O
 - Emit **epics** (title + one-liner + order). Do not emit features, stories, tasks, or specs.
 - Do not write H1/H2/H3 delivery plans, staffing models, or implementation plans.
 - Do not implement.
-- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** (conversation default; named sink only; else hand off to tracker skill/prompt).
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** — conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
 - Mixed-turn build request: finish this shape, then hand back.
 
 ## Output contract (in order)

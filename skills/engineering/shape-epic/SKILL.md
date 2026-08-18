@@ -17,7 +17,7 @@ Turn an epic-scale description into a brief and a **feature inventory**. One lev
 - Emit **features** (title + one-liner + order). Do not emit stories, tasks, or specs.
 - Do not write implementation plans or file-path task lists.
 - Do not implement.
-- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** (conversation default; named sink only; else hand off to tracker skill/prompt).
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** — conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
 - Mixed-turn build request: finish this shape, then hand back.
 
 ## Output contract (in order)

@@ -17,7 +17,7 @@ Classify the work, then hand off. This skill does **not** shape charters, invent
 - Do not implement, scaffold, or edit application code.
 - Do not write a full spec, design doc, or implementation plan.
 - Do not invent child lists in the router — that is the shape skill’s job.
-- Outcomes follow [levels.md](levels.md) **Outcomes**: conversation by default; publish only to a sink the user named; otherwise hand off to a tracker skill/prompt after shaping.
+- Outcomes follow [levels.md](levels.md) **Outcomes** — stay conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
 - Mixed turn (“break this down, then build it”): classify, hand off to the shape skill, finish shaping, then **hand back**. Do not build in this turn.
 
 ## 1. Classify
