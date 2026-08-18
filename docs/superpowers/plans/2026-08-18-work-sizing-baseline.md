@@ -120,6 +120,42 @@ Fixture: `fixtures/work-sizing-sample/` with `stripe_cust_id`. Five fresh subage
 - files_edited_paths: none
 - Pass.
 
+### F — known bug with locus (enrichment)
+
+- Prompt shape: known TypeError locus in `processOrder`
+- → `shape-task`; no fake story; no story inventory
+- Pass (PR #3 verification).
+
+### G — vague bug (enrichment)
+
+- Prompt: “Something's broken in checkout sometimes”
+- → out of family; diagnosing/triage handoff; no shaping
+- Pass (PR #3 verification).
+
+### H — spike without explicit time box (enrichment)
+
+- Prompt: “Spike: Should we store coupon redemptions in Postgres or Redis?”
+- → `shape-task` spike flavor; proposed time box; done-when = decision
+- Pass (PR #3 verification).
+
+### I — foggy research (enrichment)
+
+- Prompt: “Research notifications”
+- → out of family; wayfinder/research/grill handoff
+- Pass (PR #3 verification).
+
+### J — intermittent with named locus (precedence)
+
+- Prompt: “auth.test.ts is flaky sometimes”
+- → `shape-task` (locus wins over intermittent→diagnosing)
+- Pass.
+
+### K — thin As-a without locus (precedence)
+
+- Prompt: As-a + “checkout … broken sometimes” with no locus
+- → out of family; diagnosing wins over `shape-story`
+- Pass.
+
 ## GREEN verdict
 
-All five scenarios passed. No skill wording changes required from this round.
+Scenarios A–E passed on the original family. Enrichment scenarios F–I passed on PR #3. Precedence scenarios J–K passed with the overlapping-bug / Task-definition fix.
