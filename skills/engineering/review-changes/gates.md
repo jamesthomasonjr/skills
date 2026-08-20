@@ -36,9 +36,11 @@ Assign only to survivors:
 
 A naming nit is not a P3. It is dropped.
 
-## Empty pass
+## Empty pass vs stop
 
-If nothing qualifies: write exactly `No findings.` Do not invent a finding. An empty report is success. “Be thorough” / “complete review” / “flag anything” does not authorize nits.
+A **successful empty review** means a real comparison was inspected and nothing survived the gates. Write exactly `No findings.` as the Findings block, then Assessment and Close. Do not invent a finding. “Be thorough” / “complete review” / “flag anything” does not authorize nits.
+
+**Stop paths** are not empty reviews. Write only `Nothing to review.` (empty or unresolvable target) or a 1–2 sentence `shape-*` pointer (plan / spec / design). Do not wrap those in Findings / Assessment / Close.
 
 ## Cite
 

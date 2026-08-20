@@ -26,16 +26,27 @@ Do not paste the six gates into this file. If any gate is shaky, **drop**. When 
 
 ## Procedure
 
+If this is a stop path (empty/unresolvable, or plan/spec/design with no code diff), skip steps 1–5. Write only the stop.
+
 1. Inspect the complete diff from the comparison command (or the named patch file), plus enough surrounding code and tests to confirm each candidate.
 2. Continue through the whole diff after the first issue. Do not stop at one finding. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
 3. Apply every gate in `gates.md` to each candidate. Drop if any is shaky.
 4. Skip everything under Suppressions — including when they said “nits are fine” or “flag anything.”
 5. Assign P0–P3 only to survivors.
-6. Write the output contract. Then stop (or hand back).
+6. If this is a **stop path**, write only that stop (below). Otherwise write the output contract. Then stop (or hand back).
+
+## Stop paths (no three-block contract)
+
+These are **not** empty reviews. Do **not** emit Findings, Assessment, or Close.
+
+- Empty or unresolvable target: exactly `Nothing to review.`
+- Plan / spec / design with no code diff: 1–2 sentences, point at `shape-*`, stop.
 
 ## Output contract (in order)
 
-Always emit these three blocks, in this order, with these headings:
+Skip this entire section on stop paths.
+
+Otherwise always emit these three blocks, in this order, with these headings:
 
 1. **Findings** — one entry per survivor, severity-first:
 
@@ -64,6 +75,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “A Minor section keeps the nits somewhere” | There is no nit bucket. Drop them. Listing nits then calling them nits is still a fail. |
 | “Thorough means more findings” | Thorough means every qualifying defect, and nothing else. |
 | “They asked me to be a critical reviewer of a plan” | Out of family. Stop. Point at `shape-*`. Do not review prose here. |
+| “Always emit Findings / Assessment / Close” | Only after a real comparison. Stop paths skip the contract. Do not wrap `Nothing to review.` |
 
 ## Failures
 
@@ -77,3 +89,4 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Merge stamp / LGTM theater
 - Reviewing a plan/spec/design as if it were a code diff
 - Grilling a design instead of stopping out of family
+- Wrapping `Nothing to review.` or a `shape-*` stop in Findings / Assessment / Close

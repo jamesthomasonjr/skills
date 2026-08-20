@@ -99,11 +99,17 @@ Explicit user labels win.
 |---|---|
 | Uncommitted / working tree / “what I just changed” | Working tree vs HEAD (staged, unstaged, untracked) |
 | Named commit | That commit vs its parent |
-| Named branch, “this PR”, or no target | Merge-base of the comparison ref … HEAD |
+| Named branch, “this PR”, or no target | Merge-base of `<base>` … `<tip>` |
 
-**Default comparison ref** (named branch / this PR / no target): the named branch if they named one; otherwise the current branch’s upstream if it exists; otherwise `main`; otherwise `master`.
+**`<tip>`** (named branch / this PR / no target): the named branch if they named one; otherwise HEAD when HEAD is that feature/PR branch. Naming the PR branch while checked out on `main` still uses the named ref as `<tip>`, not HEAD.
 
-**Three-dot merge:** `git merge-base HEAD <ref>`, then `git diff <merge-base>...HEAD` (the changes that would actually merge, not a raw tip-to-tip diff).
+**`<base>`:** the integration / default branch (`origin/HEAD` if set, else `origin/main`, else `main`, else `master`). **Never** the tip’s self-upstream (a published feature branch that tracks itself yields merge-base == tip and an empty file list).
+
+“this PR” while HEAD is already the default branch and they named no feature ref: unresolvable — ask once.
+
+**Three-dot merge:** `git merge-base <tip> <base>`, then `git diff <merge-base>...<tip>` (the changes that would actually merge onto the default branch). Not `git merge-base HEAD <ref>` with `<ref>` = `@{upstream}` of the same branch. Not `...HEAD` when `<tip>` is a named ref other than the current checkout.
+
+If the three-dot file list is empty or tip equals base: `Nothing to review.` Do not treat a self-diff as a successful empty pass.
 
 **Working-tree command:** staged + unstaged + untracked vs HEAD (`git diff HEAD`, `git diff --cached` if needed to name staged paths, and untracked via `git status` / `git ls-files --others --exclude-standard`). Pass the union.
 
@@ -127,7 +133,7 @@ The leaf still applies the same six gates to the **whole** comparison. It may me
 
 ### Ambiguity
 
-If two signals both appear (e.g. “review this PR and also what I just changed”), user label wins; if still tied, ask once. Stop until they answer unless they already said “just pick,” then prefer working tree when uncommitted changes exist, otherwise merge-base … HEAD.
+If two signals both appear (e.g. “review this PR and also what I just changed”), user label wins; if still tied, ask once. Stop until they answer unless they already said “just pick,” then prefer working tree when uncommitted changes exist, otherwise merge-base of `<base>` … `<tip>`.
 
 ### Announce and hand off
 
@@ -185,9 +191,11 @@ If any gate is shaky, **drop**. When in doubt about impact, drop.
 
 Do not inflate. A naming nit is not a P3; it is dropped.
 
-### Empty pass
+### Empty pass vs stop
 
-If nothing qualifies: write exactly `No findings.` Do not invent a finding. An empty report is success.
+A **successful empty review** (a real comparison was inspected, nothing survived): write exactly `No findings.` as the Findings block, then Assessment and Close. Do not invent a finding.
+
+**Stop paths** (`Nothing to review.`, out-of-family `shape-*` pointer) are not empty reviews. Do not wrap them in Findings / Assessment / Close.
 
 ### Cite
 
@@ -199,7 +207,7 @@ Read-only defect-first review of the comparison the router passed (or that the u
 
 **REQUIRED:** Read [../review-changes/gates.md](../review-changes/gates.md) before writing findings. Same sibling-resolve rule as the router. Do not paste the six-gate list into this file.
 
-If invoked directly with no comparison: cheap-resolve as the router would (working tree if they said “what I just changed”; else merge-base of default ref … HEAD). If empty/unresolvable, `Nothing to review.` If the user pointed at a plan/spec/design, stop out of family — do not review it.
+If invoked directly with no comparison: cheap-resolve as the router would (working tree if they said “what I just changed”; else merge-base of `<base>` … `<tip>`). If empty/unresolvable, `Nothing to review.` If the user pointed at a plan/spec/design, stop out of family — do not review it. Stop paths do **not** use the Findings / Assessment / Close envelope.
 
 ### Procedure
 
@@ -208,9 +216,13 @@ If invoked directly with no comparison: cheap-resolve as the router would (worki
 3. For each candidate, apply every gate in `gates.md`. Drop if any is shaky.
 4. Skip anything listed under Suppressions.
 5. Assign P0–P3 only to survivors.
-6. Write the output contract. Then stop (or hand back on mixed turn).
+6. If this is a stop path, write only that stop. Otherwise write the output contract. Then stop (or hand back on mixed turn).
 
 ### Output contract (in order)
+
+**Stop paths skip this section** (`Nothing to review.` or a 1–2 sentence `shape-*` pointer). Do not fabricate Findings / Assessment / Close.
+
+Otherwise:
 
 1. **Findings** — one entry per surviving issue, severity-first:
 
@@ -292,17 +304,19 @@ Minimum scenarios:
 | C. `tax-bug.diff` | May find it, or bury it under nits | One (or few) P-tagged finding with concrete overcharge outcome; cite overlaps the diff |
 | D. Clean rename; unused helper still in `pricing.js` / `refunds.js` | Flags pre-existing unused code as new | Residual-risk line at most; not a numbered finding |
 | E. `tax-bug.diff` + “review this, then fix it” | Edits the fixture | Review, then hand back; no file edits |
-| F. “Review this design spec” (no code diff) | Reviews the markdown as a patch | Out of family; points at `shape-*`; does not read the leaf to produce findings |
-| G. Empty / unresolvable target | Guesses the whole repo | `Nothing to review.` or one ask, then stop |
+| F. “Review this design spec” (no code diff) | Reviews the markdown as a patch | Out of family; points at `shape-*`; no Findings/Assessment/Close envelope |
+| G. Empty / unresolvable target | Guesses the whole repo | `Nothing to review.` (not a three-block empty pass) |
+| H. “this PR” / named feature branch vs default | Self-upstream empty diff → fake `No findings.` | `git diff $(git merge-base <tip> <base>)...<tip>`; `<base>` is `main` / repo default, never self-upstream; file list nonempty |
 
 Document verbatim rationalizations in `docs/superpowers/plans/2026-08-20-review-skill-family-baseline.md`.
 
 ## Success criteria
 
-- Router classifies working tree / commit / branch-or-PR-or-default per the table; user labels win.
+- Router classifies working tree / commit / branch-or-PR per the table; user labels win.
+- Branch / “this PR” / no-target uses `<tip>` vs default `<base>` (`git diff $(git merge-base <tip> <base>)...<tip>`), never the branch’s self-upstream.
 - Router announces the comparison, passes command + file list + optional focus + mixed-turn request, and does not write findings.
 - Empty or unresolvable target: ask once or `Nothing to review.`
-- Out-of-family plan/spec/design: stop; point at `shape-*`.
+- Out-of-family plan/spec/design: stop; point at `shape-*`. Stop paths do not use Findings / Assessment / Close.
 - Leaf follows `gates.md`; DROP when shaky; `No findings.` on clean/nits-only diffs.
 - Real defect gets a P0–P3 entry with concrete bad outcome and smallest overlapping `path:line`.
 - Pre-existing is residual risk, not a numbered finding.

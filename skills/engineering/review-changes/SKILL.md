@@ -26,12 +26,19 @@ Run git **before** choosing the comparison when the user named a commit, branch,
 Allowed in **one** pass:
 
 - `git status --short` (and `git diff HEAD --name-only` / `git ls-files --others --exclude-standard` when the signal is working tree)
-- `git rev-parse --verify` for a named commit or branch
-- `git merge-base HEAD <ref>` then `git diff --name-only <merge-base>...HEAD` for branch / PR / default
+- `git rev-parse --verify` for a named commit or named branch (`<tip>`)
+- `git symbolic-ref refs/remotes/origin/HEAD` or `git rev-parse --verify` of `origin/main`, then `main`, then `master` for `<base>`
+- `git merge-base <tip> <base>` then `git diff --name-only <merge-base>...<tip>` for branch / PR / no-target
 
-Not allowed here: reading hunks to judge defects, applying gates, writing findings.
+Not allowed here: reading hunks to judge defects, applying gates, writing findings. Do **not** use a branch’s own `@{upstream}` as `<base>` when that upstream is the same branch.
 
 A stored patch the user named (`path/to/foo.diff` against a parent tree) **is** a comparison: that diff file vs the named parent. Resolve by reading the diff’s file list. Do not require a dirty git tree.
+
+`<tip>` and `<base>` (branch / PR / no-target only):
+
+- **`<tip>`** — the named branch if they named one; otherwise HEAD when HEAD is that feature/PR branch. Naming the PR branch while checked out on `main` still uses the **named ref** as `<tip>`, not HEAD.
+- **`<base>`** — the integration / default branch: `origin/HEAD` if set, else `origin/main`, else `main`, else `origin/master` / `master`. **Never** the tip’s self-upstream.
+- “this PR” while HEAD is already the default branch and they named no feature ref: **unresolvable** — ask once.
 
 | Result | Comparison |
 |---|---|
@@ -39,11 +46,10 @@ A stored patch the user named (`path/to/foo.diff` against a parent tree) **is** 
 | Uncommitted asked, status empty | **empty** — `Nothing to review.` |
 | Named commit resolves | That commit vs its parent |
 | Named commit missing or root (no parent) | **unresolvable** |
-| Named branch / “this PR” / no target; merge-base exists | Merge-base of the comparison ref … HEAD |
+| Named branch / “this PR” / no target; three-dot file list nonempty | Merge-base of `<base>` … `<tip>` |
+| Named branch / “this PR” / no target; file list empty or tip equals base | **empty** — `Nothing to review.` |
 | Named diff/patch file against a parent | That patch vs the named parent |
 | Ref missing | **unresolvable** |
-
-Default comparison ref: named branch if they named one; else current branch upstream if set; else `main`; else `master`.
 
 User labels win.
 
@@ -53,18 +59,18 @@ User labels win.
 |---|---|
 | Uncommitted / working tree / “what I just changed” | Working tree vs HEAD (staged, unstaged, untracked) |
 | Named commit | That commit vs its parent |
-| Named branch, “this PR”, or no target | Merge-base of the comparison ref … HEAD |
+| Named branch, “this PR”, or no target | Merge-base of `<base>` … `<tip>` |
 | Named diff/patch file | That patch vs the named parent |
 | Plan / spec / design / charter / brief; no code diff | **Out of family** — stop |
 | Empty or unresolvable | ask once, or `Nothing to review.` |
 
-If two signals both appear, user label wins; if still tied, ask once. Stop until they answer unless they already said “just pick,” then prefer working tree when uncommitted changes exist, otherwise merge-base … HEAD.
+If two signals both appear, user label wins; if still tied, ask once. Stop until they answer unless they already said “just pick,” then prefer working tree when uncommitted changes exist, otherwise merge-base of `<base>` … `<tip>`.
 
 **Commands to pass:**
 
 - Working tree: `git diff HEAD` plus untracked (`git ls-files --others --exclude-standard`). File list is the union.
 - Named commit: `git diff <commit>^ <commit>` (first parent for merges).
-- Branch / PR / default: `git diff <merge-base>...HEAD`.
+- Branch / PR / no-target: `git diff $(git merge-base <tip> <base>)...<tip>`. Not `...HEAD` when `<tip>` is a named ref other than HEAD. Not `@{upstream}` as `<base>`.
 - Named patch: the diff file itself; file list from its hunks.
 
 ## 3. Announce and hand off
@@ -94,3 +100,5 @@ Then follow `review-defects`. Do not keep a second review procedure here.
 - Implementing because the bug is obvious
 - Treating a plan/spec as a code review
 - Grilling a design as if this family reviewed prose
+- Using the branch’s own upstream as `<base>` (self-diff → empty file list → fake `No findings.`)
+- Using HEAD as `<tip>` when they named a different branch
