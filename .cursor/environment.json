@@ -1,0 +1,4 @@
+{
+  "install": "./scripts/install-cloud-agent-skills.sh",
+  "start": "./scripts/install-cloud-agent-skills.sh --link-only"
+}

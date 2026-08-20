@@ -22,6 +22,22 @@ Claude Code can also load this repo as a plugin via [`.claude-plugin/plugin.json
 
 Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills in `personal/` and `in-progress/` stay local to this repo.
 
+### Cursor Cloud Agents
+
+Cloud Agents run on isolated VMs and do not inherit laptop `~/.cursor/skills`, Cursor plugin installs, or GitHub Remote Rules. They do load skills from `~/.cursor/skills/` on the VM.
+
+This repo's [`.cursor/environment.json`](.cursor/environment.json) runs [`scripts/install-cloud-agent-skills.sh`](scripts/install-cloud-agent-skills.sh) in two places:
+
+- `install` — during a Build, on the default-branch checkout. Clones [jeighty/supersuit](https://github.com/jeighty/supersuit) (and this repo if it is not already the workspace), then links skills.
+- `start` — on each agent boot, after the requested branch is checked out. Runs `--link-only` so a feature branch that adds a promoted skill is linked without re-cloning supersuit.
+
+The script is idempotent, works with bash 3.2, and does not install `personal/` or `in-progress/`.
+
+```bash
+./scripts/install-cloud-agent-skills.sh
+./scripts/install-cloud-agent-skills.sh --link-only
+```
+
 ## Skills
 
 These split on one axis: who can invoke them. **User-invoked** skills are reached when you type them. **Model-invoked** skills can also be picked up from ambient context. A router (model-invoked) hands off to a leaf (user-invoked).
