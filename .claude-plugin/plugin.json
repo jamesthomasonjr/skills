@@ -1,6 +1,6 @@
 {
   "name": "jamesthomasonjr-skills",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "James Thomason Jr's personal agent skills for Cursor, Claude Code, and other coding agents.",
   "author": {
     "name": "James Thomason Jr",
@@ -26,6 +26,9 @@
     "./skills/engineering/shape-epic",
     "./skills/engineering/shape-feature",
     "./skills/engineering/shape-story",
-    "./skills/engineering/shape-task"
+    "./skills/engineering/shape-task",
+    "./skills/engineering/debug",
+    "./skills/engineering/debug-root-cause",
+    "./skills/engineering/debug-feedback-loop"
   ]
 }

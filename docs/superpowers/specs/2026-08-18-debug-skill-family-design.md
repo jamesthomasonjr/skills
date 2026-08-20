@@ -1,7 +1,7 @@
 # Debug skill family
 
 Date: 2026-08-18
-Status: draft for review (revised: Phase 4 creates the regression; Phase 3 cites ../debug/paths.md)
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 ## Problem
