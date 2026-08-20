@@ -223,4 +223,4 @@ Apply writing-skills TDD (pressure scenarios with subagents).
 - Sibling handoff works under symlink/plugin install (directory-relative, not repo-tree paths).
 - Family works without external skill installs.
 - Catalog entries and plugin manifest stay in sync.
-- Verification covers classification, investigate-before-fix (with fixture), escalation (including Phase 3 gate and direct invoke), 3-fix stop with tight signal, and mixed-turn handback.
+- Verification covers classification, investigate-before-fix (with fixture), escalation (including Phase 3 gate, direct invoke, and cannot-create-regression), 3-fix stop after tight signal exists, and mixed-turn handback.
