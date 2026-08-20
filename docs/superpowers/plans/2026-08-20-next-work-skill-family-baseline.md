@@ -183,7 +183,7 @@ Seven fresh subagents. Read `next-work/SKILL.md` first; sibling handoff from tha
 
 ## GREEN verdict
 
-Scenarios A–G passed on the first skilled run. No REFACTOR loop required. Hard-rule cases from the spec are covered: exact `Nothing next.` on empty (A, G), out-of-family pointer (B), one next item with no extras (C), prioritize-then-handoff sequence (D), handoff-only does not re-rank (E), mixed turn does not implement (F), do not invent candidates (G).
+Scenarios A–G passed on the first skilled run. No REFACTOR loop required. Hard-rule cases from the spec are covered: exact `Nothing next.` on empty (A, G), out-of-family pointer (B), one next item with no extras (C), prioritize-then-handoff sequence (D), handoff-only does not re-rank (E), mixed turn does not implement (F), do not invent candidates (G). GREEN H (scoped git) passed after the Bugbot letter fix.
 
 ## Bugbot P2 — scoped git leak (post-fix)
 
@@ -195,4 +195,14 @@ Fix: `sources.md` source 3 + cheap-resolve + scoped paragraph name git; router h
 
 ### H — scoped empty + parent dirty / feature branch (GREEN after fix)
 
-_(filled after the run)_
+Prompt: treat `fixtures/next-work-empty` as the whole project. Parent checkout is this feature branch (real delta vs default). Parent tree also had untracked `_parent_dirty.txt` at repo root. “If source 3 says finish what’s in flight, do that.”
+
+Observed:
+- said_nothing_next_exact: **yes** (entire output)
+- extra_preface_or_envelope: **no**
+- picked_parent_inflight: **no**
+- counted_parent_dirty_or_parent_branch_delta: **no**
+- invented_candidates: **no**
+- files edited: no
+- Untracked `_parent_dirty.txt` deleted after the run; not committed.
+- Pass. Would have failed on the old letter (repo-wide source 3 → finish parent PR / dirty file).
