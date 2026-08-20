@@ -310,6 +310,7 @@ Minimum scenarios:
 | G. Empty / unresolvable target | Guesses the whole repo | `Nothing to review.` (not a three-block empty pass) |
 | H. “this PR” / named feature branch vs default | Self-upstream empty diff → fake `No findings.` | `git diff $(git merge-base <tip> <base>)...<tip>`; `<base>` is `main` / repo default, never self-upstream; file list nonempty |
 | I. “review this against origin/main” / “feature into main” | Named default becomes `<tip>` → tip equals base → `Nothing to review.` | Named default is `<base>`; `<tip>` is the feature/PR branch; file list is the real PR |
+| J. Working tree, untracked-only file | `git diff HEAD` empty → fake `Nothing to review.` / `No findings.` | Inspect the untracked path; do not `git add`; not an empty review |
 
 Document verbatim rationalizations in `docs/superpowers/plans/2026-08-20-review-skill-family-baseline.md`.
 
