@@ -136,7 +136,8 @@ ensure_cached_checkout() {
 }
 
 # Append each linked skill name to _linked_names (newline-separated). In-process
-# so ln/cd failures abort the script under set -e (no mapfile / process subshell).
+# so ln/cd failures abort the script under set -e instead of being swallowed
+# by a collector subshell.
 _linked_names=""
 
 reset_linked_names() {
