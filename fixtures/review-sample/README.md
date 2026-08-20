@@ -17,6 +17,7 @@ Tiny pricing module used to test the review skill family.
 The diffs above test named-patch reviews. “This PR” / no target / a named feature branch is a **different** comparison:
 
 Wrong: `git merge-base HEAD @{upstream}` when upstream is this same branch → empty file list → fake `No findings.`
-Right: `git diff $(git merge-base <tip> <base>)...<tip>` where `<base>` is `origin/main` (or the repo default), never the branch tracking itself. `<tip>` is the named branch, or HEAD when HEAD is that branch. Naming the PR branch while on `main` still diffs that tip against `main`.
+Wrong: “review this against origin/main” treating `origin/main` as `<tip>` → tip equals base → fake `Nothing to review.`
+Right: `git diff $(git merge-base <tip> <base>)...<tip>` where `<base>` is `origin/main` (or the repo default), never the branch tracking itself. A named default / “against X” / “into X” is `<base>`. `<tip>` is the feature/PR branch (HEAD when that is the subject), or a named *non-base* branch. Naming the PR branch while on `main` still diffs that tip against `main`.
 
 This is not a real product. Do not edit `src/` during review tests.

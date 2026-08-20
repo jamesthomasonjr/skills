@@ -101,11 +101,13 @@ Explicit user labels win.
 | Named commit | That commit vs its parent |
 | Named branch, “this PR”, or no target | Merge-base of `<base>` … `<tip>` |
 
-**`<tip>`** (named branch / this PR / no target): the named branch if they named one; otherwise HEAD when HEAD is that feature/PR branch. Naming the PR branch while checked out on `main` still uses the named ref as `<tip>`, not HEAD.
+Assign **`<base>` before `<tip>`**. A named default/integration ref (`origin/main`, `main`, `origin/HEAD`, `master`, …) is `<base>`, never `<tip>`. “against X” / “into X” / “compared to X” / “vs X” assigns X as `<base>`.
 
-**`<base>`:** the integration / default branch (`origin/HEAD` if set, else `origin/main`, else `main`, else `master`). **Never** the tip’s self-upstream (a published feature branch that tracks itself yields merge-base == tip and an empty file list).
+**`<tip>`:** a named *non-base* branch; else HEAD when HEAD is that feature/PR branch. “Review this PR” with no extra ref: `<tip>` = current PR branch, `<base>` = default. Two named refs: the against/into/vs or default-looking one is `<base>`; the other is `<tip>`. Do not set both to `main`. If they only named the default and HEAD is a feature/PR branch, `<tip>` = HEAD.
 
-“this PR” while HEAD is already the default branch and they named no feature ref: unresolvable — ask once.
+**`<base>` when unset:** `origin/HEAD`, else `origin/main`, else `main`, else `master`. **Never** the tip’s self-upstream.
+
+Naming a feature/PR branch while checked out on `main` still uses that non-base ref as `<tip>`. “this PR” while HEAD is already the default branch and they named no feature ref: unresolvable — ask once.
 
 **Three-dot merge:** `git merge-base <tip> <base>`, then `git diff <merge-base>...<tip>` (the changes that would actually merge onto the default branch). Not `git merge-base HEAD <ref>` with `<ref>` = `@{upstream}` of the same branch. Not `...HEAD` when `<tip>` is a named ref other than the current checkout.
 
