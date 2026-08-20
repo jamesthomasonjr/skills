@@ -28,7 +28,8 @@ Do not paste the six gates into this file. If any gate is shaky, **drop**. When 
 
 If this is a stop path (empty/unresolvable, or plan/spec/design with no code diff), skip steps 1–5. Write only the stop.
 
-1. Inspect the complete diff from the comparison command (or the named patch file), plus enough surrounding code and tests to confirm each candidate.
+1. Inspect the complete comparison. For working tree: `git diff HEAD` **and** every untracked path in the file list. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not skip them because they are absent from `git diff HEAD`. Do not `git add`. Untracked-only is a real comparison: do not write `Nothing to review.` or `No findings.` without inspecting those files.
+   For a named patch or branch/PR three-dot: inspect that complete diff, plus enough surrounding code and tests to confirm each candidate.
 2. Continue through the whole diff after the first issue. Do not stop at one finding. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
 3. Apply every gate in `gates.md` to each candidate. Drop if any is shaky.
 4. Skip everything under Suppressions — including when they said “nits are fine” or “flag anything.”
@@ -76,6 +77,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “Thorough means more findings” | Thorough means every qualifying defect, and nothing else. |
 | “They asked me to be a critical reviewer of a plan” | Out of family. Stop. Point at `shape-*`. Do not review prose here. |
 | “Always emit Findings / Assessment / Close” | Only after a real comparison. Stop paths skip the contract. Do not wrap `Nothing to review.` |
+| “git diff HEAD was empty, so nothing to review” | Untracked files are not in `git diff HEAD`. Inspect them. Do not `git add`. |
 
 ## Failures
 
@@ -90,3 +92,4 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Reviewing a plan/spec/design as if it were a code diff
 - Grilling a design instead of stopping out of family
 - Wrapping `Nothing to review.` or a `shape-*` stop in Findings / Assessment / Close
+- Skipping untracked working-tree files because `git diff HEAD` is empty

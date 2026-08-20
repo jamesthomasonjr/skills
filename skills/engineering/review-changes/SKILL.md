@@ -47,8 +47,8 @@ A stored patch the user named (`path/to/foo.diff` against a parent tree) **is** 
 
 | Result | Comparison |
 |---|---|
-| Uncommitted / working tree / “what I just changed”; status has paths | Working tree vs HEAD (staged, unstaged, untracked) |
-| Uncommitted asked, status empty | **empty** — `Nothing to review.` |
+| Uncommitted / working tree / “what I just changed”; tracked diff **or** untracked paths | Working tree vs HEAD (staged, unstaged, untracked) |
+| Uncommitted asked; no tracked diff **and** no untracked paths | **empty** — `Nothing to review.` |
 | Named commit resolves | That commit vs its parent |
 | Named commit missing or root (no parent) | **unresolvable** |
 | Named branch / “this PR” / no target; three-dot file list nonempty | Merge-base of `<base>` … `<tip>` |
@@ -73,7 +73,7 @@ If two signals both appear, user label wins; if still tied, ask once. Stop until
 
 **Commands to pass:**
 
-- Working tree: `git diff HEAD` plus untracked (`git ls-files --others --exclude-standard`). File list is the union.
+- Working tree: file list = union of `git diff HEAD --name-only` and `git ls-files --others --exclude-standard`. Pass **both** the tracked diff command (`git diff HEAD`) **and** the untracked paths. Untracked files are first-class: the leaf must Read each, or `git diff --no-index -- /dev/null <path>`. Do **not** `git add`. Untracked-only is a real comparison — not empty, not `Nothing to review.` `git diff HEAD` alone is not the comparison.
 - Named commit: `git diff <commit>^ <commit>` (first parent for merges).
 - Branch / PR / no-target: `git diff $(git merge-base <tip> <base>)...<tip>`. Not `...HEAD` when `<tip>` is a named **non-base** ref other than HEAD. Not `@{upstream}` as `<base>`. Not a named default as `<tip>`.
 - Named patch: the diff file itself; file list from its hunks.
@@ -108,3 +108,5 @@ Then follow `review-defects`. Do not keep a second review procedure here.
 - Using the branch’s own upstream as `<base>` (self-diff → empty file list → fake `No findings.`)
 - Treating a named default (`origin/main`, `main`, …) as `<tip>` (“against origin/main” → tip equals base → fake `Nothing to review.`)
 - Using HEAD as `<tip>` when they named a different **non-base** branch
+- Inspecting only `git diff HEAD` and skipping untracked paths (fake `No findings.` / `Nothing to review.`)
+- `git add` to make untracked files show up in `git diff`

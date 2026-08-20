@@ -113,7 +113,7 @@ Naming a feature/PR branch while checked out on `main` still uses that non-base 
 
 If the three-dot file list is empty or tip equals base: `Nothing to review.` Do not treat a self-diff as a successful empty pass.
 
-**Working-tree command:** staged + unstaged + untracked vs HEAD (`git diff HEAD`, `git diff --cached` if needed to name staged paths, and untracked via `git status` / `git ls-files --others --exclude-standard`). Pass the union.
+**Working-tree command:** file list = union of `git diff HEAD --name-only` and `git ls-files --others --exclude-standard`. Inspect `git diff HEAD` for tracked changes **and** each untracked path (Read, or `git diff --no-index -- /dev/null <path>`). Do not `git add`. Untracked-only is a real comparison — not `Nothing to review.` Empty only when both lists are empty.
 
 **Named-commit command:** `git diff <commit>^ <commit>` (or `git show` equivalent). First parent for merges. A commit with no parent (root) is unresolvable → ask once or `Nothing to review.`
 
