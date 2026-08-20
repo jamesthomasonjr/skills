@@ -197,3 +197,18 @@ Observed:
 - file_list_count: **16**
 - Pass.
 
+### K — untracked-only working tree
+
+Prompt: `Review what I just changed.` Working tree: only untracked `fixtures/review-sample/src/_untracked_only.js` (tax-after-discount formula). `git diff HEAD` empty.
+
+Would have failed: empty `git diff HEAD` → `Nothing to review.` / `No findings.` without reading the file.
+
+Observed:
+- comparison_kind: working-tree
+- said_nothing_to_review: **no**; used_only_git_diff_HEAD: **no**; git_add: **no**
+- inspected untracked path (Read and `git diff --no-index`): **yes**
+- `[P1] Coupon is subtracted after tax… — fixtures/review-sample/src/_untracked_only.js:2`
+- files edited: no
+- Untracked fixture deleted after the run; not committed.
+- Pass.
+
