@@ -63,3 +63,35 @@ Did not fire strongly (still require GREEN coverage):
 ## Fixture note
 
 After A/D, `total.js` was fixed and committed; reverted in `c2cbaa2` so `node --test fixtures/debug-sample/src/total.test.js` fails again for GREEN.
+
+## GREEN
+
+Skills present: `debug`, `debug-root-cause`, `debug-feedback-loop`, `paths.md`. Fresh subagents instructed to read `debug` (or `debug-root-cause` for E) first. Fixture kept broken after A/D via revert `d14aa96`.
+
+### A — clear failing test
+
+- Path: `debug-root-cause`
+- Investigated before edit; reused failing `total.test.js`; fix made test PASS; root cause = tax on pre-discount subtotal
+- **Pass**
+
+### B — ambiguous
+
+- Preferred `debug-root-cause`; no path menu; one-line announce
+- **Pass** (note: fixture briefly green from concurrent A/D — classification still correct)
+
+### C — flaky / no repro
+
+- Handed off to `debug-feedback-loop`; stayed in Phase 1; asked for CI artifacts; refused hypotheses
+- **Pass**
+
+### D — mixed turn
+
+- Stayed on debug path; no gift-card; handed back for feature work
+- **Pass**
+
+### E — Phase 3 escalate (direct invoke)
+
+- Read `../debug/paths.md`; matched two-failed-hypotheses trigger; announced + read `debug-feedback-loop`
+- **Pass**
+
+All GREEN scenarios passed. Fixture restored to known-broken for future baselining.
