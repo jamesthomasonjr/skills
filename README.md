@@ -26,10 +26,16 @@ Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills
 
 Cloud Agents run on isolated VMs and do not inherit laptop `~/.cursor/skills`, Cursor plugin installs, or GitHub Remote Rules. They do load skills from `~/.cursor/skills/` on the VM.
 
-This repo's [`.cursor/environment.json`](.cursor/environment.json) runs [`scripts/install-cloud-agent-skills.sh`](scripts/install-cloud-agent-skills.sh) during environment setup (including Builds). The script is idempotent: it checkouts [jeighty/supersuit](https://github.com/jeighty/supersuit) and this repo (reusing the current workspace when already present), then symlinks each supersuit skill and each promoted JT skill into `~/.cursor/skills`. It does not install `personal/` or `in-progress/`.
+This repo's [`.cursor/environment.json`](.cursor/environment.json) runs [`scripts/install-cloud-agent-skills.sh`](scripts/install-cloud-agent-skills.sh) in two places:
+
+- `install` — during a Build, on the default-branch checkout. Clones [jeighty/supersuit](https://github.com/jeighty/supersuit) (and this repo if it is not already the workspace), then links skills.
+- `start` — on each agent boot, after the requested branch is checked out. Runs `--link-only` so a feature branch that adds a promoted skill is linked without re-cloning supersuit.
+
+The script is idempotent, works with bash 3.2, and does not install `personal/` or `in-progress/`.
 
 ```bash
 ./scripts/install-cloud-agent-skills.sh
+./scripts/install-cloud-agent-skills.sh --link-only
 ```
 
 ## Skills
