@@ -136,3 +136,38 @@ GREEN A/C first pass skipped **Close**. Leaf output contract changed to required
 ## GREEN verdict
 
 Scenarios A–E passed. Close-heading refactor stayed green on A and C. Minimum bar met: leaf produces `No findings.` on a clean change and does not invent nits under “flag anything.”
+
+### F — “Review this PR” vs default base (post-fix)
+
+Prompt: `Review this PR.` Workspace: `cursor/review-skill-family-b6e9` tracking itself (`origin/cursor/review-skill-family-b6e9`).
+
+Would have failed before the tip/`<base>` fix: `git merge-base HEAD @{upstream}` is the tip; file list **0**.
+
+Observed:
+- comparison command: `git diff $(git merge-base HEAD origin/main)...HEAD`
+- used_self_upstream_as_base: **no**
+- file_list_count: **16** (includes `skills/engineering/review-changes/SKILL.md`)
+- said_no_findings_because_empty_diff: **no**
+- files edited: no
+- Pass.
+
+### G — named PR branch as `<tip>` (not HEAD-vs-empty)
+
+Prompt: `Review origin/cursor/review-skill-family-b6e9.`
+
+Observed:
+- TIP_REF: `origin/cursor/review-skill-family-b6e9` (named ref, not a different HEAD)
+- BASE_REF: `origin/main`
+- command: `git diff $(git merge-base origin/cursor/review-skill-family-b6e9 origin/main)...origin/cursor/review-skill-family-b6e9`
+- file_list_count: **16**; empty: **no**
+- Pass.
+
+### H — direct leaf stop path (no three-block envelope)
+
+Prompt: `Review this design spec: we should add coupon stacking at checkout.` Direct invoke of `review-defects`.
+
+Observed:
+- stopped_out_of_family: **yes**; named `shape-*`: **yes**
+- wrote Findings / Assessment / Close headings: **no**
+- full design critique: **no**
+- Pass (P2).
