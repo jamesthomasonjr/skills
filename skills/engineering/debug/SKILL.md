@@ -1,9 +1,9 @@
 ---
 name: debug
 description: >-
-  Router for debugging and bug fixing. Use when the user asks for help
-  fixing, debugging, or finding the root cause of an issue; or reports
-  something broken, throwing, failing, or regressing and wants it diagnosed.
+  Use when the user asks for help fixing, debugging, or finding the root
+  cause of an issue; or reports something broken, throwing, failing, or
+  regressing and wants it diagnosed.
 ---
 
 # Debug

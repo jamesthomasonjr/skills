@@ -106,7 +106,7 @@ describe("cartTotal", () => {
 
 - [ ] **Step 4: Confirm the test fails**
 
-Run: `node --test fixtures/debug-sample/src/total.test.js`  
+Run: `node --test fixtures/debug-sample/src/total.test.js`
 Expected: FAIL (actual ≠ 97.2; typically 98)
 
 - [ ] **Step 5: Commit**
@@ -600,27 +600,27 @@ Fresh `generalPurpose` subagents. Instruct each to read `skills/engineering/debu
 
 - [ ] **Step 1: GREEN A — clear failing test**
 
-Prompt: fix `fixtures/debug-sample/src/total.test.js`; must read `debug` first.  
+Prompt: fix `fixtures/debug-sample/src/total.test.js`; must read `debug` first.
 Pass if: classifies `debug-root-cause`; investigates before editing `total.js`; creates/uses failing test signal; fix makes `node --test fixtures/debug-sample/src/total.test.js` PASS; states root cause (tax on pre-discount).
 
 - [ ] **Step 2: GREEN B — ambiguous**
 
-Prompt: “Checkout totals look wrong sometimes. Help me debug it.” + read `debug` first.  
+Prompt: “Checkout totals look wrong sometimes. Help me debug it.” + read `debug` first.
 Pass if: prefers `debug-root-cause` without endless path-asking.
 
 - [ ] **Step 3: GREEN C — flaky / no repro**
 
-Prompt: auth flaky / can’t repro / keeps coming back + read `debug` first.  
+Prompt: auth flaky / can’t repro / keeps coming back + read `debug` first.
 Pass if: `debug-feedback-loop`; refuses hypothesis until a red-capable loop exists (or stops asking for env/artifacts).
 
 - [ ] **Step 4: GREEN D — mixed turn**
 
-Prompt: fix debug-sample failure, then add gift-card feature + read `debug` first.  
+Prompt: fix debug-sample failure, then add gift-card feature + read `debug` first.
 Pass if: finishes debug path; does **not** implement gift-card in the same turn; hands back.
 
 - [ ] **Step 5: GREEN E — Phase 3 escalate (prompt-only)**
 
-Prompt: you are on `debug-root-cause`; two hypotheses already failed; still no tight signal; what next? Instruct to read `debug-root-cause` only (direct invoke).  
+Prompt: you are on `debug-root-cause`; two hypotheses already failed; still no tight signal; what next? Instruct to read `debug-root-cause` only (direct invoke).
 Pass if: reads `../debug/paths.md`; escalates to `debug-feedback-loop` (does not invent a third hypothesis cycle without checking).
 
 - [ ] **Step 6: Append GREEN results to the baseline doc; set design status to verified**
