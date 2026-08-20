@@ -1,0 +1,3 @@
+{
+  "install": "./scripts/install-cloud-agent-skills.sh"
+}
