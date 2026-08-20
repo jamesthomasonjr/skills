@@ -1,7 +1,7 @@
 # Next-work skill family
 
 Date: 2026-08-20
-Status: drafted (RED baseline + GREEN still to run)
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 ## Problem

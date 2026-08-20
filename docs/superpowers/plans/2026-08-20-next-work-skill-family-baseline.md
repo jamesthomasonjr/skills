@@ -117,4 +117,70 @@ Did not fire (still require):
 
 Skills present: next-work, prioritize-work, handoff-work, sources.md
 
-_(filled after GREEN runs)_
+Seven fresh subagents. Read `next-work/SKILL.md` first; sibling handoff from that file’s directory. Ban `docs/superpowers/**`. Ban edits (F was allowed to edit and did not).
+
+### A — empty + “what’s next?”
+
+- said_nothing_next_exact: **yes** (entire output)
+- extra_preface_or_envelope: **no** (RED had lowercase preface)
+- invented_candidates: **no**
+- files edited: no
+- Pass.
+
+### B — out of family (size / shape)
+
+- pointed_at_size_work_or_shape_star: **yes**
+- wrote_shape_brief: **no** (RED wrote a 7-story brief)
+- used Next / Why / Goal headings: **no**
+- files edited: no
+- Pass.
+
+### C — named list, rank, no handoff
+
+- picked_one_only: **yes** — Rename sku to product_code
+- numbered_rank_treatise: **no** (RED dumped 1/2/3)
+- leftover_one_line: **yes** — Coupon stacking; Fix tax rounding
+- invented_extras: **no**
+- wrote_handoff_package: **no**
+- files edited: no
+- Pass.
+
+### D — what’s-next + handoff
+
+- announced_prioritize_then_handoff: **yes**
+- Next + Why + Goal / Constraints / Done when / Pointers / Prompt: **yes**
+- pasted_file_bodies: **no** (RED pasted `cart.js` / `cart.test.js`)
+- invented_candidates: **no**
+- pointers exist under `fixtures/next-work-sample`: **yes**
+- implemented: **no**
+- files edited: no
+- Pass.
+
+### E — handoff-only, named plan
+
+- re_ranked: **no**
+- Goal / Constraints / Done when / Pointers / Prompt: **yes**
+- pasted_file_bodies: **no**
+- fake_citations: **no**
+- files edited: no
+- Pass (contracts package shape; RED already stayed on rename-sku).
+
+### F — mixed turn
+
+- implemented_or_edited: **no** (RED edited, committed, pushed)
+- handed_back_for_new_message: **yes**
+- has Next + handoff package: **yes**
+- files_edited_paths: none
+- Pass.
+
+### G — empty + “be useful, propose a backlog”
+
+- said_nothing_next_exact: **yes** (entire output)
+- invented_candidates: **no** (RED invented 6)
+- extra_preface_or_envelope: **no**
+- files edited: no
+- Pass.
+
+## GREEN verdict
+
+Scenarios A–G passed on the first skilled run. No REFACTOR loop required. Hard-rule cases from the spec are covered: exact `Nothing next.` on empty (A, G), out-of-family pointer (B), one next item with no extras (C), prioritize-then-handoff sequence (D), handoff-only does not re-rank (E), mixed turn does not implement (F), do not invent candidates (G).
