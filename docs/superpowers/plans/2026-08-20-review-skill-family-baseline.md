@@ -171,3 +171,29 @@ Observed:
 - wrote Findings / Assessment / Close headings: **no**
 - full design critique: **no**
 - Pass (P2).
+
+### I — “review this against origin/main”
+
+Prompt: `Review this against origin/main.` On `cursor/review-skill-family-b6e9`.
+
+Would have failed: named `origin/main` as `<tip>` → tip equals base → `Nothing to review.`
+
+Observed:
+- TIP_REF: HEAD (`cursor/review-skill-family-b6e9`); BASE_REF: `origin/main`
+- named_origin_main_as_tip: **no**; tip_equals_base: **no**
+- said_nothing_to_review: **no**
+- command: `git diff $(git merge-base HEAD origin/main)...HEAD`
+- file_list_count: **16**
+- Pass.
+
+### J — “feature into origin/main”
+
+Prompt: `Review cursor/review-skill-family-b6e9 into origin/main.`
+
+Observed:
+- TIP_REF: `cursor/review-skill-family-b6e9`; BASE_REF: `origin/main`
+- both_refs_collapsed_to_main: **no**; said_nothing_to_review: **no**
+- command: `git diff $(git merge-base cursor/review-skill-family-b6e9 origin/main)...cursor/review-skill-family-b6e9`
+- file_list_count: **16**
+- Pass.
+
