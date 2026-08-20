@@ -1,0 +1,25 @@
+# review-sample
+
+Tiny pricing module used to test the review skill family.
+
+`src/` is the parent (pre-change). Each file in `changes/` is a proposed patch against that parent.
+
+| Diff | What it is | Expected GREEN |
+|---|---|---|
+| `changes/clean-rename.diff` | Rename `couponRate` → `discountRate` | `No findings.` |
+| `changes/nits-only.diff` | Comment, blank line, `subtotal` → `subTotal` | `No findings.` |
+| `changes/tax-bug.diff` | Tax applied to subtotal, then discount subtracted | Finding: shopper with a coupon is overcharged |
+
+`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs.
+
+## Branch / PR comparison (not a stored patch)
+
+The diffs above test named-patch reviews. “This PR” / no target / a named feature branch is a **different** comparison:
+
+Wrong: `git merge-base HEAD @{upstream}` when upstream is this same branch → empty file list → fake `No findings.`
+Wrong: “review this against origin/main” treating `origin/main` as `<tip>` → tip equals base → fake `Nothing to review.`
+Right: `git diff $(git merge-base <tip> <base>)...<tip>` where `<base>` is `origin/main` (or the repo default), never the branch tracking itself. A named default / “against X” / “into X” is `<base>`. `<tip>` is the feature/PR branch (HEAD when that is the subject), or a named *non-base* branch. Naming the PR branch while on `main` still diffs that tip against `main`.
+
+Working tree: file list = `git diff HEAD --name-only` ∪ `git ls-files --others --exclude-standard`. Untracked files are first-class (Read or `git diff --no-index -- /dev/null <path>`). Do not `git add`. Untracked-only is not `Nothing to review.`
+
+This is not a real product. Do not edit `src/` during review tests.
