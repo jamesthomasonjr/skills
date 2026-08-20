@@ -18,6 +18,8 @@ off. This skill does **not** rank and does **not** write the handoff.
 
 - Do not invent work items. Follow [sources.md](sources.md). Empty set →
   exactly `Nothing next.`
+- Scoped subdirectory: resolve inside that scope only, including git.
+  Parent dirty tree or parent feature-branch delta is not a candidate.
 - Do not rank. Do not write Goal / Constraints / Done when / Pointers / Prompt.
 - Do not implement, scaffold, or edit application code.
 - Mixed turn (“what’s next, then do it” / “handoff then implement”): pass
@@ -33,7 +35,8 @@ Run [sources.md](sources.md) **before** announcing — except on an
 out-of-family stop (do not gather a set just to ignore it).
 
 User-named list wins as the set. Drop sources that do not resolve.
-Scoped subdirectory → resolve inside that scope only.
+Scoped subdirectory → resolve inside that scope only, including git.
+Parent dirty tree / parent feature-branch delta → drop.
 
 Not allowed here: ranking, writing the handoff, implementing, touring
 `src/` for chores.
@@ -92,6 +95,8 @@ item, then follow `handoff-work` with that item.
 ## Red flags
 
 - Inventing a backlog so the answer looks useful
+- Treating a parent dirty tree or parent feature-branch as “in flight”
+  when the project is a scoped subdirectory
 - Ranking in the router
 - Writing the handoff in the router
 - Implementing because the next item is obvious

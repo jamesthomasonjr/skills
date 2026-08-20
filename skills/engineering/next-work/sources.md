@@ -11,9 +11,14 @@ handoff recipe.
 1. **User-named list** — items they typed. Verbatim. Do not add extras.
 2. **Open issues / PRs** — only if resolvable here (`gh` or an equivalent
    they already have). Failure or missing tool → **drop** this source.
-3. **Current branch / uncommitted work** — cheap git (`git status --short`,
-   current branch vs default). Dirty tree or a feature branch with a real
-   delta is a candidate (“finish what’s in flight”). Clean default branch → drop.
+3. **Current branch / uncommitted work** — cheap git.
+   **Unscoped** (the repo is the project): `git status --short`, current
+   branch vs default. Dirty tree or a feature branch with a real delta is
+   a candidate (“finish what’s in flight”). Clean default branch → drop.
+   **Scoped subdirectory:** count only uncommitted paths or branch-delta
+   files **inside that scope**. A dirty parent tree or a feature-branch
+   delta entirely outside the scope is **dropped**, not “finish what’s
+   in flight.”
 4. **In-repo plans / specs under `docs/`** — plan or spec files, including
    `docs/superpowers/plans` and `docs/superpowers/specs` when those exist.
    Missing `docs/` → drop.
@@ -40,17 +45,23 @@ Allowed:
 - Treat a user-named list as the set.
 - Read one named board/ticket/path.
 - One `git status --short` plus current branch name (and, when useful,
-  whether HEAD equals the default branch).
+  whether HEAD equals the default branch). **Scoped:**
+  `git status --short -- <scope>` and, if checking a feature-branch
+  delta, `git diff --name-only <base>...<tip> -- <scope>`. Paths
+  outside the scope do not count. Empty in-scope lists → drop source 3.
 - One optional `gh issue list` / `gh pr list` (or equivalent) when they
   asked for issues/PRs or named no list and no board — skip entirely if
-  the tool is missing.
+  the tool is missing. **Scoped:** skip parent issues/PRs.
 - One glob of `docs/**/*.md` (or a named docs subfolder) for plan/spec titles.
+  **Scoped:** only `docs/` **inside that scope**.
 
 Not allowed: reading every source file to start the work, ranking in the
 resolver, implementing, inventing titles for files you did not see.
 
 When the user scoped a subdirectory as the project, resolve sources
-**inside that scope only**. Do not pull the parent repo’s `docs/` or issues.
+**inside that scope only**. Do not pull the parent repo’s `docs/`,
+issues/PRs, **or git** (parent dirty tree, parent feature-branch delta).
+After those drops, empty set → exactly `Nothing next.`
 
 ## Empty set
 

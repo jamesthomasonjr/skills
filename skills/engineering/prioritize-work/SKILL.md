@@ -26,6 +26,9 @@ Read it from this file’s directory, not cwd.
   **hand back**. They must send a **new message** to implement.
 - If invoked with no set, cheap-resolve as `next-work` would. Empty →
   exactly `Nothing next.`
+- Scoped cheap-resolve: follow [sources.md](../next-work/sources.md).
+  Parent git (dirty tree or feature-branch delta outside the scope) is
+  not in-flight work.
 - If invoked with a size / review / debug / orient ask: stop. Out of
   family. Point at the matching family. Do not pick.
 
@@ -44,7 +47,9 @@ steps 1–3. Write only the stop.
 User-named priority wins. Then, first match:
 
 1. **Finish in-flight** — uncommitted work or a feature branch that
-   already carries this item.
+   already carries this item **inside the project scope**. Parent-repo
+   dirt or a parent feature-branch delta does not qualify when the
+   project is a subdirectory.
 2. **Unblocked and pointed** — has a real file/PR/plan pointer; can start now.
 3. **Smallest finished slice** — one piece that can be done without
    inventing children.
@@ -84,6 +89,7 @@ No other sections. No handoff package. No implementation.
 | “I’ll write the handoff while I’m here” | That is `handoff-work`. Do not write it. |
 | “They said do it, so I should start” | Pick (and hand off if sequenced), then hand back. |
 | “Always emit Next / Why” | Only after a real pick. Stop paths skip the envelope. |
+| “We’re on a feature branch / the parent tree is dirty” | Scoped project: parent git is dropped. `Nothing next.` if nothing remains in scope. |
 
 ## Failures
 
@@ -93,3 +99,4 @@ No other sections. No handoff package. No implementation.
 - Implementing in this turn
 - Success envelope on a stop path
 - Re-doing the router’s classify
+- Picking parent in-flight work for a scoped empty project

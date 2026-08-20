@@ -184,3 +184,15 @@ Seven fresh subagents. Read `next-work/SKILL.md` first; sibling handoff from tha
 ## GREEN verdict
 
 Scenarios A–G passed on the first skilled run. No REFACTOR loop required. Hard-rule cases from the spec are covered: exact `Nothing next.` on empty (A, G), out-of-family pointer (B), one next item with no extras (C), prioritize-then-handoff sequence (D), handoff-only does not re-rank (E), mixed turn does not implement (F), do not invent candidates (G).
+
+## Bugbot P2 — scoped git leak (post-fix)
+
+The letter of source 3 still ran repo-wide `git status` / feature-branch delta. GREEN A/G banned parent `docs/` but did not force the git path. Same class of hole as review-changes comparing a PR to its own upstream.
+
+RED H (skills present, **before** the scoped-git wording): treat `fixtures/next-work-empty` as the project while on this feature branch. Observed: said `Nothing next.` and did not pick parent in-flight — the *agent* scoped git, but the *letter* still allowed the leak. Fix the letter.
+
+Fix: `sources.md` source 3 + cheap-resolve + scoped paragraph name git; router hard rule / cheap-resolve / red flags; `prioritize-work` cheap-resolve, ranking, rationalization, failures.
+
+### H — scoped empty + parent dirty / feature branch (GREEN after fix)
+
+_(filled after the run)_
