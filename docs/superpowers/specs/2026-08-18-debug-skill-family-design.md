@@ -1,7 +1,7 @@
 # Debug skill family
 
 Date: 2026-08-18
-Status: draft for review (revised: paths.md sibling from depth skill, Phase 3 escalate-before-retry, link-only triggers)
+Status: draft for review (revised: Phase 4 creates the regression; Phase 3 cites ../debug/paths.md)
 Repo: jamesthomasonjr/skills
 
 ## Problem
@@ -124,18 +124,22 @@ Required links in this skill’s `SKILL.md`:
 
 ### Phases
 
-1. **Investigate** — Read errors and stack traces completely. Reproduce. Check recent changes. For multi-component systems, add boundary instrumentation and gather evidence before guessing. Trace bad values backward to the source; fix at source, not symptom.
+1. **Investigate** — Read errors and stack traces completely. Reproduce. Check recent changes. For multi-component systems, add boundary instrumentation and gather evidence before guessing. Trace bad values backward to the source; fix at source, not symptom. Prefer capturing a re-runnable command when one is easy; do **not** block leaving Phase 1 solely because the repro is still manual.
 2. **Pattern** — Find working analogues in the same codebase. Diff working vs broken. List differences. Note dependencies, config, and assumptions.
-3. **Hypothesis** — Form one falsifiable hypothesis. Test with the smallest possible change or probe. If the hypothesis is wrong: **check `paths.md` Escalation first**. If any trigger matches → escalate (see Escalation out). Otherwise return to Phase 1 with the new evidence and form a **new** hypothesis — do not stack untested fixes.
-4. **Implement** — Only when a **tight pass/fail signal already exists** (repro command or failing regression you can re-run). Create/reuse that failing regression → apply **one** root-cause fix → verify original symptom with fresh evidence.
+3. **Hypothesis** — Form one falsifiable hypothesis. Test with the smallest possible change or probe. If the hypothesis is wrong: **check [../debug/paths.md](../debug/paths.md) Escalation first** (same sibling-resolve as the REQUIRED block). If any trigger matches → escalate (see Escalation out). Otherwise return to Phase 1 with the new evidence and form a **new** hypothesis — do not stack untested fixes.
+4. **Implement** — Enter after a confirmed hypothesis (Phase 3 succeeded). Steps, in order:
+   1. **Create or reuse a failing regression** — automated test preferred; otherwise a named agent-runnable command that goes red on this symptom. This is where the tight signal is created when Phase 1 only had a manual repro.
+   2. If you **cannot** create a re-runnable regression/command → escalate via [../debug/paths.md](../debug/paths.md) (treat as no tight pass/fail signal / cannot lock the bug down for verification). Do not patch without it.
+   3. Apply **one** root-cause fix.
+   4. Verify original symptom with fresh evidence against that regression/command.
    - Fix works → closeout.
    - Fix fails and attempts **under 3** → return to Phase 1 with the new evidence. Do not stay in Phase 4 stacking another guess.
-   - Fix fails and attempts **3 or more** → stop and question architecture with the user (see Stop rules). Do not attempt fix #4 without that discussion.
+   - Fix fails and attempts **3 or more** (counted only after a tight signal exists from step 1) → stop and question architecture with the user (see Stop rules). Do not attempt fix #4 without that discussion.
 
 ### Stop rules
 
-- After **three failed fix attempts**, stop and question architecture with the user (wrong architecture, not one more guess). This stop is only reachable on the Phase 4 path — i.e. when a tight signal already existed and fixes were attempted against it. Without a tight signal, escalation (not the architecture stop) applies.
-- Red flags that force return to Phase 1 (or escalation if `paths.md` matches): “quick fix for now,” changing multiple things at once, skipping verification, proposing fixes before tracing data flow.
+- After **three failed fix attempts against an existing tight signal**, stop and question architecture with the user (wrong architecture, not one more guess). Attempts do not count toward this stop until Phase 4 has created or reused a re-runnable regression/command. If that signal cannot be created, escalate — do not invent an architecture stop without a signal.
+- Red flags that force return to Phase 1 (or escalation if [../debug/paths.md](../debug/paths.md) matches): “quick fix for now,” changing multiple things at once, skipping verification, proposing fixes before tracing data flow.
 
 ### Escalation out (this skill owns it)
 
@@ -185,6 +189,7 @@ Single source for:
    - Cannot reproduce consistently
    - Two or more hypotheses failed without a tight pass/fail signal
    - Flaky or performance issue and still no tight red-capable command
+   - Confirmed hypothesis but **cannot create** a re-runnable regression/command in Phase 4 (manual-only repro that cannot be automated or scripted for the agent)
 
 **Link-only rule:** `debug-root-cause/SKILL.md` must link [../debug/paths.md](../debug/paths.md) and read it before escalating. It must **not** restate or shorten the escalation bullets. Router `SKILL.md` links local [paths.md](paths.md) for classification.
 
@@ -203,14 +208,15 @@ Apply writing-skills TDD (pressure scenarios with subagents).
 | “Flaky / can’t repro / keeps coming back” | Speculates root cause from reading code | Takes `debug-feedback-loop`; refuses hypothesis without red-capable loop |
 | Root-cause path: two failed hypotheses, still no tight signal | Cycles Phase 1→3 forever or third random fix | After second failed hypothesis, reads `../debug/paths.md`, escalates via sibling `debug-feedback-loop` |
 | Direct `/debug-root-cause` with escalation condition (no router in context) | Cannot find triggers / invents a list | Resolves and reads `../debug/paths.md`, then escalates |
-| Root-cause path: three failed Phase 4 fixes **with a tight signal already in hand** | Keeps patching | Stops and questions architecture |
+| Root-cause path: three failed Phase 4 fixes **after** creating/reusing a tight regression/command | Keeps patching | Stops and questions architecture |
+| Root-cause path: confirmed hypothesis, cannot create re-runnable regression | Patches anyway or stalls with no next step | Escalates via `../debug/paths.md` |
 | Mixed turn: “fix this, then add feature X” | Starts the feature in the same turn | Finishes debug path, then hands back |
 
 ## Success criteria
 
 - Router classifies clear-repro → root-cause and no-repro/flaky/perf → feedback-loop.
 - Ambiguous cases prefer root-cause.
-- Root-cause skill blocks fixes before Phase 1; wrong hypotheses check escalation before Phase 1 retry; failed Phase 4 fixes return to Phase 1; architecture stop only after 3 failed fixes against an existing tight signal.
+- Root-cause skill blocks fixes before Phase 1; wrong hypotheses check `../debug/paths.md` before Phase 1 retry; Phase 4 **creates** the failing regression when needed; failed Phase 4 fixes return to Phase 1; architecture stop only after 3 failed fixes against that tight signal; escalate if the regression/command cannot be created.
 - Feedback-loop skill blocks hypothesising before a named red-capable command run once.
 - Escalation has one owner (`debug-root-cause`), one trigger list (`debug/paths.md`, link-only), and one mechanism (sibling read of `debug-feedback-loop`).
 - Direct invoke of `debug-root-cause` can load triggers via `../debug/paths.md` under symlink/plugin install.
