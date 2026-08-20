@@ -36,6 +36,9 @@ Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills
 - **[shape-feature](./skills/engineering/shape-feature/SKILL.md)** — Feature brief and user-story inventory.
 - **[shape-story](./skills/engineering/shape-story/SKILL.md)** — Spec-ready user-story brief for a later specify step.
 - **[shape-task](./skills/engineering/shape-task/SKILL.md)** — Atomic task / chore / known-bug / spike brief (no fake user story).
+- **[debug](./skills/engineering/debug/SKILL.md)** — Router for debugging. Use when fixing, debugging, or finding root cause.
+- **[debug-root-cause](./skills/engineering/debug-root-cause/SKILL.md)** — Root-cause-first debugging for clear repros, stacks, and failing tests.
+- **[debug-feedback-loop](./skills/engineering/debug-feedback-loop/SKILL.md)** — Feedback-loop-first debugging for flaky, unreproducible, recurring, or performance issues.
 
 ### Productivity
 
