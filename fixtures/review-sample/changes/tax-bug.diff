@@ -1,0 +1,11 @@
+--- a/src/pricing.js
++++ b/src/pricing.js
+@@ -25,7 +25,7 @@
+     discount = subtotal * couponRate;
+   }
+ 
+-  const total = Math.round((subtotal - discount) * (1 + TAX_RATE) * 100) / 100;
++  const total = Math.round(subtotal * (1 + TAX_RATE) * 100) / 100 - discount;
+   return { subtotal, discount, total };
+ }
+ 
