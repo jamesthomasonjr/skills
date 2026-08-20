@@ -15,10 +15,12 @@ handoff recipe.
    **Unscoped** (the repo is the project): `git status --short`, current
    branch vs default. Dirty tree or a feature branch with a real delta is
    a candidate (“finish what’s in flight”). Clean default branch → drop.
-   **Scoped subdirectory:** count only uncommitted paths or branch-delta
-   files **inside that scope**. A dirty parent tree or a feature-branch
-   delta entirely outside the scope is **dropped**, not “finish what’s
-   in flight.”
+   **Scoped subdirectory — one rule:** keep uncommitted paths and
+   branch-delta files **inside that scope**. Drop parent dirty / parent
+   feature-branch files **outside** the scope. “Parent feature-branch
+   delta” is **not** an automatic drop of source 3. Drop source 3 only
+   when the in-scope uncommitted list and the in-scope branch-delta list
+   are both empty.
 4. **In-repo plans / specs under `docs/`** — plan or spec files, including
    `docs/superpowers/plans` and `docs/superpowers/specs` when those exist.
    Missing `docs/` → drop.
@@ -46,9 +48,13 @@ Allowed:
 - Read one named board/ticket/path.
 - One `git status --short` plus current branch name (and, when useful,
   whether HEAD equals the default branch). **Scoped:**
-  `git status --short -- <scope>` and, if checking a feature-branch
-  delta, `git diff --name-only <base>...<tip> -- <scope>`. Paths
-  outside the scope do not count. Empty in-scope lists → drop source 3.
+  `git status --short -- <scope>` and
+  `git diff --name-only <base>...<tip> -- <scope>`. `<tip>` is HEAD (or
+  the named feature/PR branch). `<base>` is `origin/HEAD`, else
+  `origin/main`, else `main`, else `master`. Never the branch’s own
+  `@{upstream}` when that upstream is the same branch (self-diff empties
+  the list → fake `Nothing next.`). Paths outside the scope do not
+  count. Drop source 3 only when both in-scope lists are empty.
 - One optional `gh issue list` / `gh pr list` (or equivalent) when they
   asked for issues/PRs or named no list and no board — skip entirely if
   the tool is missing. **Scoped:** skip parent issues/PRs.
@@ -60,8 +66,10 @@ resolver, implementing, inventing titles for files you did not see.
 
 When the user scoped a subdirectory as the project, resolve sources
 **inside that scope only**. Do not pull the parent repo’s `docs/`,
-issues/PRs, **or git** (parent dirty tree, parent feature-branch delta).
-After those drops, empty set → exactly `Nothing next.`
+issues/PRs, or **out-of-scope** git (parent dirty paths and parent
+feature-branch files **outside** the scope). In-scope uncommitted and
+in-scope branch-delta files still count. After those drops, empty set
+→ exactly `Nothing next.`
 
 ## Empty set
 

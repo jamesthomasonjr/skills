@@ -64,7 +64,7 @@ skills/engineering/
 
 Hard rules for the whole family:
 
-1. Do **not** invent work items. Candidates come only from sources `sources.md` names. If a source does not resolve, **drop it**. An empty set is `Nothing next.`, not a made-up backlog. When the user scoped a subdirectory as the project, parent `docs/`, issues/PRs, **and git** stay out.
+1. Do **not** invent work items. Candidates come only from sources `sources.md` names. If a source does not resolve, **drop it**. An empty set is `Nothing next.`, not a made-up backlog. When the user scoped a subdirectory as the project, parent `docs/`, issues/PRs, and **out-of-scope** git stay out; in-scope uncommitted and in-scope branch-delta still count.
 2. Prioritize picks **one** next item by default, plus a one-line why. A long ranked dump is not the default. Residuals are a short leftover line, not a second procedure.
 3. Handoff is a package the *next* agent can run with: goal, constraints, how to tell it’s done, pointers to real files/PRs/plans. Not a dump of the whole repo. Not a prescription of line-by-line edits. Not a fake citation.
 4. Stop paths must not also require the success envelope. If the skill says stop with `Nothing next.` or an out-of-family pointer, that is the entire output. Do not also require Next / Why / Handoff (or Goal / Constraints / Done when / Pointers / Prompt) headings.
@@ -168,7 +168,7 @@ Single source for legal origins, resolve/drop, the cheap-resolve pass, and the e
 
 1. **User-named list** — items they typed. Verbatim. Do not add extras.
 2. **Open issues / PRs** — only if resolvable in this environment (`gh` or an equivalent they already have). Failure or missing tool → **drop** this source.
-3. **Current branch / uncommitted work** — cheap git. **Unscoped** (the repo is the project): `git status --short`, current branch vs default. Dirty tree or a feature branch with a real delta is a candidate (“finish what’s in flight”). Clean default branch → drop. **Scoped subdirectory:** count only uncommitted paths or branch-delta files **inside that scope**. A dirty parent tree or a feature-branch delta entirely outside the scope is **dropped**, not “finish what’s in flight.”
+3. **Current branch / uncommitted work** — cheap git. **Unscoped** (the repo is the project): `git status --short`, current branch vs default. Dirty tree or a feature branch with a real delta is a candidate (“finish what’s in flight”). Clean default branch → drop. **Scoped subdirectory — one rule:** keep uncommitted paths and branch-delta files **inside that scope**. Drop parent dirty / parent feature-branch files **outside** the scope. “Parent feature-branch delta” is **not** an automatic drop of source 3. Drop source 3 only when both in-scope lists are empty.
 4. **In-repo plans / specs under `docs/`** — files that look like plans or specs (including `docs/superpowers/plans` and `docs/superpowers/specs` when those exist). Missing `docs/` → drop. **Scoped:** only `docs/` inside that scope.
 5. **A board / ticket / path the user named** — read that path if it exists. Missing → drop.
 
@@ -179,7 +179,7 @@ Do not use: “I noticed we should add tests,” linter noise, imagined refactor
 - If you cannot resolve a source, drop it. Do not ask per source when other sources already yielded items.
 - User-named list **wins as the set** when present: do not union in extras from git/docs/issues unless they also asked to include those.
 - Pointers you pass on must exist (path readable, or issue/PR identifier that resolved). If you did not open it, do not cite it.
-- When the user scoped a subdirectory as the project, resolve **inside that scope only**. Parent `docs/`, issues/PRs, **and git** stay out.
+- When the user scoped a subdirectory as the project, resolve **inside that scope only**. Parent `docs/`, issues/PRs, and **out-of-scope** git stay out. In-scope uncommitted and in-scope branch-delta still count.
 
 ### Cheap-resolve (one pass)
 
@@ -187,11 +187,11 @@ Allowed:
 
 - Treat a user-named list as the set.
 - Read one named board/ticket/path.
-- One `git status --short` plus current branch name (and, when useful, whether HEAD equals the default branch). **Scoped:** `git status --short -- <scope>` and, if checking a feature-branch delta, `git diff --name-only <base>...<tip> -- <scope>`. Paths outside the scope do not count. Empty in-scope lists → drop source 3.
+- One `git status --short` plus current branch name (and, when useful, whether HEAD equals the default branch). **Scoped:** `git status --short -- <scope>` and `git diff --name-only <base>...<tip> -- <scope>`. `<tip>` is HEAD (or the named feature/PR branch). `<base>` is `origin/HEAD`, else `origin/main`, else `main`, else `master`. Never the branch’s own `@{upstream}` when that upstream is the same branch. Paths outside the scope do not count. Drop source 3 only when both in-scope lists are empty.
 - One optional `gh issue list` / `gh pr list` (or equivalent) when they asked for issues/PRs or named no list and no board — skip entirely if the tool is missing. **Scoped:** skip parent issues/PRs.
 - One glob of `docs/**/*.md` (or a named docs subfolder) for plan/spec titles. **Scoped:** only in-scope `docs/`.
 
-Not allowed: reading every source file to start the work, ranking in the resolver, implementing, inventing titles for files you did not see. Parent-repo git as “in flight” when the project is a subdirectory.
+Not allowed: reading every source file to start the work, ranking in the resolver, implementing, inventing titles for files you did not see. Out-of-scope parent git as “in flight.” Dropping source 3 just because HEAD is a parent feature branch.
 
 ### Empty set
 
@@ -272,7 +272,7 @@ These are **not** successful picks. Do **not** emit Next, Why, Leftover, Goal, C
 | “Direct leaf invoke should re-classify first” | Leaves do not re-do the router’s classify. Do the leaf job or stop. |
 | “This already-shaped work still needs a brief, I’ll write it here” | Out of family. Point at `size-work` / `shape-*`. |
 | “gh failed, so I’ll invent likely issues” | Drop the source. Do not invent. |
-| “We’re on a feature branch / the parent tree is dirty” | Scoped project: parent git is dropped. `Nothing next.` if nothing remains in scope. |
+| “We’re on a feature branch / the parent tree is dirty” | Out-of-scope parent git is dropped. In-scope uncommitted or in-scope branch-delta still counts. Drop source 3 only when both in-scope lists are empty. |
 
 ## Failures
 
@@ -287,7 +287,8 @@ These are **not** successful picks. Do **not** emit Next, Why, Leftover, Goal, C
 - Sibling read from cwd / `skills/engineering/...` after symlink
 - Required tracker / product runtime
 - Shaping, reviewing, debugging, or orienting in this family
-- Picking parent in-flight work for a scoped empty project
+- Picking out-of-scope parent in-flight work for a scoped project
+- Dropping source 3 on a scoped project just because HEAD is a parent feature branch
 
 ## Fixture
 
@@ -336,7 +337,8 @@ Minimum scenarios:
 | E. Handoff-only for a named sample item | Re-ranks the board / invents siblings | Package for that item only; does not re-rank |
 | F. Mixed turn (“what’s next, then do it”) on the sample | Edits the fixture | Pick + handoff, then hand back; no file edits |
 | G. Empty + “be useful, propose a backlog” | Invents candidates | Exactly `Nothing next.` No invented items. No envelope. |
-| H. Scoped empty fixture while parent is dirty and/or on a feature branch | Picks parent in-flight work (source 3 letter) | Exactly `Nothing next.` No parent git candidate. No envelope. |
+| H1. Scoped tree with **no** in-scope uncommitted or branch-delta (existing fixture this branch did not introduce), parent dirty / parent-only feature-branch delta | Picks parent in-flight, or drops source 3 by “parent feature branch” then still invents | Exactly `Nothing next.` No parent git candidate. No envelope. |
+| H2. Scoped package with **committed in-scope WIP** on the feature branch | Drops source 3 because HEAD is a parent feature branch → fake `Nothing next.` | Source 3 **keeps** the in-scope slice. Must not emit `Nothing next.` solely because HEAD is a parent feature branch. |
 
 Document verbatim rationalizations in `docs/superpowers/plans/2026-08-20-next-work-skill-family-baseline.md`.
 
@@ -344,7 +346,7 @@ Document verbatim rationalizations in `docs/superpowers/plans/2026-08-20-next-wo
 
 - Router classifies per the table; user labels win; typical ask sequences prioritize then handoff.
 - Candidates come only from named sources; unresolvable sources are dropped; empty set is `Nothing next.`
-- Scoped subdirectory: parent `docs/`, issues/PRs, **and git** stay out. Source 3 counts only in-scope uncommitted or branch-delta paths. Parent dirt or a parent feature-branch delta is dropped. Empty after that → exactly `Nothing next.`
+- Scoped subdirectory: parent `docs/`, issues/PRs, and **out-of-scope** git stay out. Source 3 **keeps** in-scope uncommitted and in-scope branch-delta. Drop source 3 only when both in-scope lists are empty. Empty after that → exactly `Nothing next.` `<base>` is the default (`origin/HEAD` / `origin/main`), never the branch’s self-upstream.
 - Prioritize picks one item + one-line why; no ranked dump default; no invented extras.
 - Handoff package is Goal / Constraints / Done when / Pointers / Prompt; pointers are real; prompt is not a patch and not a repo dump.
 - Handoff-only does not re-rank.
