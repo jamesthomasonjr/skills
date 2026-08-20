@@ -1,7 +1,7 @@
 # Debug skill family
 
 Date: 2026-08-18
-Status: draft for review (revised: single escalation owner, Phase 4 retry loop, verification + sibling handoff)
+Status: draft for review (revised: paths.md sibling from depth skill, Phase 3 escalate-before-retry, link-only triggers)
 Repo: jamesthomasonjr/skills
 
 ## Problem
@@ -91,7 +91,7 @@ Canonical initial-routing table lives only in `paths.md`. Summary:
 
 ### Escalation (not the router’s job)
 
-Mid-run switches are owned **only** by `debug-root-cause`. The router never re-enters to re-classify mid-debug. Canonical escalation triggers live **only** in `paths.md` (one list); `debug-root-cause` links that list and must not invent a second one.
+Mid-run switches are owned **only** by `debug-root-cause`. The router never re-enters to re-classify mid-debug. Canonical escalation triggers live **only** in `paths.md` (one list). Skills that need them **link and read** that file — **link-only, no verbatim copy** of the trigger list in any `SKILL.md` body (avoids a second drifting list).
 
 ### Handoff contract
 
@@ -115,30 +115,31 @@ Then follow that depth skill. Do not keep a second debugging procedure in the ro
 
 **Source shape:** Superpowers systematic-debugging, rewritten in this repo’s voice.
 
+**REQUIRED before escalating (and on direct invoke):** Read [../debug/paths.md](../debug/paths.md) with the same sibling-resolve rule as the router (`../debug/paths.md` is next to this skill’s folder). After `~/.cursor/skills/debug-root-cause` symlink, a bare `paths.md` read misses — always resolve via the sibling `debug` skill directory (or invoke/read `debug`’s `paths.md` by the path used to open this `SKILL.md`). Do not paste the escalation list into this file.
+
+Required links in this skill’s `SKILL.md`:
+
+- [../debug/paths.md](../debug/paths.md)
+- [../debug-feedback-loop/SKILL.md](../debug-feedback-loop/SKILL.md)
+
 ### Phases
 
 1. **Investigate** — Read errors and stack traces completely. Reproduce. Check recent changes. For multi-component systems, add boundary instrumentation and gather evidence before guessing. Trace bad values backward to the source; fix at source, not symptom.
 2. **Pattern** — Find working analogues in the same codebase. Diff working vs broken. List differences. Note dependencies, config, and assumptions.
-3. **Hypothesis** — Form one falsifiable hypothesis. Test with the smallest possible change or probe. If the hypothesis is wrong, return to Phase 1 with the new evidence and form a **new** hypothesis — do not stack untested fixes.
-4. **Implement** — Create a failing regression (automated test or tight repro command) → apply **one** root-cause fix → verify original symptom with fresh evidence.
+3. **Hypothesis** — Form one falsifiable hypothesis. Test with the smallest possible change or probe. If the hypothesis is wrong: **check `paths.md` Escalation first**. If any trigger matches → escalate (see Escalation out). Otherwise return to Phase 1 with the new evidence and form a **new** hypothesis — do not stack untested fixes.
+4. **Implement** — Only when a **tight pass/fail signal already exists** (repro command or failing regression you can re-run). Create/reuse that failing regression → apply **one** root-cause fix → verify original symptom with fresh evidence.
    - Fix works → closeout.
    - Fix fails and attempts **under 3** → return to Phase 1 with the new evidence. Do not stay in Phase 4 stacking another guess.
    - Fix fails and attempts **3 or more** → stop and question architecture with the user (see Stop rules). Do not attempt fix #4 without that discussion.
 
 ### Stop rules
 
-- After **three failed fix attempts**, stop and question architecture with the user (wrong architecture, not one more guess). The Phase 4 → Phase 1 retry loop is what makes this stop reachable.
-- Red flags that force return to Phase 1: “quick fix for now,” changing multiple things at once, skipping verification, proposing fixes before tracing data flow.
+- After **three failed fix attempts**, stop and question architecture with the user (wrong architecture, not one more guess). This stop is only reachable on the Phase 4 path — i.e. when a tight signal already existed and fixes were attempted against it. Without a tight signal, escalation (not the architecture stop) applies.
+- Red flags that force return to Phase 1 (or escalation if `paths.md` matches): “quick fix for now,” changing multiple things at once, skipping verification, proposing fixes before tracing data flow.
 
 ### Escalation out (this skill owns it)
 
-When any trigger in `paths.md` **Escalation** matches, announce the switch in one line, then read the sibling [../debug-feedback-loop/SKILL.md](../debug-feedback-loop/SKILL.md) (same sibling-resolve rules as the router) and follow it. Do **not** bounce back through `debug` to re-classify. Do not keep both procedures in play.
-
-Canonical triggers (must match `paths.md`; do not shorten this list in the skill body):
-
-- Cannot reproduce consistently
-- Two or more hypotheses failed without a tight pass/fail signal
-- Flaky or performance issue and still no tight red-capable command
+When any trigger in [../debug/paths.md](../debug/paths.md) **Escalation** matches, announce the switch in one line, then read the sibling [../debug-feedback-loop/SKILL.md](../debug-feedback-loop/SKILL.md) and follow it. Do **not** bounce back through `debug` to re-classify. Do not keep both procedures in play. Do not restate the trigger bullets here — read `paths.md`.
 
 ### Closeout
 
@@ -179,10 +180,15 @@ In the same change that adds the skills:
 
 Single source for:
 
-1. **Classification** — the initial-routing table (same rows as Router § Classification).
-2. **Escalation** — the three mid-run triggers listed under `debug-root-cause` § Escalation out. No second copy with different wording.
+1. **Classification** — the initial-routing table (same rows as Router § Classification). The router may summarize that table in `SKILL.md` for scanability; if wording drifts, `paths.md` wins.
+2. **Escalation** — the mid-run triggers (authoritative list lives only here), including at least:
+   - Cannot reproduce consistently
+   - Two or more hypotheses failed without a tight pass/fail signal
+   - Flaky or performance issue and still no tight red-capable command
 
-Router `SKILL.md` and `debug-root-cause/SKILL.md` both say **REQUIRED: read `paths.md`** before classifying or escalating.
+**Link-only rule:** `debug-root-cause/SKILL.md` must link [../debug/paths.md](../debug/paths.md) and read it before escalating. It must **not** restate or shorten the escalation bullets. Router `SKILL.md` links local [paths.md](paths.md) for classification.
+
+Router says **REQUIRED: read `paths.md`** before classifying. `debug-root-cause` says **REQUIRED: read `../debug/paths.md`** before escalating (and on any direct invoke that might escalate).
 
 ## Verification plan
 
@@ -195,18 +201,20 @@ Apply writing-skills TDD (pressure scenarios with subagents).
 | Clear failing unit test / stack + “fix it” (against `fixtures/debug-sample/`) | Jumps to plausible patch | Takes `debug-root-cause`; investigates before fix |
 | Ambiguous: symptom named, no clear repro *or* loop signal | Guesses a path or asks forever | Prefers `debug-root-cause` |
 | “Flaky / can’t repro / keeps coming back” | Speculates root cause from reading code | Takes `debug-feedback-loop`; refuses hypothesis without red-capable loop |
-| Root-cause path: two failed hypotheses, still no tight signal | Third random fix | Escalates via sibling read of `debug-feedback-loop` (not back through router) |
-| Root-cause path: three failed Phase 4 fixes | Keeps patching | Stops and questions architecture |
+| Root-cause path: two failed hypotheses, still no tight signal | Cycles Phase 1→3 forever or third random fix | After second failed hypothesis, reads `../debug/paths.md`, escalates via sibling `debug-feedback-loop` |
+| Direct `/debug-root-cause` with escalation condition (no router in context) | Cannot find triggers / invents a list | Resolves and reads `../debug/paths.md`, then escalates |
+| Root-cause path: three failed Phase 4 fixes **with a tight signal already in hand** | Keeps patching | Stops and questions architecture |
 | Mixed turn: “fix this, then add feature X” | Starts the feature in the same turn | Finishes debug path, then hands back |
 
 ## Success criteria
 
 - Router classifies clear-repro → root-cause and no-repro/flaky/perf → feedback-loop.
 - Ambiguous cases prefer root-cause.
-- Root-cause skill blocks fixes before Phase 1; failed fixes return to Phase 1; stops at 3 failed fixes and questions architecture.
+- Root-cause skill blocks fixes before Phase 1; wrong hypotheses check escalation before Phase 1 retry; failed Phase 4 fixes return to Phase 1; architecture stop only after 3 failed fixes against an existing tight signal.
 - Feedback-loop skill blocks hypothesising before a named red-capable command run once.
-- Escalation has one owner (`debug-root-cause`), one trigger list (`paths.md`), and one mechanism (sibling read of `debug-feedback-loop`).
+- Escalation has one owner (`debug-root-cause`), one trigger list (`debug/paths.md`, link-only), and one mechanism (sibling read of `debug-feedback-loop`).
+- Direct invoke of `debug-root-cause` can load triggers via `../debug/paths.md` under symlink/plugin install.
 - Sibling handoff works under symlink/plugin install (directory-relative, not repo-tree paths).
 - Family works without external skill installs.
 - Catalog entries and plugin manifest stay in sync.
-- Verification covers classification, investigate-before-fix (with fixture), escalation, 3-fix stop, and mixed-turn handback.
+- Verification covers classification, investigate-before-fix (with fixture), escalation (including Phase 3 gate and direct invoke), 3-fix stop with tight signal, and mixed-turn handback.
