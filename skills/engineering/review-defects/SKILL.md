@@ -35,17 +35,19 @@ Do not paste the six gates into this file. If any gate is shaky, **drop**. When 
 
 ## Output contract (in order)
 
+Always emit these three blocks, in this order, with these headings:
+
 1. **Findings** — one entry per survivor, severity-first:
 
    `[P1] Imperative title — path/to/file:line`
 
    Then one short paragraph: affected scenario, concrete bad outcome, why the change is wrong. No second paragraph. No patch. No suggestion block.
 
-   **Or**, if none survive: exactly `No findings.`
+   **Or**, if none survive: this block is exactly `No findings.`
 
 2. **Assessment** — 1–3 sentences: target + comparison, material test gaps, residual pre-existing risk (at most one line). No merge stamp. No LGTM.
 
-3. **Close** — stop, or mixed-turn hand-back: review is done; they must send a **new message** to implement.
+3. **Close** — required heading, one line. Mixed-turn: review is done; they must send a **new message** to implement. Otherwise: the review is finished (do not add findings).
 
 No other sections. No “Nice to have.” No praise. No nit list after `No findings.`
 
