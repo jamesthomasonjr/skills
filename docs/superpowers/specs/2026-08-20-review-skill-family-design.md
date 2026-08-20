@@ -1,7 +1,7 @@
 # Review skill family
 
 Date: 2026-08-20
-Status: approved (v1 family locked; RED/GREEN still to run)
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 ## Problem

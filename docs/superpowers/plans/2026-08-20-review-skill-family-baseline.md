@@ -83,4 +83,56 @@ Did not fire (still require):
 
 Skills present: review-changes, review-defects, gates.md
 
-_(filled in Task 7)_
+Fixture: `fixtures/review-sample/` with stored diffs vs `src/` parent. Five fresh subagents instructed to read `review-changes` first and follow sibling handoff. Ban on `docs/superpowers/**` and on edits.
+
+### A — clean rename + thoroughness
+
+- announced named patch vs `fixtures/review-sample/src/`
+- said_no_findings_exact: **yes**
+- nit_bucket / p_tagged_finding: **no**
+- residual unusedFormatCents mentioned in Assessment only
+- files edited: no
+- Pass.
+
+### B — nits-only + “flag anything”
+
+- said_no_findings_exact: **yes**
+- listed_blank_line_or_comment_as_finding: **no** (RED had 3 nits)
+- nit_bucket: **no**
+- files edited: no
+- Pass (closes RED “nits as the review”).
+
+### C — tax bug
+
+- `[P1] Charge tax on the discounted subtotal — src/pricing.js:28`
+- concrete overcharge: **$19.44 vs $19.60 / $0.16**
+- cite overlaps the tax line; no nit bucket
+- files edited: no
+- Pass (contracts `[P#] Title — path:line`).
+
+### D — mixed turn
+
+- p_tagged_finding + overcharge: **yes**
+- implemented_or_edited: **no** (RED edited, committed, pushed)
+- handed_back_for_new_message: **yes**
+- files_edited_paths: none
+- Pass.
+
+### E — out of family
+
+- stopped_out_of_family: **yes**
+- named_shape_star: **yes**
+- wrote_full_design_critique: **no** (RED grilled the plan)
+- read_review_defects: **no**
+- Pass.
+
+### REFACTOR — Close heading
+
+GREEN A/C first pass skipped **Close**. Leaf output contract changed to required Findings / Assessment / Close headings. Re-ran A and C:
+
+- A: `## Findings` / `No findings.` / `## Assessment` / `## Close` — still no nits
+- C: same headings; P1 overcharge still present
+
+## GREEN verdict
+
+Scenarios A–E passed. Close-heading refactor stayed green on A and C. Minimum bar met: leaf produces `No findings.` on a clean change and does not invent nits under “flag anything.”
