@@ -41,6 +41,8 @@ These split on one axis: who can invoke them. **User-invoked** skills are reache
 - **[debug-root-cause](./skills/engineering/debug-root-cause/SKILL.md)** — Root-cause-first debugging for clear repros, stacks, and failing tests.
 - **[debug-feedback-loop](./skills/engineering/debug-feedback-loop/SKILL.md)** — Feedback-loop-first debugging for flaky, unreproducible, recurring, or performance issues.
 - **[review-defects](./skills/engineering/review-defects/SKILL.md)** — Defect-first read-only review of a specified comparison. May return `No findings.`
+- **[prioritize-work](./skills/engineering/prioritize-work/SKILL.md)** — Rank or select the next piece of work from a resolved set. Picks one item. Does not write the handoff.
+- **[handoff-work](./skills/engineering/handoff-work/SKILL.md)** — Package context and a copy-pasteable prompt for the next agent for a specified item. Does not re-rank.
 
 **Model-invoked**
 
@@ -48,6 +50,7 @@ These split on one axis: who can invoke them. **User-invoked** skills are reache
 - **[size-work](./skills/engineering/size-work/SKILL.md)** — Router for work sizing (initiative → epic → feature → story → task), including chores, bugs, and spikes.
 - **[debug](./skills/engineering/debug/SKILL.md)** — Router for debugging. Use when fixing, debugging, or finding root cause.
 - **[review-changes](./skills/engineering/review-changes/SKILL.md)** — Router for defect-first code review. Use when reviewing a change, PR, commit, or working tree. Classifies the comparison; does not review.
+- **[next-work](./skills/engineering/next-work/SKILL.md)** — Router for choosing the next piece of work. Use when asking what’s next or for a handoff prompt. Classifies the path; does not rank and does not write the handoff.
 
 ### Productivity
 
