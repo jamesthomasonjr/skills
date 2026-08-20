@@ -183,4 +183,3 @@ Optional: small `fixtures/debug-sample/` only if a scenario needs a known-broken
 - Escalation between paths is explicit and single-procedure.
 - Family works without external skill installs.
 - Catalog entries and plugin manifest stay in sync.
-)
