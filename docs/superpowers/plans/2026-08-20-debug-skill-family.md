@@ -52,7 +52,9 @@ Create the fixture **before** RED. Do not create debug skills in this task.
 
 - [ ] **Step 1: Write the fixture README**
 
-```markdown
+Create `fixtures/debug-sample/README.md` with this body (use a fenced bash block for the run command in the real file):
+
+```
 # debug-sample
 
 Tiny cart-total helper used to test the debug skill family.
@@ -61,14 +63,13 @@ Bug under test: `cartTotal` in `src/total.js` applies tax to the pre-discount
 subtotal instead of the post-discount amount. `src/total.test.js` fails until
 that is fixed.
 
-```bash
-node --test fixtures/debug-sample/src/total.test.js
-```
+Run: node --test fixtures/debug-sample/src/total.test.js
 
 Do not fix the bug during RED baseline runs. GREEN may fix it only when following
 `debug-root-cause` after investigation.
 ```
 
+In the committed README, wrap the run line in a normal bash fence.
 - [ ] **Step 2: Write the broken implementation**
 
 ```javascript
