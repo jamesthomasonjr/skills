@@ -39,6 +39,8 @@ Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills
 - **[debug](./skills/engineering/debug/SKILL.md)** — Router for debugging. Use when fixing, debugging, or finding root cause.
 - **[debug-root-cause](./skills/engineering/debug-root-cause/SKILL.md)** — Root-cause-first debugging for clear repros, stacks, and failing tests.
 - **[debug-feedback-loop](./skills/engineering/debug-feedback-loop/SKILL.md)** — Feedback-loop-first debugging for flaky, unreproducible, recurring, or performance issues.
+- **[review-changes](./skills/engineering/review-changes/SKILL.md)** — Router for defect-first code review. Use when reviewing a change, PR, commit, or working tree. Classifies the comparison; does not review.
+- **[review-defects](./skills/engineering/review-defects/SKILL.md)** — Defect-first read-only review of a specified comparison. May return `No findings.`
 
 ### Productivity
 
