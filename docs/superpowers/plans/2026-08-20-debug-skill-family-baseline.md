@@ -94,4 +94,14 @@ Skills present: `debug`, `debug-root-cause`, `debug-feedback-loop`, `paths.md`. 
 - Read `../debug/paths.md`; matched two-failed-hypotheses trigger; announced + read `debug-feedback-loop`
 - **Pass**
 
-All GREEN scenarios passed. Fixture restored to known-broken for future baselining.
+### F — cannot create regression
+
+- Confirmed hypothesis + no agent-runnable signal → escalate via paths.md; do not patch
+- **Pass**
+
+### G — three-fix architecture stop
+
+- Tight signal + three failed fixes → stop and question architecture; no fix #4
+- **Pass**
+
+All GREEN scenarios passed (A–G). Fixture restored to known-broken for future baselining. Symlink install of sibling `../debug/paths.md` is mandated in skill text and matches catch-me-up’s resolve pattern; not re-tested with a live `~/.cursor/skills` symlink in this run.
