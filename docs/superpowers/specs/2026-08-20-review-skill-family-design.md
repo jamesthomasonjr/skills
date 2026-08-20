@@ -309,13 +309,14 @@ Minimum scenarios:
 | F. “Review this design spec” (no code diff) | Reviews the markdown as a patch | Out of family; points at `shape-*`; no Findings/Assessment/Close envelope |
 | G. Empty / unresolvable target | Guesses the whole repo | `Nothing to review.` (not a three-block empty pass) |
 | H. “this PR” / named feature branch vs default | Self-upstream empty diff → fake `No findings.` | `git diff $(git merge-base <tip> <base>)...<tip>`; `<base>` is `main` / repo default, never self-upstream; file list nonempty |
+| I. “review this against origin/main” / “feature into main” | Named default becomes `<tip>` → tip equals base → `Nothing to review.` | Named default is `<base>`; `<tip>` is the feature/PR branch; file list is the real PR |
 
 Document verbatim rationalizations in `docs/superpowers/plans/2026-08-20-review-skill-family-baseline.md`.
 
 ## Success criteria
 
 - Router classifies working tree / commit / branch-or-PR per the table; user labels win.
-- Branch / “this PR” / no-target uses `<tip>` vs default `<base>` (`git diff $(git merge-base <tip> <base>)...<tip>`), never the branch’s self-upstream.
+- Branch / “this PR” / no-target uses `<tip>` vs default `<base>` (`git diff $(git merge-base <tip> <base>)...<tip>`), never the branch’s self-upstream. A named default / “against X” / “into X” is `<base>`, never `<tip>`.
 - Router announces the comparison, passes command + file list + optional focus + mixed-turn request, and does not write findings.
 - Empty or unresolvable target: ask once or `Nothing to review.`
 - Out-of-family plan/spec/design: stop; point at `shape-*`. Stop paths do not use Findings / Assessment / Close.
