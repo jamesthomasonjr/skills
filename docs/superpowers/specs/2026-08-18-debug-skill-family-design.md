@@ -122,8 +122,8 @@ Then follow that depth skill. Do not keep a second debugging procedure in the ro
 3. **Hypothesis** — Form one falsifiable hypothesis. Test with the smallest possible change or probe. If the hypothesis is wrong, return to Phase 1 with the new evidence and form a **new** hypothesis — do not stack untested fixes.
 4. **Implement** — Create a failing regression (automated test or tight repro command) → apply **one** root-cause fix → verify original symptom with fresh evidence.
    - Fix works → closeout.
-   - Fix fails and attempts **&lt; 3** → return to Phase 1 with the new evidence. Do not stay in Phase 4 stacking another guess.
-   - Fix fails and attempts **≥ 3** → stop and question architecture with the user (see Stop rules). Do not attempt fix #4 without that discussion.
+   - Fix fails and attempts **under 3** → return to Phase 1 with the new evidence. Do not stay in Phase 4 stacking another guess.
+   - Fix fails and attempts **3 or more** → stop and question architecture with the user (see Stop rules). Do not attempt fix #4 without that discussion.
 
 ### Stop rules
 
