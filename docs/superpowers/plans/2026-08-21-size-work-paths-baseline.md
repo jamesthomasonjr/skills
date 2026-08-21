@@ -103,8 +103,69 @@ Did not fire (still require):
 
 ## GREEN
 
-Skills present: `paths.md`; `shape-epic` / `shape-feature` REQUIRED to follow it; router path-only pointer; story/task unchanged.
+Skills present: `paths.md`; `shape-epic` / `shape-feature` REQUIRED to follow it; router path-only pointer; story/task forbid Path. Same prompts A–E. Ban `docs/superpowers/**`.
 
-Same prompts A–E. Pass criteria in `docs/superpowers/plans/2026-08-21-size-work-paths.md` Task 8.
+### A — epic shape + Path ask
 
-_(filled after GREEN runs)_
+- classified_skill: `shape-epic`
+- has_Path_heading / Path_immediately_after_inventory / Path_before_Close: **yes**
+- inventory_grain: features (4). No stories.
+- critical_path_item_count: 4 (admin → apply → receipt → analytics)
+- parallel_body: **None** (shared coupon / redemption contract)
+- invented_grandchildren / dispatched / edited: **no**
+- Pass. Closes RED “no Path section; path stuffed into Constraints.”
+
+### B — coupled inventory + fan-out pressure
+
+- classified_skill: `shape-epic`
+- Path after inventory: **yes**
+- inventory_priority_unchanged: **yes** (still starts with Cut reads)
+- parallel_is_exactly_None: **yes**
+- invented_fanout: **no**
+- critical_path_order: Add column → Dual-write → Backfill → Cut reads → Drop
+- dispatched / edited: **no**
+- Pass. Closes RED “no Path section; inventory order overwritten.” Keeps RED’s correct `None`.
+
+### C — priority ≠ path
+
+- classified_skill: `shape-feature`
+- Path after inventory, before Open questions: **yes**
+- inventory_priority_1: Apply coupon at checkout
+- critical_path_first_item: **Create a coupon**
+- create_coupon_before_apply_on_path: **yes**
+- copied_priority_as_path: **no**
+- parallel_is_exactly_None: **yes** (closes RED invented fan-out on shared coupon contract)
+- dispatched / edited: **no**
+- Pass.
+
+### D1 — story + “what's the critical path?”
+
+- classified_skill: `shape-story`
+- has_Path_heading / has_Critical_path_heading: **no**
+- Close named Path as epic/feature only
+- has_full_spec / edited: **no**
+- Pass.
+
+### D2 — task + mixed turn + dispatch
+
+- classified_skill: `shape-task`
+- has_Path_heading / fake_user_story / implemented / dispatched: **no**
+- handed_back: **yes**
+- files_edited_paths: none
+- Pass. Mixed-turn did not regress.
+
+### E — path-only, inventory exists, then dispatch + implement
+
+- classified_skill: `shape-feature` (router handed off; did **not** write Path)
+- pointed_at_paths_md: **yes**
+- has_Path_heading: **yes**; used_given_inventory: **yes**; added_extra_children: **no**
+- parallel_is_exactly_None: **yes**
+- create_coupon_before_apply_on_path: **yes**
+- dispatched / implemented: **no**; handed_back: **yes**
+- Pass. Closes RED “path-only ask refused Path.”
+
+## GREEN verdict
+
+A–E passed. Required cases: Path after inventory; Parallel `None` on coupled work; shared contract/migration on the path; priority ≠ Path; no Path on story/task/router; mixed turn does not implement or dispatch.
+
+No new rationalizations that need a REFACTOR pass. Why-coupled on B listed every expand-contract step (slightly wider than “look independent”); not a fail — `None` and unchanged inventory order already bind the defect.

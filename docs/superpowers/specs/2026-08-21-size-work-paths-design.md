@@ -1,7 +1,7 @@
 # Size-work Path (critical path + parallelization)
 
 Date: 2026-08-21
-Status: approved (v1 locked; RED/GREEN pending)
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 ## Problem
