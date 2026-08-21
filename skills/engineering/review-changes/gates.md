@@ -2,7 +2,7 @@
 
 Shared playbook for `review-changes` and `review-defects`. The leaf is **REQUIRED** to follow this file. The router does not restate it.
 
-Flag a finding only when **all six** are true. If any gate is shaky, **drop**. When in doubt about impact, drop.
+Flag a finding only when **all six** are true. If any gate is shaky, **drop**. When in doubt about impact, drop — except a demonstrated unsatisfiable pair in a procedure file (see Procedure files).
 
 ## Six gates
 
@@ -45,3 +45,27 @@ A **successful empty review** means a real comparison was inspected and nothing 
 ## Cite
 
 Smallest `path:line` (or short range) that overlaps the reviewed diff.
+
+## Procedure files
+
+Only these, and only when they appear in the comparison:
+
+- any `SKILL.md`
+- a playbook a `SKILL.md` is **REQUIRED** to follow that is also in the comparison (`gates.md`, `levels.md`, `paths.md`, `modes.md`, and the same pattern: linked from a skill as required)
+
+Not procedure: README, design spec, implementation plan, ordinary docs, comments in app code.
+
+When a procedure file is in the comparison, an **unsatisfiable pair of instructions** is a finding. All six gates can be true:
+
+1. Correctness of the procedure (the next agent cannot follow both letters).
+2. Discrete and actionable (name the two letters and the file:line).
+3. Introduced by this change.
+4. Demonstrable from the procedure text and, if present, fixtures/GREEN that already follow one letter and violate the other. This is the call path. It does not require application runtime.
+5. Concrete bad outcome: the next agent does the wrong stop, path, dispatch, empty pass, or drop of a required step. Victim is the next agent, not an end user.
+6. The author would probably fix it if they knew.
+
+Still **DROP**: wording nits, missing nice-to-have sections, “could be clearer,” a count band the author kept on purpose when the rest of the letter already agrees, speculative “an agent might misread,” ordinary README/docs prose, plan/spec/design with no procedure diff (still out of family → `shape-*`).
+
+“When in doubt, drop” still applies to app code and to shaky procedure nits. It does **not** authorize dropping a demonstrated unsatisfiable pair in a procedure file.
+
+Do not apply this rule to app-code contradictions unless they already pass today’s six gates the original way.
