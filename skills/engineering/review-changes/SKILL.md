@@ -80,7 +80,7 @@ If two signals both appear, user label wins; if still tied, ask once. Stop until
 
 ## 3. Announce and hand off
 
-**Out of family:** one or two sentences, name `shape-*` (or a later plan-review skill), **stop**. Do not read the leaf. Do not write a design critique.
+**Out of family:** one or two sentences, name `shape-*` (or a later plan-review skill), **stop**. Do not read the leaf. Do not write a design critique. A `SKILL.md` or required playbook in the file list is in family — hand off.
 
 **Empty / unresolvable:** if they can still name a target, ask once and stop. Otherwise write exactly `Nothing to review.` and stop.
 
