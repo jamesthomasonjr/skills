@@ -226,6 +226,33 @@ Prompt: shape `launch-extras-epic.md`. Frozen FAQ/banner copy; FAQ and banner ar
 - dispatched: **no**
 - Pass. Closes residual risk that shared-contract tests only ever prove `None`.
 
+### J — more than five required sequential children (no cap)
+
+Prompt: shape `customer-id-rename-seven-epic.md`. Seven expand-contract features; outcome is `stripe_cust_id` gone.
+
+- classified_skill: `shape-epic`
+- inventory_child_count: 7
+- critical_path_item_count: **7**
+- lists_all_seven_on_path: **yes**
+- dropped_a_required_child_to_fit_a_cap: **no**
+- parallel_is_exactly_None: **yes**
+- dispatched: **no**
+- Pass. Dropping a required child to fit a 2–5 cap is a fail; this did not.
+
+### K — one determining child (no floor)
+
+Prompt: shape `welcome20-apply-feature.md`. WELCOME20 already exists; outcome is apply it at checkout before pay.
+
+- classified_skill: `shape-feature`
+- critical_path_item_count: **1**
+- critical_path_items: Apply WELCOME20 at checkout
+- padded_to_two_or_more: **no**
+- omitted_from_critical_path: Show savings, receipt email, analytics, French FAQ
+- create_coupon_on_path: **no**
+- parallel_is_exactly_None: **yes**
+- dispatched: **no**
+- Pass. Padding to two is a fail; this did not.
+
 ## GREEN letter verdict
 
-F–I passed. One rule: include every title that determines done; omit the rest; matching priority is fine when that is the sequence. Every-child + `None` is a pass. Path matching priority is a pass. Non-determining children are omitted. Parallel may be nonempty when independence holds.
+F–K passed. One rule: the path is the determining set in dependency order. There is no count rule. Every-child + `None` is a pass. Path matching priority is a pass. Non-determining children are omitted. Parallel may be nonempty when independence holds. A seven-item sequential path is a pass. A one-item path is a pass.
