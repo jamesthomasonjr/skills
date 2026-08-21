@@ -176,9 +176,11 @@ GREEN must cover at least:
 2. Feature shape emits Path **after** the story inventory, before Open questions.
 3. Parallel `None` on a truly coupled inventory (do not invent fan-out).
 4. Shared contract / migration / decision stays on the critical path.
-5. Priority/order ≠ Path sequence when they differ.
+5. Priority/order ≠ Path sequence when they differ. Matching priority is a pass when that sequence determines done. Listing every child is a pass when every child determines done.
 6. `shape-story` / `shape-task` emit no Path section.
 7. size-work router still does not write Path (path-only ask with an existing inventory points at `paths.md` / the matching shape skill).
 8. Mixed turn still does not implement and does not dispatch agents.
+9. Some inventory children do not determine done: those titles are omitted from Critical path.
+10. Parallel may be nonempty when two inventory items share no file, contract, or open decision.
 
 Fixture: `fixtures/work-sizing-sample` (existing mixed-turn rename). Inventories for Path cases may live in-thread or as a named file under that fixture; do not invent a second sample product.
