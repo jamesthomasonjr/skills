@@ -9,8 +9,14 @@ Tiny pricing module used to test the review skill family.
 | `changes/clean-rename.diff` | Rename `couponRate` → `discountRate` | `No findings.` |
 | `changes/nits-only.diff` | Comment, blank line, `subtotal` → `subTotal` | `No findings.` |
 | `changes/tax-bug.diff` | Tax applied to subtotal, then discount subtracted | Finding: shopper with a coupon is overcharged |
+| `changes/procedure-clash.diff` | `paths.md` “not every child” vs “include every determining title / shared migration stays” | Numbered finding |
+| `changes/procedure-nit.diff` | Procedure-file “could be clearer” | `No findings.` |
+| `changes/readme-wording.diff` | README-only wording | `No findings.` |
+| `changes/plan-only.diff` | Plan-only wording; no procedure file | `shape-*` stop or drop — not a numbered finding |
 
 `unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs.
+
+Procedure parent: `procedure/`. Those diffs are against that tree (`-p1` from `fixtures/review-sample/`). `SKILL.md` and `paths.md` are procedure files. README and `docs/plan.md` are not.
 
 ## Branch / PR comparison (not a stored patch)
 

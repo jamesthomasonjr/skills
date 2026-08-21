@@ -1,0 +1,12 @@
+--- a/procedure/paths.md
++++ b/procedure/paths.md
+@@ -5,6 +5,9 @@
+ 
+ ## Critical path
+ 
++The path is not every child. Do not list every inventory title.
++This is not the priority list.
++
+ Include every inventory title that actually determines done.
+ Omit children that do not determine done.
+ 
