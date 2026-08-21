@@ -22,17 +22,22 @@ Constraints. Do not put it after Open questions or Close.
 
 ## Critical path
 
-Two to five items. Every item is a title from **this level's inventory**.
-Done means the brief's outcome is true.
+Every item is a title from **this level's inventory**. Done means the
+brief's outcome is true.
+
+The path is the set of inventory titles that actually determine done,
+in dependency order. There is **no count rule**.
 
 Include every inventory title that **actually determines done**.
 Omit children that do **not** determine done.
 
+Do **not** add an item to reach a minimum. Do **not** drop an item to
+reach a maximum. Nine required sequential children → a nine-item path.
+One determining child → a one-item path.
+
 Matching priority order is **fine when that is the sequence**.
 
-“Not every child” / “not the priority list” are selection hints, not
-bans. They must not force dropping a required step or reshuffling a
-path that already matches priority.
+“Shortest” means omit non-determining children, not a cap or a floor.
 
 If B cannot be done until A exists, A is before B even when B is higher
 priority.
@@ -83,7 +88,8 @@ this same three-part block. Do not grow a review-brief skill.
   defect.
 - Include every inventory title that actually determines done. Omit
   children that do not. Matching priority is fine when that is the
-  sequence.
+  sequence. Do not add an item to reach a minimum. Do not drop an item
+  to reach a maximum. There is no count rule.
 - Do not dispatch agents. `next-work` / `handoff-work` / the user do
   that.
 - One-level rule still holds. Do not explode stories while sequencing
@@ -99,6 +105,8 @@ this same three-part block. Do not grow a review-brief skill.
 | “None looks like I didn't try” | `None` is the correct pass. Inventing a set is the miss. |
 | “Priority already sequences them” | Matching priority is fine when that is the sequence. Copy it only then. |
 | “Every child on the path is a miss” | If every child determines done, list them. Parallel `None` may follow. |
+| “I'll drop one to stay at five” | Do not drop a required child. There is no count cap. |
+| “I'll add a second so the path is at least two” | One determining child is a one-item path. Do not pad. |
 | “Not every child means drop one” | Omit only children that do not determine done. |
 | “I'll reorder the inventory so the path is obvious” | Leave inventory order. Put sequence under Path. |
 | “I'll launch agents for the Parallel sets” | This family does not dispatch. Hand back. |
@@ -111,7 +119,8 @@ this same three-part block. Do not grow a review-brief skill.
 
 - Parallel set that shares a file, contract, or open decision
 - Critical path copied from priority/order when the sequence differs
-- Dropping a required child to avoid listing every item
+- Dropping a required child to avoid listing every item, or to fit a count cap
+- Padding the path with a non-determining child to reach a minimum count
 - Reshuffling a path that already matches priority
 - Inventory priority rewritten to match Path
 - Path buried in Constraints, or placed after Open questions / Close

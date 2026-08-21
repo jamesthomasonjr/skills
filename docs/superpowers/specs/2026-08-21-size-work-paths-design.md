@@ -67,7 +67,7 @@ Hard rules for Path (authoritative in `paths.md`, not restated in the router):
 
 1. Do **not** invent fan-out. A shared migration, shared type, or a shared “what does X mean” stays on the critical path.
 2. Empty Parallel (`None`) is success. Inventing independence is the defect.
-3. Include every inventory title that actually determines done. Omit children that do not. Matching priority is fine when that is the sequence. Inventory order stays value.
+3. Include every inventory title that actually determines done. Omit children that do not. Matching priority is fine when that is the sequence. Inventory order stays value. Do not add an item to reach a minimum. Do not drop an item to reach a maximum. There is no count rule.
 4. Do **not** dispatch agents. `next-work` / `handoff-work` / the user do that.
 5. One-level rule still holds. Do not explode stories while sequencing features, or features while sequencing an epic.
 6. `shape-story` and `shape-task` do **not** emit Path.
@@ -79,7 +79,7 @@ Add **one** section named **Path** to `shape-epic` and `shape-feature` only. Pla
 
 In order inside Path:
 
-1. **Critical path** — the shortest sequence that determines done. Two to five items, drawn from **this level’s inventory only**.
+1. **Critical path** — the inventory titles that actually determine done, in dependency order, drawn from **this level’s inventory only**. No count rule.
 2. **Parallel** — named sets that do not share a file, a contract, or an open decision. `None` is a valid pass.
 3. **Why coupled** — one line each for items that look independent and are not. **Omit** this subsection if none.
 
@@ -123,7 +123,7 @@ Sibling of `levels.md`. Voice matches this family: short, imperative, tables, Ha
 
 The playbook must define:
 
-- How to pick the 2–5 critical-path items from the inventory (shortest sequence that determines done: include every title that actually determines done; omit children that do not; matching priority is fine when that is the sequence).
+- How to pick critical-path items from the inventory (the titles that actually determine done, in dependency order: include every such title; omit children that do not; do not pad to a minimum or drop to a maximum; matching priority is fine when that is the sequence).
 - Independence test for Parallel: no shared file, no shared contract, no open decision. Fail any one → not parallel.
 - `None` as the entire Parallel body when the inventory is coupled. Do not hunt for a set to look useful.
 - Why coupled: only for pairs/groups that **look** independent (different titles, different users) but share a file, contract, or decision. Omit the heading when there is nothing to say.
@@ -182,5 +182,7 @@ GREEN must cover at least:
 8. Mixed turn still does not implement and does not dispatch agents.
 9. Some inventory children do not determine done: those titles are omitted from Critical path.
 10. Parallel may be nonempty when two inventory items share no file, contract, or open decision.
+11. A fully sequential inventory of more than five required children emits the **full** path. Dropping a required child to fit a cap is a fail.
+12. An inventory with one determining child emits a **one-item** path. Padding to two is a fail.
 
 Fixture: `fixtures/work-sizing-sample` (existing mixed-turn rename). Inventories for Path cases may live in-thread or as a named file under that fixture; do not invent a second sample product.

@@ -202,7 +202,9 @@ grandchildren. Never from a story or task brief.
 
 ## Critical path
 
-Two to five items. Every item is a title from **this level's inventory**.
+The path is the set of inventory titles that actually determine done,
+in dependency order. There is **no count rule**. Every item is a title
+from **this level's inventory**.
 Done means the brief's outcome is true.
 
 Not the priority/order list. Not every child. Not stories under a
@@ -479,7 +481,7 @@ Pass when:
 
 | ID | Must see |
 |---|---|
-| A | `shape-epic`; **Path** after feature inventory, before Close; 2–5 inventory features on the path; no stories |
+| A | `shape-epic`; **Path** after feature inventory, before Close; no stories; path length is the determining set (no 2–5 cap) |
 | B | Parallel body is `None`; shared column/migration stays on the path; no dispatch |
 | C | Path sequence ≠ priority 1-2-3; Create coupon before Apply; Path before Open questions |
 | D | `shape-story` / `shape-task`: no Path heading; mixed-turn: no edits, no dispatch |
