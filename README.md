@@ -50,8 +50,8 @@ These split on one axis: who can invoke them. **User-invoked** skills are reache
 - **[orient-module](./skills/engineering/orient-module/SKILL.md)** — File, module, or class: purpose, public surface, important methods.
 - **[orient-function](./skills/engineering/orient-function/SKILL.md)** — One function or method: step-by-step I/O, side effects, edge cases.
 - **[shape-initiative](./skills/engineering/shape-initiative/SKILL.md)** — Initiative charter and epic inventory (one level down).
-- **[shape-epic](./skills/engineering/shape-epic/SKILL.md)** — Epic brief and feature inventory.
-- **[shape-feature](./skills/engineering/shape-feature/SKILL.md)** — Feature brief and user-story inventory.
+- **[shape-epic](./skills/engineering/shape-epic/SKILL.md)** — Epic brief, feature inventory, and Path (critical path + parallel sets).
+- **[shape-feature](./skills/engineering/shape-feature/SKILL.md)** — Feature brief, user-story inventory, and Path (critical path + parallel sets).
 - **[shape-story](./skills/engineering/shape-story/SKILL.md)** — Spec-ready user-story brief for a later specify step.
 - **[shape-task](./skills/engineering/shape-task/SKILL.md)** — Atomic task / chore / known-bug / spike brief (no fake user story).
 - **[debug-root-cause](./skills/engineering/debug-root-cause/SKILL.md)** — Root-cause-first debugging for clear repros, stacks, and failing tests.
