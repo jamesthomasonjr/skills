@@ -20,7 +20,9 @@ Classify the work, then hand off. This skill does **not** shape charters, invent
 - Do not invent child lists in the router — that is the shape skill’s job.
 - Outcomes follow [levels.md](levels.md) **Outcomes** — stay conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
 - Mixed turn (“break this down, then build it”): classify, hand off to the shape skill, finish shaping, then **hand back**. Do not build in this turn.
+- Mixed turn that includes dispatch / fan-out / “launch agents”: classify, shape, **hand back**. Do not dispatch.
 - Vague undiagnosed bugs and foggy multi-question research are **out of family** — see [levels.md](levels.md) **Bugs and chores** / **Spikes and research**. Do not shape them here.
+- Do not write Path. The router has no inventory. If they only ask for critical path / parallel and an inventory already exists in-thread or at a named path, announce the matching shape skill (feature inventory → `shape-epic`, story inventory → `shape-feature`) and hand off. Link [paths.md](paths.md); do not paste it.
 
 ## 1. Classify
 
@@ -36,6 +38,8 @@ Use [levels.md](levels.md). Explicit labels from the user win.
 | Vague / intermittent with **no** actionable locus (“something’s broken,” “flaky sometimes” alone) | **Stop** — hand off to diagnosing/triage; do not shape |
 | Foggy multi-question exploration (“figure out notifications,” “research the space,” bare “research …” / bare “figure out X” with no sharp A-or-B question) | **Stop** — hand off to wayfinder/research/grill; do not shape |
 | Two adjacent levels both fit | ask once (see below) |
+| Only “what's the critical path / what can run in parallel” and an inventory exists | matching `shape-epic` or `shape-feature` (do not compute Path here) |
+| Only Path ask on a story/task brief (no inventory) | **Stop** — Path is not emitted at that grain; do not invent a skill |
 
 Prefer the **largest** fitting level. Bare “add X” is **not** enough for a feature — only when X is a user-perceivable product capability. Engineering “add …” chores and spikes with one clear decision question are tasks (time box optional). **Known bugfixes:** As-a **with locus** → `shape-story`; clear locus **without** As-a (including a named flaky file/test) → `shape-task`; intermittent/undiagnosed **without** locus → diagnosing (locus wins over intermittent when both match; diagnosing wins over thin As-a with no locus). **Research:** sharp single question (including “figure out whether A or B”) → spike flavor; bare or multi-question “research …” / “figure out X” → out-of-family handoff (foggy wins when the question is not sharp).
 
@@ -59,7 +63,7 @@ Otherwise read the **sibling** skill from this file’s directory (not cwd):
 - [../shape-story/SKILL.md](../shape-story/SKILL.md)
 - [../shape-task/SKILL.md](../shape-task/SKILL.md)
 
-Pass: level, original description, constraints they stated, flavor if spike, mixed-turn build request if any.
+Pass: level, original description, constraints they stated, flavor if spike, mixed-turn build or dispatch request if any.
 
 Then follow that shape skill. Do not keep a second shaping procedure here.
 
@@ -75,3 +79,6 @@ Then follow that shape skill. Do not keep a second shaping procedure here.
 - Inventing an epic/story inventory for “something’s broken” or “figure out X”
 - Shaping a vague bug or foggy research instead of handing off
 - Letting a spike become production implementation in this turn
+- Writing Path in the router
+- Restating the paths.md hard-rule list here
+- Dispatching agents because Parallel might exist
