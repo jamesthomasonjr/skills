@@ -164,8 +164,68 @@ Skills present: `paths.md`; `shape-epic` / `shape-feature` REQUIRED to follow it
 - dispatched / implemented: **no**; handed_back: **yes**
 - Pass. Closes RED “path-only ask refused Path.”
 
-## GREEN verdict
+## GREEN verdict (first pass)
 
 A–E passed. Required cases: Path after inventory; Parallel `None` on coupled work; shared contract/migration on the path; priority ≠ Path; no Path on story/task/router; mixed turn does not implement or dispatch.
 
 No new rationalizations that need a REFACTOR pass. Why-coupled on B listed every expand-contract step (slightly wider than “look independent”); not a fail — `None` and unchanged inventory order already bind the defect.
+
+**Letter gap:** A/B listed every child on the path while `paths.md` still banned “every child.” That contradiction was not a fail under A–E. Letter fix + GREEN F–I close it.
+
+## GREEN letter lock (P2)
+
+Skills present: `paths.md` letter that include-every-determining-child / omit-the-rest / matching-priority-is-fine are **one rule**, not bans. Ban `docs/superpowers/**`.
+
+### F — fully coupled inventory may list every child
+
+Prompt: same as B (`customer-id-rename-epic.md`, fan-out pressure).
+
+- classified_skill: `shape-epic`
+- critical_path_item_count: **5 / 5** (Add → Dual-write → Backfill → Cut reads → Drop)
+- lists_every_inventory_child_on_path: **yes** — **pass**, not a “used every child” failure
+- parallel_is_exactly_None: **yes**
+- inventory_still_starts_with: Cut reads (priority unchanged)
+- invented_fanout / dispatched: **no**
+- Pass.
+
+### G — path may match inventory priority
+
+Prompt: shape `customer-id-rename-sequential-epic.md` (priority already expand-contract order).
+
+- classified_skill: `shape-epic`
+- path_matches_inventory_priority: **yes**
+- reshuffled_to_avoid_matching_priority: **no**
+- dropped_a_required_child: **no**
+- parallel_is_exactly_None: **yes**
+- Pass.
+
+### H — omit children that do not determine done
+
+Prompt: same as C (`checkout-coupons-feature.md`). Outcome: shopper applies a named coupon before pay.
+
+- classified_skill: `shape-feature`
+- critical_path_items: Create a coupon → Apply coupon at checkout
+- omitted_from_critical_path: Show savings, Discount line on the receipt email, Redemption analytics event
+- receipt_or_analytics_on_critical_path: **no**
+- create_coupon_before_apply_on_path: **yes**
+- parallel_is_exactly_None: **yes** (shared coupon/redemption contract)
+- Pass. This is the only meaning of “not every child.”
+
+### I — Parallel correctly nonempty
+
+Prompt: shape `launch-extras-epic.md`. Frozen FAQ/banner copy; FAQ and banner are different files, no shared schema/API/event.
+
+- classified_skill: `shape-epic`
+- critical_path_items: Admin coupon management → Apply coupon at checkout
+- omitted_from_critical_path: French help-center FAQ, Hiring banner, Receipt coupon line
+- parallel_is_exactly_None: **no**
+- parallel_sets: French help-center FAQ + Hiring banner
+- french_faq_and_hiring_banner_in_parallel: **yes**
+- shared_a_file_or_contract_in_parallel: **no**
+- receipt_in_parallel: **no** (shared coupon contract; Why coupled)
+- dispatched: **no**
+- Pass. Closes residual risk that shared-contract tests only ever prove `None`.
+
+## GREEN letter verdict
+
+F–I passed. One rule: include every title that determines done; omit the rest; matching priority is fine when that is the sequence. Every-child + `None` is a pass. Path matching priority is a pass. Non-determining children are omitted. Parallel may be nonempty when independence holds.
