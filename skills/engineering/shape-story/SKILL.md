@@ -42,3 +42,4 @@ If another agent could not start a spec from this brief alone, add context. If y
 - Full functional-requirements catalog or prioritized GWT suites
 - Implementation in this turn
 - Empty “add the thing” brief with no problem/context/acceptance sketch
+- Path section (atomic — Path is `shape-epic` / `shape-feature` only)
