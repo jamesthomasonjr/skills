@@ -10,8 +10,8 @@ Daily code-work skills. Promoted: listed in the root README and shipped in the C
 - **[orient-module](./orient-module/SKILL.md)** — File, module, or class: purpose, public surface, important methods.
 - **[orient-function](./orient-function/SKILL.md)** — One function or method: step-by-step I/O, side effects, edge cases.
 - **[shape-initiative](./shape-initiative/SKILL.md)** — Initiative charter and epic inventory.
-- **[shape-epic](./shape-epic/SKILL.md)** — Epic brief and feature inventory.
-- **[shape-feature](./shape-feature/SKILL.md)** — Feature brief and user-story inventory.
+- **[shape-epic](./shape-epic/SKILL.md)** — Epic brief, feature inventory, and Path (critical path + parallel sets).
+- **[shape-feature](./shape-feature/SKILL.md)** — Feature brief, user-story inventory, and Path (critical path + parallel sets).
 - **[shape-story](./shape-story/SKILL.md)** — Spec-ready user-story brief.
 - **[shape-task](./shape-task/SKILL.md)** — Atomic task brief (chores, tech debt, known bugs, spikes).
 - **[debug-root-cause](./debug-root-cause/SKILL.md)** — Root-cause-first debugging (clear repro / stack / failing test).

@@ -57,6 +57,7 @@ Say so. Still produce the brief from the description. Do not invent a codebase t
 - Fake user story
 - Editing files in this turn
 - Expanding into a feature inventory
+- Path section (atomic — Path is `shape-epic` / `shape-feature` only)
 - Diagnosing an unknown intermittent failure here instead of handing off
 - Charting a multi-question research map here instead of handing off
 - Treating spike “done when” as shipped production code
