@@ -1,7 +1,7 @@
 # Review procedure-letter findings
 
 Date: 2026-08-21
-Status: approved (v1 gate addition; do not reopen)
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 Increment to `docs/superpowers/specs/2026-08-20-review-skill-family-design.md`.

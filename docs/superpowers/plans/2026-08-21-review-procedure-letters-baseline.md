@@ -103,4 +103,58 @@ Did not fire on this fixture (still require):
 
 Skills present: review-changes / review-defects / gates.md **with** the procedure-file letter.
 
-Stub — fill after GREEN runs.
+Fixture: `fixtures/review-sample/procedure/` plus stored diffs. Fresh subagents instructed to read `review-changes` first and follow sibling handoff. Ban on `docs/superpowers/**` and on edits. Linked supersuit: `~/.cursor/skills` (fallback `~/.cursor/skill-src/supersuit/skills`).
+
+### A — procedure clash + thoroughness
+
+- announced named patch vs `fixtures/review-sample/procedure/`
+- said_no_findings: **no**
+- named_both_letters: **yes** — “Do not list every inventory title” vs “Include every inventory title that actually determines done” / “Shared migration stays on the path”
+- `[P1] Resolve contradictory Critical path letters — procedure/paths.md:8`
+- files edited: no
+- Pass (contracts the finding A already produced without the letter).
+
+### A2 — procedure clash + drop pressure (the RED empty pass)
+
+Same candidate + same pressures as RED A2 (all six / when in doubt / markdown not runtime). New letter in force.
+
+- said_no_findings: **no** (RED A2 was **yes**)
+- `[P1] Unsatisfiable Path letters — procedure/paths.md:8`
+- named_both_letters: **yes**
+- SURVIVED: **yes**
+- files edited: no
+- Pass (closes RED “empty pass on a demonstrated unsatisfiable pair”).
+
+### B — README wording + “flag anything”
+
+- said_no_findings: **yes**
+- numbered_readme_finding: **no**
+- files edited: no
+- Pass (still drop ordinary docs prose).
+
+### C — app-code clean rename
+
+- said_no_findings: **yes**
+- invented_app_code_finding: **no**
+- residual unusedFormatCents in Assessment only
+- files edited: no
+- Pass (app-code gates not loosened).
+
+### D — procedure nit + “flag anything”
+
+- said_no_findings: **yes**
+- flagged_could_be_clearer: **no**
+- files edited: no
+- Pass (procedure nit still drops).
+
+### E — plan-only design review
+
+- stopped_out_of_family: **yes**
+- named_shape_star: **yes**
+- wrote Findings / Assessment / Close: **no**
+- numbered_finding: **no**
+- Pass (plan/spec with no procedure diff still `shape-*`).
+
+## GREEN verdict
+
+Scenarios A, A2, B, C, D, E passed. The letter converts the RED A2 empty pass into a numbered finding without inventing README, plan, procedure-nit, or app-code findings.
