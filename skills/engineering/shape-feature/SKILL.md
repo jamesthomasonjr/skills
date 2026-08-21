@@ -31,7 +31,7 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 4. **Boundaries** — in / out
 5. **Constraints** — dependencies and non-user-facing chores that must not appear as inventory children (or “None”)
 6. **User-story inventory** — 3–9 stories; each: short title + As a / I want / so that + priority. No acceptance scenarios yet. Do not reshuffle this order to match Path.
-7. **Path** — follow [../size-work/paths.md](../size-work/paths.md): Critical path, Parallel (`None` is success), Why coupled (omit if none). Inventory items only. Do not dispatch.
+7. **Path** — follow [../size-work/paths.md](../size-work/paths.md): Critical path (every inventory title that determines done; omit the rest; matching priority is fine when that is the sequence), Parallel (`None` is success), Why coupled (omit if none). Inventory items only. Do not dispatch.
 8. **Open questions** — decisions a later spec must settle (bullets)
 9. **Close** — ask which story to deepen with `shape-story`, or stop. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off. Mixed-turn build or dispatch request: **hand back**.
 
@@ -46,6 +46,8 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 | “These stories can all start; I’ll dispatch” | Write Parallel or `None`. Do not dispatch. |
 | “I’ll put the path after Close” | Path comes after the inventory, before Open questions. |
 | “These don’t share a file, so they’re parallel” | Shared contract or open decision still fails. `None` if nothing else passes. |
+| “Every child on the path is a miss” | If every story determines done, list them. |
+| “The path matches priority, so I must reshuffle” | Matching priority is fine when that is the sequence. |
 
 ## Failures
 
@@ -54,4 +56,5 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 - Expanding every story into a brief in this turn
 - Skipping Path, or putting it before the inventory / after Open questions
 - Inventing Parallel for a shared contract / file / open decision
+- Dropping a required story to avoid listing every child
 - Dispatching agents

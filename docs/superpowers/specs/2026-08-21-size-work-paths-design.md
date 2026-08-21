@@ -67,7 +67,7 @@ Hard rules for Path (authoritative in `paths.md`, not restated in the router):
 
 1. Do **not** invent fan-out. A shared migration, shared type, or a shared “what does X mean” stays on the critical path.
 2. Empty Parallel (`None`) is success. Inventing independence is the defect.
-3. Priority/order ≠ critical path. Inventory order stays value. Path is the sequence that determines done.
+3. Include every inventory title that actually determines done. Omit children that do not. Matching priority is fine when that is the sequence. Inventory order stays value.
 4. Do **not** dispatch agents. `next-work` / `handoff-work` / the user do that.
 5. One-level rule still holds. Do not explode stories while sequencing features, or features while sequencing an epic.
 6. `shape-story` and `shape-task` do **not** emit Path.
@@ -123,7 +123,7 @@ Sibling of `levels.md`. Voice matches this family: short, imperative, tables, Ha
 
 The playbook must define:
 
-- How to pick the 2–5 critical-path items from the inventory (shortest sequence that determines done; not “everything”; not the priority list copied in order).
+- How to pick the 2–5 critical-path items from the inventory (shortest sequence that determines done: include every title that actually determines done; omit children that do not; matching priority is fine when that is the sequence).
 - Independence test for Parallel: no shared file, no shared contract, no open decision. Fail any one → not parallel.
 - `None` as the entire Parallel body when the inventory is coupled. Do not hunt for a set to look useful.
 - Why coupled: only for pairs/groups that **look** independent (different titles, different users) but share a file, contract, or decision. Omit the heading when there is nothing to say.

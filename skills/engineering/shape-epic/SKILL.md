@@ -29,7 +29,7 @@ Turn an epic-scale description into a brief and a **feature inventory**. One lev
 4. **Success signals**
 5. **Constraints / dependencies**
 6. **Feature inventory** — 3–9 features; each: title, one-liner, priority/order. No nested stories. Do not reshuffle this order to match Path.
-7. **Path** — follow [../size-work/paths.md](../size-work/paths.md): Critical path, Parallel (`None` is success), Why coupled (omit if none). Inventory items only. Do not dispatch.
+7. **Path** — follow [../size-work/paths.md](../size-work/paths.md): Critical path (every inventory title that determines done; omit the rest; matching priority is fine when that is the sequence), Parallel (`None` is success), Why coupled (omit if none). Inventory items only. Do not dispatch.
 8. **Close** — ask which feature to shape next (`shape-feature`), or stop. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off. Mixed-turn build or dispatch request: **hand back**.
 
 ## Rationalizations
@@ -42,6 +42,8 @@ Turn an epic-scale description into a brief and a **feature inventory**. One lev
 | “I’ll skip Path until they pick a feature” | Path is part of this shape, after the inventory. |
 | “These features can all start; I’ll dispatch” | Write Parallel or `None`. Do not dispatch. |
 | “I’ll reorder the inventory to match the path” | Priority stays value. Sequence lives under Path. |
+| “Every child on the path is a miss” | If every feature determines done, list them. |
+| “The path matches priority, so I must reshuffle” | Matching priority is fine when that is the sequence. |
 
 ## Failures
 
@@ -50,4 +52,5 @@ Turn an epic-scale description into a brief and a **feature inventory**. One lev
 - Shaping all child features in this turn
 - Skipping Path, or putting it before the inventory / under Constraints
 - Inventing Parallel for a shared migration / type / decision
+- Dropping a required feature to avoid listing every child
 - Dispatching agents

@@ -25,14 +25,22 @@ Constraints. Do not put it after Open questions or Close.
 Two to five items. Every item is a title from **this level's inventory**.
 Done means the brief's outcome is true.
 
-Not the priority/order list. Not every child. Not stories under a
-feature. Not features under an epic.
+Include every inventory title that **actually determines done**.
+Omit children that do **not** determine done.
+
+Matching priority order is **fine when that is the sequence**.
+
+“Not every child” / “not the priority list” are selection hints, not
+bans. They must not force dropping a required step or reshuffling a
+path that already matches priority.
 
 If B cannot be done until A exists, A is before B even when B is higher
 priority.
 
 Do **not** reshuffle the inventory to match Path. Inventory
 priority/order stays **value**. Path is the sequence.
+
+Not stories under a feature. Not features under an epic.
 
 ## Parallel
 
@@ -73,7 +81,9 @@ this same three-part block. Do not grow a review-brief skill.
   “what does X mean” stays on the path.
 - Empty Parallel (`None`) is success. Inventing independence is the
   defect.
-- Priority/order ≠ critical path.
+- Include every inventory title that actually determines done. Omit
+  children that do not. Matching priority is fine when that is the
+  sequence.
 - Do not dispatch agents. `next-work` / `handoff-work` / the user do
   that.
 - One-level rule still holds. Do not explode stories while sequencing
@@ -87,7 +97,9 @@ this same three-part block. Do not grow a review-brief skill.
 |---|---|
 | “They look like separate workstreams” | Shared migration, type, or meaning → path, not Parallel. |
 | “None looks like I didn't try” | `None` is the correct pass. Inventing a set is the miss. |
-| “Priority already sequences them” | Priority is value. Path is what determines done. |
+| “Priority already sequences them” | Matching priority is fine when that is the sequence. Copy it only then. |
+| “Every child on the path is a miss” | If every child determines done, list them. Parallel `None` may follow. |
+| “Not every child means drop one” | Omit only children that do not determine done. |
 | “I'll reorder the inventory so the path is obvious” | Leave inventory order. Put sequence under Path. |
 | “I'll launch agents for the Parallel sets” | This family does not dispatch. Hand back. |
 | “Stories would make the path real” | One-level rule. Features stay features. |
@@ -99,6 +111,8 @@ this same three-part block. Do not grow a review-brief skill.
 
 - Parallel set that shares a file, contract, or open decision
 - Critical path copied from priority/order when the sequence differs
+- Dropping a required child to avoid listing every item
+- Reshuffling a path that already matches priority
 - Inventory priority rewritten to match Path
 - Path buried in Constraints, or placed after Open questions / Close
 - Path section on story, task, initiative, or the router
