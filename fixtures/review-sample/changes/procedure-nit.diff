@@ -1,0 +1,11 @@
+--- a/procedure/paths.md
++++ b/procedure/paths.md
+@@ -5,6 +5,8 @@
+ 
+ ## Critical path
+ 
++This section could be clearer about how to phrase titles.
++
+ Include every inventory title that actually determines done.
+ Omit children that do not determine done.
+ 

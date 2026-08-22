@@ -15,7 +15,7 @@ Classify the review target, announce the comparison, then hand off. This skill d
 - Read-only. No edits, no commits, no pushes, no GitHub review comments.
 - Do not apply [gates.md](gates.md). Do not write findings. That is `review-defects`.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The leaf finishes the review, then hands back. Do not implement in this turn.
-- Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read `review-defects`. Do not grill the prose as a design reviewer.
+- Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read `review-defects`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
 - Focus is an optional user-named phrase, not a menu. Do not infer modes.
 
@@ -66,7 +66,7 @@ User labels win.
 | Named commit | That commit vs its parent |
 | Named branch, “this PR”, or no target | Merge-base of `<base>` … `<tip>` |
 | Named diff/patch file | That patch vs the named parent |
-| Plan / spec / design / charter / brief; no code diff | **Out of family** — stop |
+| Plan / spec / design / charter / brief; no procedure file in the comparison | **Out of family** — stop |
 | Empty or unresolvable | ask once, or `Nothing to review.` |
 
 If two signals both appear, user label wins; if still tied, ask once. Stop until they answer unless they already said “just pick,” then prefer working tree when uncommitted changes exist, otherwise merge-base of `<base>` … `<tip>`.
@@ -80,7 +80,7 @@ If two signals both appear, user label wins; if still tied, ask once. Stop until
 
 ## 3. Announce and hand off
 
-**Out of family:** one or two sentences, name `shape-*` (or a later plan-review skill), **stop**. Do not read the leaf. Do not write a design critique.
+**Out of family:** one or two sentences, name `shape-*` (or a later plan-review skill), **stop**. Do not read the leaf. Do not write a design critique. A `SKILL.md` or required playbook in the file list is in family — hand off.
 
 **Empty / unresolvable:** if they can still name a target, ask once and stop. Otherwise write exactly `Nothing to review.` and stop.
 
