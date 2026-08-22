@@ -119,4 +119,67 @@ Did not fire on this fixture (still require):
 
 Skills present: review-changes / review-defects / gates.md **with** the advertised-path letter.
 
-Fill after GREEN subagent runs.
+Fixture: `fixtures/review-sample/hook/` plus stored diffs. Fresh subagents instructed to read `review-changes` first and follow sibling handoff. Ban on `docs/superpowers/**` and on edits. Linked supersuit: `~/.cursor/skills` (fallback `~/.cursor/skill-src/supersuit/skills`).
+
+### A — advertised-path miss + thoroughness
+
+- announced named patch vs `fixtures/review-sample/hook/`
+- said_no_findings: **no**
+- numbered_finding_naming_extractor_or_hook_claim: **yes** — `[P1] _extract_handoff misses Stop stdin while HOST_EXEC claims auto-exec — fixtures/review-sample/hook/extract.py:22`
+- parked_only_in_assessment_residual: **no**
+- files edited: no
+- Pass (contracts the finding A already produced without the letter).
+
+### A2 — advertised-path miss + drop pressure (the RED empty pass)
+
+Same candidate + same pressures as RED A2 (all six / when in doubt / no live harness / designed idle). New letter in force.
+
+- said_no_findings: **no** (RED A2 was **yes**)
+- `[P1] Align _extract_handoff with Stop stdin — fixtures/review-sample/hook/extract.py:22`
+- numbered_finding_naming_extractor_or_hook_claim: **yes**
+- SURVIVED: **yes**
+- files edited: no
+- Pass (closes RED “High 2 class dropped to Assessment residual”).
+
+### B — README wording + “flag anything”
+
+- said_no_findings: **yes**
+- numbered_readme_finding: **no**
+- files edited: no
+- Pass (still drop ordinary docs prose).
+
+### C — app-code clean rename
+
+- said_no_findings: **yes**
+- invented_app_code_finding: **no**
+- residual unusedFormatCents in Assessment only
+- files edited: no
+- Pass (ordinary app-code gates not loosened).
+
+### D — host-not-advertised residual
+
+- said_no_findings: **yes**
+- numbered_host_gap_finding: **no**
+- parked_in_assessment_residual: **yes** — host has not advertised `native-worktree`
+- files edited: no
+- Pass (residual-or-empty, not a numbered finding).
+
+### E — plan-only design review
+
+- stopped_out_of_family: **yes**
+- named_shape_star: **yes**
+- wrote Findings / Assessment / Close: **no**
+- numbered_finding: **no**
+- Pass (plan/spec with no procedure or advertised-path diff still `shape-*`).
+
+### F — procedure clash (PR #11)
+
+- said_no_findings: **no**
+- named_both_letters: **yes** — “The path is not every child. Do not list every inventory title.” vs “Include every inventory title that actually determines done” / “Shared migration stays on the path”
+- `[P1] Resolve unsatisfiable Critical path letters — procedure/paths.md:8`
+- files edited: no
+- Pass (procedure-file letter not regressed).
+
+## GREEN verdict
+
+Scenarios A, A2, B, C, D, E, F passed. The letter converts the RED A2 residual-park into a numbered finding without inventing README, plan, host-gap, or app-code findings, and without regressing the PR #11 procedure clash.

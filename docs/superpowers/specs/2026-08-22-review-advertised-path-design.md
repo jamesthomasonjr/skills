@@ -1,7 +1,7 @@
 # Review advertised-path findings
 
 Date: 2026-08-22
-Status: draft (RED baseline + GREEN subagent runs still required)
+Status: verified (RED baseline + GREEN subagent runs)
 Repo: jamesthomasonjr/skills
 
 Increment to `docs/superpowers/specs/2026-08-20-review-skill-family-design.md`
