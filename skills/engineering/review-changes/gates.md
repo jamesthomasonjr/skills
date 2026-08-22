@@ -2,7 +2,7 @@
 
 Shared playbook for `review-changes` and `review-defects`. The leaf is **REQUIRED** to follow this file. The router does not restate it.
 
-Flag a finding only when **all six** are true. If any gate is shaky, **drop**. When in doubt about impact, drop — except a demonstrated unsatisfiable pair in a procedure file (see Procedure files).
+Flag a finding only when **all six** are true. If any gate is shaky, **drop**. When in doubt about impact, drop — except a demonstrated unsatisfiable pair in a procedure file (see Procedure files) or a this-PR advertised-path miss (see Advertised paths).
 
 ## Six gates
 
@@ -20,9 +20,9 @@ Never a numbered finding:
 - Style, naming, comment, or formatting nits — including when the user said “nits are fine” or “flag anything.”
 - Extra blank lines, header comments that restate the filename, and local identifier renames with no behavior change.
 - Anything a linter, formatter, or typechecker already enforces.
-- Speculative “might break” with no demonstrable call path.
-- Intentional behavior the diff is clearly aiming at.
-- Pre-existing issues — at most **one residual-risk line** in Assessment, never a numbered finding.
+- Speculative “might break” with no demonstrable call path. A this-PR advertised-path miss is not speculative (see Advertised paths).
+- Intentional behavior the diff is clearly aiming at. Designed idle-when-no-handoff does not cover a hook whose extractor can never see a handoff.
+- Pre-existing issues — at most **one residual-risk line** in Assessment, never a numbered finding. Host-not-advertised (example: native-worktree) is this residual class. A this-PR advertised-path miss is not.
 - A “Minor / nit / consider” bucket. There is no such bucket. Listing nits then labeling them “nits only” is still a failed empty pass.
 
 ## Severity
@@ -69,3 +69,30 @@ Still **DROP**: wording nits, missing nice-to-have sections, “could be clearer
 “When in doubt, drop” still applies to app code and to shaky procedure nits. It does **not** authorize dropping a demonstrated unsatisfiable pair in a procedure file.
 
 Do not apply this rule to app-code contradictions unless they already pass today’s six gates the original way.
+
+## Advertised paths
+
+App-code gates stay tight except this class. Do not stretch the Procedure files rule onto `hooks.json` or ordinary docs.
+
+**Residual** = the host has not advertised a capability yet (example: native-worktree). At most one Assessment residual line. Never a numbered finding.
+
+**Finding** = this change’s own hook, header, or extractor cannot do what it claims.
+
+Example: this PR registers a Stop hook and `HOST_EXEC` claims the host auto-executes via Stop, but `_extract_handoff` reads `id` / `from` / `on` while Stop stdin is `session_id` / `stop_hook_active`. Designed idle-when-no-handoff does **not** cover “this PR’s only registered Stop hook can never have a handoff.”
+
+Gate 4: hook/tool stdin shape and the extractor in this comparison are the call path. Live harness eval is not required.
+
+“No live harness eval” / “it might fail in production” is not a drop for that class. Do not park that class in Assessment residual.
+
+All six gates can be true:
+
+1. Correctness of the advertised path (the hook, header, or extractor cannot do what this change claims).
+2. Discrete and actionable (name the claim and the stdin/extractor miss; file:line).
+3. Introduced by this change.
+4. Demonstrable from the hook/tool stdin shape and the extractor in this comparison. This is the call path. Live harness eval is not required.
+5. Concrete bad outcome: the advertised auto-exec never runs for the victim of the claim. Designed idle-when-no-handoff does not cover a hook that can never see a handoff.
+6. The author would probably fix it if they knew.
+
+Still **DROP**: wording nits, speculative “might break” with no this-PR advertised path, pre-existing host gaps (at most one Assessment residual line), plan/spec with no procedure or advertised-path diff (still out of family → `shape-*`).
+
+“When in doubt, drop” still applies to ordinary app code. It does **not** authorize dropping a this-PR advertised-path miss, and it does **not** authorize inventing findings for host-not-advertised residuals.
