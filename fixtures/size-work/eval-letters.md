@@ -23,10 +23,10 @@ sizer scorecard. Run `size-work`.
 
 | Leaf | Required |
 |---|---|
-| `size-work` | Classify `shape-feature` (not epic). SOLID / ISP / stacked PRs / “three cuts” do not bump. |
+| `size-work` | Classify `shape-feature` (not epic). SOLID / ISP / stacked PRs / “three cuts” do not bump. Do not ask-once into a single story to shrink Path. |
 | `shape-feature` | User-story inventory **3–9** (five OK). Each child is As a / I want / so that (or equivalent user-value). Path = every determining title (no count floor). If five stories all determine today’s weather for my location, list those five. Out stays off the path. **Not** the old parked Path (one story / Parallel None). Parallel **`None`** if they share the weather API contract or one page. Weather API is a separate `shape-task` (decision brief), not a production story, not swallowed. Close announces `write-design` (then `write-plan`). |
 | `shape-task` (API spike) | Decision brief. Done-when = pick + why, not shipped code. After a vendor spike, next is `write-design` / `write-plan`, or `write-spec` if the pick would stale In/Out. Not writing-plans. |
-| `shape-story` | Suggested next is `specify-work` / `write-spec`. Not brainstorming / Spec Kit / `/to-spec`. |
+| `shape-story` | Suggested next is `specify-work` / `write-spec` on **that story**. Not `write-design`. Not brainstorming / Spec Kit / `/to-spec`. Ask-once only when feature and story both genuinely fit. |
 
 ## RED catches
 
@@ -40,10 +40,13 @@ sizer scorecard. Run `size-work`.
 | **pad-to-one** | Size the weather-spec blob; five determining stories | Adds a dummy so Critical path is one title |
 | **drop-to-one** | Size the weather-spec blob; five determining stories | Drops determining titles so Critical path is one title (old parked card) |
 | **superpowers-next** | `shape-story` close, or `shape-task` after a vendor spike | Names Superpowers brainstorming, Spec Kit `/speckit.specify`, `/to-spec`, or writing-plans as the required next path |
+| **ask-once-to-shrink** | Size the weather-spec blob | Asks once into `shape-story` to shrink Path / match the old one-story card |
+| **write-design-from-story** | Genuine ask-once landed on story after a write-spec blob | Announces `write-design` as next (needs a feature inventory this leaf does not emit) |
 
 ## GREEN W — weather blob → shape-feature
 
-- Leaf: `shape-feature` (router classified feature; not epic).
+- Leaf: `shape-feature` (router classified feature; not epic). Did
+  **not** ask-once into a single story to shrink Path.
 - Inventory: 3–9 user stories. Five is a pass. Each child is user-value
   (As a / I want / so that or equivalent).
 - Out stays Out (URL-query, multi-day). Not children. Not on the path.
@@ -99,8 +102,9 @@ Work-sizing baseline C (`docs/superpowers/plans/2026-08-18-work-sizing-baseline.
 required naming `/speckit.specify`. That successor is **retargeted**.
 
 - Leaf: `shape-story`
-- Suggested next: `specify-work` / `write-spec`
-- Fail if the required next is brainstorming, Spec Kit, or `/to-spec`
+- Suggested next: `specify-work` / `write-spec` on that story
+- Fail if the required next is `write-design`, brainstorming, Spec Kit, or `/to-spec`
+- Fail if a weather write-spec blob was ask-once’d into this leaf to shrink Path
 
 ## GREEN T successor — vendor spike close
 

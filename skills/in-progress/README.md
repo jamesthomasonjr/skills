@@ -10,10 +10,11 @@ One workflow:
 write-spec → size-work → write-design → write-plan
 ```
 
-`write-spec` stops and points at `size-work`. `size-work` classifies
-and shapes, then points at `write-design`. Neither family auto-continues
-the next leaf. Neither family copies Superpowers write-and-commit or a
-2–5 minute TDD plan.
+`write-spec` stops and points at `size-work`. After `shape-feature`,
+next is `write-design`. If they picked story at a genuine ask-once,
+next is `write-spec` on that story — not `write-design`. Neither
+family auto-continues. Neither family copies Superpowers
+write-and-commit or a 2–5 minute TDD plan.
 
 ## Skills
 

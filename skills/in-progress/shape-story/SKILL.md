@@ -20,6 +20,11 @@ Produce a **spec-ready brief** for one user story. Not a spec. Not an implementa
 - Do not silently split into tasks; if the story is too large, say so and offer split stories or `shape-task` for pure chores.
 - Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** — conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
 - Mixed-turn build request: finish this brief, then hand back.
+- Next is `specify-work` / `write-spec` on **this** story. If they
+  arrived because they picked story at a genuine ask-once after a
+  write-spec blob, that next is still `write-spec` — not
+  `write-design`, not Superpowers. This leaf does not emit a
+  feature inventory. `write-design` needs one.
 
 ## Output contract (in order)
 
@@ -37,6 +42,13 @@ Produce a **spec-ready brief** for one user story. Not a spec. Not an implementa
 
 If another agent could not start a spec from this brief alone, add context. If you wrote the full spec, delete the spec sections and leave the sketch.
 
+## Rationalizations
+
+| Excuse | Reality |
+|---|---|
+| “levels.md said write-design after a write-spec blob” | That is the `shape-feature` close. This leaf points at `write-spec`. |
+| “I’ll design now; the story brief is enough inventory” | `write-design` needs a feature inventory. This leaf does not emit one. |
+
 ## Failures
 
 - Full functional-requirements catalog or prioritized GWT suites
@@ -44,3 +56,4 @@ If another agent could not start a spec from this brief alone, add context. If y
 - Empty “add the thing” brief with no problem/context/acceptance sketch
 - Path section (atomic — Path is `shape-epic` / `shape-feature` only)
 - Suggested next names Superpowers brainstorming, Spec Kit, or `/to-spec` instead of `specify-work` / `write-spec`
+- Announcing `write-design` after this leaf (including after an ask-once from a write-spec blob)

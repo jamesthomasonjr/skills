@@ -65,7 +65,16 @@ Never emit a feature/story inventory for a spike. Never let a spike silently bec
 
 ## Ambiguity
 
-If two adjacent levels both fit: recommend one in a single sentence, ask once, then stop until they answer — unless they already said “just pick,” in which case pick the larger level and proceed.
+Ask-once only when two adjacent levels both **genuinely** fit.
+Recommend one in a single sentence, ask once, then stop until they
+answer — unless they already said “just pick,” in which case pick
+the larger level and proceed.
+
+A write-spec weather blob (today’s weather here; later features Out)
+is **feature**. Do not ask-once into a single story to shrink Path.
+If a genuine ask-once lands on story, that leaf’s next is
+`write-spec` on the story — not `write-design`. See **After a
+write-spec blob**.
 
 ## What each level must not emit
 
@@ -78,9 +87,24 @@ If two adjacent levels both fit: recommend one in a single sentence, ask once, t
 ## After a write-spec blob
 
 A sharpened spec (one user-perceivable outcome; later features Out;
-standards as labels; vendor/API still a spike) is **feature** grain.
-Largest fit. `shape-story` is the adjacent ask-once. It is **not**
-an epic.
+standards as labels; vendor/API still a spike) is **feature** grain
+by default. Largest fit. It is **not** an epic.
+
+Ask-once (`shape-story`) only when feature and story both
+**genuinely** fit. Do not ask-once into a single story to shrink
+Path. A weather blob remains **feature**.
+
+**Next leaf follows the shape that ran.** Announce. Do not invoke.
+Do not hand off to Superpowers brainstorming or writing-plans.
+
+| Shape that ran | Next |
+|---|---|
+| `shape-feature` | `write-design` (then `write-plan`) |
+| `shape-story` (they picked story at a genuine ask-once) | `specify-work` / `write-spec` on **that story**. Not `write-design`. Not Superpowers. |
+
+Do **not** tell every shape leaf that `write-design` is next after
+any write-spec blob. `write-design` needs a feature inventory.
+`shape-story` does not emit one.
 
 Standards (SOLID, ISP, stacked PRs) and a later cut count (“three
 cuts”) **never** bump grain. They are not capabilities and not
@@ -106,10 +130,6 @@ pad-to-one or drop-to-one to match an old parked card.
 An open vendor / API decision (which weather service) stays a
 separate `shape-task` (spike flavor) — a **decision brief**, not a
 production story, not swallowed into the feature inventory.
-
-After shaping a write-spec blob, announce `write-design` as next
-(then `write-plan`). Stop. Do not invoke them. Do not hand off to
-Superpowers brainstorming or writing-plans.
 
 ## Outcomes
 
