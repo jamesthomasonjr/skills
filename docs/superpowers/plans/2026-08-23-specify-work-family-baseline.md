@@ -278,3 +278,24 @@ Skills present after `e56fd81`. Fresh `generalPurpose` subagents. Ban: `docs/sup
 - Spike first and separate. No 2–5 minute contract. No grain bump.
 - Files edited: none
 - Pass.
+
+### GREEN K — kinds.md-literal write-spec on slim dump (visibility ladder)
+
+Skills present after `6938ba4`. Fresh `generalPurpose` subagent. Ban: `docs/superpowers/**`, `fixtures/specify-work/weather-eval.md`. Follow `kinds.md` literally.
+
+- Agent: `30ec2b7e-31f5-4cc5-961d-44e3a7645803`
+- Outcome / In / Out / standards: present. Classes / cuts: **none.**
+- Open decisions: **which weather service / weather API / weather vendor** as a **spike** (`shape-task`). Not omitted. Not an explained pick.
+- Omitted because the dump did not say “open”? **No.** Dump edited? **No.**
+- Controlling sentences: “`write-spec` **infers** unanswered external or product choices. Do not require the dump to name them.” Spike default for an external service with no vendor. Never silent on an external vendor/API.
+- Pass. Closes RED-K omit.
+
+### A reconfirm (after visibility ladder)
+
+- Agent: `1d582bb8-c410-41f7-8a3e-5ffe7fd6f997`
+- Before grain, slim dump → **write-spec** only.
+- Outcome: one page, today’s weather for the user’s location. Out: URL + 3/7/10-day. Standards labeled. Classes / cuts: **none.** Plan: **no.**
+- Open decisions: **which weather service** as a **spike**. Dump edited? **No.**
+- Pass.
+
+Confirm dump still slim: `fixtures/specify-work/weather-dump.md` has no class list and no “picking the service is still open” sentence.
