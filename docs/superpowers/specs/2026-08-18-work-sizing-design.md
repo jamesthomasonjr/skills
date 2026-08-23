@@ -13,7 +13,7 @@ Users describe work at wildly different grains — “rebuild billing,” “add
 - Classify a work description as initiative, epic, feature, user story, or (when necessary) task.
 - Route to a level skill that shapes that unit and decomposes **one level down**.
 - Large units produce child inventories (initiative→epics, epic→features, feature→stories), not specs or plans.
-- Stories and tasks produce **spec-ready briefs** — enough context for a future prompt to run brainstorming / Spec Kit specify / to-spec — without writing the full spec here.
+- Stories and tasks produce **spec-ready briefs** — enough context for a future `specify-work` / `write-spec` — without writing the full spec here. (2026-08-18 original named brainstorming / Spec Kit specify / to-spec as that future prompt; live contract is write-spec.)
 - Stay project-agnostic and tracker-agnostic (conversation-first; optional markdown save).
 
 ## Non-goals
@@ -152,7 +152,7 @@ Spec-ready brief:
 - Acceptance sketch (3–7 bullets — not a full Spec Kit scenarios section)
 - Edge cases to explore later
 - Dependencies / assumptions
-- Suggested next step: brainstorming, Spec Kit `/speckit.specify`, or mattpocock `/to-spec` — do not run those here unless the user explicitly asks in a **new** message after this brief.
+- Suggested next step: `specify-work` / `write-spec` on that story. Not Superpowers brainstorming, Spec Kit `/speckit.specify`, or mattpocock `/to-spec`. Do not run the specify path here unless the user explicitly asks in a **new** message after this brief. (2026-08-18 original named brainstorming / Spec Kit / `/to-spec`; live contract is write-spec.)
 
 Optional: if the story is still too large or mixes unrelated chores, offer to split into stories or note candidate tasks — do not silently become `shape-task`.
 
