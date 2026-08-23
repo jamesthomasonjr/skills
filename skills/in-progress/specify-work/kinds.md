@@ -292,8 +292,9 @@ Failure: stacked PRs and no paths. Failure: the plan becomes a
 2–5 minute code novel. Failure: flat `src/*.ts` dump with every
 cut in one directory. Failure: hexagonal
 `domain/ports/adapters/views` as the only legal tree. Failure:
-distant `tests/` tree. Failure: requiring the weather Location
-tree or `LocationProvider` as the only pass.
+distant `tests/` tree. Failure: one dump folder that mixes
+every cut (mixed-cut map). Failure: requiring the weather
+Location tree or `LocationProvider` as the only pass.
 
 ## Compose order
 
@@ -377,7 +378,8 @@ is the unlabeled table only.
 - File map is a flat `src/*.ts` dump with every cut in one directory
 - File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree
 - File map requires a distant `tests/` tree
-- File map that requires the weather Location tree as the only pass
+- File map is one dump folder that mixes every cut (mixed-cut map)
+- File map that requires the weather Location tree or `LocationProvider` as the only pass
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three

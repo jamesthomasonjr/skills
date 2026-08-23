@@ -114,6 +114,8 @@ from scratch.
 - File map requires `domain/` / `ports/` / `adapters/` / `views/`
   as the only legal tree
 - File map requires a distant `tests/` tree
+- File map is one dump folder that mixes every cut (mixed-cut
+  map)
 - File map that requires the weather Location tree or
   `LocationProvider` paths as the only pass
 - Planning after a pick that would change In/Out or grain
