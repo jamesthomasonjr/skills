@@ -1,6 +1,6 @@
 {
   "name": "jamesthomasonjr-skills",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "James Thomason Jr's personal agent skills for Cursor, Claude Code, and other coding agents.",
   "author": {
     "name": "James Thomason Jr",
@@ -21,12 +21,6 @@
     "./skills/engineering/orient-repo",
     "./skills/engineering/orient-module",
     "./skills/engineering/orient-function",
-    "./skills/engineering/size-work",
-    "./skills/engineering/shape-initiative",
-    "./skills/engineering/shape-epic",
-    "./skills/engineering/shape-feature",
-    "./skills/engineering/shape-story",
-    "./skills/engineering/shape-task",
     "./skills/engineering/debug",
     "./skills/engineering/debug-root-cause",
     "./skills/engineering/debug-feedback-loop",
