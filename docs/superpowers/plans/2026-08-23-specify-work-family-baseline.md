@@ -56,6 +56,66 @@ Did not fire (still require):
 
 Skills present: `specify-work`, `kinds.md`, `write-spec`, `write-design`, `write-plan`.
 
-Fresh subagents. Ban: `docs/superpowers/**`, `fixtures/specify-work/weather-eval.md`. Read the named in-progress skill first.
+Fresh `generalPurpose` subagents. Ban: `docs/superpowers/**`, `fixtures/specify-work/weather-eval.md`. Each read the named in-progress skill first. No application files edited.
 
-Results filled after GREEN runs.
+### A — weather dump → write-spec only
+
+- leaf: **write-spec**
+- Outcome: single page, today’s weather for the user’s location
+- Out: URL-query location; 3-day; 7-day; 10-day
+- Standards labeled only (`stacked PRs`, `ISP`, `SOLID`) — not designed
+- Classes / providers in the document: **none**
+- Plan / stacked-PR list: **no**
+- Invoked size-work / write-design / write-plan: **no**
+- Close: announced `size-work`; “design and a plan; those need a new message. Stopping here.”
+- Files edited: none
+- Pass. Closes RED-1 auto-continue.
+
+### B — write-spec output + size-work letters (do not implement size-work)
+
+Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `shape-*` follow-through.
+
+- largest fit: **feature**; adjacent ask-once: **story**
+- inventory: **one story** (today’s weather for my location on one page)
+- URL-query / multi-day: **not** children (Out)
+- Path: that story. Parallel: **None**
+- weather API: separate **shape-task** spike
+- readable as epic: **no**
+- readable as class inventory: **no** (SOLID/ISP/stacked PRs are labels)
+- Pass.
+
+### C — write-design after grain
+
+- providers: LocationProvider → UserLocationProvider; DateProvider → TodaysDateProvider; WeatherProvider → service of choice
+- later-feature seams: URL-query adapter; SingleDateProvider + DateRangeProvider; fat DateProvider later — notes, not inventory
+- added multi-day / URL-query to inventory: **no**
+- resized / wrote plan: **no**
+- files edited: none
+- Pass.
+
+### D — write-plan after grain
+
+- unit: stacked PR (interface + impl + tests + mock for dependents)
+- 2–5 minute Superpowers step list as the contract: **no**
+- spike first and separate (`shape-task`): **yes**
+- grain bump / Out into inventory: **no**
+- implemented: **no**
+- files edited: none
+- Pass.
+
+### E — class list as the first ask
+
+- treated as inventory: **no**
+- followed write-design: **no**
+- pointer: **write-spec → size-work**
+- stopped without a spec/design/plan document: **yes**
+- files edited: none
+- Pass.
+
+### F — plan-only after grain
+
+- leaf: **write-plan** (not write-spec)
+- re-ran write-spec as the main document: **no**
+- stacked-PR plan: **yes**
+- files edited: none
+- Pass.
