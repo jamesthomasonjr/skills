@@ -77,6 +77,7 @@ That turn is `write-design` (or `write-plan` if plan-only).
 - Standards designed (interfaces, PR lists) instead of labeled
 - Path or implementation plan
 - Invoking `size-work`, `write-design`, or `write-plan`
+- Re-running after grain on a mixed dump without an In/Out rewrite ask
 - Aborting because the dump mentioned classes
 - Auto-continue because the dump named all three jobs
 - Grilling from scratch after a weather-style dump
