@@ -1,7 +1,7 @@
 # Specify-work skill family (in-progress draft)
 
 Date: 2026-08-23
-Status: draft (in-progress; not promoted)
+Status: verified (RED baseline + GREEN A–F; in-progress; not promoted)
 Repo: jamesthomasonjr/skills
 
 ## Problem
