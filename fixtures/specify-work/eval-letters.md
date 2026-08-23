@@ -23,7 +23,7 @@ product choices (vendor / API).
 |---|---|
 | `write-spec` | **Approaches** — 2–3 real alternatives, trade-offs, recommended pick. Pick includes stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendor/product options, each with short pros/cons, compare/contrast, and whether it would change MVP In/Out, grain, later cuts, auth, data shape, or tests. |
 | `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — a reader with only the file map knows what the cut does. GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`, `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or equivalent job names). Role + adapter is fine. TypeScript-style is fine. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`) as the only names. Do **not** require Superpowers dump strings. User class lists remain hints. |
-| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut:** interface + first impl + fake + unit test live together under that cut. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
+| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** — score the Location tree (or the two adapter nests), not “any grouping.” Preferred: `src/Location/Location.ts` + test, then `src/Location/Provider/LocationProvider.ts` + test and `BrowserGeolocationProvider.ts` + test. Acceptable (do not fail): `src/Location/LocationProvider/` or `src/LocationProvider/`. Do not require one exact spelling. Tests sit next to the file they cover. Capability / cut folder first, then port + first impl together. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
 
 Unchanged compose: weather API stays a **spike** unless demoted with
 a named default **and** why later cuts would not change. Stack pick
@@ -81,8 +81,10 @@ do not diverge on these ids:
 | **stale-spec-after-pick** | After grain, a vendor pick that would change In/Out, plus “design the classes” | Continues to `write-design` without re-running `write-spec` (grain stale; should point at write-spec → size-work) |
 | **plan-after-nonstale-pick** | After grain, settled non-stale vendor + “plan this”, **no design yet** | Takes `write-design` because the table says “next unfinished” / “no design yet” |
 | **cute-cut-names** | `write-design` after grain, slim dump, no class list | Interface + first impl are poetry / vibe / cute one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`) that need the design prose to decode |
-| **flat-src-map** | `write-plan` after grain + a design | File map dumps all cuts in `src/*.ts` with no per-cut grouping |
+| **flat-src-map** | `write-plan` after grain + a design | File map dumps all cuts in `src/*.ts` with every cut in one directory |
 | **hex-only-tree** | `write-plan` after grain + a design | File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree |
+| **distant-tests** | `write-plan` after grain + a design | File map requires a distant `tests/` tree instead of tests next to the file they cover |
+| **any-grouping** | `write-plan` after grain + a design | File map groups files but not as the Location tree or the two adapter nests (mixed-cut dump, or “any folder” sold as GREEN) |
 | **wrote-file-no-sink** | `write-spec` on the weather dump; no sink named | Wrote or committed a spec file / invented `docs/work/` |
 | **then-build-continued** | “spec this then build” | Built, designed, planned, or sized in the same turn |
 | **grilled-dump** | Weather dump | Interviewed from scratch instead of separating the dump |
@@ -120,10 +122,25 @@ do not diverge on these ids:
 
 - **Spike** first as `shape-task` with real options + impact (not “pick a weather API”). Not swallowed.
 - **File map** before stacked PRs: exact paths + what each file owns; this design’s cut names (job-named, not a dump-name fixture list).
-- **Colocate by cut:** `src/<cut>/` (or equivalent) holds interface + first impl + fake + unit test together.
-- GREEN example: `src/location-provider/LocationProvider.ts` next to `BrowserGeolocationProvider.ts`, `FakeLocationProvider.ts`, and the unit test. Same for each cut.
-- Fail a flat `src/*.ts` dump with no grouping.
+- **Colocate by cut** — score the Location tree (or the two adapter nests), not “any grouping.”
+- Capability / cut folder first (`Location`), then port + first impl together.
+- Tests sit next to the file they cover (not a distant `tests/` tree).
+- Preferred GREEN (Location cut; do **not** require this exact spelling):
+
+```
+src/Location/Location.ts
+src/Location/Location.test.ts
+src/Location/Provider/LocationProvider.ts
+src/Location/Provider/LocationProvider.test.ts
+src/Location/Provider/BrowserGeolocationProvider.ts
+src/Location/Provider/BrowserGeolocationProvider.test.ts
+```
+
+- Acceptable adapter nests (do **not** fail): `src/Location/LocationProvider/` or `src/LocationProvider/`.
+- Same shape for each cut. Job names on the types, not `Here` / `Place` / `TodayBoard`.
+- Fail a flat `src/*.ts` dump with every cut in one directory.
 - Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree.
+- Fail a distant `tests/` tree. Fail a mixed-cut dump folder.
 - Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR, not inside every port folder.
 - Each stacked PR names the files it touches.
 - File-map paths match the PRs. No TBD. No 2–5 minute code novel.
@@ -246,6 +263,18 @@ agent may treat `domain/` / `ports/` / `adapters/` / `views/`
 as the only legal tree (Superpowers hexagonal folders). That
 is the hole: mandatory layer folders, not colocation by cut.
 
+## RED-V — any-grouping (pre-tighten)
+
+Follow the loose colocate letter (`src/<cut>/` or equivalent
+holds interface + first impl + fake + one unit test).
+Expect: any per-cut folder dump still GREEN — including a
+mixed-cut `src/weather/` or a distant `tests/` tree — because
+the letter scored “some grouping,” not the Location tree.
+Hole vs JT’s tree: no capability folder first, no tests-next-
+to-each-file, no `Provider` nest (or the two accepted nests).
+Do **not** fail `src/Location/LocationProvider/` or
+`src/LocationProvider/` once the tighten lands.
+
 ## GREEN observed (after the letters)
 
 Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
@@ -274,9 +303,12 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Spike first with Open-Meteo vs OpenWeatherMap + impact. File map
   (design cut names) before stacked PRs. Each PR names files. Paths
   match. No TBD. No 2–5 minute novel. Spike not swallowed. Pass.
-- Prior D scored paths only. **Colocate by cut** is a new letter;
-  a flat `src/*.ts` dump or a mandatory hexagonal tree would now
-  fail.
+- Prior D scored paths only. **Colocate by cut** then scored any
+  per-cut folder. The tighten scores the Location tree (or the
+  two adapter nests). A flat `src/*.ts` dump, a distant `tests/`
+  tree, a mixed-cut dump, or a mandatory hexagonal tree fail.
+  `src/Location/LocationProvider/` and `src/LocationProvider/`
+  still pass.
 
 ### P — CityFormWeather + “Design the classes”
 

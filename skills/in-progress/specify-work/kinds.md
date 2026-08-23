@@ -213,16 +213,37 @@ file is responsible for. Paths and names follow **this design’s
 cut names** (which name the job). Do not treat Superpowers dump
 names (`LocationProvider`) as a required fixture list.
 
-**Colocate by cut.** Group files that change together under the
-cut, not a flat `src/*.ts` dump and not a mandatory
-`domain/` / `ports/` / `adapters/` / `views/` tree.
+**Colocate by cut.** Score the **Location tree** (or the two
+adapter nests), not “any grouping.” Capability / cut folder
+first, then port + first impl together. Tests sit next to the
+file they cover — not a distant `tests/` tree.
 
-GREEN: `src/location-provider/LocationProvider.ts` next to
-`BrowserGeolocationProvider.ts`, `FakeLocationProvider.ts`, and
-the unit test. Same for each cut.
+Preferred GREEN (Location cut). Do **not** require this exact
+spelling (`Location` vs `location` vs this design’s job name):
+
+```
+src/Location/Location.ts
+src/Location/Location.test.ts
+src/Location/Provider/LocationProvider.ts
+src/Location/Provider/LocationProvider.test.ts
+src/Location/Provider/BrowserGeolocationProvider.ts
+src/Location/Provider/BrowserGeolocationProvider.test.ts
+```
+
+Acceptable adapter nests (do **not** fail):
+`src/Location/LocationProvider/` or `src/LocationProvider/`.
+Same shape for each cut.
+
+Job names stay on the types (`LocationProvider`,
+`BrowserGeolocationProvider`), not `Here` / `Place` /
+`TodayBoard`.
 
 RED: all cuts dumped in `src/*.ts` with no grouping.
-RED: requiring hexagonal folder names as the only legal tree.
+RED: requiring hexagonal `domain/` / `ports/` / `adapters/` /
+`views/` as the only legal tree.
+RED: requiring a distant `tests/` tree.
+RED: one dump folder that mixes every cut (`src/app/`,
+`src/weather/` with location + weather + page together).
 
 Scaffold (`package.json`, `vite.config`, `index.html`) can sit at
 the page cut / composition PR, not inside every port folder.
@@ -239,13 +260,15 @@ Do not add bite-size TDD steps, complete test / impl code blocks,
 or Superpowers execution-handoff.
 
 Cheap self-review: no TBD; file-map paths match the PRs;
-signatures / names match the design cuts; files that change
-together live under the cut.
+signatures / names match the design cuts; Location tree (or the
+two adapter nests); tests next to the file they cover.
 
 Failure: stacked PRs and no paths. Failure: the plan becomes a
-2–5 minute code novel. Failure: flat `src/*.ts` dump with no cut
-grouping. Failure: hexagonal `domain/ports/adapters/views` as
-the only legal tree.
+2–5 minute code novel. Failure: flat `src/*.ts` dump with every
+cut in one directory. Failure: hexagonal
+`domain/ports/adapters/views` as the only legal tree. Failure:
+distant `tests/` tree. Failure: “any grouping” that is not the
+Location tree or the two adapter nests.
 
 ## Compose order
 
@@ -300,7 +323,9 @@ is the unlabeled table only.
 | “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |
 | “I’ll use Superpowers’ exact dump names so the eval passes” | Equivalents that name the job pass. Not a fixture list. |
 | “domain/ports/adapters is how hexagonal works” | Not the only legal tree. Colocate by cut. |
-| “src/*.ts is simpler” | Files that change together live under the cut. |
+| “src/*.ts is simpler” | Fail a flat dump. Use the Location tree (or the two nests). |
+| “Any per-cut folder is enough” | Score the Location tree. Do not fail `src/Location/LocationProvider/` or `src/LocationProvider/`. Fail mixed-cut dumps. |
+| “Tests live in tests/” | Tests sit next to the file they cover. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
 
 ## Failures
@@ -323,8 +348,10 @@ is the unlabeled table only.
 - Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday` as the only names)
 - Requiring Superpowers dump name strings as the design
 - Plan with stacked PRs and no paths
-- File map is a flat `src/*.ts` dump with no cut grouping
+- File map is a flat `src/*.ts` dump with every cut in one directory
 - File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree
+- File map requires a distant `tests/` tree
+- File map grouping that is not the Location tree or the two adapter nests (`src/Location/LocationProvider/`, `src/LocationProvider/`)
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three
