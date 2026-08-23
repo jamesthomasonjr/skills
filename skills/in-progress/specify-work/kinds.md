@@ -54,6 +54,23 @@ Do not wait for a class list. Do not pull Out requirements in to
 Failure: a cut has interface + first impl but no error note and no
 test note.
 
+Every cut’s **interface + first implementation** names the
+**job**. A reader who has only the file map — no design prose —
+must know what the cut does.
+
+GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`,
+`CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or
+equivalent job names). Role + adapter is fine. TypeScript-style
+is fine.
+
+RED: poetry / vibe names that need the design to decode —
+`Here`, `Place`, `TodayBoard`, `ComposeToday` as the only names.
+Fail cute one-word cuts.
+
+Do **not** require Superpowers dump names (`LocationProvider`) as
+a fixture list. The letter is “names the job,” not “use these
+strings.” A user class list remains a hint.
+
 ## Open decisions
 
 `write-spec` **infers** unanswered external or product choices. Do
@@ -193,7 +210,25 @@ over-split. Fail epic. Fail class / provider children.
 `write-plan` emits a **File map** after Spike and before the
 stacked-PR list: exact paths to create or modify, and what each
 file is responsible for. Paths and names follow **this design’s
-cut names**, not dump names (`LocationProvider`).
+cut names** (which name the job). Do not treat Superpowers dump
+names (`LocationProvider`) as a required fixture list.
+
+**Colocate by cut.** Group files that change together under the
+cut, not a flat `src/*.ts` dump and not a mandatory
+`domain/` / `ports/` / `adapters/` / `views/` tree.
+
+GREEN: `src/location-provider/LocationProvider.ts` next to
+`BrowserGeolocationProvider.ts`, `FakeLocationProvider.ts`, and
+the unit test. Same for each cut.
+
+RED: all cuts dumped in `src/*.ts` with no grouping.
+RED: requiring hexagonal folder names as the only legal tree.
+
+Scaffold (`package.json`, `vite.config`, `index.html`) can sit at
+the page cut / composition PR, not inside every port folder.
+
+Keep the writing-plans line in spirit: files that change together
+live together; split by responsibility, not by technical layer.
 
 Each stacked PR then names the files it touches.
 
@@ -204,10 +239,13 @@ Do not add bite-size TDD steps, complete test / impl code blocks,
 or Superpowers execution-handoff.
 
 Cheap self-review: no TBD; file-map paths match the PRs;
-signatures / names match the design cuts.
+signatures / names match the design cuts; files that change
+together live under the cut.
 
 Failure: stacked PRs and no paths. Failure: the plan becomes a
-2–5 minute code novel.
+2–5 minute code novel. Failure: flat `src/*.ts` dump with no cut
+grouping. Failure: hexagonal `domain/ports/adapters/views` as
+the only legal tree.
 
 ## Compose order
 
@@ -259,6 +297,11 @@ is the unlabeled table only.
 | “Cuts have interface and impl; errors wait for the plan” | Every cut owns an error note and a test note now. |
 | “Stacked PRs imply the paths” | Emit a File map with exact paths before the PR list. |
 | “Writing-plans uses 2–5 minute TDD steps” | This family’s plan unit is a stacked PR + File map, not a code novel. |
+| “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |
+| “I’ll use Superpowers’ exact dump names so the eval passes” | Equivalents that name the job pass. Not a fixture list. |
+| “domain/ports/adapters is how hexagonal works” | Not the only legal tree. Colocate by cut. |
+| “src/*.ts is simpler” | Files that change together live under the cut. |
+| “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
 
 ## Failures
 
@@ -277,7 +320,11 @@ is the unlabeled table only.
 - Non-stale pick + “plan this” taken as `write-design` because no design exists yet, or because the unlabeled table said “only cuts” / “next unfinished”
 - Auto-continuing the after-pick loop (spec → size → design) in one turn
 - A cut with interface + first impl but no error note and no test note
+- Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday` as the only names)
+- Requiring Superpowers dump name strings as the design
 - Plan with stacked PRs and no paths
+- File map is a flat `src/*.ts` dump with no cut grouping
+- File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three

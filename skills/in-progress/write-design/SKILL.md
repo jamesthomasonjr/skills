@@ -53,16 +53,23 @@ the class-design job. The user does not have to list classes.
    / failure** states that cut owns, and **how that cut is tested**
    (what is faked vs real). Short notes, not test code, not a plan,
    not stories. Current inventory only. Well-defined SOLID cuts, not
-   a grab bag of helpers. Names are yours. Do not pull Out in to
-   “prove” error paths.
+   a grab bag of helpers. Names **the job**: a reader with only the
+   file map must know what the cut does. Role + adapter is fine
+   (`LocationProvider` + `BrowserGeolocationProvider`,
+   `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient`, or
+   equivalent). Do not use poetry or cute one-word names (`Here`,
+   `Place`, `TodayBoard`, `ComposeToday`). Do not treat Superpowers
+   dump strings as a required list. A user class list remains a
+   hint. Do not pull Out in to “prove” error paths.
 4. **Later-feature seams** — how Out work would widen a cut (thin now,
    fat adapter later). Notes, **not** inventory. Do not pull Out into
    inventory to “prove” ISP.
 5. **Close** — hand back. Do not write the plan. Do not resize.
 
 Every cut has an interface, a first implementation, an error note,
-and a test note. Cuts must cover the sized outcome. If a cut is not
-split (not thin), write why.
+and a test note. Interface + first impl name the job. Cuts must
+cover the sized outcome. If a cut is not split (not thin), write
+why.
 
 ## Rationalizations
 
@@ -70,6 +77,8 @@ split (not thin), write why.
 |---|---|
 | “They didn’t list classes, so I cannot design” | Derive cuts from the sized work. |
 | “They dumped LocationProvider, so that is the design” | Hint only. Derive from the sized outcome. |
+| “Here / Place / TodayBoard is shorter” | Fail cute one-word / poetry names. Name the job. |
+| “GREEN requires LocationProvider exactly” | Equivalent job names pass. Not a fixture list. |
 | “They dumped classes first, so start there” | No grain. Point at `write-spec` → `size-work`. |
 | “Design this — no grain, but they didn’t list classes” | Still no grain. Stop. |
 | “I’ll add the 10-day story so the ISP seam is real” | Seams are notes. Out stays Out. |
@@ -85,6 +94,8 @@ split (not thin), write why.
 - Waiting for a class list, or copying a dump’s list as the design
 - Designing before grain (plain “design this” or a class dump)
 - Cuts without an interface + first impl
+- Cute / poetry / one-word cut names that do not name the job
+- Requiring Superpowers dump name strings as the design
 - A cut with interface + impl but no error note and no test note
 - Designing after a pick that would change In/Out or grain
 - Taking a non-stale “plan this” because no design exists yet

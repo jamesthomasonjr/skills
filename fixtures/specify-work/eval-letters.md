@@ -22,8 +22,8 @@ product choices (vendor / API).
 | Leaf | New required section |
 |---|---|
 | `write-spec` | **Approaches** — 2–3 real alternatives, trade-offs, recommended pick. Pick includes stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendor/product options, each with short pros/cons, compare/contrast, and whether it would change MVP In/Out, grain, later cuts, auth, data shape, or tests. |
-| `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. |
-| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. |
+| `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — a reader with only the file map knows what the cut does. GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`, `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or equivalent job names). Role + adapter is fine. TypeScript-style is fine. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`) as the only names. Do **not** require Superpowers dump strings. User class lists remain hints. |
+| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut:** interface + first impl + fake + unit test live together under that cut. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
 
 Unchanged compose: weather API stays a **spike** unless demoted with
 a named default **and** why later cuts would not change. Stack pick
@@ -80,6 +80,9 @@ do not diverge on these ids:
 | **2-5-minute-plan** | `write-plan` after grain + a design | Plan contract is a 2–5 minute TDD step list / code novel |
 | **stale-spec-after-pick** | After grain, a vendor pick that would change In/Out, plus “design the classes” | Continues to `write-design` without re-running `write-spec` (grain stale; should point at write-spec → size-work) |
 | **plan-after-nonstale-pick** | After grain, settled non-stale vendor + “plan this”, **no design yet** | Takes `write-design` because the table says “next unfinished” / “no design yet” |
+| **cute-cut-names** | `write-design` after grain, slim dump, no class list | Interface + first impl are poetry / vibe / cute one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`) that need the design prose to decode |
+| **flat-src-map** | `write-plan` after grain + a design | File map dumps all cuts in `src/*.ts` with no per-cut grouping |
+| **hex-only-tree** | `write-plan` after grain + a design | File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree |
 | **wrote-file-no-sink** | `write-spec` on the weather dump; no sink named | Wrote or committed a spec file / invented `docs/work/` |
 | **then-build-continued** | “spec this then build” | Built, designed, planned, or sized in the same turn |
 | **grilled-dump** | Weather dump | Interviewed from scratch instead of separating the dump |
@@ -98,7 +101,17 @@ do not diverge on these ids:
 
 ## GREEN C — write-design (after grain)
 
-- Steps + Cuts; every cut has interface + first impl; names free.
+- Steps + Cuts; every cut has interface + first impl.
+- Interface + first impl **name the job**. A reader with only the
+  file map knows what each cut does.
+- GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`,
+  `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or
+  equivalent job names). Role + adapter is fine. TypeScript-style
+  is fine.
+- Fail cute / poetry names as the only names (`Here`, `Place`,
+  `TodayBoard`, `ComposeToday`). Fail cute one-word cuts.
+- Do **not** fail equivalent job names that are not those exact
+  Superpowers strings. User class lists remain hints.
 - Every cut also has an **error / failure** note and a **test** note (faked vs real).
 - Notes are short. Not test code. Not a plan. Not size-work stories.
 - Out items are seams only. No resize.
@@ -106,9 +119,15 @@ do not diverge on these ids:
 ## GREEN D — write-plan (after grain)
 
 - **Spike** first as `shape-task` with real options + impact (not “pick a weather API”). Not swallowed.
-- **File map** before stacked PRs: exact paths + what each file owns; design cut names (not dump names).
+- **File map** before stacked PRs: exact paths + what each file owns; this design’s cut names (job-named, not a dump-name fixture list).
+- **Colocate by cut:** `src/<cut>/` (or equivalent) holds interface + first impl + fake + unit test together.
+- GREEN example: `src/location-provider/LocationProvider.ts` next to `BrowserGeolocationProvider.ts`, `FakeLocationProvider.ts`, and the unit test. Same for each cut.
+- Fail a flat `src/*.ts` dump with no grouping.
+- Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree.
+- Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR, not inside every port folder.
 - Each stacked PR names the files it touches.
 - File-map paths match the PRs. No TBD. No 2–5 minute code novel.
+- After-pick / Approaches ≠ spike / error+test notes unchanged.
 
 ## GREEN R — non-stale pick + “plan this”, no design
 
@@ -199,6 +218,34 @@ winning user label? **no.** Controlling row: “Only cuts / seams /
 errors | `write-design`.” Compose: “Spike pick landed | see After
 a spike pick | that table.”
 
+## RED-S — cute-cut-names (pre-letter)
+
+Follow current `write-design` after grain. Slim dump. No class list.
+Current letter: “Names are yours” / GREEN C “names free.”
+Expect: interface + first impl may be poetry / vibe / cute
+one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`)
+that need the design prose to decode. Job-shaped names may
+still appear; they are not required.
+
+Do not require Superpowers dump strings as the fail. The hole
+is “names free,” not “must not say LocationProvider.”
+
+## RED-T — flat-src-map (pre-letter)
+
+Follow current `write-plan` after grain, using a design’s cuts.
+Current letter: File map = exact paths + cut names. No grouping
+rule.
+Expect: a flat `src/*.ts` dump (every cut’s files in `src/` with
+no per-cut folder) still passes paths / no-TBD / no 2–5 minute
+novel.
+
+## RED-U — hex-only-tree (pre-letter)
+
+Same prompt as RED-T. Current letter has no tree rule, so an
+agent may treat `domain/` / `ports/` / `adapters/` / `views/`
+as the only legal tree (Superpowers hexagonal folders). That
+is the hole: mandatory layer folders, not colocation by cut.
+
 ## GREEN observed (after the letters)
 
 Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
@@ -217,6 +264,9 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Cuts `LocationSource` / `TodayWeatherSource` / `WeatherPage`: each
   has interface, impl, depends, thin/fat, error note, test note
   (faked vs real). Out seams only. No plan. Pass.
+- Those names still **name the job** under the new letter
+  (equivalent job names, not Superpowers dump strings). Cute /
+  poetry-only names would now fail.
 
 ### D — write-plan after grain
 
@@ -224,6 +274,9 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Spike first with Open-Meteo vs OpenWeatherMap + impact. File map
   (design cut names) before stacked PRs. Each PR names files. Paths
   match. No TBD. No 2–5 minute novel. Spike not swallowed. Pass.
+- Prior D scored paths only. **Colocate by cut** is a new letter;
+  a flat `src/*.ts` dump or a mandatory hexagonal tree would now
+  fail.
 
 ### P — CityFormWeather + “Design the classes”
 
