@@ -11,8 +11,8 @@ the only sizer scorecard, and it does not say “do not run size-work.”
 | Grain | `shape-feature` (not epic). `shape-story` is the adjacent ask-once. |
 | Inventory | 3–9 user stories (five OK). Fail epic. Fail class / provider children. Do **not** fail five as over-split. |
 | Out | URL-query location; multi-day (3/7/10-day) forecast |
-| Path | Determining inventory titles (no count rule) |
-| Parallel | `None` while the weather API decision is open |
+| Path | Every determining inventory title. No count floor. If five user-perceivable stories all determine today’s weather for my location, list those five titles. Omit only titles that do not determine done. Out (multi-day / URL-query) stays out of inventory and off the path. **Not** the old parked Path (one story / Parallel None). |
+| Parallel | `None` if the stories share the weather API contract or one page (open vendor is one such shared decision). That is not a one-story Path. |
 | Separate | `shape-task` spike for which weather API (decision brief, not a production story, not swallowed) |
 | After grain | Class / ISP / stacked-PR work — not inventory |
 

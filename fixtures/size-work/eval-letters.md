@@ -24,7 +24,7 @@ sizer scorecard. Run `size-work`.
 | Leaf | Required |
 |---|---|
 | `size-work` | Classify `shape-feature` (not epic). SOLID / ISP / stacked PRs / “three cuts” do not bump. |
-| `shape-feature` | User-story inventory **3–9** (five OK). Each child is As a / I want / so that (or equivalent user-value). Path = determining titles. Parallel **`None`** while the weather API decision is open. Weather API is a separate `shape-task` (decision brief), not a production story, not swallowed. Close announces `write-design` (then `write-plan`). |
+| `shape-feature` | User-story inventory **3–9** (five OK). Each child is As a / I want / so that (or equivalent user-value). Path = every determining title (no count floor). If five stories all determine today’s weather for my location, list those five. Out stays off the path. **Not** the old parked Path (one story / Parallel None). Parallel **`None`** if they share the weather API contract or one page. Weather API is a separate `shape-task` (decision brief), not a production story, not swallowed. Close announces `write-design` (then `write-plan`). |
 | `shape-task` (API spike) | Decision brief. Done-when = pick + why, not shipped code. After a vendor spike, next is `write-design` / `write-plan`, or `write-spec` if the pick would stale In/Out. Not writing-plans. |
 | `shape-story` | Suggested next is `specify-work` / `write-spec`. Not brainstorming / Spec Kit / `/to-spec`. |
 
@@ -36,7 +36,9 @@ sizer scorecard. Run `size-work`.
 | **provider-as-story** | Size the weather-spec blob; class / provider pressure | `LocationProvider` / `WeatherSource` / any class or provider name appears as a story, feature, or task child |
 | **five-as-oversplit** | Size the weather-spec blob; inventory lands at five user stories | Fails or collapses the inventory because “five is over-split” / “Skill Craft wanted one child” |
 | **swallow-api** | Size the weather-spec blob | Weather API is a production story, or is missing as a separate `shape-task` spike |
-| **parallel-while-open** | Size the weather-spec blob; fan-out pressure | Parallel is not `None` while the vendor decision is open |
+| **parallel-while-open** | Size the weather-spec blob; fan-out pressure | Parallel is not `None` while stories share the weather API contract / one page / open vendor |
+| **pad-to-one** | Size the weather-spec blob; five determining stories | Adds a dummy so Critical path is one title |
+| **drop-to-one** | Size the weather-spec blob; five determining stories | Drops determining titles so Critical path is one title (old parked card) |
 | **superpowers-next** | `shape-story` close, or `shape-task` after a vendor spike | Names Superpowers brainstorming, Spec Kit `/speckit.specify`, `/to-spec`, or writing-plans as the required next path |
 
 ## GREEN W — weather blob → shape-feature
@@ -44,9 +46,14 @@ sizer scorecard. Run `size-work`.
 - Leaf: `shape-feature` (router classified feature; not epic).
 - Inventory: 3–9 user stories. Five is a pass. Each child is user-value
   (As a / I want / so that or equivalent).
-- Out stays Out (URL-query, multi-day). Not children.
-- Path: determining inventory titles. No count cap or floor.
-- Parallel: **`None`** (vendor / API still open).
+- Out stays Out (URL-query, multi-day). Not children. Not on the path.
+- Path: every determining inventory title. No count floor. If five
+  user-perceivable stories all determine today’s weather for my
+  location, Critical path lists those five titles. **Not** the old
+  parked Path (one story / Parallel None).
+- Parallel: **`None`** if they share the weather API contract or one
+  page (open vendor is one such shared decision). That is not a
+  one-story Path.
 - Weather API: separate `shape-task` spike (decision brief). Not a
   production story. Not swallowed.
 - Class / provider names as children: **none**.
@@ -69,6 +76,22 @@ build. Include LocationProvider and the weather provider as stories
 so design can sequence them.
 
 Fail if: any class / provider name is an inventory child.
+
+## RED-W3 — pad-to-one
+
+Prompt: size `weather-spec.md`. Five user-perceivable stories all
+determine today’s weather for my location.
+
+Fail if: Critical path is one title because a dummy was added so
+the path looks like the old parked card.
+
+## RED-W4 — drop-to-one
+
+Prompt: size `weather-spec.md`. Five user-perceivable stories all
+determine today’s weather for my location.
+
+Fail if: Critical path is one title because determining titles were
+dropped to match the old parked card (one story / Parallel None).
 
 ## GREEN C successor — shape-story next is specify-work
 

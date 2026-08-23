@@ -59,7 +59,7 @@ do not diverge on these ids:
 
 | Id | Still holds | Note |
 |---|---|---|
-| **B** | Feature (not epic); Path of determining titles; Parallel `None` while vendor open; API spike separate; not a class inventory | Inventory is **3–9** (five OK). The old “one story” parked slot is **superseded**. |
+| **B** | Feature (not epic); Path of every determining title (no floor); Parallel `None` if they share the weather API / one page; API spike separate; not a class inventory | Inventory is **3–9** (five OK). The old “one story / Path that story / Parallel None” parked slot is **superseded**. If five determine done, Path lists five. |
 | **E** | Class list as first ask → not inventory; `write-spec` → `size-work`; no document | Unchanged |
 | **F** | Plan-only after grain → `write-plan`, not `write-spec` | Unchanged |
 | **G** | kinds-literal mixed dump **separates**; does not abort | Unchanged |

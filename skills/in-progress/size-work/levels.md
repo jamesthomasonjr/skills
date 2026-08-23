@@ -95,6 +95,14 @@ child is a fail.
 band. Do not fail five as over-split. Do not add a “one user-story
 child” rule.
 
+Path follows [paths.md](paths.md): every determining inventory
+title, no count floor. If five user-perceivable stories all
+determine today’s weather for my location, Critical path lists
+those titles. Out (multi-day / URL-query) stays out of inventory
+and off the path. Parallel `None` if they share the weather API
+contract or one page — that is **not** a one-story Path. Do not
+pad-to-one or drop-to-one to match an old parked card.
+
 An open vendor / API decision (which weather service) stays a
 separate `shape-task` (spike flavor) — a **decision brief**, not a
 production story, not swallowed into the feature inventory.

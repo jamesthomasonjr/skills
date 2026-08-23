@@ -87,3 +87,4 @@ Then follow that shape skill. Do not keep a second shaping procedure here.
 - Failing a 3–9 / five-story feature inventory as over-split
 - Swallowing the weather API spike into a production story
 - Handing off to Superpowers brainstorming or writing-plans after a write-spec blob
+- Weather Path of one title to match the old parked card (pad-to-one or drop-to-one)
