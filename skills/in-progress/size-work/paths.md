@@ -56,10 +56,15 @@ Independence test — fail **any** one and they are not parallel:
 
 - Shared file (including a migration)
 - Shared contract (type, schema, API, event shape)
-- Open decision (“what does X mean”)
+- Open decision (“what does X mean”), including an open vendor /
+  API pick (which weather service)
 
 Write exactly `None` when nothing passes. `None` is success. Inventing
 a set to look useful is the defect.
+
+While a vendor / API decision that later cuts depend on is still
+open, Parallel is **`None`**. Do not invent independent story
+workstreams around an unsettled weather API.
 
 Do not dispatch agents from a set. `next-work` / `handoff-work` / the
 user do that.
@@ -102,6 +107,7 @@ this same three-part block. Do not grow a review-brief skill.
 | Excuse | Reality |
 |---|---|
 | “They look like separate workstreams” | Shared migration, type, or meaning → path, not Parallel. |
+| “Stories can start while we pick the weather API” | Open vendor / API is an open decision. Parallel is `None`. |
 | “None looks like I didn't try” | `None` is the correct pass. Inventing a set is the miss. |
 | “Priority already sequences them” | Matching priority is fine when that is the sequence. Copy it only then. |
 | “Every child on the path is a miss” | If every child determines done, list them. Parallel `None` may follow. |

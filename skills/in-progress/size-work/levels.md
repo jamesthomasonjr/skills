@@ -75,6 +75,34 @@ If two adjacent levels both fit: recommend one in a single sentence, ask once, t
 | User story | Full Spec Kit `spec.md`, Superpowers design doc, implementation, scaffolding |
 | Task | Fake “As a…” wrapper, implementation in the sizing turn |
 
+## After a write-spec blob
+
+A sharpened spec (one user-perceivable outcome; later features Out;
+standards as labels; vendor/API still a spike) is **feature** grain.
+Largest fit. `shape-story` is the adjacent ask-once. It is **not**
+an epic.
+
+Standards (SOLID, ISP, stacked PRs) and a later cut count (“three
+cuts”) **never** bump grain. They are not capabilities and not
+inventory children.
+
+Class / provider / interface names (`LocationProvider`,
+`WeatherSource`, …) are **not** stories, features, or tasks. Those
+are `write-design` cuts after grain. Listing one as an inventory
+child is a fail.
+
+`shape-feature` inventory stays **3–9** user stories. Five is in
+band. Do not fail five as over-split. Do not add a “one user-story
+child” rule.
+
+An open vendor / API decision (which weather service) stays a
+separate `shape-task` (spike flavor) — a **decision brief**, not a
+production story, not swallowed into the feature inventory.
+
+After shaping a write-spec blob, announce `write-design` as next
+(then `write-plan`). Stop. Do not invoke them. Do not hand off to
+Superpowers brainstorming or writing-plans.
+
 ## Outcomes
 
 The shaped charter, inventory, or brief **is** the portable artifact. This family is tracker-agnostic.

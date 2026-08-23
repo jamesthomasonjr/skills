@@ -1,6 +1,19 @@
 # In progress
 
-Drafts that are not ready to ship. Not promoted — do not list these in the root README or `.claude-plugin/plugin.json`.
+Drafts that are not ready to ship. Not promoted — do not list these in
+the root README or `.claude-plugin/plugin.json`. The plugin does not
+install this bucket.
+
+One workflow:
+
+```
+write-spec → size-work → write-design → write-plan
+```
+
+`write-spec` stops and points at `size-work`. `size-work` classifies
+and shapes, then points at `write-design`. Neither family auto-continues
+the next leaf. Neither family copies Superpowers write-and-commit or a
+2–5 minute TDD plan.
 
 ## Skills
 

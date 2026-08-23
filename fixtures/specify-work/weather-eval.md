@@ -2,15 +2,18 @@
 
 GREEN must match this card unless the specify-work letters themselves force a change (they must not).
 
-After `write-spec`, size-work would classify `shape-feature` (largest fit; `shape-story` is the adjacent ask-once).
+After `write-spec`, run `size-work` (live letters). Scorer:
+`fixtures/size-work/eval-letters.md`. This parked card is **not**
+the only sizer scorecard, and it does not say “do not run size-work.”
 
 | Slot | Value |
 |---|---|
-| Inventory | One story — today’s weather for my location on one page |
+| Grain | `shape-feature` (not epic). `shape-story` is the adjacent ask-once. |
+| Inventory | 3–9 user stories (five OK). Fail epic. Fail class / provider children. Do **not** fail five as over-split. |
 | Out | URL-query location; multi-day (3/7/10-day) forecast |
-| Path | That story |
-| Parallel | `None` |
-| Separate | `shape-task` spike for which weather API |
+| Path | Determining inventory titles (no count rule) |
+| Parallel | `None` while the weather API decision is open |
+| Separate | `shape-task` spike for which weather API (decision brief, not a production story, not swallowed) |
 | After grain | Class / ISP / stacked-PR work — not inventory |
 
 Design names are **agent-chosen**. GREEN scores shape (interface + first impl per cut; steps cover the sized outcome; thin where a consumer would not need extra methods), not `LocationProvider` / `SingleDateProvider` spelling.

@@ -184,6 +184,10 @@ spikes-with-options / labels. It is not an epic. It is not a class
 inventory. It is not a Path. size-work reads requirements in
 In/Out, not Standards, not providers, not Approaches.
 
+size-work inventory is **3–9** user stories (**five OK**). This
+family must not assert one story, and must not treat five as
+over-split. Fail epic. Fail class / provider children.
+
 ## File map
 
 `write-plan` emits a **File map** after Spike and before the

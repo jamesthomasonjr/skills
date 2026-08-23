@@ -33,7 +33,7 @@ Produce an **implement-ready or decide-ready brief** for an atomic engineering c
 4. **Done when** — 3–7 concrete checks (for bugs: include repro gone / regression check)
 5. **Steps sketch** — ordered bullets (no full patch)
 6. **Risks** — blast radius, expand-contract needs, missing targets
-7. **Close** — hand back; offer implement / writing-plans on a **new** message. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
+7. **Close** — hand back; offer implement on a **new** message. Do not offer Superpowers writing-plans. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
 
 ## Output contract — spike flavor
 
@@ -46,7 +46,12 @@ Use when the router passed `flavor: spike`, or the description is a spike / sing
 5. **Done when** — written answer, options considered, and a recommendation (not “code shipped”)
 6. **Out of scope** — no production feature work inside the spike
 7. **Approach sketch** — how you’ll learn (read code/docs, spike branch, prototype) — bullets only
-8. **Close** — hand back; next message may run the spike, a prototype skill, or writing-plans. Do **not** offer “implement the feature” as the default close. If they named a sink, publish per Outcomes.
+8. **Close** — hand back. After a vendor / API spike, next is
+   `write-design` / `write-plan`, or re-run `write-spec` if the pick
+   would stale Outcome / In / Out or grain. Do **not** offer
+   Superpowers writing-plans. Do **not** offer “implement the
+   feature” as the default close. If they named a sink, publish per
+   Outcomes.
 
 ## If the target does not exist
 
@@ -61,3 +66,5 @@ Say so. Still produce the brief from the description. Do not invent a codebase t
 - Diagnosing an unknown intermittent failure here instead of handing off
 - Charting a multi-question research map here instead of handing off
 - Treating spike “done when” as shipped production code
+- Offering Superpowers writing-plans as the next step
+- After a vendor spike, skipping `write-design` / `write-plan` (or `write-spec` when the pick would stale In/Out)
