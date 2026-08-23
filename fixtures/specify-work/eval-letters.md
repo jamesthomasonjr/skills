@@ -1,13 +1,15 @@
 # specify-work eval letters
 
 Scorer rubric for the Superpowers-gap letters. Not user input.
-GREEN prompts must not open this file, `weather-eval.md`, or
-`charge-eval.md`.
+GREEN prompts must not open this file, `weather-eval.md`,
+`charge-eval.md`, or `house-eval.md`.
 
-Input dumps: `weather-dump.md` (weather novel) and
-`charge-dump.md` (second novel). Grain (when needed) is the
-parked card in `weather-eval.md` or `charge-eval.md`. Ban:
-`docs/superpowers/**`.
+Input dumps: `weather-dump.md` (weather novel),
+`charge-dump.md` (second novel), and `house-dump.md` plus
+`house-repo/` (existing-repo novel). Grain (when needed) is
+the parked card in `weather-eval.md`, `charge-eval.md`, or
+`house-eval.md`. Ban: `docs/superpowers/**`. Not a third
+scorer for the 8am Charge-C/D scan.
 
 One leaf per turn. Before grain, mixed dump → `write-spec`. After
 grain, mixed dump → `write-design`. No grain → stop for design/plan.
@@ -27,6 +29,7 @@ product choices (vendor / API).
 | `write-spec` | **Approaches** — 2–3 real alternatives, trade-offs, recommended pick. Pick includes stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendor/product options, each with short pros/cons, compare/contrast, and whether it would change MVP In/Out, grain, later cuts, auth, data shape, or tests. |
 | `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — synonym family, not one token. `${Location\|Position\|Coordinates\|similar}Provider` (or Client / Adapter / Gateway / Source) GREEN. Same weather dump: `DevicePosition` + `BrowserDevicePosition` GREEN. Requiring `LocationProvider` as the only accepted token RED. Charge dump: `CardCharger` + `StripeCardCharger` (or `PaymentClient` / `ChargeGateway` family) GREEN. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold`). Superpowers does not dictate type names. User class lists remain hints. |
 | `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (the rule, not “the Location tree”): capability folder first, port + first impl together, tests next to the file. Acceptable nests: `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`. Weather synonyms (`src/DevicePosition/…`) and charge (`src/Charge/…` / `src/Payment/…`) both GREEN. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Fail requiring `LocationProvider` paths as the only pass. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
+| `write-plan` (existing repo) | **Follow the house.** Not a Charge-C/D scorer. Input: `house-dump.md` + `house-repo/`. Match naming, functions vs classes, `tests/` vs colocated, flat `src` if that is already the tree. GREEN: `lib/geo/…` + `tests/geo/…`. RED: invents `src/Location/Provider/` + classes + tests-next-to-file against this house. Do **not** fail house-style `tests/` or flat `src` on this prompt. Greenfield Charge-C/D and `distant-tests` / `flat-src-map` stay as written for weather/charge dumps. |
 
 Unchanged compose: weather API stays a **spike** unless demoted with
 a named default **and** why later cuts would not change. Stack pick
@@ -90,6 +93,7 @@ do not diverge on these ids:
 | **hex-only-tree** | `write-plan` after grain + a design | File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree |
 | **distant-tests** | `write-plan` after grain + a design | File map requires a distant `tests/` tree instead of tests next to the file they cover |
 | **any-grouping** | `write-plan` after grain + a design | File map groups files but not colocate-by-cut (mixed-cut dump, or “any folder” sold as GREEN) |
+| **invent-convention** | `write-plan` after grain, `house-dump.md` + `house-repo/` | File map invents a second convention (`src/Location/Provider/` + classes, or tests-next-to-file) against the existing `lib/geo/` + `tests/` + function-module house |
 | **wrote-file-no-sink** | `write-spec` on the weather dump; no sink named | Wrote or committed a spec file / invented `docs/work/` |
 | **then-build-continued** | “spec this then build” | Built, designed, planned, or sized in the same turn |
 | **grilled-dump** | Weather dump | Interviewed from scratch instead of separating the dump |
@@ -172,6 +176,29 @@ pass, the letter does not scale.
 - RED: requiring the weather Location tree as the only pass.
 - No TBD. No 2–5 minute code novel. Scaffold at the page /
   composition cut.
+
+## GREEN House — write-plan (after grain, existing repo)
+
+Not a Charge-C/D scorer. Not a third 8am novel. Charge-C/D
+and weather-only-pass stay as written for `charge-dump.md` /
+`weather-dump.md`.
+
+- Input: `house-dump.md` + `house-repo/`. Do not open
+  `house-eval.md`, `weather-eval.md`, `charge-eval.md`, or
+  this file.
+- Grain exists (parked in `house-eval.md`). Leaf: `write-plan`.
+- File map **follows the house**: `lib/geo/` function modules,
+  tests under `tests/geo/`, not `src/Location/Provider/`
+  classes, not tests next to the file.
+- GREEN: `lib/geo/…` + `tests/geo/…` (or the same house with
+  new weather files next to those conventions).
+- RED: invents `src/Location/Provider/` + classes +
+  tests-next-to-file against this house.
+- Do **not** fail house-style `tests/` or flat `src` on this
+  prompt. Greenfield `distant-tests` / `flat-src-map` stay
+  RED on weather/charge dumps.
+- Spike first with options + impact. No TBD. No 2–5 minute
+  code novel. Each stacked PR names the files it touches.
 
 ## GREEN R — non-stale pick + “plan this”, no design
 
@@ -308,10 +335,25 @@ weather Location tree as the scored shape. Same weather dump:
 dump would fail unless it copies weather names. Hole: one
 novel memorized; the letter does not scale.
 
+## RED-X — invent-convention (pre-letter)
+
+Follow current `write-plan` + `kinds.md` File map after grain,
+using `house-dump.md` + `house-repo/`. Current letter:
+colocate-by-cut is unconditional. Distant `tests/` and flat
+`src/*.ts` are always RED. “Tests live in tests/” is a
+rationalization to reject the house.
+Expect: a plan that follows `lib/geo/` + `tests/geo/` +
+function modules **fails** as distant-tests / not
+colocate-by-cut. A plan that invents
+`src/Location/Provider/` + classes + tests-next-to-file
+**passes** the current File map Failures. Hole: no
+existing-repo predicate. Greenfield `distant-tests` /
+`flat-src-map` stay the right RED on weather/charge dumps.
+
 ## GREEN observed (after the letters)
 
-Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
-`generalPurpose` subagents.
+Ban: `docs/superpowers/**`, `weather-eval.md`, `house-eval.md`,
+this file. Fresh `generalPurpose` subagents.
 
 ### A — write-spec, slim dump, before grain
 
