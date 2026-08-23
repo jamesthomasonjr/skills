@@ -9,7 +9,9 @@ repo, `docs/superpowers/`, or `weather-eval.md` as the product.
 |---|---|
 | `weather-dump.md` | User thought process (input) |
 | `weather-eval.md` | Parked eval card (not input). Grain is 3–9 stories (five OK). |
-| `eval-letters.md` | RED/GREEN letters for Approaches, cut notes, File map, job-named cuts, colocate-by-cut, and PIN prose (not input) |
+| `charge-dump.md` | Second-domain user thought process (input). Checkout / charge-a-card. |
+| `charge-eval.md` | Parked eval card for the charge dump (not input). |
+| `eval-letters.md` | RED/GREEN letters for Approaches, cut notes, File map, synonym job names, colocate-by-cut, second-domain scale, and PIN prose (not input) |
 
 Sizer letters (run `size-work`; do not leave this family as the only
 card): `../size-work/eval-letters.md`.

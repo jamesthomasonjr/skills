@@ -1,10 +1,13 @@
 # specify-work eval letters
 
 Scorer rubric for the Superpowers-gap letters. Not user input.
-GREEN prompts must not open this file or `weather-eval.md`.
+GREEN prompts must not open this file, `weather-eval.md`, or
+`charge-eval.md`.
 
-Input dump: `weather-dump.md`. Grain (when needed) is the parked card
-in `weather-eval.md`. Ban: `docs/superpowers/**`.
+Input dumps: `weather-dump.md` (weather novel) and
+`charge-dump.md` (second novel). Grain (when needed) is the
+parked card in `weather-eval.md` or `charge-eval.md`. Ban:
+`docs/superpowers/**`.
 
 One leaf per turn. Before grain, mixed dump → `write-spec`. After
 grain, mixed dump → `write-design`. No grain → stop for design/plan.
@@ -22,8 +25,8 @@ product choices (vendor / API).
 | Leaf | New required section |
 |---|---|
 | `write-spec` | **Approaches** — 2–3 real alternatives, trade-offs, recommended pick. Pick includes stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendor/product options, each with short pros/cons, compare/contrast, and whether it would change MVP In/Out, grain, later cuts, auth, data shape, or tests. |
-| `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — a reader with only the file map knows what the cut does. GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`, `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or equivalent job names). Role + adapter is fine. TypeScript-style is fine. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`) as the only names. Do **not** require Superpowers dump strings. User class lists remain hints. |
-| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** — score the Location tree (or the two adapter nests), not “any grouping.” Preferred: `src/Location/Location.ts` + test, then `src/Location/Provider/LocationProvider.ts` + test and `BrowserGeolocationProvider.ts` + test. Acceptable (do not fail): `src/Location/LocationProvider/` or `src/LocationProvider/`. Do not require one exact spelling. Tests sit next to the file they cover. Capability / cut folder first, then port + first impl together. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
+| `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — synonym family, not one token. `${Location\|Position\|Coordinates\|similar}Provider` (or Client / Adapter / Gateway / Source) GREEN. Same weather dump: `DevicePosition` + `BrowserDevicePosition` GREEN. Requiring `LocationProvider` as the only accepted token RED. Charge dump: `CardCharger` + `StripeCardCharger` (or `PaymentClient` / `ChargeGateway` family) GREEN. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold`). Superpowers does not dictate type names. User class lists remain hints. |
+| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (the rule, not “the Location tree”): capability folder first, port + first impl together, tests next to the file. Acceptable nests: `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`. Weather synonyms (`src/DevicePosition/…`) and charge (`src/Charge/…` / `src/Payment/…`) both GREEN. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Fail requiring `LocationProvider` paths as the only pass. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
 
 Unchanged compose: weather API stays a **spike** unless demoted with
 a named default **and** why later cuts would not change. Stack pick
@@ -80,11 +83,13 @@ do not diverge on these ids:
 | **2-5-minute-plan** | `write-plan` after grain + a design | Plan contract is a 2–5 minute TDD step list / code novel |
 | **stale-spec-after-pick** | After grain, a vendor pick that would change In/Out, plus “design the classes” | Continues to `write-design` without re-running `write-spec` (grain stale; should point at write-spec → size-work) |
 | **plan-after-nonstale-pick** | After grain, settled non-stale vendor + “plan this”, **no design yet** | Takes `write-design` because the table says “next unfinished” / “no design yet” |
-| **cute-cut-names** | `write-design` after grain, slim dump, no class list | Interface + first impl are poetry / vibe / cute one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`) that need the design prose to decode |
-| **flat-src-map** | `write-plan` after grain + a design | File map dumps all cuts in `src/*.ts` with every cut in one directory |
+| **cute-cut-names** | `write-design` after grain, weather or charge dump, no class list | Interface + first impl are poetry / vibe / cute one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold`) that need the design prose to decode |
+| **location-token-only** | `write-design` after grain, weather dump | Treats `LocationProvider` as the only accepted token, or fails `DevicePosition` + `BrowserDevicePosition` (or Coordinates/Location synonym family) |
+| **weather-only-pass** | `write-design` / `write-plan` after grain, **charge** dump | Weather Location names/tree are required, or charge synonym job names + colocate-by-cut fail |
+| **flat-src-map** | `write-plan` after grain + a design (weather or charge) | File map dumps all cuts in `src/*.ts` with every cut in one directory |
 | **hex-only-tree** | `write-plan` after grain + a design | File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree |
 | **distant-tests** | `write-plan` after grain + a design | File map requires a distant `tests/` tree instead of tests next to the file they cover |
-| **any-grouping** | `write-plan` after grain + a design | File map groups files but not as the Location tree or the two adapter nests (mixed-cut dump, or “any folder” sold as GREEN) |
+| **any-grouping** | `write-plan` after grain + a design | File map groups files but not colocate-by-cut (mixed-cut dump, or “any folder” sold as GREEN) |
 | **wrote-file-no-sink** | `write-spec` on the weather dump; no sink named | Wrote or committed a spec file / invented `docs/work/` |
 | **then-build-continued** | “spec this then build” | Built, designed, planned, or sized in the same turn |
 | **grilled-dump** | Weather dump | Interviewed from scratch instead of separating the dump |
@@ -101,43 +106,36 @@ do not diverge on these ids:
 - Approaches did not swallow the vendor into a silent / default-without-ladder pick.
 - Did not grill. Did not auto-continue.
 
-## GREEN C — write-design (after grain)
+## GREEN C — write-design (after grain, weather dump)
+
+Score the **rule**, not the weather spelling.
 
 - Steps + Cuts; every cut has interface + first impl.
-- Interface + first impl **name the job**. A reader with only the
-  file map knows what each cut does.
-- GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`,
-  `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or
-  equivalent job names). Role + adapter is fine. TypeScript-style
-  is fine.
-- Fail cute / poetry names as the only names (`Here`, `Place`,
-  `TodayBoard`, `ComposeToday`). Fail cute one-word cuts.
-- Do **not** fail equivalent job names that are not those exact
-  Superpowers strings. User class lists remain hints.
-- Every cut also has an **error / failure** note and a **test** note (faked vs real).
-- Notes are short. Not test code. Not a plan. Not size-work stories.
-- Out items are seams only. No resize.
+- Interface + first impl **name the job**. Synonym family, not
+  one token: `${Location|Position|Coordinates|similar}Provider`
+  (or Client / Adapter / Gateway / Source). Same idea for the
+  browser adapter, current-weather client + vendor adapter,
+  and page/composer.
+- Same weather dump: `DevicePosition` + `BrowserDevicePosition`
+  GREEN. Coordinates/Location synonym family GREEN.
+- Requiring `LocationProvider` as the only accepted token RED.
+- Fail cute / poetry names (`Here`, `Place`, `TodayBoard`,
+  `ComposeToday`). Fail cute one-word cuts.
+- Superpowers does not dictate type names. User class lists
+  remain hints.
+- Every cut also has an **error / failure** note and a **test**
+  note (faked vs real). Notes are short. Out items are seams
+  only. No resize.
 
-## GREEN D — write-plan (after grain)
+## GREEN D — write-plan (after grain, weather dump)
+
+Score the **rule**, not the weather Location tree.
 
 - **Spike** first as `shape-task` with real options + impact (not “pick a weather API”). Not swallowed.
-- **File map** before stacked PRs: exact paths + what each file owns; this design’s cut names (job-named, not a dump-name fixture list).
-- **Colocate by cut** — score the Location tree (or the two adapter nests), not “any grouping.”
-- Capability / cut folder first (`Location`), then port + first impl together.
-- Tests sit next to the file they cover (not a distant `tests/` tree).
-- Preferred GREEN (Location cut; do **not** require this exact spelling):
-
-```
-src/Location/Location.ts
-src/Location/Location.test.ts
-src/Location/Provider/LocationProvider.ts
-src/Location/Provider/LocationProvider.test.ts
-src/Location/Provider/BrowserGeolocationProvider.ts
-src/Location/Provider/BrowserGeolocationProvider.test.ts
-```
-
-- Acceptable adapter nests (do **not** fail): `src/Location/LocationProvider/` or `src/LocationProvider/`.
-- Same shape for each cut. Job names on the types, not `Here` / `Place` / `TodayBoard`.
+- **File map** before stacked PRs: exact paths + what each file owns; this design’s cut names (synonym job names).
+- **Colocate by cut:** capability folder first, port + first impl together, tests next to the file they cover.
+- Acceptable nests (do not require one spelling): `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`.
+- Same weather dump: `src/DevicePosition/…` (or Coordinates/Location synonym folder) GREEN. Requiring `src/Location/…` + `LocationProvider` as the only pass RED.
 - Fail a flat `src/*.ts` dump with every cut in one directory.
 - Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree.
 - Fail a distant `tests/` tree. Fail a mixed-cut dump folder.
@@ -145,6 +143,35 @@ src/Location/Provider/BrowserGeolocationProvider.test.ts
 - Each stacked PR names the files it touches.
 - File-map paths match the PRs. No TBD. No 2–5 minute code novel.
 - After-pick / Approaches ≠ spike / error+test notes unchanged.
+
+## GREEN Charge-C — write-design (after grain, charge dump)
+
+Different domain, same letters. If weather Location is the only
+pass, the letter does not scale.
+
+- Input: `charge-dump.md`. Do not open `charge-eval.md`,
+  `weather-eval.md`, or this file.
+- Steps + Cuts; every cut has interface + first impl + error
+  note + test note.
+- Job names GREEN: `CardCharger` + `StripeCardCharger`,
+  `PaymentClient` + `StripePaymentClient`, `ChargeGateway` +
+  `BraintreeChargeGateway`, or equivalent synonym family.
+- RED: cute names (`Till`, `Gold`, `TodayTill`,
+  `ComposeCharge`). RED: requiring weather `LocationProvider`
+  (or the weather Location tree) as the pass.
+
+## GREEN Charge-D — write-plan (after grain, charge dump)
+
+- Spike first (which payment processor) with real options +
+  impact. Not a one-liner. Not swallowed.
+- File map colocates by cut: capability folder first, port +
+  first impl together, tests next to the file.
+- GREEN: `src/Charge/…`, `src/Payment/…`, or
+  `src/ChargeGateway/…` using any of the three accepted nests.
+- RED: flat `src/*.ts` with every cut in one directory.
+- RED: requiring the weather Location tree as the only pass.
+- No TBD. No 2–5 minute code novel. Scaffold at the page /
+  composition cut.
 
 ## GREEN R — non-stale pick + “plan this”, no design
 
@@ -268,12 +295,18 @@ is the hole: mandatory layer folders, not colocation by cut.
 Follow the loose colocate letter (`src/<cut>/` or equivalent
 holds interface + first impl + fake + one unit test).
 Expect: any per-cut folder dump still GREEN — including a
-mixed-cut `src/weather/` or a distant `tests/` tree — because
-the letter scored “some grouping,” not the Location tree.
-Hole vs JT’s tree: no capability folder first, no tests-next-
-to-each-file, no `Provider` nest (or the two accepted nests).
-Do **not** fail `src/Location/LocationProvider/` or
-`src/LocationProvider/` once the tighten lands.
+mixed-cut dump or a distant `tests/` tree — because the
+letter scored “some grouping,” not colocate-by-cut
+(capability folder, port + first impl together, tests beside
+the file). The three accepted nests still pass.
+
+## RED-W — location-token-only / weather-only-pass (pre-scale)
+
+Skill prose + evals that treat `LocationProvider` + the
+weather Location tree as the scored shape. Same weather dump:
+`DevicePosition` + `BrowserDevicePosition` would fail. Charge
+dump would fail unless it copies weather names. Hole: one
+novel memorized; the letter does not scale.
 
 ## GREEN observed (after the letters)
 
@@ -293,9 +326,10 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Cuts `LocationSource` / `TodayWeatherSource` / `WeatherPage`: each
   has interface, impl, depends, thin/fat, error note, test note
   (faked vs real). Out seams only. No plan. Pass.
-- Those names still **name the job** under the new letter
-  (equivalent job names, not Superpowers dump strings). Cute /
-  poetry-only names would now fail.
+- Those names still **name the job** (synonym family, not a
+  Superpowers token). `DevicePosition` + `BrowserDevicePosition`
+  would also pass. Cute / poetry-only names fail. Requiring
+  `LocationProvider` as the only token would now fail.
 
 ### D — write-plan after grain
 
@@ -303,12 +337,12 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Spike first with Open-Meteo vs OpenWeatherMap + impact. File map
   (design cut names) before stacked PRs. Each PR names files. Paths
   match. No TBD. No 2–5 minute novel. Spike not swallowed. Pass.
-- Prior D scored paths only. **Colocate by cut** then scored any
-  per-cut folder. The tighten scores the Location tree (or the
-  two adapter nests). A flat `src/*.ts` dump, a distant `tests/`
-  tree, a mixed-cut dump, or a mandatory hexagonal tree fail.
-  `src/Location/LocationProvider/` and `src/LocationProvider/`
-  still pass.
+- Prior D scored paths only, then any per-cut folder, then a
+  weather Location tree. The scale letter scores colocate-by-
+  cut + synonym folders. `src/DevicePosition/…` GREEN.
+  `src/Charge/…` must also GREEN. A flat `src/*.ts` dump, a
+  distant `tests/` tree, a mixed-cut dump, a mandatory
+  hexagonal tree, or `LocationProvider` as the only pass fail.
 
 ### P — CityFormWeather + “Design the classes”
 

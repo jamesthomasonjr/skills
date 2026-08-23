@@ -16,23 +16,24 @@ the only sizer scorecard, and it does not say “do not run size-work.”
 | Separate | `shape-task` spike for which weather API (decision brief, not a production story, not swallowed) |
 | After grain | Class / ISP / stacked-PR work — not inventory |
 
-Design names are **agent-chosen** and must **name the job**. GREEN
-scores job-readable interface + first impl (file map alone is
-enough), not Superpowers dump spelling. `LocationProvider` +
-`BrowserGeolocationProvider` is a GREEN shape, not a required
-fixture list. Fail cute / poetry-only names (`Here`, `Place`,
-`TodayBoard`, `ComposeToday`).
+Design names are **agent-chosen** and must **name the job**.
+GREEN scores the synonym family, not one token.
+`DevicePosition` + `BrowserDevicePosition` (or
+Coordinates/Location synonyms) GREEN. Requiring
+`LocationProvider` as the only accepted token RED. Fail cute /
+poetry-only names (`Here`, `Place`, `TodayBoard`,
+`ComposeToday`). Superpowers does not dictate type names.
 
-GREEN also requires the Superpowers-gap letters (score job names
-and the Location tree / two adapter nests, not dump strings,
-hexagonal folders, or “any grouping”).
-Approaches ≠ spike options.
+GREEN also requires colocate-by-cut (capability folder, port +
+first impl together, tests beside the file — three accepted
+nests), not a weather Location tree as the only pass. Second
+novel: `charge-dump.md`. Approaches ≠ spike options.
 
 | Leaf | Required |
 |---|---|
 | `write-spec` | **Approaches** — 2–3 **build** alternatives (stack / architecture), trade-offs, recommended pick including stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendors, each with pros/cons and impact (key vs no key, forecast fields, whether In/Out, grain, later cuts, auth, data shape, or tests move). Weather API stays a **spike** unless demoted with a named default **and** why later cuts would not change. Stack pick is usually **explained**, not a substitute for that spike. Fail if silent on stack while inferring a weather spike. Fail if Approaches swallows the vendor. Fail if the spike is only “pick a weather API.” |
-| `write-design` | Every cut also states **error / failure** states that cut owns, and **how that cut is tested** (faked vs real). Short notes, not test code, not a plan, not stories. Interface + first impl **name the job** (file map alone is enough). GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`, `CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or equivalent). Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`). Do not require Superpowers dump strings. Fail if a cut has interface + impl but no error note and no test note. Fail if a just-landed pick would change In/Out or grain and this leaf designs anyway. |
-| `write-plan` | **File map** before the stacked-PR list: exact paths to create/modify and what each file is responsible for, using this design’s cut names. **Colocate by cut** — score the Location tree (or the two adapter nests), not “any grouping.” Preferred: `src/Location/Location.ts` + test, then `src/Location/Provider/LocationProvider.ts` + test and `BrowserGeolocationProvider.ts` + test. Acceptable (do not fail): `src/Location/LocationProvider/` or `src/LocationProvider/`. Do not require one exact spelling. Tests sit next to the file they cover. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Each stacked PR names the files it touches. Spike still first as a `shape-task` **with options + impact**, not a one-liner. Fail if stacked PRs and no paths. Fail if the plan is a 2–5 minute code novel. Fail if a non-stale vendor pick + “plan this” (no design yet) is taken as `write-design`. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
+| `write-design` | Every cut also states **error / failure** states that cut owns, and **how that cut is tested** (faked vs real). Short notes, not test code, not a plan, not stories. Interface + first impl **name the job** (synonym family). `DevicePosition` + `BrowserDevicePosition` GREEN. Requiring `LocationProvider` as the only token RED. Fail cute / poetry names. Fail if a cut has interface + impl but no error note and no test note. Fail if a just-landed pick would change In/Out or grain and this leaf designs anyway. |
+| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (capability folder, port + first impl together, tests beside the file). Three accepted nests. `src/DevicePosition/…` GREEN. Requiring the weather Location tree / `LocationProvider` paths as the only pass RED. Fail a flat `src/*.ts` dump. Fail hexagonal-only. Fail a distant `tests/` tree. Each stacked PR names the files it touches. Spike still first as a `shape-task` **with options + impact**. Fail if stacked PRs and no paths. Fail if the plan is a 2–5 minute code novel. Fail if a non-stale vendor pick + “plan this” (no design yet) is taken as `write-design`. Scaffold may sit at the page cut / composition PR. |
 
 Do not treat this file as a user prompt. The input dump is `weather-dump.md`.
 Scorer letters: `eval-letters.md`.

@@ -58,29 +58,28 @@ from scratch.
    / cuts / auth / data / tests impact). Not a one-liner. Not the
    Approaches stack bake-off.
 2. **File map** — exact paths to create or modify, and what each file
-   is responsible for, using **this design’s cut names** (job-named;
-   not a dump-name fixture list). **Colocate by cut** — score the
-   Location tree (or the two adapter nests), not “any grouping.”
-   Capability / cut folder first, then port + first impl together.
-   Tests sit next to the file they cover, not a distant `tests/`
-   tree. Preferred GREEN (do not require this exact spelling):
-   `src/Location/Location.ts` + `Location.test.ts`, then
-   `src/Location/Provider/LocationProvider.ts` +
-   `LocationProvider.test.ts` and
-   `BrowserGeolocationProvider.ts` +
-   `BrowserGeolocationProvider.test.ts`. Acceptable (do not fail):
-   `src/Location/LocationProvider/` or `src/LocationProvider/`.
-   Same shape for each cut. Not a flat `src/*.ts` dump. Not a
-   mandatory `domain/` / `ports/` / `adapters/` / `views/` tree.
-   Scaffold (`package.json`, `vite.config`, `index.html`) can sit
-   at the page cut / composition PR. Before the stacked-PR list.
+   is responsible for, using **this design’s cut names** (synonym
+   job names). Superpowers does not dictate type or file names.
+   **Colocate by cut:** capability folder first, port + first impl
+   together, tests beside the file they cover. Not a distant
+   `tests/` tree. Not a mandatory
+   `domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
+   `src/*.ts` dump. Do **not** score a weather Location tree as
+   the only GREEN. Acceptable nests (do not require one spelling):
+   `src/<Capability>/Provider/`,
+   `src/<Capability>/<CapabilityProvider>/`,
+   `src/<CapabilityProvider>/`. Illustrations (not a fixture
+   list): `src/DevicePosition/Provider/…` next to
+   `src/Charge/Provider/…`. Same shape for each cut. Scaffold
+   (`package.json`, `vite.config`, `index.html`) can sit at the
+   page cut / composition PR. Before the stacked-PR list.
 3. **Stacked PRs** — one PR per **cut** from the design: that
    interface + impl + tests + mock/test impl for dependents. Each PR
    **names the files it touches**. Name the GitHub stacked-PR
    workflow as the standard, not as inventory.
 4. **Close** — cheap self-review (no TBD; file-map paths match the
-   PRs; names match the design cuts; Location tree or the two
-   adapter nests; tests next to the file they cover), then hand
+   PRs; names match the design cuts; colocate by cut; synonym
+   job names; tests next to the file they cover), then hand
    back. Do not implement. Do not resize.
 
 ## Rationalizations
@@ -95,8 +94,9 @@ from scratch.
 | “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. Derive cuts the same way `write-design` would. |
 | “Three providers means this is an epic — I’ll re-size” | Do not change grain. |
 | “The dump said LocationProvider, so that is PR 1” | Use this design’s cuts. Names are not a fixture list. |
-| “src/*.ts is simpler” | Fail a flat dump. Use the Location tree (or the two nests). |
-| “Any per-cut folder is enough” | Score the Location tree. Do not fail `src/Location/LocationProvider/` or `src/LocationProvider/`. |
+| “src/*.ts is simpler” | Fail a flat dump. Capability folder, then port + first impl together. |
+| “Score the Location tree” | That is one weather illustration. Charge (and synonyms) must also pass. |
+| “GREEN requires LocationProvider paths” | Synonym capability folders GREEN. That token as the only pass is RED. |
 | “Tests live in tests/” | Tests sit next to the file they cover. |
 | “domain/ports/adapters/views is the SOLID tree” | Not the only legal tree. Colocate by cut. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
@@ -114,9 +114,8 @@ from scratch.
 - File map requires `domain/` / `ports/` / `adapters/` / `views/`
   as the only legal tree
 - File map requires a distant `tests/` tree
-- File map grouping that is not the Location tree or the two
-  adapter nests (`src/Location/LocationProvider/`,
-  `src/LocationProvider/`)
+- File map that requires the weather Location tree or
+  `LocationProvider` paths as the only pass
 - Planning after a pick that would change In/Out or grain
 - Bouncing a non-stale “plan this” to `write-design` because no
   design exists yet

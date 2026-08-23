@@ -58,18 +58,33 @@ Every cut’s **interface + first implementation** names the
 **job**. A reader who has only the file map — no design prose —
 must know what the cut does.
 
-GREEN shape: `LocationProvider` + `BrowserGeolocationProvider`,
-`CurrentWeatherClient` + `OpenMeteoCurrentWeatherClient` (or
-equivalent job names). Role + adapter is fine. TypeScript-style
-is fine.
+Accept **synonym** job names, not one token. Anything that
+follows `${Location|Position|Coordinates|similar}Provider`
+(or Client / Adapter / Gateway / Source for that job) is
+GREEN. Same idea for the other cuts: browser geolocation
+adapter, current-weather client + vendor adapter,
+page/composer — and the same roles on a different domain.
 
-RED: poetry / vibe names that need the design to decode —
-`Here`, `Place`, `TodayBoard`, `ComposeToday` as the only names.
-Fail cute one-word cuts.
+Examples (not a fixture list; if weather names appear, a
+second-domain example sits next to them):
 
-Do **not** require Superpowers dump names (`LocationProvider`) as
-a fixture list. The letter is “names the job,” not “use these
-strings.” A user class list remains a hint.
+- Weather: `DevicePosition` + `BrowserDevicePosition`, or
+  `LocationProvider` + `BrowserGeolocationProvider`.
+- Charge: `CardCharger` + `StripeCardCharger`, or
+  `PaymentClient` + `StripePaymentClient`.
+
+Role + adapter is fine. TypeScript-style is fine.
+
+RED: poetry / vibe / cute one-word names (`Here`, `Place`,
+`TodayBoard`, `ComposeToday`, `Till`, `Gold`).
+RED: requiring `LocationProvider` (or any Superpowers dump
+string) as the only accepted token.
+
+Do not treat Superpowers file names as required fixtures.
+One responsibility per file; files that change together live
+together; split by job, not layer; follow the house if a repo
+already has a pattern; type names consistent across tasks.
+A user class list remains a hint.
 
 ## Open decisions
 
@@ -210,40 +225,49 @@ over-split. Fail epic. Fail class / provider children.
 `write-plan` emits a **File map** after Spike and before the
 stacked-PR list: exact paths to create or modify, and what each
 file is responsible for. Paths and names follow **this design’s
-cut names** (which name the job). Do not treat Superpowers dump
-names (`LocationProvider`) as a required fixture list.
+cut names** (synonym job names). Superpowers does not dictate
+type names or file names.
 
-**Colocate by cut.** Score the **Location tree** (or the two
-adapter nests), not “any grouping.” Capability / cut folder
-first, then port + first impl together. Tests sit next to the
-file they cover — not a distant `tests/` tree.
+**Colocate by cut.** Capability / cut folder first, then port +
+first impl together. Tests sit next to the file they cover —
+not a distant `tests/` tree. Not a mandatory
+`domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
+`src/*.ts` dump. Do **not** score a weather Location tree as
+the only GREEN.
 
-Preferred GREEN (Location cut). Do **not** require this exact
-spelling (`Location` vs `location` vs this design’s job name):
+Do not require one nest spelling. Acceptable:
+
+- `src/<Capability>/Provider/`
+- `src/<Capability>/<CapabilityProvider>/`
+- `src/<CapabilityProvider>/`
+
+Illustrations (same rule, two novels — not a fixture list):
 
 ```
-src/Location/Location.ts
-src/Location/Location.test.ts
-src/Location/Provider/LocationProvider.ts
-src/Location/Provider/LocationProvider.test.ts
-src/Location/Provider/BrowserGeolocationProvider.ts
-src/Location/Provider/BrowserGeolocationProvider.test.ts
+src/DevicePosition/DevicePosition.ts
+src/DevicePosition/DevicePosition.test.ts
+src/DevicePosition/Provider/DevicePositionProvider.ts
+src/DevicePosition/Provider/DevicePositionProvider.test.ts
+src/DevicePosition/Provider/BrowserDevicePosition.ts
+src/DevicePosition/Provider/BrowserDevicePosition.test.ts
+
+src/Charge/Charge.ts
+src/Charge/Charge.test.ts
+src/Charge/Provider/CardCharger.ts
+src/Charge/Provider/CardCharger.test.ts
+src/Charge/Provider/StripeCardCharger.ts
+src/Charge/Provider/StripeCardCharger.test.ts
 ```
 
-Acceptable adapter nests (do **not** fail):
-`src/Location/LocationProvider/` or `src/LocationProvider/`.
-Same shape for each cut.
+Same shape for each cut. Job names on the types, not
+`Here` / `Place` / `TodayBoard` / `Till` / `Gold`.
 
-Job names stay on the types (`LocationProvider`,
-`BrowserGeolocationProvider`), not `Here` / `Place` /
-`TodayBoard`.
-
-RED: all cuts dumped in `src/*.ts` with no grouping.
-RED: requiring hexagonal `domain/` / `ports/` / `adapters/` /
-`views/` as the only legal tree.
+RED: all cuts dumped in `src/*.ts` with every cut in one
+directory.
+RED: requiring hexagonal folder names as the only legal tree.
 RED: requiring a distant `tests/` tree.
-RED: one dump folder that mixes every cut (`src/app/`,
-`src/weather/` with location + weather + page together).
+RED: one dump folder that mixes every cut.
+RED: requiring `LocationProvider` paths as the only pass.
 
 Scaffold (`package.json`, `vite.config`, `index.html`) can sit at
 the page cut / composition PR, not inside every port folder.
@@ -260,15 +284,16 @@ Do not add bite-size TDD steps, complete test / impl code blocks,
 or Superpowers execution-handoff.
 
 Cheap self-review: no TBD; file-map paths match the PRs;
-signatures / names match the design cuts; Location tree (or the
-two adapter nests); tests next to the file they cover.
+signatures / names match the design cuts; colocate by cut
+(capability folder, port + first impl together, tests beside
+the file); synonym job names.
 
 Failure: stacked PRs and no paths. Failure: the plan becomes a
 2–5 minute code novel. Failure: flat `src/*.ts` dump with every
 cut in one directory. Failure: hexagonal
 `domain/ports/adapters/views` as the only legal tree. Failure:
-distant `tests/` tree. Failure: “any grouping” that is not the
-Location tree or the two adapter nests.
+distant `tests/` tree. Failure: requiring the weather Location
+tree or `LocationProvider` as the only pass.
 
 ## Compose order
 
@@ -321,10 +346,11 @@ is the unlabeled table only.
 | “Stacked PRs imply the paths” | Emit a File map with exact paths before the PR list. |
 | “Writing-plans uses 2–5 minute TDD steps” | This family’s plan unit is a stacked PR + File map, not a code novel. |
 | “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |
-| “I’ll use Superpowers’ exact dump names so the eval passes” | Equivalents that name the job pass. Not a fixture list. |
+| “GREEN requires LocationProvider exactly” | Synonyms GREEN (`DevicePosition`, `CardCharger`, …). That token as the only pass is RED. |
+| “I’ll use Superpowers’ exact dump names so the eval passes” | Superpowers does not dictate type names. Equivalents that name the job pass. |
 | “domain/ports/adapters is how hexagonal works” | Not the only legal tree. Colocate by cut. |
-| “src/*.ts is simpler” | Fail a flat dump. Use the Location tree (or the two nests). |
-| “Any per-cut folder is enough” | Score the Location tree. Do not fail `src/Location/LocationProvider/` or `src/LocationProvider/`. Fail mixed-cut dumps. |
+| “src/*.ts is simpler” | Fail a flat dump. Capability folder, then port + first impl together. |
+| “Score the Location tree” | That is one weather illustration. Charge (and synonyms) must also pass. |
 | “Tests live in tests/” | Tests sit next to the file they cover. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
 
@@ -345,13 +371,13 @@ is the unlabeled table only.
 - Non-stale pick + “plan this” taken as `write-design` because no design exists yet, or because the unlabeled table said “only cuts” / “next unfinished”
 - Auto-continuing the after-pick loop (spec → size → design) in one turn
 - A cut with interface + first impl but no error note and no test note
-- Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday` as the only names)
-- Requiring Superpowers dump name strings as the design
+- Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold` as the only names)
+- Requiring `LocationProvider` or any Superpowers dump string as the only accepted token
 - Plan with stacked PRs and no paths
 - File map is a flat `src/*.ts` dump with every cut in one directory
 - File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree
 - File map requires a distant `tests/` tree
-- File map grouping that is not the Location tree or the two adapter nests (`src/Location/LocationProvider/`, `src/LocationProvider/`)
+- File map that requires the weather Location tree as the only pass
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three
