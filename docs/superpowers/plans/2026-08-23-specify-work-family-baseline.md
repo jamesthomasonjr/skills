@@ -335,3 +335,46 @@ Skills present after `6ad06dc`. Fresh `generalPurpose` subagent. Ban: `docs/supe
 - Pass.
 
 Dump still slim: no class list, no “picking the service is still open.”
+
+## Superpowers-gap letters (Approaches / cut notes / File map / spike options)
+
+RED against the pre-letter skills (agents followed then-current
+`write-*` + `kinds.md`; ban `docs/superpowers/**`):
+
+- **RED-M omit-approaches** (`ee98e06e`): Approaches **no**. Stack
+  named **no**. Weather spike **yes** (one-liner).
+- **RED-N omit-cut-notes** (`02409e37`): three cuts, interface+impl
+  **yes**; error note **no**; test note **no**.
+- **RED-O omit-file-map** (`9a71362c`): spike first **yes**; File map
+  **no**; PRs name files **no**; 2–5 minute contract **no**.
+- **RED-P one-line-spike** (same `ee98e06e`): “which weather
+  vendor/API” — no options, no per-option impact.
+- **RED-Q stale-spec-after-pick** (`1ecd0a3a`): SevenDayWeather +
+  “Design the classes” → `write-design`. No write-spec. No
+  size-work pointer.
+
+GREEN after the letters (ban `docs/superpowers/**`,
+`weather-eval.md`, `eval-letters.md`):
+
+- **A** (`335a1b7f`): Approaches (TS+Vite+Vitest+page vs React vs
+  Next) + Open-Meteo/OpenWeatherMap spike with impact + explained
+  stack. Stop. Pass.
+- **C** (`10677dbd`): every cut has error note + test note
+  (faked vs real). Pass.
+- **D** (`825b63b7`): File map + spike options + PRs name files.
+  No 2–5 minute novel. Pass.
+- **P** (`d39e1652`): CityFormWeather (no geolocation) + “Design
+  the classes” → `write-spec`, point at `size-work`. Pass.
+- **K** (`361c5fde`): kinds-literal; Approaches + spike options;
+  not a one-liner; not silent on stack. Pass.
+
+### After-pick user-label clash (RED-R / GREEN R)
+
+- **RED-R** (`749b1949`, pre-fix): Open-Meteo + “plan this”, no
+  design → `write-design` via “Only cuts / seams / errors.” User
+  label ignored.
+- **GREEN R** (`a3e35f3b`, after three-way letter): same prompt →
+  `write-plan` (step 2). Did not take “no design yet” as
+  write-design.
+- **P reconfirm** (`a3ef2ae5`): CityFormWeather + “design the
+  classes” still step 1 `write-spec`. Stale still wins.

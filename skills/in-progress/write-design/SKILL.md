@@ -22,6 +22,12 @@ the class-design job. The user does not have to list classes.
 - If grain does not exist, **stop** and point at `write-spec` →
   `size-work`. Do not emit What / Steps / Cuts. Same letter as
   `write-plan`. A plain “design this” with no class list still bounces.
+- If a just-landed spike pick **would** change Outcome / In / Out or
+  grain, **stop**. Point at `write-spec` → `size-work`. Do not design
+  on a stale spec. If the pick is **not** stale and they said
+  “plan this” (only), this is **not** your leaf — even when no
+  design exists yet. Follow [../specify-work/kinds.md](../specify-work/kinds.md)
+  **After a spike pick**.
 - **Derive** steps and cuts from the sized work. Do not wait for the
   user to list classes. Do not copy a dump’s class list as the design.
 - If they *did* dump a class list, treat it as a **hint**, not required
@@ -43,16 +49,20 @@ the class-design job. The user does not have to list classes.
 2. **Steps** — what must happen to make What true. No class names
    required here.
 3. **Cuts** — one entry per collaborator: interface, first
-   implementation, who depends on it, why it is thin or fat. Current
-   inventory only. Well-defined SOLID cuts, not a grab bag of helpers.
-   Names are yours.
+   implementation, who depends on it, why it is thin or fat, **error
+   / failure** states that cut owns, and **how that cut is tested**
+   (what is faked vs real). Short notes, not test code, not a plan,
+   not stories. Current inventory only. Well-defined SOLID cuts, not
+   a grab bag of helpers. Names are yours. Do not pull Out in to
+   “prove” error paths.
 4. **Later-feature seams** — how Out work would widen a cut (thin now,
    fat adapter later). Notes, **not** inventory. Do not pull Out into
    inventory to “prove” ISP.
 5. **Close** — hand back. Do not write the plan. Do not resize.
 
-Every cut has an interface and a first implementation. Cuts must cover
-the sized outcome. If a cut is not split (not thin), write why.
+Every cut has an interface, a first implementation, an error note,
+and a test note. Cuts must cover the sized outcome. If a cut is not
+split (not thin), write why.
 
 ## Rationalizations
 
@@ -65,12 +75,19 @@ the sized outcome. If a cut is not split (not thin), write why.
 | “I’ll add the 10-day story so the ISP seam is real” | Seams are notes. Out stays Out. |
 | “This should be an epic now that we have three cuts” | Do not resize. Cuts are not children. |
 | “I’ll write the stacked-PR plan while the types are fresh” | New message. This leaf is design. |
+| “They named a vendor and said design, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. If they said “plan this” and the pick is not stale, that is `write-plan`. |
+| “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. |
+| “Errors wait for the class list / the plan” | Every cut owns an error note and a test note now. |
+| “I’ll pull 10-day in so the failed-fetch path is real” | Out stays Out. Error notes are not stories. |
 
 ## Failures
 
 - Waiting for a class list, or copying a dump’s list as the design
 - Designing before grain (plain “design this” or a class dump)
 - Cuts without an interface + first impl
+- A cut with interface + impl but no error note and no test note
+- Designing after a pick that would change In/Out or grain
+- Taking a non-stale “plan this” because no design exists yet
 - Adding Out items (multi-day, URL-query) to inventory
 - Resizing or writing Path
 - Implementation plan or 2–5 minute steps

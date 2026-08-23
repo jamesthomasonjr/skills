@@ -28,32 +28,47 @@ does **not** write the spec, design, or plan.
 
 ## 1. Classify
 
-Use [kinds.md](kinds.md). Explicit user labels win.
+Use [kinds.md](kinds.md). Explicit user labels win when they name
+**only one** document, except [kinds.md](kinds.md) **After a spike
+pick** when that pick would stale Outcome / In / Out or grain.
 
 | Signal | Leaf |
 |---|---|
 | “spec this”; product dump; one outcome not yet sharpened; In/Out; foggy idea | `write-spec` |
 | Thought-process dump that already mixes outcome + how + classes + plan; **no grain** | `write-spec` — separate; do not emit classes or the plan |
-| Same mixed dump or “spec, design, and plan” **after grain** | `write-design` — do not re-run `write-spec` unless they asked to rewrite In/Out |
-| “design this”; classes / interfaces / providers; **after grain exists** | `write-design` |
-| “plan this”; stacked PRs; implementation sequence; **after grain exists** | `write-plan` |
+| Same mixed dump or “spec, design, and plan” **after grain** | `write-design` — do not re-run `write-spec` unless they asked to rewrite In/Out or a just-landed spike pick would stale it |
+| Spike pick landed; pick **would** change Outcome / In / Out or grain | `write-spec` — even if they said “design” or “plan.” Stop. Point at `size-work`. |
+| Spike pick landed; **not** stale; they named only one document | That leaf. “plan this” → `write-plan`. “design this” → `write-design`. Do not override with “next unfinished.” |
+| Spike pick landed; **not** stale; mixed ask or just the pick | [kinds.md](kinds.md) **After a spike pick** step 3 (unlabeled table only) |
+| “design this”; classes / interfaces / providers; **after grain exists** | `write-design` (unless a just-landed pick would stale In/Out) |
+| “plan this”; stacked PRs; implementation sequence; **after grain exists** | `write-plan` (unless a just-landed pick would stale In/Out) |
 | Class / provider list as the **first** ask; no sized inventory; no “design this story/feature” after grain | **Stop** — not inventory. Point at `write-spec` → `size-work`. Do not read `write-design`. |
 | Size / shape / break down / how big / inventory / Path | **Out of family** — `size-work` / `shape-*`. Stop. |
 | Review / debug / what’s next | **Out of family** — matching family. Stop. |
 
 Follow [kinds.md](kinds.md) **Compose order**. User label wins when
-they name **only one** document.
+they name **only one** document, except after a spike pick that
+would stale Outcome / In / Out or grain.
 
 - **Before grain:** spec+design+plan or a mixed dump → `write-spec`.
   Separate. Do not abort on classes.
+- **After a spike pick:** follow [kinds.md](kinds.md) **After a
+  spike pick** in order. Stale → `write-spec` (wins over labels).
+  Not stale + one named document → that leaf. Not stale + mixed /
+  just the pick → unlabeled table. One leaf. Do not auto-continue
+  spec → size → design. Point at `size-work` when grain is stale;
+  do not invoke it.
 - **After grain:** spec+design+plan, a re-sent mixed dump, or
   design+plan → `write-design` first, then **hand back**. Do not
   re-run `write-spec` unless they explicitly asked to rewrite the
-  spec or change In/Out. Do not skip to `write-plan`.
+  spec or change In/Out, or a just-landed pick would stale it. Do
+  not skip to `write-plan`.
 - **After grain, spec only** (explicit rewrite / In/Out change) →
   `write-spec`.
-- **After grain, plan only** → `write-plan`.
-- **After grain, design only** → `write-design`.
+- **After grain, plan only** → `write-plan` (unless a just-landed
+  pick would stale In/Out).
+- **After grain, design only** → `write-design` (unless a
+  just-landed pick would stale In/Out).
 
 ## 2. Announce and hand off
 
@@ -88,6 +103,11 @@ Then follow that leaf. Do not keep a second specify procedure here.
 - Skipping to `write-plan` when they also asked to design after grain
 - Re-running `write-spec` after grain because the dump still says “spec this”
 - Treating a class list as inventory
+- Treating Approaches (stack) as spike options (vendor), or the reverse
+- Designing or planning after a pick that would stale In/Out
+- Taking `write-design` on a non-stale pick + “plan this” because
+  there is no design yet, or because the unlabeled table said so
+- Auto-continuing the after-pick loop in one turn
 - Invoking `size-work` from this family
 - Implementing because the outcome is obvious
 - Writing `docs/work/` or committing a spec file without a named sink

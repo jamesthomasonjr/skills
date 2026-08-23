@@ -9,3 +9,4 @@ repo, `docs/superpowers/`, or `weather-eval.md` as the product.
 |---|---|
 | `weather-dump.md` | User thought process (input) |
 | `weather-eval.md` | Parked eval card (not input) |
+| `eval-letters.md` | RED/GREEN letters for Approaches, cut notes, File map (not input) |
