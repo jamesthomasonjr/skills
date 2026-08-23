@@ -153,3 +153,15 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 - stacked-PR plan: **yes**
 - files edited: none
 - Pass.
+
+### G — kinds.md-literal mixed dump (letter clash)
+
+Results after GREEN.
+
+### H — “design this”, no grain, no class list
+
+Results after GREEN.
+
+### I — after grain, design + plan
+
+Results after GREEN.
