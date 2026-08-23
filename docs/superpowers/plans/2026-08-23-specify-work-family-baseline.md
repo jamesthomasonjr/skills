@@ -367,3 +367,14 @@ GREEN after the letters (ban `docs/superpowers/**`,
   the classes” → `write-spec`, point at `size-work`. Pass.
 - **K** (`361c5fde`): kinds-literal; Approaches + spike options;
   not a one-liner; not silent on stack. Pass.
+
+### After-pick user-label clash (RED-R / GREEN R)
+
+- **RED-R** (`749b1949`, pre-fix): Open-Meteo + “plan this”, no
+  design → `write-design` via “Only cuts / seams / errors.” User
+  label ignored.
+- **GREEN R** (`a3e35f3b`, after three-way letter): same prompt →
+  `write-plan` (step 2). Did not take “no design yet” as
+  write-design.
+- **P reconfirm** (`a3ef2ae5`): CityFormWeather + “design the
+  classes” still step 1 `write-spec`. Stale still wins.

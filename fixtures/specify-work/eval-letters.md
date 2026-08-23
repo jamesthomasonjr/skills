@@ -196,3 +196,16 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Approaches + stack pick. Weather spike with ≥2 vendors + impact.
   Not a one-liner. Not omitted for “dump didn’t say open” / “no
   cuts.” Not silent on stack. Pass.
+
+### R — non-stale Open-Meteo + “plan this”, no design
+
+- Agent: `a3e35f3b-cd60-4887-a647-7eb8ee35295a`
+- Leaf: **write-plan**. Step 2 user label. “No design yet” →
+  write-design? **no.** write-design? **no.** write-spec? **no.**
+  File map + stacked PRs + spike options. Pass.
+
+### P reconfirm — CityFormWeather + “design the classes”
+
+- Agent: `a3ef2ae5-c136-4052-b5c4-9ab725ee28a9`
+- After a spike pick **step 1**. Leaf: `write-spec`. Stale? **yes.**
+  write-design? **no.** Pointed at size-work? **yes.** Pass.
