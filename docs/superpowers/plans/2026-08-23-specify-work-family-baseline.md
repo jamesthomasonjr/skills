@@ -181,7 +181,20 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 
 ### J — after grain, re-sent mixed dump / spec+design+plan
 
-Results after GREEN.
+- leaf: **write-design** (not write-spec, not write-plan)
+- Compose row: after grain, spec+design+plan / re-sent mixed dump → `write-design` first; do not re-run `write-spec`
+- New Outcome/In/Out spec? **No.** Stacked-PR plan? **No.** size-work announced? **No.**
+- Class design (What/How/providers)? **Yes.** Hand back after one leaf? **Yes.**
+- Files edited: none
+- Pass.
+
+### A reconfirm (after compose-order rewrite)
+
+- Before grain, same weather dump → **write-spec** only. Classes none. Out includes URL + multi-day. Close points at size-work. Pass.
+
+### I reconfirm (after compose-order rewrite)
+
+- After grain, design+plan only → **write-design**. No stacked-PR plan. Hand back. Pass.
 
 ### A–F reconfirm (after letter rewrite)
 
