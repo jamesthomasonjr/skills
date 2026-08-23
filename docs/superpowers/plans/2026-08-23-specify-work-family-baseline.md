@@ -310,3 +310,28 @@ Skills present after `6938ba4`. Fresh `generalPurpose` subagent. Ban: `docs/supe
 - Pass.
 
 Confirm dump still slim: `fixtures/specify-work/weather-dump.md` has no class list and no “picking the service is still open” sentence.
+
+### GREEN L — kinds.md-literal write-spec (outcome-gated ladder)
+
+Skills present after `6ad06dc`. Fresh `generalPurpose` subagent. Ban: `docs/superpowers/**`, `weather-eval.md`. Follow `kinds.md` literally, including every WHEN / IF. write-spec must not emit cuts.
+
+- Agent: `38ce703a-6f20-4880-a1ec-d3460c428567`
+- Open decisions: **which weather service / weather API / weather vendor** as a **spike**. Not omitted. Not an explained pick.
+- Omitted because “no cut depends yet” / “write-spec has no cuts”? **No.** Dump edited? **No.**
+- Controlling sentences: “Apply the visibility ladder **without a cut prerequisite**. Gate on the **outcome / MVP In**, not on cuts.” “No cuts yet” is not a reason to omit.
+- Pass. Closes RED-L cut-prerequisite omit.
+
+### K reconfirm (after outcome-gated ladder)
+
+- Agent: `866b0a1d-cea3-47fa-ae7a-f179c60cae79`
+- kinds-literal write-spec. Weather service as **spike**. Omitted because dump did not say “open”? **No.** Dump edited? **No.**
+- Pass.
+
+### A reconfirm (after outcome-gated ladder)
+
+- Agent: `4541b5c7-57ac-4d3b-8575-908cb9c7fdaf`
+- write-spec only. Outcome: one page, today’s weather for location. Out: URL + 3/7/10-day. Standards labeled. Classes / cuts: **none.** Plan: **no.**
+- Open decisions: which weather service as a **spike**. Dump edited? **No.**
+- Pass.
+
+Dump still slim: no class list, no “picking the service is still open.”
