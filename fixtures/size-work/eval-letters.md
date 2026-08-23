@@ -99,7 +99,9 @@ dropped to match the old parked card (one story / Parallel None).
 ## GREEN C successor — shape-story next is specify-work
 
 Work-sizing baseline C (`docs/superpowers/plans/2026-08-18-work-sizing-baseline.md`)
-required naming `/speckit.specify`. That successor is **retargeted**.
+records the 2026-08-18 observed next as `/speckit.specify`
+(**observed-then**). Live contract is `specify-work` / `write-spec`.
+That successor is **retargeted**.
 
 - Leaf: `shape-story`
 - Suggested next: `specify-work` / `write-spec` on that story

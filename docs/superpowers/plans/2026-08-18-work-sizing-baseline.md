@@ -104,9 +104,11 @@ Fixture: `fixtures/work-sizing-sample/` with `stripe_cust_id`. Five fresh subage
 ### C — user story
 
 - shape-story; problem_context + acceptance_sketch: yes
-- has_full_spec: no; suggested_next_step_named: yes (`/speckit.specify`)
+- has_full_spec: no
+- suggested_next_step_named: **observed-then** yes (`/speckit.specify`) — that is what the 2026-08-18 agent said. Do not rewrite it.
+- Live contract (do not rescore the observed line as today's required next): `specify-work` / `write-spec` on that story. Not `/speckit.specify`, not `/to-spec`, not Superpowers brainstorming, not `write-design`. See `fixtures/size-work/eval-letters.md` GREEN C successor.
 - implemented / files edited: no
-- Pass.
+- Pass on brief shape. The observed `/speckit.specify` is history, not the live pass name.
 
 ### D — ambiguous
 
