@@ -120,9 +120,14 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 
 ### C — write-design after grain
 
-- providers: LocationProvider → UserLocationProvider; DateProvider → TodaysDateProvider; WeatherProvider → service of choice
-- later-feature seams: URL-query adapter; SingleDateProvider + DateRangeProvider; fat DateProvider later — notes, not inventory
-- added multi-day / URL-query to inventory: **no**
+Score **shape**, not dump names. Agent-chosen cut names are fine.
+
+- Steps emitted? **Yes** (must cover the sized MVP; class names not required here)
+- Cuts: every cut has interface + first impl? **Yes**
+- Cuts cover the MVP (a location source, a weather source, a way to show it — names free)? **Yes**
+- At least one thin cut, or a written reason a cut is not split? **Yes**
+- Multi-day / URL pulled into inventory? **No** (seams only)
+- Copied a dump class list as the design? **No** (slim dump has none)
 - resized / wrote plan: **no**
 - files edited: none
 - Pass.
@@ -130,6 +135,7 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 ### D — write-plan after grain
 
 - unit: stacked PR (interface + impl + tests + mock for dependents)
+- units follow **this design’s cuts** (whatever names write-design chose); not a fixed `LocationProvider` list
 - 2–5 minute Superpowers step list as the contract: **no**
 - spike first and separate (`shape-task`): **yes**
 - grain bump / Out into inventory: **no**
@@ -166,7 +172,7 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 ### H — “design this”, no grain, no class list
 
 - Stop + pointer `write-spec` → `size-work`? **Yes.**
-- Emitted What / How / providers? **No.**
+- Emitted What / Steps / Cuts? **No.**
 - Mandated bounce: “If grain does not exist, **stop** … A plain “design this” with no class list still bounces.”
 - Files edited: none
 - Pass. Closes the write-design no-grain hole.
@@ -175,7 +181,7 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 
 - Leaf: **write-design** (not write-plan)
 - Tie sentence: “After grain, if both design and plan are named, take `write-design` … then **hand back**.”
-- Class design? **Yes.** Stacked-PR plan? **No.** Hand back after one leaf? **Yes.**
+- Steps + Cuts derived (shape, not dump names)? **Yes.** Stacked-PR plan? **No.** Hand back after one leaf? **Yes.**
 - Files edited: none
 - Pass. Closes RED-I skip to write-plan.
 
@@ -184,7 +190,7 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 - leaf: **write-design** (not write-spec, not write-plan)
 - Compose row: after grain, spec+design+plan / re-sent mixed dump → `write-design` first; do not re-run `write-spec`
 - New Outcome/In/Out spec? **No.** Stacked-PR plan? **No.** size-work announced? **No.**
-- Class design (What/How/providers)? **Yes.** Hand back after one leaf? **Yes.**
+- Steps + Cuts derived (What/Steps/Cuts; names agent-chosen)? **Yes.** Hand back after one leaf? **Yes.**
 - Files edited: none
 - Pass.
 
@@ -202,7 +208,61 @@ Same prompts as A–F. Fresh subagents. Ban: `docs/superpowers/**`.
 
 - **A:** write-spec only; Out = URL + 3/7/10-day; standards labeled; classes none; stop; point at size-work. Pass.
 - **B:** feature / one story / Path that story / Parallel none / API spike separate; not epic; not class inventory. Pass.
-- **C:** write-design; providers + ISP seams; no multi-day in inventory; no resize; no plan. Pass.
-- **D:** write-plan; stacked-PR unit; spike first/separate; no 2–5 minute contract; no grain bump. Pass.
+- **C:** write-design; Steps + Cuts (shape, not names); no multi-day in inventory; no resize; no plan. Pass.
+- **D:** write-plan; stacked-PR units follow this design’s cuts; spike first/separate; no 2–5 minute contract; no grain bump. Pass.
 - **E:** class list first → not inventory; `write-spec` → `size-work`; no document. Pass.
 - **F:** write-plan, not write-spec. Pass.
+
+### Derive-cuts GREEN (slim dump; score shape)
+
+Skills present after `e56fd81`. Fresh `generalPurpose` subagents. Ban: `docs/superpowers/**`, `fixtures/specify-work/weather-eval.md`. Grain parked: feature / one story (today’s weather for my location on one page) / Path that story / Parallel none / API spike separate. Design names agent-chosen.
+
+#### C — write-design from slim dump after grain
+
+- Agent: `445a2f0d-ed94-4f54-9209-2136bb9b9849`
+- Prompt: after grain, write-design from the slim dump (or spec + parked grain). No class list in the prompt. Ban `docs/superpowers/**`.
+- Leaf: **write-design**
+- What: sized MVP (today’s weather for the user’s location on one page). In/Out unchanged.
+- Steps: resolve place, load today’s conditions, show one page (wording free).
+- Cuts (agent-chosen): `CurrentPlace` / `NavigatorCurrentPlace`; `TodayOutlook` / `HttpTodayOutlook`; `TodaySurface` / `SingleScreenToday`. Every cut has interface + first impl. Covers location source, weather source, a way to show it.
+- Thin: yes (at least one thin cut). Multi-day / URL: seams only, not inventory.
+- Copied a dump class list? **No** (slim dump has none). Resize? **No.** Plan? **No.**
+- Files edited: none
+- Pass.
+
+#### A — slim dump before grain → write-spec only
+
+- Agent: `42c1e85f-b059-4c3e-9866-26a864d10149`
+- Leaf: **write-spec**
+- Outcome: one page, today’s weather for the user’s location
+- Out: 3/7/10-day + URL-query location
+- Spike: which weather service
+- Standards labeled (`SOLID`, `ISP`, `stacked PRs`)
+- Classes / cuts: **none**
+- Plan: **no**
+- Files edited: none
+- Pass. GREEN A still holds after slimming the dump.
+
+#### I — after grain, design + plan only
+
+- Agent: `5e9a0c78-430d-4168-97f5-ada523c75421`
+- Leaf: **write-design** (not write-plan)
+- Steps + Cuts derived. Stacked-PR plan? **No.** Hand back? **Yes.**
+- Files edited: none
+- Pass.
+
+#### J — after grain, re-sent slim dump / spec+design+plan
+
+- Agent: `7bfc4f10-88ca-42ee-9fe5-dddd32caf21c`
+- Leaf: **write-design** (not write-spec, not write-plan)
+- New Outcome/In/Out spec? **No.** Steps + Cuts derived? **Yes.** Plan this turn? **No.** Hand back? **Yes.**
+- Files edited: none
+- Pass. After-grain compose letter holds.
+
+#### D — write-plan uses C’s cuts
+
+- Agent: `5adfa533-f687-4943-b12b-53c4dbbfebe6`
+- Used C’s cuts (`CurrentPlace`, `TodayOutlook`, `TodaySurface`), not a fixed `LocationProvider` list
+- Spike first and separate. No 2–5 minute contract. No grain bump.
+- Files edited: none
+- Pass.

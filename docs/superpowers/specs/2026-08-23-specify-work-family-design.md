@@ -65,7 +65,7 @@ skills/in-progress/
   write-spec/
     SKILL.md       # one sharp outcome; In / Out; spikes; standards as labels
   write-design/
-    SKILL.md       # what vs how; providers; later-feature seams
+    SKILL.md       # What / Steps / Cuts; later-feature seams
   write-plan/
     SKILL.md       # stacked-PR units; spike first/separate
 ```
@@ -100,7 +100,7 @@ Do not summarize the three output contracts or the requirement/standard letter i
 ### Leaf descriptions
 
 - `write-spec` — Sharpen one product outcome. Use when `specify-work` hands off, or the user wants an outcome / MVP In / later-features Out before sizing. Does not design classes or write a plan.
-- `write-design` — Design interfaces and providers. Use when `specify-work` hands off, or the user asks to design a story/feature after grain exists. Does not resize or write the implementation plan.
+- `write-design` — Design interfaces and first implementations for already-sized work. Use when `specify-work` hands off, or the user asks to design a story/feature after grain exists. Derives cuts from the sized outcome. Does not resize or write the implementation plan.
 - `write-plan` — Sequence stacked-PR units. Use when `specify-work` hands off, or the user asks for an implementation plan after grain exists. Does not change grain or implement.
 
 ## Playbook (`kinds.md`)
@@ -118,9 +118,9 @@ size-work must still refuse a class list even if the spec is full of SOLID label
 
 ### Class lists
 
-`LocationProvider`, `DateProvider`, `WeatherProvider`, and ISP splits (`SingleDateProvider` / `DateRangeProvider`) are **not** requirements and **not** inventory. They are design.
+Class and interface **cuts** are **not** requirements and **not** inventory. Producing them is `write-design`’s job **after grain**. `write-design` **derives** steps and cuts from the sized work. A user class list is a **hint**, not required inventory and not a substitute for that derivation.
 
-**Stop** (point at `write-spec` → `size-work`) only when the **ask is the class list as the work**, or when `write-design` / `write-plan` would run **before grain**. `write-spec` on a mixed dump **separates**; it does not abort because classes appeared. No-grain for design/plan is the same stop even with no class list. “Design this story/feature after grain” still requires grain.
+**Stop** (point at `write-spec` → `size-work`) only when the **ask is the class list as the work**, or when `write-design` / `write-plan` would run **before grain**. Before grain, `write-spec` on a mixed dump **separates** (no cuts). After grain, a re-sent mixed dump is `write-design`. After grain, `write-design` does not wait for a class list.
 
 ### Open decisions
 

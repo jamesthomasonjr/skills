@@ -28,13 +28,13 @@
 | Path | Responsibility |
 |---|---|
 | `fixtures/specify-work/README.md` | File map only (no GREEN leak) |
-| `fixtures/specify-work/weather-dump.md` | Thought-process dump (input for A/E) |
+| `fixtures/specify-work/weather-dump.md` | Slim product-intent dump (input for A/C) |
 | `fixtures/specify-work/weather-eval.md` | Parked eval card (humans/baseline; GREEN prompts must not open it) |
 | `docs/superpowers/plans/2026-08-23-specify-work-family-baseline.md` | RED notes + GREEN results |
 | `skills/in-progress/specify-work/kinds.md` | Requirement vs standard letter |
 | `skills/in-progress/specify-work/SKILL.md` | Router: classify, announce, hand off |
 | `skills/in-progress/write-spec/SKILL.md` | Outcome / In / Out / spikes / labels; stop |
-| `skills/in-progress/write-design/SKILL.md` | What vs how; providers; seams; no resize |
+| `skills/in-progress/write-design/SKILL.md` | What / Steps / Cuts; seams; no resize |
 | `skills/in-progress/write-plan/SKILL.md` | Stacked-PR units; spike first/separate |
 | `skills/in-progress/README.md` | Drafts index |
 
@@ -53,7 +53,7 @@ RED cannot fail at auto-continue or SOLID-into-sizing unless there is a weather 
 
 **Interfaces:**
 - Consumes: nothing
-- Produces: dump (input) + parked eval (expected grain). Dump must include MVP, how, classes, stacked PRs, later ISP — so a mega-skill is tempted to emit all three.
+- Produces: dump (input) + parked eval (expected grain). Slim dump is product intent only (MVP, later-not-MVP, standards as labels, mixed spec/design/plan ask). It does **not** list steps, named providers, or the ISP lecture — `write-design` derives those.
 
 - [ ] **Step 1: Write the fixture README (file map only)**
 
@@ -203,9 +203,9 @@ git commit -m "feat: add write-spec leaf"
 
 **Interfaces:**
 - Consumes: `../specify-work/kinds.md`
-- Produces: What / How / Later-feature seams / Close. Requires grain. No resize. No plan unless new message.
+- Produces: What / Steps / Cuts / Later-feature seams / Close. Requires grain. Derives cuts from sized work. No resize. No plan unless new message.
 
-- [ ] **Step 1: Write the leaf.** `disable-model-invocation: true`. If classes arrive before sizing, stop and point at write-spec → size-work. ISP seams are notes, not inventory.
+- [ ] **Step 1: Write the leaf.** `disable-model-invocation: true`. If grain does not exist, stop and point at write-spec → size-work. Do not wait for a class list. ISP seams are notes, not inventory.
 
 - [ ] **Step 2: Commit**
 
@@ -272,8 +272,8 @@ Fresh `generalPurpose` subagents. Ban `docs/superpowers/**` and `fixtures/specif
 
 - [ ] **A:** weather dump → write-spec only (Out = URL + multi-day; standards labeled; classes absent; stops; points at size-work)
 - [ ] **B:** write-spec output + size-work `levels.md` → would be feature / one story / Path that story / Parallel none / API spike separate. Do not implement size-work. Spec is not an epic or class inventory.
-- [ ] **C:** write-design after that grain → providers/ISP seams; no multi-day in inventory; no resize
-- [ ] **D:** write-plan → stacked-PR units; spike first/separate; no 2–5 minute contract; no grain bump
+- [ ] **C:** write-design after that grain from the slim dump (no class list) → Steps and Cuts; every cut has interface + first impl; cuts cover the MVP (names free); thin or a written reason; multi-day / URL seams only; no resize; no plan
+- [ ] **D:** write-plan → stacked-PR units follow this design’s cuts; spike first/separate; no 2–5 minute contract; no grain bump
 - [ ] **E:** class list as first ask → not inventory; points at write-spec → size-work
 - [ ] **F:** plan-only or design-only after grain → correct leaf, not write-spec
 
