@@ -20,8 +20,20 @@ SOLID labels. This family must not hand size-work a class inventory.
 (`SingleDateProvider` / `DateRangeProvider`) are **not** requirements
 and **not** inventory. They are design.
 
-If they arrive before grain exists, **stop**. Point at `write-spec` →
-`size-work`. Do not treat them as stories, features, or tasks.
+**Stop** (point at `write-spec` → `size-work`; do not treat providers
+as stories, features, or tasks) only when:
+
+- the **ask is the class list as the work** (no product outcome to
+  sharpen; classes/providers are the request), or
+- `write-design` or `write-plan` would run **before grain exists**.
+
+`write-spec` on a mixed dump (outcome + classes + plan) **separates**.
+It emits a class-free spec. It does **not** abort. Do not treat
+“classes appear in the dump” as “stop, do not write the spec.”
+
+**No grain** for `write-design` / `write-plan` is the same stop even
+when they did not dump a class list. “Design this story/feature after
+grain” still requires grain; it is not a bypass.
 
 ## Open decisions
 
@@ -47,6 +59,9 @@ size-work reads requirements in In/Out, not Standards, not providers.
 | “10-day is how we prove ISP, so it is MVP” | 10-day is a requirement. If it is later, it stays Out. |
 | “They asked for spec, design, and plan together” | One leaf this turn. Separate the dump. Hand back. |
 | “Standards are required this turn, so I should design them” | Labels on the spec. Design after grain. |
+| “Classes appear in the dump, so I must stop” | Separate. Stop only when the ask is the class list, or design/plan would run before grain. |
+| “Design this — no grain, no class list, so proceed” | No grain. Stop. Same letter as write-plan. |
+| “They asked for design and plan after grain, so take the later leaf” | `write-design` first. Hand back. Do not skip to `write-plan`. |
 
 ## Failures
 
@@ -54,4 +69,7 @@ size-work reads requirements in In/Out, not Standards, not providers.
 - Class / provider list handed to size-work as children
 - Out requirement pulled into MVP In during design or plan
 - Spike swallowed into a production PR
+- Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three
+- `write-design` or `write-plan` running before grain
+- After grain, taking `write-plan` when both design and plan were named

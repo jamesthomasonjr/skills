@@ -43,8 +43,11 @@ Use [kinds.md](kinds.md). Explicit user labels win.
 If they already have grain and ask only for design or only for plan,
 take that leaf. Do not send them through `write-spec` again.
 
-If two in-family signals both appear, user label wins; if still tied,
-prefer `write-spec` when grain does not exist, else the named later leaf.
+If two in-family signals both appear, user label wins when they name
+**only one**. Before grain, a mixed dump still goes to `write-spec`.
+After grain, if both design and plan are named, take `write-design`
+(earlier in the sequence), then **hand back**. Do not skip to
+`write-plan`.
 
 ## 2. Announce and hand off
 
@@ -75,6 +78,8 @@ Then follow that leaf. Do not keep a second specify procedure here.
 
 - Writing the spec, design, or plan in the router
 - Auto-continuing because the dump asked for all three
+- Aborting `write-spec` because a mixed dump mentioned classes
+- Skipping to `write-plan` when they also asked to design after grain
 - Treating a class list as inventory
 - Invoking `size-work` from this family
 - Implementing because the outcome is obvious

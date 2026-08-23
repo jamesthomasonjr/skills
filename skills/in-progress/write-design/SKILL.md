@@ -16,10 +16,13 @@ class-design skill.
 
 ## Hard rules
 
-- **Requires** a sized inventory, or an explicit “design this
-  story/feature” after grain exists.
-- If they dump classes **before** sizing, **stop**. Point at
-  `write-spec` → `size-work`. Do not treat the list as inventory.
+- **Requires** grain (a sized inventory). “Design this story/feature
+  after grain” still requires grain; it is not a bypass.
+- If grain does not exist, **stop** and point at `write-spec` →
+  `size-work`. Do not emit What / How. Same letter as `write-plan`.
+  A plain “design this” with no class list still bounces.
+- If they dump classes **before** sizing, same stop. Do not treat
+  the list as inventory.
 - Follow [../specify-work/kinds.md](../specify-work/kinds.md). Later-feature
   seams (ISP) are design notes, not new inventory children.
 - Do not resize. Do not move Out requirements into In. Do not add
@@ -43,6 +46,7 @@ class-design skill.
 | Excuse | Reality |
 |---|---|
 | “They dumped classes first, so start there” | No grain. Point at `write-spec` → `size-work`. |
+| “Design this — no grain, but they didn’t list classes” | Still no grain. Stop. |
 | “I’ll add the 10-day story so the ISP seam is real” | Seams are notes. Out stays Out. |
 | “This should be an epic now that we have three providers” | Do not resize. Providers are not children. |
 | “I’ll write the stacked-PR plan while the types are fresh” | New message. This leaf is design. |
@@ -50,7 +54,7 @@ class-design skill.
 
 ## Failures
 
-- Designing before grain (except the stop + pointer)
+- Designing before grain (plain “design this” or a class dump)
 - Adding Out items (multi-day, URL-query) to inventory
 - Resizing or writing Path
 - Implementation plan or 2–5 minute steps

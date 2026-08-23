@@ -30,6 +30,10 @@ an implementation plan.
   for design, plan, size, or build.
 - Questions only when one outcome is still foggy. If they already dumped
   a thought process, **separate** it. Do not grill from scratch.
+- A mixed dump that mentions classes is **not** the class-list stop.
+  Separate. Do not abort. The [kinds.md](../specify-work/kinds.md)
+  class-list stop is for “the ask is the class list” or for
+  design/plan before grain — not for this leaf on a mixed dump.
 
 ## Output contract (in order)
 
@@ -56,6 +60,7 @@ they already said.
 | “They asked for spec, design, and plan together” | This leaf is the spec. Hand back. |
 | “Standards are required this turn, so I should design them” | Labels only. |
 | “I’ll list the providers so size-work can sequence them” | Classes are not inventory. |
+| “Classes appear in the dump, so kinds.md says stop” | Separate. Do not abort. |
 | “I’ll keep going — the outcome is already obvious” | Close. Point at `size-work`. Do not invoke it. |
 | “Brainstorming would continue into a design doc and writing-plans” | This skill stops. It does not auto-continue. |
 | “I’ll write a spec file under docs/ so we can commit it” | Conversation-only unless they named a sink. |
@@ -66,6 +71,7 @@ they already said.
 - Standards designed (interfaces, PR lists) instead of labeled
 - Path or implementation plan
 - Invoking `size-work`, `write-design`, or `write-plan`
+- Aborting because the dump mentioned classes
 - Auto-continue because the dump named all three jobs
 - Grilling from scratch after a weather-style dump
 - Committing a spec file with no named sink

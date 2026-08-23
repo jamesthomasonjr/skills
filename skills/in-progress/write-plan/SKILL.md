@@ -17,9 +17,9 @@ from scratch.
 
 ## Hard rules
 
-- **Requires** grain (sized inventory, or an explicit “plan this
-  story/feature” after grain exists). If grain does not exist, **stop**
-  and point at `write-spec` → `size-work`.
+- **Requires** grain (a sized inventory). “Plan this story/feature
+  after grain” still requires grain; it is not a bypass. If grain
+  does not exist, **stop** and point at `write-spec` → `size-work`.
 - The **unit of work is a stacked PR**: one interface + implementation
   + tests, plus a mock / test impl of that interface for dependents.
 - Do **not** use a 2–5 minute Superpowers step list as the contract.
