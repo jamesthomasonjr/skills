@@ -13,4 +13,6 @@ After `write-spec`, size-work would classify `shape-feature` (largest fit; `shap
 | Separate | `shape-task` spike for which weather API |
 | After grain | Class / ISP / stacked-PR work — not inventory |
 
+Design names are **agent-chosen**. GREEN scores shape (interface + first impl per cut; steps cover the sized outcome; thin where a consumer would not need extra methods), not `LocationProvider` / `SingleDateProvider` spelling.
+
 Do not treat this file as a user prompt. The input dump is `weather-dump.md`.

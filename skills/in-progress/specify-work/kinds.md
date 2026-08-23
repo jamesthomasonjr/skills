@@ -16,26 +16,29 @@ SOLID labels. This family must not hand size-work a class inventory.
 
 ## Class lists
 
-`LocationProvider`, `DateProvider`, `WeatherProvider`, and ISP splits
-(`SingleDateProvider` / `DateRangeProvider`) are **not** requirements
-and **not** inventory. They are design.
+Class and interface **cuts** are **not** requirements and **not**
+inventory. Producing them is `write-design`’s job **after grain**.
+`write-design` **derives** steps and cuts from the sized work. A user
+class list is a **hint**, not required inventory and not a substitute
+for that derivation.
 
-**Stop** (point at `write-spec` → `size-work`; do not treat providers
-as stories, features, or tasks) only when:
+**Stop** (point at `write-spec` → `size-work`; do not treat cuts as
+stories, features, or tasks) only when:
 
 - the **ask is the class list as the work** (no product outcome to
   sharpen; classes/providers are the request), or
 - `write-design` or `write-plan` would run **before grain exists**.
 
-**Before grain**, `write-spec` on a mixed dump (outcome + classes +
-plan) **separates**. It emits a class-free spec. It does **not** abort.
-Do not treat “classes appear in the dump” as “stop, do not write the
-spec.” **After grain**, a re-sent mixed dump is `write-design` (see
-Compose order), not a second spec.
+**Before grain**, `write-spec` on a mixed dump **separates**. It emits
+a class-free spec (no cuts). It does **not** abort. Do not treat
+“classes appear in the dump” as “stop, do not write the spec.”
+**After grain**, a re-sent mixed dump is `write-design` (see Compose
+order), not a second spec.
 
 **No grain** for `write-design` / `write-plan` is the same stop even
 when they did not dump a class list. “Design this story/feature after
-grain” still requires grain; it is not a bypass.
+grain” still requires grain; it is not a bypass. After grain,
+`write-design` does not wait for a class list.
 
 ## Open decisions
 
@@ -72,7 +75,8 @@ label wins when they name **only one** document.
 | Excuse | Reality |
 |---|---|
 | “SOLID is in the spec, so this is an epic” | Labels do not bump grain. |
-| “I’ll list LocationProvider as a story so size-work can sequence it” | Classes are not inventory. Design after grain. |
+| “I’ll list LocationProvider as a story so size-work can sequence it” | Cuts are not inventory. Design after grain. |
+| “They didn’t name classes, so write-design cannot run” | Derive cuts from the sized work. |
 | “Stacked PRs are required, so they are children” | Standard → plan, not inventory. |
 | “10-day is how we prove ISP, so it is MVP” | 10-day is a requirement. If it is later, it stays Out. |
 | “They asked for spec, design, and plan together” **before grain** | `write-spec`. Separate the dump. Hand back. Point at size-work. |
@@ -85,7 +89,8 @@ label wins when they name **only one** document.
 ## Failures
 
 - Standard listed as an inventory child, or used to bump feature → epic
-- Class / provider list handed to size-work as children
+- Class / provider list or derived cuts handed to size-work as children
+- `write-design` waiting for a class list, or copying a dump’s list as the design
 - Out requirement pulled into MVP In during design or plan
 - Spike swallowed into a production PR
 - Aborting `write-spec` because a mixed dump mentioned classes

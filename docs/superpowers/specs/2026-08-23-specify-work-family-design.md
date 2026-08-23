@@ -176,13 +176,13 @@ Replacement for Superpowers brainstorming’s **one sharp outcome** job only.
 5. **Standards** — labels only (`stacked PRs`, `ISP`, `SOLID`). Do not design them.
 6. **Close** — announce `size-work` as next. **Stop.** Do not invoke `size-work`, `write-design`, or `write-plan`.
 
-**Must not emit:** classes, providers, Path, implementation plan, stacked-PR list, 2–5 minute steps, a committed spec file (unless they named a sink).
+**Must not emit:** classes, providers, cuts, Path, implementation plan, stacked-PR list, 2–5 minute steps, a committed spec file (unless they named a sink).
 
 If they already dumped a thought process, **separate** it into the five headings. Do not interview from scratch. Ask only if one outcome is still not sharp.
 
 ### `write-design`
 
-This is the class-design skill.
+This is the class-design skill. It **derives** steps and cuts from the sized work. The user does not have to list classes. A dumped class list is a hint, not the design.
 
 **Requires** grain (a sized inventory). “Design this story/feature after grain” still requires grain; it is not a bypass. If grain does not exist, **stop** and point at `write-spec` → `size-work` — same letter as `write-plan`. A plain “design this” with no class list still bounces. A class dump before sizing is the same stop.
 
@@ -191,11 +191,12 @@ This is the class-design skill.
 **Output contract (in order):**
 
 1. **What** — the sized outcome (do not change In/Out).
-2. **How** — interfaces / providers for the **current** inventory only.
-3. **Later-feature seams** — ISP notes (narrow interfaces, fat adapter later). Design notes, **not** new inventory children.
-4. **Close** — hand back. A plan needs a **new** message.
+2. **Steps** — what must happen to make What true. No class names required here.
+3. **Cuts** — one entry per collaborator: interface, first implementation, who depends on it, why it is thin or fat. Current inventory only. Names are agent-chosen.
+4. **Later-feature seams** — how Out work would widen a cut (thin now, fat adapter later). Notes, **not** inventory.
+5. **Close** — hand back. A plan needs a **new** message.
 
-**Must not:** resize; add Out items to inventory; write the implementation plan; implement.
+**Must not:** wait for a class list; copy a dump’s class list as the design; resize; add Out items to inventory; write the implementation plan; implement.
 
 ### `write-plan`
 
@@ -208,7 +209,7 @@ Bake-off against Superpowers writing-plans. The **unit of work is a stacked PR**
 **Output contract (in order):**
 
 1. **Spike** — if `write-spec` named an open product/API decision, list it first as a separate `shape-task`. Do not swallow it into a production PR.
-2. **Stacked PRs** — one PR per interface: interface + impl + tests + mock/test impl for dependents. Name the GitHub stacked-PR workflow as the standard, not as inventory.
+2. **Stacked PRs** — one PR per **cut** from this design (whatever names `write-design` chose): interface + impl + tests + mock/test impl for dependents. Do not hard-code `LocationProvider`. Name the GitHub stacked-PR workflow as the standard, not as inventory.
 3. **Close** — hand back. Do not implement.
 
 **Must not:** a 2–5 minute step list as the contract; grain bump; class list as size-work children; implement.
@@ -228,13 +229,12 @@ After `write-spec`, size-work **would** classify `shape-feature` (largest fit; `
 | Separate | `shape-task` spike for which weather API |
 | After grain | Class / ISP / stacked-PR work — not inventory |
 
-Thought process, **separated across the three leaves** (do not dump all three from `write-spec`):
+Thought process, **separated across the three leaves** (the slim dump does **not** list classes or steps):
 
 1. **write-spec MVP:** single page, today’s weather for the user’s location.
 2. **write-spec Out / spike:** URL-query later; multi-day later; which weather API is the spike. Standards labeled only.
-3. **write-design how:** get location; maybe today’s date; fetch weather; display. Providers: `LocationProvider` → `UserLocationProvider` (later URL); `DateProvider` → `TodaysDateProvider` (maybe unnecessary); `WeatherProvider` → service of choice (the spike picks it).
-4. **write-design seams:** later 3/7/10-day → day vs range methods; `SingleDateProvider` + `DateRangeProvider`; fat `DateProvider` implements both. ISP. Not MVP. Not inventory.
-5. **write-plan:** small stacked PRs, one interface + impl + tests each; mock for dependents. GitHub stacked PRs. Spike first and separate.
+3. **write-design:** derive Steps and Cuts from that sized story. Score **shape** (interface + first impl per cut; steps cover location, weather, display — names free). Thin where a consumer would not need extra methods. Out work is seams only.
+4. **write-plan:** stacked PRs follow **this design’s cuts**, one interface + impl + tests + mock each. Spike first and separate.
 
 Input dump lives at `fixtures/specify-work/weather-dump.md`. The parked card lives in this spec and in `fixtures/specify-work/weather-eval.md` (file map only in the fixture README — do not leak GREEN into the dump).
 
@@ -270,7 +270,7 @@ GREEN (fresh subagents banned from `docs/superpowers/**`):
 
 - **A:** weather dump → `write-spec` only. Out includes URL + multi-day. Standards labeled not designed. Classes absent. Stops; points at `size-work`.
 - **B:** `write-spec` output + size-work letters → would be feature / one story / Path that story / Parallel none / API spike separate. Do not implement size-work. Assert the spec cannot be read as an epic or class inventory.
-- **C:** `write-design` after that grain → providers/ISP seams; does not add multi-day to inventory; does not resize.
+- **C:** `write-design` after that grain from the slim dump (no class list) → Steps and Cuts; every cut has interface + first impl; cuts cover the MVP (location source, weather source, a way to show it — names free); at least one thin cut or a written reason a cut is not split; multi-day / URL are seams only; no resize; no plan.
 - **D:** `write-plan` → stacked-PR units, spike first/separate, no 2–5 minute step list as the contract, no grain bump.
 - **E:** class list as the first ask → router/`write-spec` does not treat it as inventory; points at `write-spec` → `size-work`.
 - **F:** plan-only or design-only ask after grain → correct leaf, not `write-spec`.

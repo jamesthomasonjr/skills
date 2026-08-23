@@ -20,7 +20,8 @@ an implementation plan.
   **Standards** (labels only). Then **stop**.
 - Follow [../specify-work/kinds.md](../specify-work/kinds.md). Requirements
   go In or Out. Standards are labels. Classes are not inventory.
-- Do not emit classes, providers, Path, or a stacked-PR / step list.
+- Do not emit classes, providers, **cuts**, Path, or a stacked-PR /
+  step list. Cuts are `write-design` after grain.
 - Do not invoke `size-work`, `write-design`, or `write-plan`. Announce
   `size-work` as next, then **stop**.
 - Do not implement.
@@ -73,7 +74,7 @@ That turn is `write-design` (or `write-plan` if plan-only).
 
 ## Failures
 
-- Classes, providers, or ISP splits in this output
+- Classes, providers, cuts, or ISP splits in this output
 - Standards designed (interfaces, PR lists) instead of labeled
 - Path or implementation plan
 - Invoking `size-work`, `write-design`, or `write-plan`
