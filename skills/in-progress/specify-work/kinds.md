@@ -40,6 +40,20 @@ when they did not dump a class list. “Design this story/feature after
 grain” still requires grain; it is not a bypass. After grain,
 `write-design` does not wait for a class list.
 
+Every `write-design` cut states, as **short notes** (not test code,
+not a plan, not size-work stories):
+
+- **Error / failure** states that cut owns (denied location, failed
+  fetch, …).
+- **How that cut is tested** — what is faked vs real (presenter
+  fakes, …).
+
+Do not wait for a class list. Do not pull Out requirements in to
+“prove” error paths. Do not emit 2–5 minute steps.
+
+Failure: a cut has interface + first impl but no error note and no
+test note.
+
 ## Open decisions
 
 `write-spec` **infers** unanswered external or product choices. Do
@@ -63,7 +77,8 @@ visible option that still fits:
 2. **Explained decision** — only if one standard/free default is a
    no-brainer **and** the pick does not change grain or later
    cuts. Write the pick and why in Open decisions. Not a spike.
-   Not silent.
+   Not silent. A **stack** pick (language / bundler / test runner /
+   page vs framework) is usually this class.
 3. **Silent** — only if the choice is forced by an already-stated
    stack or is the only legal option. Never silent on an external
    vendor/API.
@@ -78,16 +93,104 @@ pick only if they name the default and say why a later spike would
 not change those future cuts. External, not our code, stays a
 spike unless demoted that way.
 
-`write-spec` lists the chosen visibility under Open decisions.
-size-work would shape a spike as a separate `shape-task`.
-`write-plan` lists that spike first. It must not swallow the spike
-into a production implementation PR.
+A spike is **not** a one-liner (“pick a weather API”). Each Open
+decision spike lists **real options** (at least two when more than
+one reasonable vendor or product exists) with:
+
+- short pros / cons
+- compare / contrast
+- whether **each** option would change MVP In / Out, grain, later
+  cuts, auth, data shape, or tests. If it would not, say so.
+
+`write-spec` lists visibility **and** those options under Open
+decisions. size-work would shape a spike as a separate
+`shape-task` (this family does not edit size-work). `write-plan`
+lists that spike **first**, with the same options / impact — not
+a one-liner. It must not swallow the spike into a production
+implementation PR.
+
+**Approaches ≠ spike options.** Approaches (next section) are ways
+to build. Spike options are unsettled external or product choices
+(vendor / API). Do not paste the stack bake-off into the spike.
+Do not paste vendor options into Approaches as a substitute for
+this ladder. Naming a vendor inside an Approaches pick does not
+make it silent or a default-without-ladder.
+
+## Approaches
+
+`write-spec` compares **how we build** the Outcome / MVP In. This
+is not inventory. This is not cuts. This is not Path. This is not
+a reason to auto-continue into design or plan. Do not grill.
+
+Required section: **2–3 real alternatives**, trade-offs, then a
+recommended pick and why. Alternatives are **stack / architecture**
+(language, bundler, test runner, page vs framework) — not the
+vendor list from Open decisions. When the dump did not settle a
+stack, the pick includes how we build.
+
+Compose with **Open decisions** (do not duplicate that ladder
+here):
+
+- The stack pick is usually an **explained** decision: name it,
+  say why, on Open decisions. It is not a substitute for the
+  vendor / API spike.
+- The weather API stays a **spike** unless demoted with a named
+  default **and** why later cuts would not change.
+- Failure: silent on stack while inferring a weather / vendor
+  spike.
+- Failure: Approaches swallows the vendor into a silent or
+  default-without-ladder pick.
+
+Still stop. Point at `size-work`. Do not invoke it.
+
+## After a spike pick
+
+When a spike pick lands (the user names a vendor, or a later turn
+says “use Open-Meteo”), judge **impact** first. Then take **one**
+leaf. Do not auto-continue this loop in one turn.
+
+| Impact of the pick | Leaf |
+|---|---|
+| Changes Outcome / In / Out, or **would** change grain | `write-spec`. Stop. Point at `size-work` (grain is stale). Do not keep designing or planning on the old spec. This family does not edit size-work. |
+| Only cuts / seams / errors | `write-design` (after grain still exists) |
+| Only sequence / files / PR split | `write-plan` |
+| Nothing material | Note that. Take the next unfinished leaf (`write-design` if no design yet, else `write-plan`). |
+
+This check **wins** over “they said design this” / “plan this”
+when the pick would change Outcome / In / Out or grain. User label
+still wins for a single named document when the pick would **not**
+stale the spec.
+
+Do not swallow the pick into a production PR. Do not add bake-off
+runner code or a 2–5 minute Superpowers TDD novel.
 
 ## After write-spec
 
-The spec is a feature-shaped outcome plus In / Out / spikes / labels.
-It is not an epic. It is not a class inventory. It is not a Path.
-size-work reads requirements in In/Out, not Standards, not providers.
+The spec is a feature-shaped outcome plus In / Out / approaches /
+spikes-with-options / labels. It is not an epic. It is not a class
+inventory. It is not a Path. size-work reads requirements in
+In/Out, not Standards, not providers, not Approaches.
+
+## File map
+
+`write-plan` emits a **File map** after Spike and before the
+stacked-PR list: exact paths to create or modify, and what each
+file is responsible for. Paths and names follow **this design’s
+cut names**, not dump names (`LocationProvider`).
+
+Each stacked PR then names the files it touches.
+
+Spike still first as a `shape-task` (options + impact, not a
+one-liner). Do not swallow it.
+
+Do not add bite-size TDD steps, complete test / impl code blocks,
+or Superpowers execution-handoff.
+
+Cheap self-review: no TBD; file-map paths match the PRs;
+signatures / names match the design cuts.
+
+Failure: stacked PRs and no paths. Failure: the plan becomes a
+2–5 minute code novel.
 
 ## Compose order
 
@@ -96,14 +199,17 @@ write-spec → size-work → write-design → write-plan
 ```
 
 Grain means a spec was already consumed. One leaf this turn. User
-label wins when they name **only one** document.
+label wins when they name **only one** document, except **After a
+spike pick** when that pick would stale Outcome / In / Out or
+grain.
 
 | When | Ask | Leaf |
 |---|---|---|
 | **Before grain** | spec+design+plan, or a mixed dump | `write-spec`. Separate. Do not abort on classes. Stop. Point at size-work. |
-| **After grain** | spec+design+plan, a re-sent mixed dump, or design+plan | `write-design` first, then hand back. Do **not** re-run `write-spec` unless they explicitly asked to rewrite the spec or change In/Out (requirements that can change grain). |
+| **After grain** | spec+design+plan, a re-sent mixed dump, or design+plan | `write-design` first, then hand back. Do **not** re-run `write-spec` unless they explicitly asked to rewrite the spec or change In/Out, **or** a just-landed spike pick would change Outcome / In / Out or grain. |
 | **After grain** | spec only (explicit rewrite / In/Out change) | `write-spec` |
-| **After grain** | plan only | `write-plan` |
+| **After grain** | plan only | `write-plan` (unless a just-landed pick would stale In/Out — then `write-spec`) |
+| **Spike pick landed** | see **After a spike pick** | that table, then hand back |
 
 ## Rationalizations
 
@@ -115,7 +221,7 @@ label wins when they name **only one** document.
 | “Stacked PRs are required, so they are children” | Standard → plan, not inventory. |
 | “10-day is how we prove ISP, so it is MVP” | 10-day is a requirement. If it is later, it stays Out. |
 | “They asked for spec, design, and plan together” **before grain** | `write-spec`. Separate the dump. Hand back. Point at size-work. |
-| “They asked for spec, design, and plan together” **after grain** (or re-sent the mixed dump) | `write-design` first. Hand back. Do not re-run `write-spec` unless they asked to rewrite In/Out. |
+| “They asked for spec, design, and plan together” **after grain** (or re-sent the mixed dump) | `write-design` first. Hand back. Do not re-run `write-spec` unless they asked to rewrite In/Out or a pick would stale it. |
 | “Standards are required this turn, so I should design them” | Labels on the spec. Design after grain. |
 | “Classes appear in the dump, so I must stop” | Before grain, separate. Do not abort. After grain, that is not a `write-spec` turn. |
 | “Design this — no grain, no class list, so proceed” | No grain. Stop. Same letter as write-plan. |
@@ -124,6 +230,15 @@ label wins when they name **only one** document.
 | “I’ll stay silent; they’ll pick a weather API later” | Never silent on an external vendor/API. Spike unless demoted. |
 | “OpenWeather is obvious, so I won’t mention it” | Explained decision only if you name the default and say why a later spike would not change those future cuts. Otherwise spike. |
 | “No cuts yet, so the ladder does not apply” | False. Infer from the outcome. “No cuts yet” is not a reason to omit. |
+| “Approaches already picked Open-Meteo, so the spike can be a one-liner” | Approaches ≠ spike options. Vendor stays a spike with real options unless demoted. |
+| “Stack vs React is a spike option” | That is Approaches (ways to build). Spike options are vendor / product choices. |
+| “Spike is ‘pick a weather API’” | List real options, pros/cons, and impact. |
+| “They named a vendor and said design, so write-design” | If the pick would change In/Out or grain, `write-spec` then point at size-work. Do not design on a stale spec. |
+| “The pick landed, so spec then size then design this turn” | One leaf. Do not auto-continue that loop. |
+| “Approaches picked a stack, so continue to design” | Close. Point at `size-work`. |
+| “Cuts have interface and impl; errors wait for the plan” | Every cut owns an error note and a test note now. |
+| “Stacked PRs imply the paths” | Emit a File map with exact paths before the PR list. |
+| “Writing-plans uses 2–5 minute TDD steps” | This family’s plan unit is a stacked PR + File map, not a code novel. |
 
 ## Failures
 
@@ -135,8 +250,16 @@ label wins when they name **only one** document.
 - Omitting an inferred external/API spike because the dump did not name it as open
 - Omitting an inferred external spike because cuts do not exist yet
 - Silent on an external vendor/API
+- Spike that only says “pick a weather API” (no options / no impact)
+- Approaches silent on stack while inferring a weather / vendor spike
+- Approaches swallows the vendor into a silent or default-without-ladder pick
+- After a pick that would change In/Out or grain, continuing to `write-design` or `write-plan` without re-running `write-spec`
+- Auto-continuing the after-pick loop (spec → size → design) in one turn
+- A cut with interface + first impl but no error note and no test note
+- Plan with stacked PRs and no paths
+- 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three
 - `write-design` or `write-plan` running before grain
-- After grain, taking `write-plan` when design is in the ask
-- After grain, re-running `write-spec` on a mixed dump / spec+design+plan unless they asked to rewrite In/Out
+- After grain, taking `write-plan` when design is in the ask (and no stale-spec pick)
+- After grain, re-running `write-spec` on a mixed dump / spec+design+plan unless they asked to rewrite In/Out or a pick would stale it
