@@ -145,7 +145,7 @@ git commit -m "docs: record specify-work RED baseline"
 
 - [ ] **Step 1: Write `kinds.md`** (see spec **Playbook**. If wording conflicts with a SKILL.md summary, this file wins.)
 
-Must include: requirement vs standard table; “never bump feature to epic”; “never inventory children”; size-work still refuses a class list; class lists are design; open decisions are spikes / `shape-task`.
+Must include: requirement vs standard table; “never bump feature to epic”; “never inventory children”; size-work still refuses a class list; class lists are design; Open decisions visibility ladder (`write-spec` infers; spike > explanation > silent; never silent on an external vendor/API).
 
 - [ ] **Step 2: Commit**
 
@@ -270,7 +270,8 @@ git commit -m "docs: index specify-work draft in in-progress"
 
 Fresh `generalPurpose` subagents. Ban `docs/superpowers/**` and `fixtures/specify-work/weather-eval.md`. Instruct each to read the named in-progress skill first.
 
-- [ ] **A:** weather dump → write-spec only (Out = URL + multi-day; standards labeled; classes absent; stops; points at size-work)
+- [ ] **A:** weather dump → write-spec only (Out = URL + multi-day; standards labeled; classes absent; weather service as inferred **spike**; stops; points at size-work)
+- [ ] **K:** slim dump + kinds.md-literal write-spec → Open decisions includes which weather service (or equivalent vendor) as a spike. Fail if omitted because the dump didn’t say “open.” Fail if the dump was edited to re-teach the spike.
 - [ ] **B:** write-spec output + size-work `levels.md` → would be feature / one story / Path that story / Parallel none / API spike separate. Do not implement size-work. Spec is not an epic or class inventory.
 - [ ] **C:** write-design after that grain from the slim dump (no class list) → Steps and Cuts; every cut has interface + first impl; cuts cover the MVP (names free); thin or a written reason; multi-day / URL seams only; no resize; no plan
 - [ ] **D:** write-plan → stacked-PR units follow this design’s cuts; spike first/separate; no 2–5 minute contract; no grain bump

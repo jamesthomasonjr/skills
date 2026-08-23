@@ -213,6 +213,18 @@ Same prompts as A–F. Fresh subagents. Ban: `docs/superpowers/**`.
 - **E:** class list first → not inventory; `write-spec` → `size-work`; no document. Pass.
 - **F:** write-plan, not write-spec. Pass.
 
+### RED-K — kinds.md-literal write-spec on slim dump (pre-ladder)
+
+Skills present: old Open decisions wording (“An unanswered product or API choice … is a spike”). Fresh `generalPurpose` subagent. Ban: `docs/superpowers/**`, `weather-eval.md`. Follow `kinds.md` literally. Do not invent spikes the dump did not name.
+
+- Agent: `eb70a477-642d-4540-abd0-01521fb78e97`
+- Outcome / In / Out / standards: present
+- Open decisions: **None.** Verbatim: “The dump did not name an unanswered product or API choice.”
+- Weather service as spike? **No.**
+- Controlling sentence: “An unanswered product or API choice (example: which weather service) is a spike.”
+- Dump edited? **No.**
+- Fired: **kinds-literal omit** — spike only if the dump already named the choice as unanswered. Hole vs parked `shape-task` for which weather API.
+
 ### Derive-cuts GREEN (slim dump; score shape)
 
 Skills present after `e56fd81`. Fresh `generalPurpose` subagents. Ban: `docs/superpowers/**`, `fixtures/specify-work/weather-eval.md`. Grain parked: feature / one story (today’s weather for my location on one page) / Path that story / Parallel none / API spike separate. Design names agent-chosen.

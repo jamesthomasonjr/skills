@@ -43,7 +43,13 @@ an implementation plan.
 2. **MVP In** — requirements that ship in the first cut.
 3. **Later-features Out** — requirements that wait (URL-query location,
    multi-day forecast, …).
-4. **Open decisions** — spikes (product/API questions). Not class names.
+4. **Open decisions** — infer unanswered external or product
+   choices. Do not require the dump to name them. Follow the
+   visibility ladder in [../specify-work/kinds.md](../specify-work/kinds.md)
+   (`spike` > explained > silent). An external vendor/API with no
+   vendor in the dump is a **spike** unless demoted to an explained
+   pick (name the default and why a spike would not change the
+   cuts). Never silent on an external vendor/API. Not class names.
 5. **Standards** — labels only (`stacked PRs`, `ISP`, `SOLID`). Do not
    design them.
 6. **Close** — announce `size-work` as next. **Stop.** Do not invoke it.
@@ -71,6 +77,8 @@ That turn is `write-design` (or `write-plan` if plan-only).
 | “I’ll keep going — the outcome is already obvious” | Close. Point at `size-work`. Do not invoke it. |
 | “Brainstorming would continue into a design doc and writing-plans” | This skill stops. It does not auto-continue. |
 | “I’ll write a spec file under docs/ so we can commit it” | Conversation-only unless they named a sink. |
+| “The dump didn’t say picking the service is still open” | Infer. External vendor/API with no vendor named is a spike unless demoted. |
+| “I’ll stay silent on the weather API” | Never silent on an external vendor/API. |
 
 ## Failures
 
@@ -83,3 +91,5 @@ That turn is `write-design` (or `write-plan` if plan-only).
 - Auto-continue because the dump named all three jobs
 - Grilling from scratch after a weather-style dump
 - Committing a spec file with no named sink
+- Omitting an inferred external/API spike because the dump did not name it as open
+- Silent on an external vendor/API
