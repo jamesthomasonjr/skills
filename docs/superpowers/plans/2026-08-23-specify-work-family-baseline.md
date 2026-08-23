@@ -156,12 +156,36 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 
 ### G — kinds.md-literal mixed dump (letter clash)
 
-Results after GREEN.
+- Emitted Outcome / In / Out? **Yes.** Outcome: single page, today’s weather for the user’s location. Out: URL-query + 3/7/10-day.
+- Stopped at the class-list line and aborted? **No.**
+- Controlling sentence: “`write-spec` on a mixed dump … **separates**. It emits a class-free spec. It does **not** abort.”
+- Classes in the spec: **none.** Invoked write-design / write-plan: **no.**
+- Files edited: none
+- Pass. Closes RED-G abort.
 
 ### H — “design this”, no grain, no class list
 
-Results after GREEN.
+- Stop + pointer `write-spec` → `size-work`? **Yes.**
+- Emitted What / How / providers? **No.**
+- Mandated bounce: “If grain does not exist, **stop** … A plain “design this” with no class list still bounces.”
+- Files edited: none
+- Pass. Closes the write-design no-grain hole.
 
 ### I — after grain, design + plan
 
-Results after GREEN.
+- Leaf: **write-design** (not write-plan)
+- Tie sentence: “After grain, if both design and plan are named, take `write-design` … then **hand back**.”
+- Class design? **Yes.** Stacked-PR plan? **No.** Hand back after one leaf? **Yes.**
+- Files edited: none
+- Pass. Closes RED-I skip to write-plan.
+
+### A–F reconfirm (after letter rewrite)
+
+Same prompts as A–F. Fresh subagents. Ban: `docs/superpowers/**`.
+
+- **A:** write-spec only; Out = URL + 3/7/10-day; standards labeled; classes none; stop; point at size-work. Pass.
+- **B:** feature / one story / Path that story / Parallel none / API spike separate; not epic; not class inventory. Pass.
+- **C:** write-design; providers + ISP seams; no multi-day in inventory; no resize; no plan. Pass.
+- **D:** write-plan; stacked-PR unit; spike first/separate; no 2–5 minute contract; no grain bump. Pass.
+- **E:** class list first → not inventory; `write-spec` → `size-work`; no document. Pass.
+- **F:** write-plan, not write-spec. Pass.
