@@ -272,6 +272,7 @@ Fresh `generalPurpose` subagents. Ban `docs/superpowers/**` and `fixtures/specif
 
 - [ ] **A:** weather dump → write-spec only (Out = URL + multi-day; standards labeled; classes absent; weather service as inferred **spike**; stops; points at size-work)
 - [ ] **K:** slim dump + kinds.md-literal write-spec → Open decisions includes which weather service (or equivalent vendor) as a spike. Fail if omitted because the dump didn’t say “open.” Fail if the dump was edited to re-teach the spike.
+- [ ] **L:** slim dump + kinds.md-literal write-spec → must spike which weather service. Fail if omitted because “no cut depends yet” / “write-spec has no cuts.”
 - [ ] **B:** write-spec output + size-work `levels.md` → would be feature / one story / Path that story / Parallel none / API spike separate. Do not implement size-work. Spec is not an epic or class inventory.
 - [ ] **C:** write-design after that grain from the slim dump (no class list) → Steps and Cuts; every cut has interface + first impl; cuts cover the MVP (names free); thin or a written reason; multi-day / URL seams only; no resize; no plan
 - [ ] **D:** write-plan → stacked-PR units follow this design’s cuts; spike first/separate; no 2–5 minute contract; no grain bump

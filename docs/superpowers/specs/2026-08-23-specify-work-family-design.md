@@ -124,15 +124,15 @@ Class and interface **cuts** are **not** requirements and **not** inventory. Pro
 
 ### Open decisions
 
-`write-spec` **infers** unanswered external or product choices. Do not require the dump to name them.
+`write-spec` **infers** unanswered external or product choices. Do not require the dump to name them. Apply the visibility ladder **without a cut prerequisite**. Gate on the **outcome / MVP In**, not on cuts. `write-spec` does not wait for `write-design` cuts. “No cuts yet” is not a reason to omit.
 
-Visibility ladder (most visible first):
+If making the outcome true would use an external service, vendor, library, or product option the dump did not settle:
 
-1. **Spike** (Open decisions → size-work `shape-task`) — default when unclear. Use when we would not write the implementation (vendor/API), more than one reasonable option exists, or the choice can change cuts, auth, data shape, or tests. An external service with no vendor in the dump is this class unless demoted. Example: which weather service.
-2. **Explained decision** — only if one standard/free default is a no-brainer **and** the pick does not change grain or cuts. Write the pick and why. Not a spike. Not silent.
+1. **Spike** (Open decisions → size-work `shape-task`) — default when unclear. Use when we would not write the implementation (vendor/API), more than one reasonable option exists, or the choice can change **later** cuts, auth, data shape, or tests. An external service with no vendor in the dump is this class unless demoted. Example: which weather service.
+2. **Explained decision** — only if one standard/free default is a no-brainer **and** the pick does not change grain or later cuts. Write the pick and why. Not a spike. Not silent.
 3. **Silent** — only if the choice is forced by an already-stated stack or is the only legal option. Never silent on an external vendor/API.
 
-If unclear: spike > explanation > silent. Demote a weather-API from spike to explained pick only by naming the default and saying why a spike would not change the cuts. External, not our code, stays a spike unless demoted that way.
+If unclear: spike > explanation > silent. “Cuts” in the spike/demote lines means **the later design would change**, not that cuts already exist. Demote a weather-API only by naming the default and saying why a later spike would not change those future cuts.
 
 `write-plan` lists that spike first. It must not swallow the spike into a production implementation PR. The slim dump does **not** re-teach this lecture.
 
@@ -182,7 +182,7 @@ Replacement for Superpowers brainstorming’s **one sharp outcome** job only.
 1. **Outcome** — one sharp user-perceivable result.
 2. **MVP In** — requirements that ship in the first cut.
 3. **Later-features Out** — requirements that wait (URL-query location, multi-day forecast, …).
-4. **Open decisions** — infer unanswered external or product choices (visibility ladder in `kinds.md`). Do not require the dump to name them. External vendor/API with no vendor in the dump is a **spike** unless demoted. Not class names.
+4. **Open decisions** — infer unanswered external or product choices from the outcome / MVP In (visibility ladder in `kinds.md`, no cut prerequisite). Do not require the dump to name them. External vendor/API with no vendor in the dump is a **spike** unless demoted. Not class names.
 5. **Standards** — labels only (`stacked PRs`, `ISP`, `SOLID`). Do not design them.
 6. **Close** — announce `size-work` as next. **Stop.** Do not invoke `size-work`, `write-design`, or `write-plan`.
 
@@ -266,6 +266,7 @@ Same idea as size-work Outcomes:
 - Multi-day or URL-query added to inventory during design or plan.
 - Spike swallowed into a production implementation PR.
 - Omitting an inferred external/API spike because the dump did not name it as open. Silent on an external vendor/API.
+- Omitting an inferred external spike because cuts do not exist yet.
 - 2–5 minute Superpowers step list as `write-plan`’s contract.
 - Router writing the spec/design/plan.
 - Writing `docs/work/` or committing a spec file with no named sink.
@@ -290,6 +291,7 @@ GREEN (fresh subagents banned from `docs/superpowers/**`):
 - **I:** after grain exists, “design the classes and plan the implementation” → `write-design` (not `write-plan`); hand back.
 - **J:** grain already exists + weather-style dump / “spec, design, and plan” → `write-design` (not `write-spec`, not `write-plan`). Hand back. No second spec, no stacked-PR plan this turn.
 - **K:** slim dump + `kinds.md`-literal `write-spec`. Open decisions **must** include which weather service (or equivalent external weather vendor) as a spike. Fail if omitted because the dump didn’t say “open.” Fail if the dump was edited to re-teach the spike.
+- **L:** slim dump + `kinds.md`-literal `write-spec`. Must spike which weather service. Fail if omitted because “no cut depends yet” / “write-spec has no cuts.”
 
 ## Catalog
 

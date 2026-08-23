@@ -45,19 +45,25 @@ grain” still requires grain; it is not a bypass. After grain,
 `write-spec` **infers** unanswered external or product choices. Do
 not require the dump to name them.
 
-When a cut would depend on an external service, vendor, library, or
-product option the dump did not settle, pick the most visible option
-that still fits:
+Apply the visibility ladder **without a cut prerequisite**. Gate on
+the **outcome / MVP In**, not on cuts. `write-spec` does not wait
+for `write-design` cuts. “No cuts yet” is not a reason to omit an
+Open decision.
+
+If making the outcome true would use an external service, vendor,
+library, or product option the dump did not settle, pick the most
+visible option that still fits:
 
 1. **Spike** (Open decisions → size-work `shape-task`) — default
    when unclear. Use when we would not write the implementation
    (vendor/API), more than one reasonable option exists, or the
-   choice can change cuts, auth, data shape, or tests. An external
-   service with no vendor in the dump is this class unless demoted
-   below. Example: which weather service.
+   choice can change **later** cuts, auth, data shape, or tests.
+   An external service with no vendor in the dump is this class
+   unless demoted below. Example: which weather service.
 2. **Explained decision** — only if one standard/free default is a
-   no-brainer **and** the pick does not change grain or cuts. Write
-   the pick and why in Open decisions. Not a spike. Not silent.
+   no-brainer **and** the pick does not change grain or later
+   cuts. Write the pick and why in Open decisions. Not a spike.
+   Not silent.
 3. **Silent** — only if the choice is forced by an already-stated
    stack or is the only legal option. Never silent on an external
    vendor/API.
@@ -65,10 +71,12 @@ that still fits:
 If unclear, take the more visible option: spike > explanation >
 silent.
 
-An agent may **demote** a weather-API (or any external vendor/API)
-from spike to explained pick only if they name the default and say
-why a spike would not change the cuts. External, not our code,
-stays a spike unless demoted that way.
+“Cuts” in the spike/demote lines means **the later design would
+change**, not “cuts must already exist.” An agent may **demote** a
+weather-API (or any external vendor/API) from spike to explained
+pick only if they name the default and say why a later spike would
+not change those future cuts. External, not our code, stays a
+spike unless demoted that way.
 
 `write-spec` lists the chosen visibility under Open decisions.
 size-work would shape a spike as a separate `shape-task`.
@@ -114,7 +122,8 @@ label wins when they name **only one** document.
 | “They asked for design and plan after grain, so take the later leaf” | `write-design` first. Hand back. Do not skip to `write-plan`. |
 | “The dump didn’t say the service is still open, so no spike” | Infer. Do not require the dump to name the choice. |
 | “I’ll stay silent; they’ll pick a weather API later” | Never silent on an external vendor/API. Spike unless demoted. |
-| “OpenWeather is obvious, so I won’t mention it” | Explained decision only if you name the default and say why a spike would not change the cuts. Otherwise spike. |
+| “OpenWeather is obvious, so I won’t mention it” | Explained decision only if you name the default and say why a later spike would not change those future cuts. Otherwise spike. |
+| “No cuts yet, so the ladder does not apply” | False. Infer from the outcome. “No cuts yet” is not a reason to omit. |
 
 ## Failures
 
@@ -124,6 +133,7 @@ label wins when they name **only one** document.
 - Out requirement pulled into MVP In during design or plan
 - Spike swallowed into a production PR
 - Omitting an inferred external/API spike because the dump did not name it as open
+- Omitting an inferred external spike because cuts do not exist yet
 - Silent on an external vendor/API
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three

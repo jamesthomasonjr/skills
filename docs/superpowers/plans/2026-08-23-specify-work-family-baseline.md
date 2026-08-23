@@ -279,6 +279,17 @@ Skills present after `e56fd81`. Fresh `generalPurpose` subagents. Ban: `docs/sup
 - Files edited: none
 - Pass.
 
+### RED-L — kinds.md-literal write-spec, cut-gated WHEN (pre-reword)
+
+Skills present: ladder gated on “When a cut would depend…”. Fresh `generalPurpose` subagent. Ban: `docs/superpowers/**`, `weather-eval.md`. Follow `kinds.md` WHEN as written. write-spec must not emit cuts.
+
+- Agent: `f5c8a38f-c658-499c-9f31-e6b2d3329e90`
+- Weather service as spike? **No.**
+- Open decisions listed location-obtain, “today’s weather” facts, and units — not the vendor.
+- Controlling WHEN: “When a cut would depend on an external service…” treated as unmet because write-spec has no cuts.
+- Omitted because no cut depends yet / write-spec has no cuts? **Yes.** Dump edited? **No.**
+- Fired: **cut-prerequisite omit** — same hole as RED-K, new gate.
+
 ### GREEN K — kinds.md-literal write-spec on slim dump (visibility ladder)
 
 Skills present after `6938ba4`. Fresh `generalPurpose` subagent. Ban: `docs/superpowers/**`, `fixtures/specify-work/weather-eval.md`. Follow `kinds.md` literally.

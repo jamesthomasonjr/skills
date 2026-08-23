@@ -44,12 +44,16 @@ an implementation plan.
 3. **Later-features Out** — requirements that wait (URL-query location,
    multi-day forecast, …).
 4. **Open decisions** — infer unanswered external or product
-   choices. Do not require the dump to name them. Follow the
-   visibility ladder in [../specify-work/kinds.md](../specify-work/kinds.md)
-   (`spike` > explained > silent). An external vendor/API with no
-   vendor in the dump is a **spike** unless demoted to an explained
-   pick (name the default and why a spike would not change the
-   cuts). Never silent on an external vendor/API. Not class names.
+   choices from the **outcome / MVP In**. Do not require the dump
+   to name them. Do not wait for cuts. Follow the visibility
+   ladder in [../specify-work/kinds.md](../specify-work/kinds.md)
+   (`spike` > explained > silent) **without a cut prerequisite**.
+   If making the outcome true would use an external vendor/API
+   with no vendor in the dump, that is a **spike** unless demoted
+   to an explained pick (name the default and why a later spike
+   would not change those future cuts). “Cuts” here means the
+   later design would change, not that cuts exist now. Never
+   silent on an external vendor/API. Not class names.
 5. **Standards** — labels only (`stacked PRs`, `ISP`, `SOLID`). Do not
    design them.
 6. **Close** — announce `size-work` as next. **Stop.** Do not invoke it.
@@ -79,6 +83,7 @@ That turn is `write-design` (or `write-plan` if plan-only).
 | “I’ll write a spec file under docs/ so we can commit it” | Conversation-only unless they named a sink. |
 | “The dump didn’t say picking the service is still open” | Infer. External vendor/API with no vendor named is a spike unless demoted. |
 | “I’ll stay silent on the weather API” | Never silent on an external vendor/API. |
+| “No cuts yet, so the ladder does not apply” | False. Infer from the outcome. |
 
 ## Failures
 
@@ -92,4 +97,5 @@ That turn is `write-design` (or `write-plan` if plan-only).
 - Grilling from scratch after a weather-style dump
 - Committing a spec file with no named sink
 - Omitting an inferred external/API spike because the dump did not name it as open
+- Omitting an inferred external spike because cuts do not exist yet
 - Silent on an external vendor/API
