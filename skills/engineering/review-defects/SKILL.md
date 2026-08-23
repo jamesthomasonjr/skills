@@ -14,7 +14,7 @@ Read-only, defect-first review of **this change**. May return `No findings.`
 
 **REQUIRED:** Follow [../review-changes/gates.md](../review-changes/gates.md). Read it before writing findings. Resolve that path from this file’s directory, not cwd. After `~/.cursor/skills/review-defects` symlink, a bare `gates.md` read misses.
 
-Do not paste the six gates into this file. If any gate is shaky, **drop**. When in doubt, drop — except a demonstrated unsatisfiable pair in a procedure file.
+Do not paste the six gates into this file. If any gate is shaky, **drop**. When in doubt, drop — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss.
 
 **Procedure files** (same letter as `gates.md`; do not weaken it):
 
@@ -40,6 +40,33 @@ Still **DROP**: wording nits, missing nice-to-have sections, “could be clearer
 
 Do not apply this rule to app-code contradictions unless they already pass today’s six gates the original way.
 
+**Advertised paths** (same letter as `gates.md`; do not weaken it):
+
+App-code gates stay tight except this class. Do not stretch the Procedure files rule onto `hooks.json` or ordinary docs.
+
+**Residual** = the host has not advertised a capability yet (example: native-worktree). At most one Assessment residual line. Never a numbered finding.
+
+**Finding** = this change’s own hook, header, or extractor cannot do what it claims.
+
+Example: this PR registers a Stop hook and `HOST_EXEC` claims the host auto-executes via Stop, but `_extract_handoff` reads `id` / `from` / `on` while Stop stdin is `session_id` / `stop_hook_active`. Designed idle-when-no-handoff does **not** cover “this PR’s only registered Stop hook can never have a handoff.”
+
+Gate 4: hook/tool stdin shape and the extractor in this comparison are the call path. Live harness eval is not required.
+
+“No live harness eval” / “it might fail in production” is not a drop for that class. Do not park that class in Assessment residual.
+
+All six gates can be true:
+
+1. Correctness of the advertised path (the hook, header, or extractor cannot do what this change claims).
+2. Discrete and actionable (name the claim and the stdin/extractor miss; file:line).
+3. Introduced by this change.
+4. Demonstrable from the hook/tool stdin shape and the extractor in this comparison. This is the call path. Live harness eval is not required.
+5. Concrete bad outcome: the advertised auto-exec never runs for the victim of the claim. Designed idle-when-no-handoff does not cover a hook that can never see a handoff.
+6. The author would probably fix it if they knew.
+
+Still **DROP**: wording nits, speculative “might break” with no this-PR advertised path, pre-existing host gaps (at most one Assessment residual line), plan/spec with no procedure or advertised-path diff (still out of family → `shape-*`).
+
+“When in doubt, drop” still applies to ordinary app code. It does **not** authorize dropping a this-PR advertised-path miss, and it does **not** authorize inventing findings for host-not-advertised residuals.
+
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
@@ -55,7 +82,7 @@ If this is a stop path (empty/unresolvable, or plan/spec/design with no procedur
 1. Inspect the complete comparison. For working tree: `git diff HEAD` **and** every untracked path in the file list. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not skip them because they are absent from `git diff HEAD`. Do not `git add`. Untracked-only is a real comparison: do not write `Nothing to review.` or `No findings.` without inspecting those files.
    For a named patch or branch/PR three-dot: inspect that complete diff, plus enough surrounding code and tests to confirm each candidate.
 2. Continue through the whole diff after the first issue. Do not stop at one finding. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
-3. Apply every gate in `gates.md` to each candidate. Drop if any is shaky — except a demonstrated unsatisfiable pair in a procedure file. When a procedure file is in the file list, apply the Procedure files letter. Do not require application runtime for that class.
+3. Apply every gate in `gates.md` to each candidate. Drop if any is shaky — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. When a procedure file is in the file list, apply the Procedure files letter. When this change’s own hook, header, or extractor advertises a path, apply the Advertised paths letter. Live harness eval is not required for that class. Do not require application runtime for a procedure-file pair.
 4. Skip everything under Suppressions — including when they said “nits are fine” or “flag anything.”
 5. Assign P0–P3 only to survivors.
 6. If this is a **stop path**, write only that stop (below). Otherwise write the output contract. Then stop (or hand back).
@@ -94,8 +121,8 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “Empty report looks unfinished” | `No findings.` is success. Inventing a finding is the failure. |
 | “Nits help the author” / “nits are fine” / “flag anything” | Nits are not findings. Drop them. Complete ≠ whitespace. |
 | “This pre-existing bug is serious” | Residual-risk line in Assessment. Never a numbered finding. |
-| “It might fail in production” | Speculative → drop. Demonstrate the call path or drop. |
-| “When in doubt, flag it” | When in doubt, **drop** — except a demonstrated unsatisfiable pair in a procedure file. |
+| “It might fail in production” | Speculative → drop unless this PR advertised the path. For that class, stdin shape + extractor is the call path. Live eval is not required. |
+| “When in doubt, flag it” | When in doubt, **drop** — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. |
 | “Gate 5 wants a runtime user break” | Procedure victim is the next agent. Wrong stop / path / dispatch / empty pass / dropped step is the outcome. |
 | “When in doubt, drop — so drop the clash” | That sentence does not authorize dropping a demonstrated unsatisfiable pair in a procedure file. |
 | “Do not grill plan/spec prose, and this is markdown” | README/plan/spec stay out. `SKILL.md` and required playbooks are the product. Inspect them. |
@@ -108,6 +135,11 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “They asked me to be a critical reviewer of a plan” | Out of family when no procedure file is in the comparison. Stop. Point at `shape-*`. Do not grill that prose. |
 | “Always emit Findings / Assessment / Close” | Only after a real comparison. Stop paths skip the contract. Do not wrap `Nothing to review.` |
 | “git diff HEAD was empty, so nothing to review” | Untracked files are not in `git diff HEAD`. Inspect them. Do not `git add`. |
+| “Designed idle-when-no-handoff covers this” | Idle is for no handoff. An extractor that can never see this hook’s stdin is a finding. |
+| “No live harness eval” | Gate 4 for this class is stdin shape + extractor. Live eval is not required. |
+| “Park it in Assessment residual” | Residual is host-not-advertised. A this-PR advertised-path miss is a numbered finding. |
+| “hooks.json is a procedure file / unsatisfiable pair” | Do not stretch that rule onto `hooks.json` or ordinary docs. Use the advertised-path letter. |
+| “Host has not advertised native-worktree — finding” | Residual-or-empty. Never a numbered finding. |
 
 ## Failures
 
@@ -126,3 +158,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Dropping a demonstrated unsatisfiable pair in a procedure file
 - Treating a `SKILL.md` or required playbook as plan/spec prose
 - Requiring application runtime before a procedure-file pair can survive
+- Dropping a this-PR advertised-path miss (hook / header / extractor cannot do what it claims)
+- Parking that class in Assessment residual
+- Stretching the procedure-file rule onto `hooks.json` or ordinary docs
+- Numbering a host-not-advertised capability gap

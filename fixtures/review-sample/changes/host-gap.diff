@@ -1,0 +1,13 @@
+--- a/hook/worktree.py
++++ b/hook/worktree.py
+@@ -1,7 +1,9 @@
+-"""Workspace helper. Always uses git worktree."""
++"""Workspace helper. Host has not advertised native-worktree yet."""
+ 
+ import subprocess
+ 
+ 
+ def ensure_workspace(path):
++    # Residual: native-worktree is a host capability this change does not
++    # advertise. Keep git worktree. Do not infer the token from the product name.
+     subprocess.run(["git", "worktree", "add", path], check=True)

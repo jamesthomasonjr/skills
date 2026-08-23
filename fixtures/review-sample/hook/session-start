@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Agent-mediated header. The model calls extract.py --id / --from / --on.
+echo "WORKFLOW_MAP: execute extract.py --id <id> (or --from / --on)."

@@ -1,0 +1,81 @@
+--- a/hook/hooks.json
++++ b/hook/hooks.json
+@@ -9,6 +9,16 @@
+           }
+         ]
+       }
++    ],
++    "Stop": [
++      {
++        "hooks": [
++          {
++            "type": "command",
++            "command": "python3 ./extract.py"
++          }
++        ]
++      }
+     ]
+   }
+ }
+--- a/hook/session-start
++++ b/hook/session-start
+@@ -1,3 +1,3 @@
+ #!/usr/bin/env bash
+-# Agent-mediated header. The model calls extract.py --id / --from / --on.
+-echo "WORKFLOW_MAP: execute extract.py --id <id> (or --from / --on)."
++# HOST_EXEC: the host auto-executes via Stop. Do not invent argv.
++echo "HOST_EXEC: Stop hook runs extract.py. Claude Code: Stop hook."
+--- a/hook/extract.py
++++ b/hook/extract.py
+@@ -1,8 +1,28 @@
+-"""CLI mediator. Reads --id / --from / --on from argv only."""
++"""Stop mediator. HOST_EXEC claims the host auto-executes via Stop."""
+ 
+ import argparse
+ import json
+ import sys
++
++
++def _read_stdin_payload():
++    raw = sys.stdin.read()
++    if not raw.strip():
++        return None
++    return json.loads(raw)
++
++
++def _extract_handoff(payload):
++    """Return (id, from, on) from hook JSON.
++
++    Claude Stop stdin has session_id / stop_hook_active, not id/from/on.
++    """
++    if not payload:
++        return None, None, None
++    action_id = payload.get("id") if isinstance(payload.get("id"), str) else None
++    from_id = payload.get("from") if isinstance(payload.get("from"), str) else None
++    on = payload.get("on") if isinstance(payload.get("on"), str) else None
++    return action_id, from_id, on
+ 
+ 
+ def parse_args(argv=None):
+@@ -14,6 +34,13 @@
+ 
+ 
+ def run(args):
++    payload = None
++    if not args.id and not args.from_id:
++        payload = _read_stdin_payload()
++        extracted_id, extracted_from, extracted_on = _extract_handoff(payload)
++        args.id = args.id or extracted_id
++        args.from_id = args.from_id or extracted_from
++        args.on = args.on or extracted_on
+     if args.id or (args.from_id and args.on):
+         return {
+             "mode": "auto",
+@@ -21,6 +48,7 @@
+             "from": args.from_id,
+             "on": args.on,
+         }
++    # Designed idle-when-no-handoff. A Stop with no id/from/on is silent idle.
+     return {"mode": "idle", "reason": "no run id or from/on"}
+ 
+ 
