@@ -65,7 +65,16 @@ Never emit a feature/story inventory for a spike. Never let a spike silently bec
 
 ## Ambiguity
 
-If two adjacent levels both fit: recommend one in a single sentence, ask once, then stop until they answer — unless they already said “just pick,” in which case pick the larger level and proceed.
+Ask-once only when two adjacent levels both **genuinely** fit.
+Recommend one in a single sentence, ask once, then stop until they
+answer — unless they already said “just pick,” in which case pick
+the larger level and proceed.
+
+A write-spec weather blob (today’s weather here; later features Out)
+is **feature**. Do not ask-once into a single story to shrink Path.
+If a genuine ask-once lands on story, that leaf’s next is
+`write-spec` on the story — not `write-design`. See **After a
+write-spec blob**.
 
 ## What each level must not emit
 
@@ -74,6 +83,53 @@ If two adjacent levels both fit: recommend one in a single sentence, ask once, t
 | Initiative / Epic / Feature | Full specs, design docs, implementation plans, Given/When/Then catalogs, file-path task lists, skipping to grandchildren |
 | User story | Full Spec Kit `spec.md`, Superpowers design doc, implementation, scaffolding |
 | Task | Fake “As a…” wrapper, implementation in the sizing turn |
+
+## After a write-spec blob
+
+A sharpened spec (one user-perceivable outcome; later features Out;
+standards as labels; vendor/API still a spike) is **feature** grain
+by default. Largest fit. It is **not** an epic.
+
+Ask-once (`shape-story`) only when feature and story both
+**genuinely** fit. Do not ask-once into a single story to shrink
+Path. A weather blob remains **feature**.
+
+**Next leaf follows the shape that ran.** Announce. Do not invoke.
+Do not hand off to Superpowers brainstorming or writing-plans.
+
+| Shape that ran | Next |
+|---|---|
+| `shape-feature` | `write-design` (then `write-plan`) |
+| `shape-story` (they picked story at a genuine ask-once) | `specify-work` / `write-spec` on **that story**. Not `write-design`. Not Superpowers. |
+
+Do **not** tell every shape leaf that `write-design` is next after
+any write-spec blob. `write-design` needs a feature inventory.
+`shape-story` does not emit one.
+
+Standards (SOLID, ISP, stacked PRs) and a later cut count (“three
+cuts”) **never** bump grain. They are not capabilities and not
+inventory children.
+
+Class / provider / interface names (`LocationProvider`,
+`WeatherSource`, …) are **not** stories, features, or tasks. Those
+are `write-design` cuts after grain. Listing one as an inventory
+child is a fail.
+
+`shape-feature` inventory stays **3–9** user stories. Five is in
+band. Do not fail five as over-split. Do not add a “one user-story
+child” rule.
+
+Path follows [paths.md](paths.md): every determining inventory
+title, no count floor. If five user-perceivable stories all
+determine today’s weather for my location, Critical path lists
+those titles. Out (multi-day / URL-query) stays out of inventory
+and off the path. Parallel `None` if they share the weather API
+contract or one page — that is **not** a one-story Path. Do not
+pad-to-one or drop-to-one to match an old parked card.
+
+An open vendor / API decision (which weather service) stays a
+separate `shape-task` (spike flavor) — a **decision brief**, not a
+production story, not swallowed into the feature inventory.
 
 ## Outcomes
 

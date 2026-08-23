@@ -2,15 +2,18 @@
 
 GREEN must match this card unless the specify-work letters themselves force a change (they must not).
 
-After `write-spec`, size-work would classify `shape-feature` (largest fit; `shape-story` is the adjacent ask-once).
+After `write-spec`, run `size-work` (live letters). Scorer:
+`fixtures/size-work/eval-letters.md`. This parked card is **not**
+the only sizer scorecard, and it does not say “do not run size-work.”
 
 | Slot | Value |
 |---|---|
-| Inventory | One story — today’s weather for my location on one page |
+| Grain | `shape-feature` (not epic). Do not ask-once into a single story to shrink Path. After `shape-feature`, next is `write-design` (then `write-plan`). Do not invoke. |
+| Inventory | 3–9 user stories (five OK). Fail epic. Fail class / provider children. Do **not** fail five as over-split. |
 | Out | URL-query location; multi-day (3/7/10-day) forecast |
-| Path | That story |
-| Parallel | `None` |
-| Separate | `shape-task` spike for which weather API |
+| Path | Every determining inventory title. No count floor. If five user-perceivable stories all determine today’s weather for my location, list those five titles. Omit only titles that do not determine done. Out (multi-day / URL-query) stays out of inventory and off the path. **Not** the old parked Path (one story / Parallel None). |
+| Parallel | `None` if the stories share the weather API contract or one page (open vendor is one such shared decision). That is not a one-story Path. |
+| Separate | `shape-task` spike for which weather API (decision brief, not a production story, not swallowed) |
 | After grain | Class / ISP / stacked-PR work — not inventory |
 
 Design names are **agent-chosen**. GREEN scores shape (interface + first impl per cut; steps cover the sized outcome; thin where a consumer would not need extra methods), not `LocationProvider` / `SingleDateProvider` spelling.

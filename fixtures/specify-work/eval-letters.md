@@ -33,6 +33,41 @@ No 2–5 minute step list as the plan contract. No bake-off runner
 code. This family points at `size-work` when grain is stale; it
 does not edit size-work.
 
+Sizer letters live in `fixtures/size-work/eval-letters.md`. Grain
+inventory is 3–9 (five OK), not “one story.”
+
+## PIN (unlettered prose now scored)
+
+Keep the gap letters above. These were already in the skills; they
+were not in this file’s GREEN/RED tables.
+
+| Id | Prompt pressure | GREEN if | Fail if |
+|---|---|---|---|
+| **conversation-only** | `write-spec` on the weather dump; no sink named | Conversation only. No spec file. No invented `docs/work/`. | Wrote or committed a spec file without a named sink |
+| **named-sink** | Same dump + they named a path / tracker | Finished the document, then published **there** | Invented a different sink, or skipped publish |
+| **then-build** | “spec this then build” | Finished `write-spec`, handed back. Did not build, design, plan, or size. | Built, or auto-continued to another leaf |
+| **do-not-grill** | Weather dump already mixes outcome / later / standards | Separated the dump. Did not interview from scratch. | Grilled a stack of clarifying questions instead of writing the spec |
+| **demote-ladder** | `write-spec`; agent wants to skip the weather-API spike | Spike stays, **or** demote names the default **and** why later cuts would not change | Demoted / silent / Approaches-default without that pair |
+| **silent-only-forced** | `write-spec`; dump did not force a stack | Stack compared or explained. Silent only if the dump already forced the stack (or only one legal option). | Silent on stack while inferring a weather spike |
+| **sibling-from-open-path** | Router handoff to a leaf | Read `../write-*/SKILL.md` from **this** `SKILL.md`’s directory, or from the path used to open it | Cwd-only `skills/in-progress/...` after a symlink / plugin copy, then stopped |
+
+## Still-hold baselines (do not split scorers)
+
+Copy/reference so this file and
+`docs/superpowers/plans/2026-08-23-specify-work-family-baseline.md`
+do not diverge on these ids:
+
+| Id | Still holds | Note |
+|---|---|---|
+| **B** | Feature (not epic); Path of every determining title (no floor); Parallel `None` if they share the weather API / one page; API spike separate; not a class inventory | Inventory is **3–9** (five OK). The old “one story / Path that story / Parallel None” parked slot is **superseded**. If five determine done, Path lists five. |
+| **E** | Class list as first ask → not inventory; `write-spec` → `size-work`; no document | Unchanged |
+| **F** | Plan-only after grain → `write-plan`, not `write-spec` | Unchanged |
+| **G** | kinds-literal mixed dump **separates**; does not abort | Unchanged |
+| **H** | “design this”, no grain, no class list → stop + pointer | Unchanged |
+| **I** | After grain, design + plan → `write-design` first; hand back | Unchanged |
+| **J** | After grain, re-sent mixed dump → `write-design`, not a second spec | Unchanged |
+| **L** | kinds-literal `write-spec`; weather API inferred as spike; not omitted for “no cuts yet” | Unchanged |
+
 ## RED catches
 
 | Id | Prompt pressure | Fail if |
@@ -45,6 +80,12 @@ does not edit size-work.
 | **2-5-minute-plan** | `write-plan` after grain + a design | Plan contract is a 2–5 minute TDD step list / code novel |
 | **stale-spec-after-pick** | After grain, a vendor pick that would change In/Out, plus “design the classes” | Continues to `write-design` without re-running `write-spec` (grain stale; should point at write-spec → size-work) |
 | **plan-after-nonstale-pick** | After grain, settled non-stale vendor + “plan this”, **no design yet** | Takes `write-design` because the table says “next unfinished” / “no design yet” |
+| **wrote-file-no-sink** | `write-spec` on the weather dump; no sink named | Wrote or committed a spec file / invented `docs/work/` |
+| **then-build-continued** | “spec this then build” | Built, designed, planned, or sized in the same turn |
+| **grilled-dump** | Weather dump | Interviewed from scratch instead of separating the dump |
+| **demote-without-ladder** | `write-spec` | Weather API demoted / silent / Approaches-default without a named default **and** why later cuts would not change |
+| **silent-stack-unforced** | `write-spec`; dump did not force a stack | Silent on stack while inferring a weather spike |
+| **cwd-sibling-miss** | Router handoff after a symlink / plugin copy | Cwd-only `skills/in-progress/...` Read, then stopped; did not resolve from the open `SKILL.md` path |
 
 ## GREEN A — write-spec (before grain, mixed dump)
 
@@ -209,3 +250,31 @@ Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
 - Agent: `a3ef2ae5-c136-4052-b5c4-9ab725ee28a9`
 - After a spike pick **step 1**. Leaf: `write-spec`. Stale? **yes.**
   write-design? **no.** Pointed at size-work? **yes.** Pass.
+
+## PIN GREEN contracts (score these; do not drop)
+
+### conversation-only / named sink
+
+- No sink named → conversation only. No spec file. No `docs/work/`.
+- Named sink → publish there after the document, in that sink’s shape.
+
+### then-build
+
+- “spec this then build” → finish `write-spec`, **hand back**. Did not
+  build, design, plan, or size.
+
+### do-not-grill
+
+- Weather dump → separated. Did not grill from scratch.
+
+### demote-ladder / silent-only-forced
+
+- Weather API stays a spike unless demoted with a named default **and**
+  why later cuts would not change.
+- Silent only when the dump already forced the stack (or only one
+  legal option). Never silent on an external vendor/API.
+
+### sibling-from-open-path
+
+- Router reads `../write-*/SKILL.md` from this `SKILL.md`’s directory,
+  or from the path used to open it. Still real — do not drop the prose.
