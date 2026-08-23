@@ -127,3 +127,42 @@ SevenDayWeather + “Design the classes”): leaf **write-design**.
 Re-ran write-spec? **no.** Pointed at size-work? **no.** Cuts
 emitted? **yes.** Controlling sentence: do not re-run
 `write-spec` unless they **explicitly** asked to rewrite In/Out.
+
+## GREEN observed (after the letters)
+
+Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
+`generalPurpose` subagents.
+
+### A — write-spec, slim dump, before grain
+
+- Agent: `335a1b7f-d023-40a0-a409-30fc7f48135e`
+- Approaches: TS + Vite + Vitest + static page vs React vs Next. Pick (1).
+- Spike: Open-Meteo vs OpenWeatherMap, pros/cons + impact. Stack explained.
+- Vendor not swallowed. Classes/plan **none**. Stop → `size-work`. Pass.
+
+### C — write-design after grain
+
+- Agent: `10677dbd-bb6d-42f0-8d9a-d3d5d5a31fc3`
+- Cuts `LocationSource` / `TodayWeatherSource` / `WeatherPage`: each
+  has interface, impl, depends, thin/fat, error note, test note
+  (faked vs real). Out seams only. No plan. Pass.
+
+### D — write-plan after grain
+
+- Agent: `825b63b7-7233-4f00-a1d9-d7c157e8a118`
+- Spike first with Open-Meteo vs OpenWeatherMap + impact. File map
+  (design cut names) before stacked PRs. Each PR names files. Paths
+  match. No TBD. No 2–5 minute novel. Spike not swallowed. Pass.
+
+### P — CityFormWeather + “Design the classes”
+
+- Agent: `d39e1652-a1f5-47c0-8787-d6231f5d6723`
+- Leaf: `write-spec` (pick would change In: device location → typed
+  city). Pointed at `size-work`. No Cuts. No auto-continue. Pass.
+
+### K — kinds-literal write-spec
+
+- Agent: `361c5fde-4de1-4853-b266-d168991823c5`
+- Approaches + stack pick. Weather spike with ≥2 vendors + impact.
+  Not a one-liner. Not omitted for “dump didn’t say open” / “no
+  cuts.” Not silent on stack. Pass.
