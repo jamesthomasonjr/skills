@@ -82,8 +82,10 @@ string) as the only accepted token.
 
 Do not treat Superpowers file names as required fixtures.
 One responsibility per file; files that change together live
-together; split by job, not layer; follow the house if a repo
-already has a pattern; type names consistent across tasks.
+together; split by job, not layer. **File map** owns the
+tree (greenfield colocate-by-cut vs existing-repo house).
+Type and function names follow the house when a repo already
+has a pattern; type names stay consistent across tasks.
 A user class list remains a hint.
 
 ## Open decisions
@@ -228,14 +230,25 @@ file is responsible for. Paths and names follow **this design’s
 cut names** (synonym job names). Superpowers does not dictate
 type names or file names.
 
-**Colocate by cut.** Capability / cut folder first, then port +
-first impl together. Tests sit next to the file they cover —
-not a distant `tests/` tree. Not a mandatory
-`domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
-`src/*.ts` dump. Do **not** score a weather Location tree as
-the only GREEN.
+**Existing repo → match the house.** A tree already on disk
+(`lib/`, `tests/`, flat `src/`, function modules, classes) is
+the convention. Match naming, functional or procedural vs OO,
+tests in a separate folder vs colocated, flat `src` if that is
+already the tree. Superpowers “follow existing patterns” is
+the cousin line. Fail **only** when the plan invents a second
+convention (house uses `tests/` + functions; the plan invents
+`src/Location/Provider/` + classes, or tests-next-to-file
+against a `tests/` house). Do **not** fail house-style
+`tests/` or flat `src` on an existing-repo prompt.
 
-Do not require one nest spelling. Acceptable:
+**Greenfield / no house → colocate by cut.** Capability / cut
+folder first, then port + first impl together. Tests sit next
+to the file they cover — not a distant `tests/` tree. Not a
+mandatory `domain/` / `ports/` / `adapters/` / `views/` tree.
+Not a flat `src/*.ts` dump. Do **not** score a weather Location
+tree as the only GREEN.
+
+Do not require one nest spelling. Acceptable **on greenfield**:
 
 - `src/<Capability>/Provider/`
 - `src/<Capability>/<CapabilityProvider>/`
@@ -259,15 +272,30 @@ src/Charge/Provider/StripeCardCharger.ts
 src/Charge/Provider/StripeCardCharger.test.ts
 ```
 
-Same shape for each cut. Job names on the types, not
-`Here` / `Place` / `TodayBoard` / `Till` / `Gold`.
+Existing-repo illustration (match that house; do not rewrite
+it to the greenfield nests):
 
-RED: all cuts dumped in `src/*.ts` with every cut in one
-directory.
-RED: requiring hexagonal folder names as the only legal tree.
-RED: requiring a distant `tests/` tree.
-RED: one dump folder that mixes every cut.
-RED: requiring `LocationProvider` paths as the only pass.
+```
+lib/geo/position.js
+tests/geo/position.test.js
+```
+
+Same shape for each cut on greenfield. Job names on the types
+or functions, not `Here` / `Place` / `TodayBoard` / `Till` /
+`Gold`. Follow house type / function names when a tree
+already exists.
+
+RED (greenfield / no house): all cuts dumped in `src/*.ts`
+with every cut in one directory.
+RED (greenfield / no house): requiring hexagonal folder
+names as the only legal tree.
+RED (greenfield / no house): requiring a distant `tests/`
+tree.
+RED (greenfield / no house): one dump folder that mixes
+every cut.
+RED (greenfield / no house): requiring `LocationProvider`
+paths as the only pass.
+RED (existing repo): inventing a second convention.
 
 Scaffold (`package.json`, `vite.config`, `index.html`) can sit at
 the page cut / composition PR, not inside every port folder.
@@ -285,16 +313,18 @@ or Superpowers execution-handoff.
 
 Cheap self-review: no TBD; file-map paths match the PRs;
 signatures / names match the design cuts; colocate by cut
-(capability folder, port + first impl together, tests beside
-the file); synonym job names.
+when greenfield; **follow the house** when a tree already
+exists; synonym job names.
 
 Failure: stacked PRs and no paths. Failure: the plan becomes a
-2–5 minute code novel. Failure: flat `src/*.ts` dump with every
-cut in one directory. Failure: hexagonal
-`domain/ports/adapters/views` as the only legal tree. Failure:
-distant `tests/` tree. Failure: one dump folder that mixes
-every cut (mixed-cut map). Failure: requiring the weather
+2–5 minute code novel. Failure (greenfield): flat `src/*.ts`
+dump with every cut in one directory. Failure (greenfield):
+hexagonal `domain/ports/adapters/views` as the only legal
+tree. Failure (greenfield): distant `tests/` tree. Failure
+(greenfield): one dump folder that mixes every cut
+(mixed-cut map). Failure (greenfield): requiring the weather
 Location tree or `LocationProvider` as the only pass.
+Failure (existing repo): inventing a second convention.
 
 ## Compose order
 
@@ -349,10 +379,11 @@ is the unlabeled table only.
 | “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |
 | “GREEN requires LocationProvider exactly” | Synonyms GREEN (`DevicePosition`, `CardCharger`, …). That token as the only pass is RED. |
 | “I’ll use Superpowers’ exact dump names so the eval passes” | Superpowers does not dictate type names. Equivalents that name the job pass. |
-| “domain/ports/adapters is how hexagonal works” | Not the only legal tree. Colocate by cut. |
-| “src/*.ts is simpler” | Fail a flat dump. Capability folder, then port + first impl together. |
+| “domain/ports/adapters is how hexagonal works” | Not the only legal tree. Greenfield: colocate by cut. House: match the house. |
+| “src/*.ts is simpler” | Greenfield: fail a flat dump. Existing flat-src house: match it. |
 | “Score the Location tree” | That is one weather illustration. Charge (and synonyms) must also pass. |
-| “Tests live in tests/” | Tests sit next to the file they cover. |
+| “Tests live in tests/” | Greenfield: tests sit next to the file. Existing repo: match the house. Do not fail `tests/` when that is the house. |
+| “Colocate-by-cut always wins” | Only when there is no house. Against a `tests/` + functions house it is a second convention. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
 
 ## Failures
@@ -375,11 +406,12 @@ is the unlabeled table only.
 - Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold` as the only names)
 - Requiring `LocationProvider` or any Superpowers dump string as the only accepted token
 - Plan with stacked PRs and no paths
-- File map is a flat `src/*.ts` dump with every cut in one directory
-- File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree
-- File map requires a distant `tests/` tree
+- File map is a flat `src/*.ts` dump with every cut in one directory (greenfield / no house)
+- File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree (greenfield / no house)
+- File map requires a distant `tests/` tree (greenfield / no house)
 - File map is one dump folder that mixes every cut (mixed-cut map)
 - File map that requires the weather Location tree or `LocationProvider` as the only pass
+- File map invents a second convention on an existing-repo prompt
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three
