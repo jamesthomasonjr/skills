@@ -29,11 +29,12 @@ from scratch.
   **After a spike pick**.
 - The **unit of work is a stacked PR**: one interface + implementation
   + tests, plus a mock / test impl of that interface for dependents.
-- Stacked-PR units follow **this design’s cuts** (the names
-  `write-design` chose). Do not hard-code `LocationProvider` or any
-  other dump name. If no design is in-thread, still plan one stacked
-  PR per collaborator the sized outcome needs; derive those cuts the
-  same way `write-design` would.
+- Stacked-PR units follow **this design’s cuts** (job-named). Do
+  not substitute Superpowers dump names for this design’s names,
+  and do not require those dump strings when the design used
+  equivalent job names. If no design is in-thread, still plan one
+  stacked PR per collaborator the sized outcome needs; derive
+  those cuts the same way `write-design` would (names the job).
 - Do **not** use a 2–5 minute Superpowers step list as the contract.
 - A spike (open product/API decision) stays a separate `shape-task`.
   List it **first**, with the same **options + impact** as the spec’s
@@ -57,15 +58,29 @@ from scratch.
    / cuts / auth / data / tests impact). Not a one-liner. Not the
    Approaches stack bake-off.
 2. **File map** — exact paths to create or modify, and what each file
-   is responsible for, using **this design’s cut names** (not dump
-   names). Before the stacked-PR list.
+   is responsible for, using **this design’s cut names** (synonym
+   job names). Superpowers does not dictate type or file names.
+   **Colocate by cut:** capability folder first, port + first impl
+   together, tests beside the file they cover. Not a distant
+   `tests/` tree. Not a mandatory
+   `domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
+   `src/*.ts` dump. Do **not** score a weather Location tree as
+   the only GREEN. Acceptable nests (do not require one spelling):
+   `src/<Capability>/Provider/`,
+   `src/<Capability>/<CapabilityProvider>/`,
+   `src/<CapabilityProvider>/`. Illustrations (not a fixture
+   list): `src/DevicePosition/Provider/…` next to
+   `src/Charge/Provider/…`. Same shape for each cut. Scaffold
+   (`package.json`, `vite.config`, `index.html`) can sit at the
+   page cut / composition PR. Before the stacked-PR list.
 3. **Stacked PRs** — one PR per **cut** from the design: that
    interface + impl + tests + mock/test impl for dependents. Each PR
    **names the files it touches**. Name the GitHub stacked-PR
    workflow as the standard, not as inventory.
 4. **Close** — cheap self-review (no TBD; file-map paths match the
-   PRs; names match the design cuts), then hand back. Do not
-   implement. Do not resize.
+   PRs; names match the design cuts; colocate by cut; synonym
+   job names; tests next to the file they cover), then hand
+   back. Do not implement. Do not resize.
 
 ## Rationalizations
 
@@ -79,6 +94,12 @@ from scratch.
 | “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. Derive cuts the same way `write-design` would. |
 | “Three providers means this is an epic — I’ll re-size” | Do not change grain. |
 | “The dump said LocationProvider, so that is PR 1” | Use this design’s cuts. Names are not a fixture list. |
+| “src/*.ts is simpler” | Fail a flat dump. Capability folder, then port + first impl together. |
+| “Score the Location tree” | That is one weather illustration. Charge (and synonyms) must also pass. |
+| “GREEN requires LocationProvider paths” | Synonym capability folders GREEN. That token as the only pass is RED. |
+| “Tests live in tests/” | Tests sit next to the file they cover. |
+| “domain/ports/adapters/views is the SOLID tree” | Not the only legal tree. Colocate by cut. |
+| “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
 | “I’ll add the 10-day slice so the stack is complete” | Out stays Out. |
 | “The plan is obvious, so I’ll start the first PR” | Hand back. New message to implement. |
 | “They said spec this then build” | Finish the named leaf. Do not build. |
@@ -89,6 +110,14 @@ from scratch.
 - Spike swallowed into a production PR
 - Spike that only says “pick a weather API” (no options / no impact)
 - Stacked PRs and no paths
+- File map is a flat `src/*.ts` dump with every cut in one directory
+- File map requires `domain/` / `ports/` / `adapters/` / `views/`
+  as the only legal tree
+- File map requires a distant `tests/` tree
+- File map is one dump folder that mixes every cut (mixed-cut
+  map)
+- File map that requires the weather Location tree or
+  `LocationProvider` paths as the only pass
 - Planning after a pick that would change In/Out or grain
 - Bouncing a non-stale “plan this” to `write-design` because no
   design exists yet
