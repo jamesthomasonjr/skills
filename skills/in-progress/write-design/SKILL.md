@@ -64,8 +64,11 @@ the class-design job. The user does not have to list classes.
    one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`,
    `Till`, `Gold`). Requiring `LocationProvider` as the only
    accepted token is RED. Superpowers does not dictate type
-   names. A user class list remains a hint. Do not pull Out in
-   to “prove” error paths.
+   names. If an existing repo already names the job (functions
+   or types), follow those house names. Do not invent a class
+   / Provider family against a function-module house. A user
+   class list remains a hint. Do not pull Out in to “prove”
+   error paths.
 4. **Later-feature seams** — how Out work would widen a cut (thin now,
    fat adapter later). Notes, **not** inventory. Do not pull Out into
    inventory to “prove” ISP.
@@ -84,6 +87,7 @@ why.
 | “They dumped LocationProvider, so that is the design” | Hint only. Derive from the sized outcome. |
 | “Here / Place / TodayBoard is shorter” | Fail cute one-word / poetry names. Name the job. |
 | “GREEN requires LocationProvider exactly” | Synonyms GREEN (`DevicePosition`, `CardCharger`, …). That token as the only pass is RED. |
+| “LocationProvider is the SOLID name” | Follow the house. Function modules stay functions. |
 | “They dumped classes first, so start there” | No grain. Point at `write-spec` → `size-work`. |
 | “Design this — no grain, but they didn’t list classes” | Still no grain. Stop. |
 | “I’ll add the 10-day story so the ISP seam is real” | Seams are notes. Out stays Out. |
@@ -101,6 +105,7 @@ why.
 - Cuts without an interface + first impl
 - Cute / poetry / one-word cut names that do not name the job
 - Requiring `LocationProvider` or any Superpowers dump string as the only accepted token
+- Inventing class / Provider names against an existing function-module house
 - A cut with interface + impl but no error note and no test note
 - Designing after a pick that would change In/Out or grain
 - Taking a non-stale “plan this” because no design exists yet

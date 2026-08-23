@@ -1,13 +1,15 @@
 # specify-work eval letters
 
 Scorer rubric for the Superpowers-gap letters. Not user input.
-GREEN prompts must not open this file, `weather-eval.md`, or
-`charge-eval.md`.
+GREEN prompts must not open this file, `weather-eval.md`,
+`charge-eval.md`, or `house-eval.md`.
 
-Input dumps: `weather-dump.md` (weather novel) and
-`charge-dump.md` (second novel). Grain (when needed) is the
-parked card in `weather-eval.md` or `charge-eval.md`. Ban:
-`docs/superpowers/**`.
+Input dumps: `weather-dump.md` (weather novel),
+`charge-dump.md` (second novel), and `house-dump.md` plus
+`house-repo/` (existing-repo novel). Grain (when needed) is
+the parked card in `weather-eval.md`, `charge-eval.md`, or
+`house-eval.md`. Ban: `docs/superpowers/**`. Not a third
+scorer for the 8am Charge-C/D scan.
 
 One leaf per turn. Before grain, mixed dump → `write-spec`. After
 grain, mixed dump → `write-design`. No grain → stop for design/plan.
@@ -26,7 +28,21 @@ product choices (vendor / API).
 |---|---|
 | `write-spec` | **Approaches** — 2–3 real alternatives, trade-offs, recommended pick. Pick includes stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendor/product options, each with short pros/cons, compare/contrast, and whether it would change MVP In/Out, grain, later cuts, auth, data shape, or tests. |
 | `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — synonym family, not one token. `${Location\|Position\|Coordinates\|similar}Provider` (or Client / Adapter / Gateway / Source) GREEN. Same weather dump: `DevicePosition` + `BrowserDevicePosition` GREEN. Requiring `LocationProvider` as the only accepted token RED. Charge dump: `CardCharger` + `StripeCardCharger` (or `PaymentClient` / `ChargeGateway` family) GREEN. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold`). Superpowers does not dictate type names. User class lists remain hints. |
-| `write-plan` | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (the rule, not “the Location tree”): capability folder first, port + first impl together, tests next to the file. Acceptable nests: `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`. Weather synonyms (`src/DevicePosition/…`) and charge (`src/Charge/…` / `src/Payment/…`) both GREEN. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Fail requiring `LocationProvider` paths as the only pass. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. |
+| `write-plan` (weather or charge) | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (the rule, not “the Location tree”): capability folder first, port + first impl together, tests next to the file. Acceptable nests: `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`. Weather synonyms (`src/DevicePosition/…`) and charge (`src/Charge/…` / `src/Payment/…`) both GREEN. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Fail requiring `LocationProvider` paths as the only pass. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. Greenfield weather/charge only — not `follow-house`. |
+| `write-plan` (existing repo) | **follow-house** (existing-repo novels only; not Charge-C/D). GREEN if the File map copies the repo’s existing test root, naming, and FP vs OO. RED only if it invents a second convention (colocate on a `tests/` house, or distant `tests/` on a colocated house). Do not score Superpowers File map. Charge-C/D and weather-only-pass stay greenfield. |
+
+### follow-house (existing-repo novels only)
+
+Skill Evaluator scores **follow-house** on existing-repo
+novels only. Keep Charge-C/D and weather-only-pass
+greenfield. Do not score Superpowers File map. Superpowers
+already has “follow existing patterns” with no letter —
+this novel adds our letter, not a rewrite of weather/charge
+dumps.
+
+| Id | Prompt pressure | GREEN if | Fail if |
+|---|---|---|---|
+| **follow-house** | `write-plan` after grain, `house-dump.md` + `house-repo/` | File map copies the repo’s existing test root, naming, and FP vs OO | Invents a second convention (colocate on a `tests/` house, or distant `tests/` on a colocated house) |
 
 Unchanged compose: weather API stays a **spike** unless demoted with
 a named default **and** why later cuts would not change. Stack pick
@@ -88,8 +104,9 @@ do not diverge on these ids:
 | **weather-only-pass** | `write-design` / `write-plan` after grain, **charge** dump | Weather Location names/tree are required, or charge synonym job names + colocate-by-cut fail |
 | **flat-src-map** | `write-plan` after grain + a design (weather or charge) | File map dumps all cuts in `src/*.ts` with every cut in one directory |
 | **hex-only-tree** | `write-plan` after grain + a design | File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree |
-| **distant-tests** | `write-plan` after grain + a design | File map requires a distant `tests/` tree instead of tests next to the file they cover |
-| **any-grouping** | `write-plan` after grain + a design | File map groups files but not colocate-by-cut (mixed-cut dump, or “any folder” sold as GREEN) |
+| **distant-tests** | `write-plan` after grain + a design (weather or charge) | File map requires a distant `tests/` tree instead of tests next to the file they cover. Greenfield weather/charge only. Do **not** fail a house-following `tests/` map (`follow-house`). |
+| **any-grouping** | `write-plan` after grain + a design (weather or charge) | File map groups files but not colocate-by-cut (mixed-cut dump, or “any folder” sold as GREEN). Greenfield weather/charge only. Do **not** fail a house-following `tests/` map (`follow-house`). |
+| **follow-house** | `write-plan` after grain, existing-repo novel only (`house-dump.md` + `house-repo/`) | Invents a second convention (colocate on a `tests/` house, or distant `tests/` on a colocated house). Do **not** fail a File map that copies the house test root, naming, and FP vs OO. Not Charge-C/D. Do not score Superpowers File map. |
 | **wrote-file-no-sink** | `write-spec` on the weather dump; no sink named | Wrote or committed a spec file / invented `docs/work/` |
 | **then-build-continued** | “spec this then build” | Built, designed, planned, or sized in the same turn |
 | **grilled-dump** | Weather dump | Interviewed from scratch instead of separating the dump |
@@ -172,6 +189,30 @@ pass, the letter does not scale.
 - RED: requiring the weather Location tree as the only pass.
 - No TBD. No 2–5 minute code novel. Scaffold at the page /
   composition cut.
+
+## GREEN follow-house — write-plan (after grain, existing repo)
+
+Stable id: **follow-house**. Skill Evaluator scores this id
+on existing-repo novels only. Not a Charge-C/D scorer. Not
+a third 8am novel. Charge-C/D and weather-only-pass stay
+as written for `charge-dump.md` / `weather-dump.md`. Do
+not score Superpowers File map.
+
+- Input: `house-dump.md` + `house-repo/`. Do not open
+  `house-eval.md`, `weather-eval.md`, `charge-eval.md`, or
+  this file.
+- Grain exists (parked in `house-eval.md`). Leaf: `write-plan`.
+- **GREEN if** the File map copies the repo’s existing test
+  root, naming, and FP vs OO. This house: `tests/` root,
+  `lib/geo/` function modules (`getDevicePosition`).
+- **RED only if** it invents a second convention (colocate
+  on a `tests/` house, or distant `tests/` on a colocated
+  house). Example of inventing: `src/Location/Provider/` +
+  classes + tests-next-to-file against this house.
+- Greenfield `distant-tests` / `flat-src-map` stay RED on
+  weather/charge dumps.
+- Spike first with options + impact. No TBD. No 2–5 minute
+  code novel. Each stacked PR names the files it touches.
 
 ## GREEN R — non-stale pick + “plan this”, no design
 
@@ -308,10 +349,25 @@ weather Location tree as the scored shape. Same weather dump:
 dump would fail unless it copies weather names. Hole: one
 novel memorized; the letter does not scale.
 
+## RED-X — follow-house (pre-letter)
+
+Follow current `write-plan` + `kinds.md` File map after grain,
+using `house-dump.md` + `house-repo/`. Current letter:
+colocate-by-cut is unconditional. Distant `tests/` and flat
+`src/*.ts` are always RED. “Tests live in tests/” is a
+rationalization to reject the house.
+Expect: a plan that copies the house test root / naming /
+FP vs OO **fails** as distant-tests / not colocate-by-cut.
+A plan that invents a second convention (colocate on this
+`tests/` house) **passes** the current File map Failures.
+Hole: no existing-repo predicate. Greenfield
+`distant-tests` / `flat-src-map` stay the right RED on
+weather/charge dumps. Do not score Superpowers File map.
+
 ## GREEN observed (after the letters)
 
-Ban: `docs/superpowers/**`, `weather-eval.md`, this file. Fresh
-`generalPurpose` subagents.
+Ban: `docs/superpowers/**`, `weather-eval.md`, `house-eval.md`,
+this file. Fresh `generalPurpose` subagents.
 
 ### A — write-spec, slim dump, before grain
 
