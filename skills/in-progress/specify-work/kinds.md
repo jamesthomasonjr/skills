@@ -146,20 +146,33 @@ Still stop. Point at `size-work`. Do not invoke it.
 ## After a spike pick
 
 When a spike pick lands (the user names a vendor, or a later turn
-says “use Open-Meteo”), judge **impact** first. Then take **one**
-leaf. Do not auto-continue this loop in one turn.
+says “use Open-Meteo”), take **one** leaf. Do not auto-continue
+this loop in one turn.
+
+Apply **in this order**. Do not read the unlabeled table as a
+second vote on a named leaf.
+
+1. **Stale** — the pick would change Outcome / In / Out, or would
+   change grain. Impact **wins**. `write-spec`. Stop. Point at
+   `size-work`. Even if they said “design” or “plan.” This family
+   does not edit size-work. Do not keep designing or planning on
+   the old spec.
+2. **Not stale, and they named only one document.** User label
+   **wins**. “plan this” → `write-plan`. “design this” →
+   `write-design`. Do **not** override a named leaf with “next
+   unfinished,” “no design yet, so write-design,” or “only cuts,
+   so write-design.”
+3. **Not stale, and they did not name only one document** (mixed
+   ask, or just the pick). Then this table:
 
 | Impact of the pick | Leaf |
 |---|---|
-| Changes Outcome / In / Out, or **would** change grain | `write-spec`. Stop. Point at `size-work` (grain is stale). Do not keep designing or planning on the old spec. This family does not edit size-work. |
 | Only cuts / seams / errors | `write-design` (after grain still exists) |
 | Only sequence / files / PR split | `write-plan` |
 | Nothing material | Note that. Take the next unfinished leaf (`write-design` if no design yet, else `write-plan`). |
 
-This check **wins** over “they said design this” / “plan this”
-when the pick would change Outcome / In / Out or grain. User label
-still wins for a single named document when the pick would **not**
-stale the spec.
+The table is only step 3. It does not apply when step 1 or step 2
+already named the leaf.
 
 Do not swallow the pick into a production PR. Do not add bake-off
 runner code or a 2–5 minute Superpowers TDD novel.
@@ -200,8 +213,8 @@ write-spec → size-work → write-design → write-plan
 
 Grain means a spec was already consumed. One leaf this turn. User
 label wins when they name **only one** document, except **After a
-spike pick** when that pick would stale Outcome / In / Out or
-grain.
+spike pick** step 1 (stale). Step 2 is that user-label win. Step 3
+is the unlabeled table only.
 
 | When | Ask | Leaf |
 |---|---|---|
@@ -209,7 +222,9 @@ grain.
 | **After grain** | spec+design+plan, a re-sent mixed dump, or design+plan | `write-design` first, then hand back. Do **not** re-run `write-spec` unless they explicitly asked to rewrite the spec or change In/Out, **or** a just-landed spike pick would change Outcome / In / Out or grain. |
 | **After grain** | spec only (explicit rewrite / In/Out change) | `write-spec` |
 | **After grain** | plan only | `write-plan` (unless a just-landed pick would stale In/Out — then `write-spec`) |
-| **Spike pick landed** | see **After a spike pick** | that table, then hand back |
+| **Spike pick landed** | stale (Outcome / In / Out / grain) | `write-spec`. Wins over “design” / “plan.” |
+| **Spike pick landed** | not stale; they named only one document | That leaf. Do not override with “next unfinished.” |
+| **Spike pick landed** | not stale; mixed ask or just the pick | Unlabeled table in **After a spike pick** step 3 |
 
 ## Rationalizations
 
@@ -234,6 +249,7 @@ grain.
 | “Stack vs React is a spike option” | That is Approaches (ways to build). Spike options are vendor / product choices. |
 | “Spike is ‘pick a weather API’” | List real options, pros/cons, and impact. |
 | “They named a vendor and said design, so write-design” | If the pick would change In/Out or grain, `write-spec` then point at size-work. Do not design on a stale spec. |
+| “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. `write-plan` derives cuts the same way `write-design` would. |
 | “The pick landed, so spec then size then design this turn” | One leaf. Do not auto-continue that loop. |
 | “Approaches picked a stack, so continue to design” | Close. Point at `size-work`. |
 | “Cuts have interface and impl; errors wait for the plan” | Every cut owns an error note and a test note now. |
@@ -254,6 +270,7 @@ grain.
 - Approaches silent on stack while inferring a weather / vendor spike
 - Approaches swallows the vendor into a silent or default-without-ladder pick
 - After a pick that would change In/Out or grain, continuing to `write-design` or `write-plan` without re-running `write-spec`
+- Non-stale pick + “plan this” taken as `write-design` because no design exists yet, or because the unlabeled table said “only cuts” / “next unfinished”
 - Auto-continuing the after-pick loop (spec → size → design) in one turn
 - A cut with interface + first impl but no error note and no test note
 - Plan with stacked PRs and no paths

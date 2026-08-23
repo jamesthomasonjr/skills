@@ -24,7 +24,9 @@ the class-design job. The user does not have to list classes.
   `write-plan`. A plain “design this” with no class list still bounces.
 - If a just-landed spike pick **would** change Outcome / In / Out or
   grain, **stop**. Point at `write-spec` → `size-work`. Do not design
-  on a stale spec. Follow [../specify-work/kinds.md](../specify-work/kinds.md)
+  on a stale spec. If the pick is **not** stale and they said
+  “plan this” (only), this is **not** your leaf — even when no
+  design exists yet. Follow [../specify-work/kinds.md](../specify-work/kinds.md)
   **After a spike pick**.
 - **Derive** steps and cuts from the sized work. Do not wait for the
   user to list classes. Do not copy a dump’s class list as the design.
@@ -73,7 +75,8 @@ split (not thin), write why.
 | “I’ll add the 10-day story so the ISP seam is real” | Seams are notes. Out stays Out. |
 | “This should be an epic now that we have three cuts” | Do not resize. Cuts are not children. |
 | “I’ll write the stacked-PR plan while the types are fresh” | New message. This leaf is design. |
-| “They named a vendor and said design, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. |
+| “They named a vendor and said design, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. If they said “plan this” and the pick is not stale, that is `write-plan`. |
+| “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. |
 | “Errors wait for the class list / the plan” | Every cut owns an error note and a test note now. |
 | “I’ll pull 10-day in so the failed-fetch path is real” | Out stays Out. Error notes are not stories. |
 
@@ -84,6 +87,7 @@ split (not thin), write why.
 - Cuts without an interface + first impl
 - A cut with interface + impl but no error note and no test note
 - Designing after a pick that would change In/Out or grain
+- Taking a non-stale “plan this” because no design exists yet
 - Adding Out items (multi-day, URL-query) to inventory
 - Resizing or writing Path
 - Implementation plan or 2–5 minute steps

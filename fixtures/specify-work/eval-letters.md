@@ -8,8 +8,10 @@ in `weather-eval.md`. Ban: `docs/superpowers/**`.
 
 One leaf per turn. Before grain, mixed dump → `write-spec`. After
 grain, mixed dump → `write-design`. No grain → stop for design/plan.
-After a spike pick, follow kinds.md **After a spike pick** (do not
-auto-continue that loop).
+After a spike pick: stale → `write-spec` (wins over “design” /
+“plan”). Not stale + they named only one document → that leaf.
+Not stale + mixed / just the pick → unfinished-leaf / impact
+routing. Do not auto-continue that loop.
 
 Approaches ≠ spike options. Approaches = ways to build
 (stack / architecture). Spike options = unsettled external /
@@ -42,6 +44,7 @@ does not edit size-work.
 | **omit-file-map** | `write-plan` after grain + a design | Stacked PRs and no exact paths (no File map, and PRs do not name files) |
 | **2-5-minute-plan** | `write-plan` after grain + a design | Plan contract is a 2–5 minute TDD step list / code novel |
 | **stale-spec-after-pick** | After grain, a vendor pick that would change In/Out, plus “design the classes” | Continues to `write-design` without re-running `write-spec` (grain stale; should point at write-spec → size-work) |
+| **plan-after-nonstale-pick** | After grain, settled non-stale vendor + “plan this”, **no design yet** | Takes `write-design` because the table says “next unfinished” / “no design yet” |
 
 ## GREEN A — write-spec (before grain, mixed dump)
 
@@ -65,6 +68,15 @@ does not edit size-work.
 - **File map** before stacked PRs: exact paths + what each file owns; design cut names (not dump names).
 - Each stacked PR names the files it touches.
 - File-map paths match the PRs. No TBD. No 2–5 minute code novel.
+
+## GREEN R — non-stale pick + “plan this”, no design
+
+- Grain exists. Vendor pick does **not** change Outcome / In / Out
+  or grain (example: Open-Meteo for today + device location).
+- No design in-thread. User names only one document: **plan this**.
+- Leaf: `write-plan` (not `write-design`). Plan may derive cuts the
+  same way `write-design` would.
+- Did not override the named leaf with “next unfinished.”
 
 ## GREEN P — after a pick that would change In/Out
 
@@ -127,6 +139,24 @@ SevenDayWeather + “Design the classes”): leaf **write-design**.
 Re-ran write-spec? **no.** Pointed at size-work? **no.** Cuts
 emitted? **yes.** Controlling sentence: do not re-run
 `write-spec` unless they **explicitly** asked to rewrite In/Out.
+
+## RED-R — plan-after-nonstale-pick (pre-fix letter clash)
+
+Grain exists. No design. User: settled vendor that would **not**
+stale In/Out (Open-Meteo) + “plan this.”
+
+Current clash: **After a spike pick** table (“only cuts” /
+“nothing material” → `write-design` if no design) has no
+user-label carve-out. Paragraph / router say user label still
+wins when the pick is not stale.
+
+Expect: kinds-literal agent takes `write-design`.
+
+Observed (agent `749b1949-942c-4f13-a89f-c475c2d70602`): leaf
+**write-design**. write-plan? **no.** Treated “plan this” as a
+winning user label? **no.** Controlling row: “Only cuts / seams /
+errors | `write-design`.” Compose: “Spike pick landed | see After
+a spike pick | that table.”
 
 ## GREEN observed (after the letters)
 

@@ -22,7 +22,10 @@ from scratch.
   does not exist, **stop** and point at `write-spec` → `size-work`.
   If a just-landed spike pick **would** change Outcome / In / Out or
   grain, **stop**. Point at `write-spec` → `size-work`. Do not plan
-  on a stale spec. Follow [../specify-work/kinds.md](../specify-work/kinds.md)
+  on a stale spec. If the pick is **not** stale and they said
+  “plan this,” this is your leaf even when no design is in-thread.
+  Do not bounce to `write-design` for “next unfinished” or “no
+  design yet.” Follow [../specify-work/kinds.md](../specify-work/kinds.md)
   **After a spike pick**.
 - The **unit of work is a stacked PR**: one interface + implementation
   + tests, plus a mock / test impl of that interface for dependents.
@@ -72,7 +75,8 @@ from scratch.
 | “I’ll fold the API spike into the first production PR” | Spike stays a `shape-task`. List it first, with options. |
 | “Stacked PRs imply the paths” | Emit a File map with exact paths first. |
 | “Spike is ‘which weather API’” | Carry options + impact from Open decisions. |
-| “They named a vendor and said plan, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. |
+| “They named a vendor and said plan, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. If it would not, this leaf — even with no design yet. |
+| “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. Derive cuts the same way `write-design` would. |
 | “Three providers means this is an epic — I’ll re-size” | Do not change grain. |
 | “The dump said LocationProvider, so that is PR 1” | Use this design’s cuts. Names are not a fixture list. |
 | “I’ll add the 10-day slice so the stack is complete” | Out stays Out. |
@@ -86,6 +90,8 @@ from scratch.
 - Spike that only says “pick a weather API” (no options / no impact)
 - Stacked PRs and no paths
 - Planning after a pick that would change In/Out or grain
+- Bouncing a non-stale “plan this” to `write-design` because no
+  design exists yet
 - Grain bump, or Out items added to inventory
 - Hard-coded dump class names instead of this design’s cuts
 - Class list as size-work children
