@@ -118,7 +118,9 @@ size-work must still refuse a class list even if the spec is full of SOLID label
 
 ### Class lists
 
-`LocationProvider`, `DateProvider`, `WeatherProvider`, and ISP splits (`SingleDateProvider` / `DateRangeProvider`) are **not** requirements and **not** inventory. They are design. If they arrive before grain, stop and point at `write-spec` → `size-work`. Do not treat them as stories, features, or tasks.
+`LocationProvider`, `DateProvider`, `WeatherProvider`, and ISP splits (`SingleDateProvider` / `DateRangeProvider`) are **not** requirements and **not** inventory. They are design.
+
+**Stop** (point at `write-spec` → `size-work`) only when the **ask is the class list as the work**, or when `write-design` / `write-plan` would run **before grain**. `write-spec` on a mixed dump **separates**; it does not abort because classes appeared. No-grain for design/plan is the same stop even with no class list. “Design this story/feature after grain” still requires grain.
 
 ### Open decisions
 
@@ -146,7 +148,7 @@ An unanswered product or API choice (example: which weather service) is a **spik
 
 If they already have grain and ask only for design or only for plan, take that leaf. Do not send them through `write-spec` again.
 
-If two in-family signals both appear, user label wins; if still tied, prefer `write-spec` when grain does not exist, else the named later leaf.
+If two in-family signals both appear, user label wins when they name only one. Before grain, a mixed dump still goes to `write-spec`. After grain, if both design and plan are named, take `write-design` (earlier in the sequence), then hand back. Do not skip to `write-plan`.
 
 ### Ambiguity
 
@@ -177,7 +179,7 @@ If they already dumped a thought process, **separate** it into the five headings
 
 This is the class-design skill.
 
-**Requires** a sized inventory, or an explicit “design this story/feature” after grain exists. If they dump classes before sizing, **stop** and point at `write-spec` → `size-work`.
+**Requires** grain (a sized inventory). “Design this story/feature after grain” still requires grain; it is not a bypass. If grain does not exist, **stop** and point at `write-spec` → `size-work` — same letter as `write-plan`. A plain “design this” with no class list still bounces. A class dump before sizing is the same stop.
 
 **REQUIRED:** Follow `kinds.md`.
 
@@ -267,6 +269,9 @@ GREEN (fresh subagents banned from `docs/superpowers/**`):
 - **D:** `write-plan` → stacked-PR units, spike first/separate, no 2–5 minute step list as the contract, no grain bump.
 - **E:** class list as the first ask → router/`write-spec` does not treat it as inventory; points at `write-spec` → `size-work`.
 - **F:** plan-only or design-only ask after grain → correct leaf, not `write-spec`.
+- **G:** weather-style mixed dump + `kinds.md`-literal → still emits Outcome/In/Out; does not stop at the class-list line.
+- **H:** “design this” with no grain and no class list → stop + pointer, no design output.
+- **I:** after grain exists, “design the classes and plan the implementation” → `write-design` (not `write-plan`); hand back.
 
 ## Catalog
 

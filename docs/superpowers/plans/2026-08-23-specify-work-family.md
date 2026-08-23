@@ -101,7 +101,10 @@ git commit -m "test: add specify-work weather fixture"
 
 ```bash
 test ! -e skills/in-progress/specify-work/SKILL.md
+test ! -e skills/in-progress/specify-work/kinds.md
 test ! -e skills/in-progress/write-spec/SKILL.md
+test ! -e skills/in-progress/write-design/SKILL.md
+test ! -e skills/in-progress/write-plan/SKILL.md
 ```
 
 - [ ] **Step 2: Run two fresh `generalPurpose` subagents in parallel**

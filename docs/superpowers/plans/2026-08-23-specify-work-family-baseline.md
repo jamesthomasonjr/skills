@@ -52,6 +52,40 @@ Did not fire (still require):
 - 2–5 minute Superpowers step list as the plan contract (RED-1 used stacked PRs; GREEN D still forbids that contract).
 - Writing `docs/work/` or committing a spec file (neither RED run did).
 
+## Letter-clash RED (skills present, old wording)
+
+Three fresh `generalPurpose` subagents against the pre-fix letters. Ban: `docs/superpowers/**`.
+
+### RED-G — kinds.md-literal on weather dump
+
+Prompt: follow `kinds.md` as authoritative; then `write-spec`; weather dump.
+
+Observed:
+- Emitted Outcome / In / Out? **No.**
+- Stopped because classes arrived before grain? **Yes.**
+- Controlling sentence: “If they arrive before grain exists, **stop**.”
+- Wrote a class-free spec, or abort? **Abort.**
+- Fired: **kinds.md class-list stop aborted write-spec** on the mixed dump (GREEN A).
+
+### RED-H — “design this”, no grain, no class list
+
+Prompt: follow `write-design` as written. No inventory. No class list. “Design this. I want the design for a weather page.”
+
+Observed:
+- This sample **stopped** and pointed at `write-spec` → `size-work`.
+- Controlling sentence: “Requires a sized inventory, or an explicit ‘design this story/feature’ after grain exists.”
+- The **letter hole** remains: bounce is only mandated for a class dump. The “or … after grain” clause can be read as a bypass. A later agent can proceed on a plain “design this.” Fix: same no-grain stop as `write-plan`.
+
+### RED-I — after grain, design + plan
+
+Prompt: follow the router. Grain set. “Design the classes and plan the implementation.”
+
+Observed:
+- Leaf: **write-plan**
+- Tie-break used: “prefer `write-spec` when grain does not exist, else the named later leaf.”
+- Stacked-PR plan? **Yes.** Class design? **No.**
+- Fired: **tie-break skipped write-design.**
+
 ## GREEN
 
 Skills present: `specify-work`, `kinds.md`, `write-spec`, `write-design`, `write-plan`.
