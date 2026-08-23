@@ -64,7 +64,9 @@ from scratch.
    Not a flat `src/*.ts` dump. Not a mandatory
    `domain/` / `ports/` / `adapters/` / `views/` tree. Scaffold
    (`package.json`, `vite.config`, `index.html`) can sit at the
-   page cut / composition PR. Before the stacked-PR list.
+   page cut / composition PR. GREEN: `src/location-provider/LocationProvider.ts`
+   next to `BrowserGeolocationProvider.ts`, `FakeLocationProvider.ts`,
+   and the unit test — same for each cut. Before the stacked-PR list.
 3. **Stacked PRs** — one PR per **cut** from the design: that
    interface + impl + tests + mock/test impl for dependents. Each PR
    **names the files it touches**. Name the GitHub stacked-PR
