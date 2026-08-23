@@ -33,21 +33,27 @@ Use [kinds.md](kinds.md). Explicit user labels win.
 | Signal | Leaf |
 |---|---|
 | “spec this”; product dump; one outcome not yet sharpened; In/Out; foggy idea | `write-spec` |
-| Thought-process dump that already mixes outcome + how + classes + plan | `write-spec` — separate; do not emit classes or the plan |
+| Thought-process dump that already mixes outcome + how + classes + plan; **no grain** | `write-spec` — separate; do not emit classes or the plan |
+| Same mixed dump or “spec, design, and plan” **after grain** | `write-design` — do not re-run `write-spec` unless they asked to rewrite In/Out |
 | “design this”; classes / interfaces / providers; **after grain exists** | `write-design` |
 | “plan this”; stacked PRs; implementation sequence; **after grain exists** | `write-plan` |
 | Class / provider list as the **first** ask; no sized inventory; no “design this story/feature” after grain | **Stop** — not inventory. Point at `write-spec` → `size-work`. Do not read `write-design`. |
 | Size / shape / break down / how big / inventory / Path | **Out of family** — `size-work` / `shape-*`. Stop. |
 | Review / debug / what’s next | **Out of family** — matching family. Stop. |
 
-If they already have grain and ask only for design or only for plan,
-take that leaf. Do not send them through `write-spec` again.
+Follow [kinds.md](kinds.md) **Compose order**. User label wins when
+they name **only one** document.
 
-If two in-family signals both appear, user label wins when they name
-**only one**. Before grain, a mixed dump still goes to `write-spec`.
-After grain, if both design and plan are named, take `write-design`
-(earlier in the sequence), then **hand back**. Do not skip to
-`write-plan`.
+- **Before grain:** spec+design+plan or a mixed dump → `write-spec`.
+  Separate. Do not abort on classes.
+- **After grain:** spec+design+plan, a re-sent mixed dump, or
+  design+plan → `write-design` first, then **hand back**. Do not
+  re-run `write-spec` unless they explicitly asked to rewrite the
+  spec or change In/Out. Do not skip to `write-plan`.
+- **After grain, spec only** (explicit rewrite / In/Out change) →
+  `write-spec`.
+- **After grain, plan only** → `write-plan`.
+- **After grain, design only** → `write-design`.
 
 ## 2. Announce and hand off
 
@@ -80,6 +86,7 @@ Then follow that leaf. Do not keep a second specify procedure here.
 - Auto-continuing because the dump asked for all three
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Skipping to `write-plan` when they also asked to design after grain
+- Re-running `write-spec` after grain because the dump still says “spec this”
 - Treating a class list as inventory
 - Invoking `size-work` from this family
 - Implementing because the outcome is obvious

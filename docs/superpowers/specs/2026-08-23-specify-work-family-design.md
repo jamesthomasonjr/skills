@@ -139,16 +139,21 @@ An unanswered product or API choice (example: which weather service) is a **spik
 | Signal | Leaf |
 |---|---|
 | “spec this”; product dump; one outcome not yet sharpened; In/Out; foggy idea | `write-spec` |
-| Thought-process dump that already mixes outcome + how + classes + plan (weather-style) | `write-spec` — **separate** the dump; do not grill from scratch; do not emit classes or the plan |
+| Thought-process dump that already mixes outcome + how + classes + plan; **no grain** | `write-spec` — **separate**; do not emit classes or the plan |
+| Same mixed dump or “spec, design, and plan” **after grain** | `write-design` — do not re-run `write-spec` unless they asked to rewrite In/Out |
 | “design this”; classes / interfaces / providers; what-vs-how; **after grain exists** | `write-design` |
 | “plan this”; stacked PRs; implementation sequence; **after grain exists** | `write-plan` |
 | Class / provider list as the **first** ask; no sized inventory; no “design this story/feature” after grain | **Stop** — do not treat as inventory. Point at `write-spec` → `size-work`. Do not read `write-design`. |
 | Size / shape / break down / how big / inventory / Path | **Out of family** — `size-work` / `shape-*`. Stop. Do not read a leaf. |
 | Review / debug / what’s next | **Out of family** — matching family. Stop. |
 
-If they already have grain and ask only for design or only for plan, take that leaf. Do not send them through `write-spec` again.
+Follow `kinds.md` **Compose order**. Grain means a spec was already consumed. User label wins when they name only one document.
 
-If two in-family signals both appear, user label wins when they name only one. Before grain, a mixed dump still goes to `write-spec`. After grain, if both design and plan are named, take `write-design` (earlier in the sequence), then hand back. Do not skip to `write-plan`.
+- **Before grain:** spec+design+plan or a mixed dump → `write-spec`. Separate. Do not abort on classes.
+- **After grain:** spec+design+plan, a re-sent mixed dump, or design+plan → `write-design` first, then hand back. Do not re-run `write-spec` unless they asked to rewrite In/Out. Do not skip to `write-plan`.
+- **After grain, spec only** (explicit rewrite / In/Out change) → `write-spec`.
+- **After grain, plan only** → `write-plan`.
+- **After grain, design only** → `write-design`.
 
 ### Ambiguity
 
@@ -272,6 +277,7 @@ GREEN (fresh subagents banned from `docs/superpowers/**`):
 - **G:** weather-style mixed dump + `kinds.md`-literal → still emits Outcome/In/Out; does not stop at the class-list line.
 - **H:** “design this” with no grain and no class list → stop + pointer, no design output.
 - **I:** after grain exists, “design the classes and plan the implementation” → `write-design` (not `write-plan`); hand back.
+- **J:** grain already exists + weather-style dump / “spec, design, and plan” → `write-design` (not `write-spec`, not `write-plan`). Hand back. No second spec, no stacked-PR plan this turn.
 
 ## Catalog
 

@@ -179,6 +179,10 @@ Contract-faithful spec (same shape as A) + `levels.md` / `paths.md` only. No `sh
 - Files edited: none
 - Pass. Closes RED-I skip to write-plan.
 
+### J — after grain, re-sent mixed dump / spec+design+plan
+
+Results after GREEN.
+
 ### A–F reconfirm (after letter rewrite)
 
 Same prompts as A–F. Fresh subagents. Ban: `docs/superpowers/**`.

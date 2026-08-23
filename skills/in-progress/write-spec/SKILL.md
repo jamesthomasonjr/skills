@@ -25,15 +25,16 @@ an implementation plan.
   `size-work` as next, then **stop**.
 - Do not implement.
 - Outcomes: conversation-only unless they named a sink.
-- Mixed turn (“spec this then build” / “spec, design, and plan”): finish
-  **this** document, then **hand back**. They must send a new message
-  for design, plan, size, or build.
-- Questions only when one outcome is still foggy. If they already dumped
-  a thought process, **separate** it. Do not grill from scratch.
-- A mixed dump that mentions classes is **not** the class-list stop.
-  Separate. Do not abort. The [kinds.md](../specify-work/kinds.md)
-  class-list stop is for “the ask is the class list” or for
-  design/plan before grain — not for this leaf on a mixed dump.
+- Mixed turn (“spec this then build”): finish **this** document, then
+  **hand back**. They must send a new message for design, plan, size,
+  or build.
+- **Before grain** (or an explicit spec rewrite): if they dumped a
+  thought process, **separate** it. Do not grill from scratch. A mixed
+  dump that mentions classes is **not** the class-list stop — separate,
+  do not abort.
+- **After grain:** do not run this leaf on a re-sent mixed dump /
+  “spec, design, and plan” unless they explicitly asked to rewrite the
+  spec or change In/Out. That turn is `write-design`.
 
 ## Output contract (in order)
 
@@ -48,16 +49,21 @@ an implementation plan.
 
 ## Separating a dump
 
-If the message already mixes MVP, how, classes, and a plan: put the
-sharp outcome and In/Out/spikes/labels here. Leave how, providers, ISP
-seams, and stacked PRs for later leaves. Do not interview around what
-they already said.
+**Before grain** (or an explicit spec rewrite): if the message already
+mixes MVP, how, classes, and a plan, put the sharp outcome and
+In/Out/spikes/labels here. Leave how, providers, ISP seams, and
+stacked PRs for later leaves. Do not interview around what they
+already said.
+
+**After grain:** do not separate a re-sent dump into a second spec
+unless they explicitly asked to rewrite the spec or change In/Out.
+That turn is `write-design` (or `write-plan` if plan-only).
 
 ## Rationalizations
 
 | Excuse | Reality |
 |---|---|
-| “They asked for spec, design, and plan together” | This leaf is the spec. Hand back. |
+| “They asked for spec, design, and plan together” | **Before grain** this leaf is the spec. **After grain** this is not your turn unless they asked to rewrite In/Out. |
 | “Standards are required this turn, so I should design them” | Labels only. |
 | “I’ll list the providers so size-work can sequence them” | Classes are not inventory. |
 | “Classes appear in the dump, so kinds.md says stop” | Separate. Do not abort. |

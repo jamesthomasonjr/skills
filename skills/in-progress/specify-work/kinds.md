@@ -27,9 +27,11 @@ as stories, features, or tasks) only when:
   sharpen; classes/providers are the request), or
 - `write-design` or `write-plan` would run **before grain exists**.
 
-`write-spec` on a mixed dump (outcome + classes + plan) **separates**.
-It emits a class-free spec. It does **not** abort. Do not treat
-“classes appear in the dump” as “stop, do not write the spec.”
+**Before grain**, `write-spec` on a mixed dump (outcome + classes +
+plan) **separates**. It emits a class-free spec. It does **not** abort.
+Do not treat “classes appear in the dump” as “stop, do not write the
+spec.” **After grain**, a re-sent mixed dump is `write-design` (see
+Compose order), not a second spec.
 
 **No grain** for `write-design` / `write-plan` is the same stop even
 when they did not dump a class list. “Design this story/feature after
@@ -49,6 +51,22 @@ The spec is a feature-shaped outcome plus In / Out / spikes / labels.
 It is not an epic. It is not a class inventory. It is not a Path.
 size-work reads requirements in In/Out, not Standards, not providers.
 
+## Compose order
+
+```
+write-spec → size-work → write-design → write-plan
+```
+
+Grain means a spec was already consumed. One leaf this turn. User
+label wins when they name **only one** document.
+
+| When | Ask | Leaf |
+|---|---|---|
+| **Before grain** | spec+design+plan, or a mixed dump | `write-spec`. Separate. Do not abort on classes. Stop. Point at size-work. |
+| **After grain** | spec+design+plan, a re-sent mixed dump, or design+plan | `write-design` first, then hand back. Do **not** re-run `write-spec` unless they explicitly asked to rewrite the spec or change In/Out (requirements that can change grain). |
+| **After grain** | spec only (explicit rewrite / In/Out change) | `write-spec` |
+| **After grain** | plan only | `write-plan` |
+
 ## Rationalizations
 
 | Excuse | Reality |
@@ -57,9 +75,10 @@ size-work reads requirements in In/Out, not Standards, not providers.
 | “I’ll list LocationProvider as a story so size-work can sequence it” | Classes are not inventory. Design after grain. |
 | “Stacked PRs are required, so they are children” | Standard → plan, not inventory. |
 | “10-day is how we prove ISP, so it is MVP” | 10-day is a requirement. If it is later, it stays Out. |
-| “They asked for spec, design, and plan together” | One leaf this turn. Separate the dump. Hand back. |
+| “They asked for spec, design, and plan together” **before grain** | `write-spec`. Separate the dump. Hand back. Point at size-work. |
+| “They asked for spec, design, and plan together” **after grain** (or re-sent the mixed dump) | `write-design` first. Hand back. Do not re-run `write-spec` unless they asked to rewrite In/Out. |
 | “Standards are required this turn, so I should design them” | Labels on the spec. Design after grain. |
-| “Classes appear in the dump, so I must stop” | Separate. Stop only when the ask is the class list, or design/plan would run before grain. |
+| “Classes appear in the dump, so I must stop” | Before grain, separate. Do not abort. After grain, that is not a `write-spec` turn. |
 | “Design this — no grain, no class list, so proceed” | No grain. Stop. Same letter as write-plan. |
 | “They asked for design and plan after grain, so take the later leaf” | `write-design` first. Hand back. Do not skip to `write-plan`. |
 
@@ -72,4 +91,5 @@ size-work reads requirements in In/Out, not Standards, not providers.
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three
 - `write-design` or `write-plan` running before grain
-- After grain, taking `write-plan` when both design and plan were named
+- After grain, taking `write-plan` when design is in the ask
+- After grain, re-running `write-spec` on a mixed dump / spec+design+plan unless they asked to rewrite In/Out
