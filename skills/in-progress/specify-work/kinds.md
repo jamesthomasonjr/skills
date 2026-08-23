@@ -232,14 +232,15 @@ type names or file names.
 
 **Existing repo → match the house.** A tree already on disk
 (`lib/`, `tests/`, flat `src/`, function modules, classes) is
-the convention. Match naming, functional or procedural vs OO,
-tests in a separate folder vs colocated, flat `src` if that is
-already the tree. Superpowers “follow existing patterns” is
-the cousin line. Fail **only** when the plan invents a second
-convention (house uses `tests/` + functions; the plan invents
-`src/Location/Provider/` + classes, or tests-next-to-file
-against a `tests/` house). Do **not** fail house-style
-`tests/` or flat `src` on an existing-repo prompt.
+the convention. GREEN if the File map copies the repo’s
+existing test root, naming, and FP vs OO. Superpowers
+“follow existing patterns” is the cousin line, not a letter
+we score. RED **only** if the plan invents a second
+convention (colocate on a `tests/` house, or distant
+`tests/` on a colocated house). Example of inventing:
+`src/Location/Provider/` + classes against a `tests/` +
+function-module house. Do **not** fail house-style `tests/`
+or flat `src` on an existing-repo prompt.
 
 **Greenfield / no house → colocate by cut.** Capability / cut
 folder first, then port + first impl together. Tests sit next
@@ -295,7 +296,9 @@ RED (greenfield / no house): one dump folder that mixes
 every cut.
 RED (greenfield / no house): requiring `LocationProvider`
 paths as the only pass.
-RED (existing repo): inventing a second convention.
+RED (existing repo): inventing a second convention
+(colocate on a `tests/` house, or distant `tests/` on a
+colocated house).
 
 Scaffold (`package.json`, `vite.config`, `index.html`) can sit at
 the page cut / composition PR, not inside every port folder.
@@ -324,7 +327,9 @@ tree. Failure (greenfield): distant `tests/` tree. Failure
 (greenfield): one dump folder that mixes every cut
 (mixed-cut map). Failure (greenfield): requiring the weather
 Location tree or `LocationProvider` as the only pass.
-Failure (existing repo): inventing a second convention.
+Failure (existing repo): inventing a second convention
+(colocate on a `tests/` house, or distant `tests/` on a
+colocated house).
 
 ## Compose order
 
@@ -383,7 +388,7 @@ is the unlabeled table only.
 | “src/*.ts is simpler” | Greenfield: fail a flat dump. Existing flat-src house: match it. |
 | “Score the Location tree” | That is one weather illustration. Charge (and synonyms) must also pass. |
 | “Tests live in tests/” | Greenfield: tests sit next to the file. Existing repo: match the house. Do not fail `tests/` when that is the house. |
-| “Colocate-by-cut always wins” | Only when there is no house. Against a `tests/` + functions house it is a second convention. |
+| “Colocate-by-cut always wins” | Only when there is no house. Colocate on a `tests/` house, or distant `tests/` on a colocated house, is a second convention. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
 
 ## Failures
@@ -411,7 +416,7 @@ is the unlabeled table only.
 - File map requires a distant `tests/` tree (greenfield / no house)
 - File map is one dump folder that mixes every cut (mixed-cut map)
 - File map that requires the weather Location tree or `LocationProvider` as the only pass
-- File map invents a second convention on an existing-repo prompt
+- File map invents a second convention on an existing-repo prompt (colocate on a `tests/` house, or distant `tests/` on a colocated house)
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
 - Auto-continue spec → design → plan because the dump named all three

@@ -22,10 +22,12 @@ Existing tree: `house-repo/` — `lib/geo/` function modules,
 Design names follow the **house**: function / module names
 (`getDevicePosition`), not a class / `LocationProvider` family.
 
-File map scores **follow the house**, not colocate-by-cut.
-GREEN: `lib/geo/…` + `tests/geo/…` (or the same house with new
-files). RED: invents `src/Location/Provider/` + classes +
-tests-next-to-file against this house.
+Letter id: **follow-house**. File map scores that id, not
+colocate-by-cut and not Superpowers File map.
+GREEN if the File map copies the repo’s existing test root,
+naming, and FP vs OO (`tests/` + `lib/geo/` functions).
+RED only if it invents a second convention (colocate on this
+`tests/` house, or distant `tests/` on a colocated house).
 
 Do not treat this file as a user prompt. The input dump is
 `house-dump.md` plus `house-repo/`. Scorer letters:

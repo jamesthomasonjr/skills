@@ -11,7 +11,7 @@ repo, `docs/superpowers/`, or `weather-eval.md` as the product.
 | `weather-eval.md` | Parked eval card (not input). Grain is 3–9 stories (five OK). |
 | `charge-dump.md` | Second-domain user thought process (input). Checkout / charge-a-card. |
 | `charge-eval.md` | Parked eval card for the charge dump (not input). |
-| `eval-letters.md` | RED/GREEN letters for Approaches, cut notes, File map, synonym job names, colocate-by-cut, second-domain scale, follow-the-house, and PIN prose (not input) |
+| `eval-letters.md` | RED/GREEN letters for Approaches, cut notes, File map, synonym job names, colocate-by-cut, second-domain scale, follow-house, and PIN prose (not input) |
 | `house-dump.md` | Existing-repo user thought process (input) |
 | `house-eval.md` | Parked eval card for the house dump (not input) |
 | `house-repo/` | Existing tree the house dump is about (input) |
