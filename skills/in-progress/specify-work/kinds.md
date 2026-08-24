@@ -70,8 +70,8 @@ anemic DTO). Primitive / array / tuple of primitives do not
 spawn a type. Not a new cut unless it has interface + first
 impl + error/test notes.
 
-RED: poetry / vibe / cute one-word names (`Here`, `Place`,
-`TodayBoard`, `ComposeToday`, `Till`, `Gold`).
+RED: poetry / vibe / cute one-word names that do not name
+the job.
 
 One responsibility per file; files that change together live
 together; split by job, not layer. **File map** owns the
@@ -257,8 +257,8 @@ Existing repo → match `lib/` + `tests/` + function-modules
 greenfield nests.
 
 Same shape for each cut on greenfield. Job names on the types
-or functions, not `Here` / `Place` / `TodayBoard` / `Till` /
-`Gold`. Follow house type / function names when a tree
+or functions, not poetry / vibe / cute one-word names.
+Follow house type / function names when a tree
 already exists.
 
 **Named types** and **in-cut errors:** if In, a cut, or this
@@ -377,7 +377,7 @@ is the unlabeled table only.
 | “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Type what In names. |
 | “Stacked PRs imply the paths” | Emit a File map with exact paths before the PR list. |
 | “Writing-plans uses 2–5 minute TDD steps” | This family’s plan unit is a stacked PR + File map, not a code novel. |
-| “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |
+| “A one-word name is shorter” | Fail cute one-word cuts. Name the job. |
 | “domain/ports/adapters is how hexagonal works” | Not the only legal tree. Greenfield: colocate by cut. House: match the house. |
 | “src/*.ts is simpler” | Greenfield: fail a flat dump. Existing flat-src house: match it. |
 | “Tests live in tests/” | Greenfield: tests sit next to the file. Existing repo: match the house. Do not fail `tests/` when that is the house. |
@@ -403,7 +403,7 @@ is the unlabeled table only.
 - A cut with interface + first impl but no error note and no test note
 - Error notes that omit an in-cut error type (or enum)
 - A name in In / a cut / the File map with no class / type / interface / enum in the owning cut
-- Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold` as the only names)
+- Cute / poetry / one-word cut names that do not name the job
 - Plan with stacked PRs and no paths
 - File map is a flat `src/*.ts` dump with every cut in one directory (greenfield / no house)
 - File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree (greenfield / no house)
