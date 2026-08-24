@@ -43,8 +43,7 @@ an implementation plan.
 
 1. **Outcome** — one sharp user-perceivable result.
 2. **MVP In** — requirements that ship in the first cut.
-3. **Later-features Out** — requirements that wait (URL-query location,
-   multi-day forecast, …).
+3. **Later-features Out** — requirements that wait.
 4. **Approaches** — 2–3 **build** alternatives (stack / architecture:
    language, bundler, test runner, page vs framework), trade-offs,
    recommended pick and why. When the dump did not settle a stack,
@@ -63,7 +62,7 @@ an implementation plan.
    would not change those future cuts). A spike lists **real
    options** (at least two) with short pros/cons, compare/contrast,
    and whether each would change MVP In/Out, grain, later cuts,
-   auth, data shape, or tests — not “pick a weather API.” A stack
+   auth, data shape, or tests — not “pick a vendor/API.” A stack
    pick from Approaches is usually **explained** here; it does
    not replace the vendor spike. “Cuts” here means the later
    design would change, not that cuts exist now. Never silent on
@@ -97,11 +96,11 @@ Otherwise that turn is `write-design` (or `write-plan` if plan-only).
 | “Brainstorming would continue into a design doc and writing-plans” | This skill stops. It does not auto-continue. |
 | “I’ll write a spec file under docs/ so we can commit it” | Conversation-only unless they named a sink. |
 | “The dump didn’t say picking the service is still open” | Infer. External vendor/API with no vendor named is a spike unless demoted. |
-| “I’ll stay silent on the weather API” | Never silent on an external vendor/API. |
+| “I’ll stay silent on the vendor/API” | Never silent on an external vendor/API. |
 | “No cuts yet, so the ladder does not apply” | False. Infer from the outcome. |
-| “Approaches already named Open-Meteo, so the spike can be a one-liner” | Approaches ≠ spike options. List vendor options with impact. |
-| “I’ll skip Approaches; the stack is implied by the weather spike” | Silent on stack while inferring a vendor spike is a failure. |
-| “I’ll pick Open-Meteo in Approaches and stay silent in Open decisions” | Naming a vendor in Approaches is not a ladder demote. |
+| “Approaches already named a vendor, so the spike can be a one-liner” | Approaches ≠ spike options. List vendor options with impact. |
+| “I’ll skip Approaches; the stack is implied by the vendor spike” | Silent on stack while inferring a vendor spike is a failure. |
+| “I’ll pick a vendor in Approaches and stay silent in Open decisions” | Naming a vendor in Approaches is not a ladder demote. |
 
 ## Failures
 
@@ -113,12 +112,12 @@ Otherwise that turn is `write-design` (or `write-plan` if plan-only).
   or a stale-spec spike pick
 - Aborting because the dump mentioned classes
 - Auto-continue because the dump named all three jobs
-- Grilling from scratch after a weather-style dump
+- Grilling from scratch after a mixed dump
 - Committing a spec file with no named sink
 - Omitting an inferred external/API spike because the dump did not name it as open
 - Omitting an inferred external spike because cuts do not exist yet
 - Silent on an external vendor/API
-- Spike that only says “pick a weather API” (no options / no impact)
+- Spike that only says “pick a vendor/API” (no options / no impact)
 - Approaches missing, or silent on stack while inferring a vendor spike
 - Approaches swallows the vendor into a silent / default-without-ladder pick
 - Auto-continue into design or plan because Approaches picked a stack

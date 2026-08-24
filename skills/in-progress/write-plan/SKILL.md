@@ -30,15 +30,15 @@ from scratch.
 - The **unit of work is a stacked PR**: one interface + implementation
   + tests, plus a mock / test impl of that interface for dependents.
 - Stacked-PR units follow **this design’s cuts** (job-named). Do
-  not substitute Superpowers dump names for this design’s names,
-  and do not require those dump strings when the design used
-  equivalent job names. If no design is in-thread, still plan one
-  stacked PR per collaborator the sized outcome needs; derive
-  those cuts the same way `write-design` would (names the job).
-- Do **not** use a 2–5 minute Superpowers step list as the contract.
+  not substitute a dump’s class names for this design’s names.
+  If no design is in-thread, still plan one stacked PR per
+  collaborator the sized outcome needs; derive those cuts the
+  same way `write-design` would (names the job; named types
+  and in-cut error types included).
+- Do **not** use a 2–5 minute step list as the contract.
 - A spike (open product/API decision) stays a separate `shape-task`.
   List it **first**, with the same **options + impact** as the spec’s
-  Open decision — not “pick a weather API.” It must not swallow the
+  Open decision — not “pick a vendor/API.” It must not swallow the
   spike into a production implementation PR. Not Approaches (stack).
 - Standards live here as **workflow** (stacked PRs, ISP-narrow
   interfaces for dependents). They do not become inventory children
@@ -58,42 +58,48 @@ from scratch.
    / cuts / auth / data / tests impact). Not a one-liner. Not the
    Approaches stack bake-off.
 2. **File map** — exact paths to create or modify, and what each file
-   is responsible for, using **this design’s cut names** (synonym
-   job names). Superpowers does not dictate type or file names.
+   is responsible for, using **this design’s cut names**.
    **Existing repo → match the house.** GREEN if the File map
    copies the repo’s existing test root, naming, and FP vs
-   OO. Superpowers “follow existing patterns” is the cousin
-   line, not a letter we score. RED **only** if the plan
-   invents a second convention (colocate on a `tests/` house,
-   or distant `tests/` on a colocated house). Example of
-   inventing: `src/Location/Provider/` + classes against a
-   `tests/` + function-module house. Do **not** fail
-   house-style `tests/` or flat `src` on an existing-repo
-   prompt.
+   OO. RED **only** if the plan invents a second convention
+   (colocate on a `tests/` house, or distant `tests/` on a
+   colocated house). Example of inventing: `src/Port/Provider/`
+   + classes against a `tests/` + function-module house. Do
+   **not** fail house-style `tests/` or flat `src` on an
+   existing-repo prompt.
    **Greenfield / no house → colocate by cut:** capability
    folder first, port + first impl together, tests beside the
    file they cover. Not a distant `tests/` tree. Not a mandatory
    `domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
-   `src/*.ts` dump. Do **not** score a weather Location tree as
-   the only GREEN. Acceptable greenfield nests (do not require
-   one spelling): `src/<Capability>/Provider/`,
-   `src/<Capability>/<CapabilityProvider>/`,
-   `src/<CapabilityProvider>/`. Illustrations (not a fixture
-   list): `src/DevicePosition/Provider/…` next to
-   `src/Charge/Provider/…`. Existing-repo illustration:
-   `lib/geo/…` + `tests/geo/…` — match that house. Same shape
-   for each cut on greenfield. Scaffold
-   (`package.json`, `vite.config`, `index.html`) can sit at the
-   page cut / composition PR. Before the stacked-PR list.
+   `src/*.ts` dump. Acceptable greenfield nests (do not require
+   one spelling; invented generic names): `src/Port/Provider/`,
+   `src/Port/PortProvider/`, `src/PortProvider/`. Existing
+   repo → match `lib/` + `tests/` + function-modules (or
+   whatever tree is on disk). Same shape for each cut on
+   greenfield.
+
+   **Named types** and **in-cut errors:** if In, a cut, or
+   this File map names a non-primitive, that name exists as
+   a class, type, interface, or enum in the **owning cut**.
+   Each cut’s error note includes an in-cut error type (or
+   enum), not an `errors/` folder. Greenfield colocate;
+   house still wins if the repo already has `errors/`.
+   Primitive / array / tuple of primitives do not spawn a
+   type.
+
+   Scaffold (`package.json`, `vite.config`, `index.html`) can
+   sit at the page cut / composition PR. Before the stacked-PR
+   list.
 3. **Stacked PRs** — one PR per **cut** from the design: that
    interface + impl + tests + mock/test impl for dependents. Each PR
    **names the files it touches**. Name the GitHub stacked-PR
    workflow as the standard, not as inventory.
 4. **Close** — cheap self-review (no TBD; file-map paths match the
-   PRs; names match the design cuts; colocate by cut when
-   greenfield; follow the house when a tree already exists;
-   synonym job names), then hand back. Do not implement. Do
-   not resize.
+   PRs; names match the design cuts; named types and in-cut
+   error types sit with the cut on greenfield; house still
+   wins if the repo already has `errors/`; colocate by cut
+   when greenfield; follow the house when a tree already
+   exists), then hand back. Do not implement. Do not resize.
 
 ## Rationalizations
 
@@ -102,19 +108,19 @@ from scratch.
 | “Writing-plans uses 2–5 minute TDD steps” | This leaf’s unit is a stacked PR + File map, not a code novel. |
 | “I’ll fold the API spike into the first production PR” | Spike stays a `shape-task`. List it first, with options. |
 | “Stacked PRs imply the paths” | Emit a File map with exact paths first. |
-| “Spike is ‘which weather API’” | Carry options + impact from Open decisions. |
+| “Spike is ‘which vendor/API’” | Carry options + impact from Open decisions. |
 | “They named a vendor and said plan, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. If it would not, this leaf — even with no design yet. |
 | “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. Derive cuts the same way `write-design` would. |
 | “Three providers means this is an epic — I’ll re-size” | Do not change grain. |
-| “The dump said LocationProvider, so that is PR 1” | Use this design’s cuts. Names are not a fixture list. |
+| “The dump named a class, so that is PR 1” | Use this design’s cuts. Names are not a fixture list. |
 | “src/*.ts is simpler” | Greenfield: fail a flat dump. Existing flat-src house: match it. |
-| “Score the Location tree” | That is one weather illustration. Charge (and synonyms) must also pass. |
-| “GREEN requires LocationProvider paths” | Synonym capability folders GREEN. That token as the only pass is RED. |
 | “Tests live in tests/” | Greenfield: tests sit next to the file. Existing repo: match the house. Do not fail `tests/` when that is the house. |
 | “Colocate-by-cut always wins” | Only when there is no house. Colocate on a `tests/` house, or distant `tests/` on a colocated house, is a second convention. |
 | “domain/ports/adapters/views is the SOLID tree” | Not the only legal tree. Greenfield: colocate by cut. House: match the house. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
-| “I’ll add the 10-day slice so the stack is complete” | Out stays Out. |
+| “I’ll put all failures in errors/” | Greenfield colocate. House still wins if the repo already has `errors/`. |
+| “Named types are implied by the cut” | If the File map names it, it exists in the owning cut. |
+| “I’ll add the later-feature so the stack is complete” | Out stays Out. |
 | “The plan is obvious, so I’ll start the first PR” | Hand back. New message to implement. |
 | “They said spec this then build” | Finish the named leaf. Do not build. |
 
@@ -122,7 +128,7 @@ from scratch.
 
 - 2–5 minute step list / code novel as the contract
 - Spike swallowed into a production PR
-- Spike that only says “pick a weather API” (no options / no impact)
+- Spike that only says “pick a vendor/API” (no options / no impact)
 - Stacked PRs and no paths
 - File map is a flat `src/*.ts` dump with every cut in one directory
   (greenfield / no house)
@@ -132,8 +138,11 @@ from scratch.
   house)
 - File map is one dump folder that mixes every cut (mixed-cut
   map)
-- File map that requires the weather Location tree or
-  `LocationProvider` paths as the only pass
+- File map puts owned error types in `errors/` (greenfield /
+  no house, and the house does not already use `errors/`)
+- File map names a non-primitive with no class / type /
+  interface / enum in the owning cut
+- File map omits an in-cut error type (or enum)
 - File map invents a second convention on an existing-repo
   prompt (colocate on a `tests/` house, or distant `tests/`
   on a colocated house)
