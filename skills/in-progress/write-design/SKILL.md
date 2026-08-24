@@ -63,8 +63,8 @@ Agent check. Fix inline. Do not re-emit this list in the design.
    what it depends on, plus an error note with an in-cut type and
    how it is tested.
 4. **Job names** — interface + first impl name the job.
-5. **Mentioned types** — a name in In / a cut / the File map exists
-   in the owning cut. Do not invent extra types.
+5. **Mentioned types** — a name in In or a cut exists in the
+   owning cut. Do not invent extra types. File map is `write-plan`.
 6. **Coverage** — cuts cover the sized outcome. If a cut is not
    split (not thin), write why.
 

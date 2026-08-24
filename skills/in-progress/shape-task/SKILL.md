@@ -47,10 +47,10 @@ Use when the router passed `flavor: spike`, or the description is a spike / sing
 5. **Done when** — written answer, options considered, and a recommendation (not “code shipped”)
 6. **Out of scope** — no production feature work inside the spike
 7. **Approach sketch** — how you’ll learn (read code/docs, spike branch, prototype) — bullets only
-8. **Close** — **Terminal:** hand back. After a vendor / API spike, next is
-   `write-design` / `write-plan`, or re-run `write-spec` if the pick
-   would stale Outcome / In / Out or grain. Do **not** offer
-   Superpowers writing-plans. Do **not** offer “implement the
+8. **Close** — **Terminal:** hand back. Follow
+   [../specify-work/kinds.md](../specify-work/kinds.md) **After a
+   spike pick** for the next named leaf; do not invoke it. Do **not**
+   offer Superpowers writing-plans. Do **not** offer “implement the
    feature” as the default close. If they named a sink, publish per
    Outcomes.
 
@@ -78,4 +78,4 @@ Say so. Still produce the brief from the description. Do not invent a codebase t
 - Charting a multi-question research map here instead of handing off
 - Treating spike “done when” as shipped production code
 - Offering Superpowers writing-plans as the next step
-- After a vendor spike, skipping `write-design` / `write-plan` (or `write-spec` when the pick would stale In/Out)
+- After a vendor spike, skipping kinds.md **After a spike pick** (or invoking the next leaf)

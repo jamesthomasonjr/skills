@@ -51,7 +51,9 @@ Agent check. Fix inline. Do not re-emit this list.
 3. **Spike** — open vendor / API is a `shape-task`, not a production story.
 4. **In/Out** — Out stays out of inventory and off the path.
 5. **Path** — after the inventory; follows paths.md.
-6. **Close** — announces next; does not invoke `write-design` or Superpowers.
+6. **Close** — after a write-spec blob, announce `write-design` and
+   stop; otherwise ask which story to deepen. Do not invoke
+   `write-design` or Superpowers.
 
 ## Rationalizations
 
