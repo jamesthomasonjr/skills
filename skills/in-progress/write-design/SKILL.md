@@ -56,12 +56,11 @@ the class-design job. The user does not have to list classes.
    a grab bag of helpers. Names **the job**: a reader with only the
    file map must know what the cut does. Role + adapter is fine.
    TypeScript-style is fine. Do not use poetry or cute one-word
-   names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`,
-   `Gold`). If an existing repo already names the job (functions
-   or types), follow those house names. Do not invent a class
-   / Provider family against a function-module house. A user
-   class list remains a hint. Do not pull Out in to “prove”
-   error paths.
+   names that do not name the job. If an existing repo already
+   names the job (functions or types), follow those house names.
+   Do not invent a class / Provider family against a
+   function-module house. A user class list remains a hint.
+   Do not pull Out in to “prove” error paths.
 
    **Named types:** If In, a cut, or the File map names a
    non-primitive collaborator or data type, that name must
@@ -91,7 +90,7 @@ outcome. If a cut is not split (not thin), write why.
 |---|---|
 | “They didn’t list classes, so I cannot design” | Derive cuts from the sized work. |
 | “They dumped a class list, so that is the design” | Hint only. Derive from the sized outcome. |
-| “Here / Place / TodayBoard is shorter” | Fail cute one-word / poetry names. Name the job. |
+| “A one-word name is shorter” | Fail cute one-word / poetry names. Name the job. |
 | “That dump token is the SOLID name” | Follow the house. Function modules stay functions. |
 | “They dumped classes first, so start there” | No grain. Point at `write-spec` → `size-work`. |
 | “Design this — no grain, but they didn’t list classes” | Still no grain. Stop. |
