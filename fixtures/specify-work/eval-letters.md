@@ -11,6 +11,12 @@ the parked card in `weather-eval.md`, `charge-eval.md`, or
 `house-eval.md`. Ban: `docs/superpowers/**`. Not a third
 scorer for the 8am Charge-C/D scan.
 
+**mentioned-types** and **in-cut-errors** work on weather
+and charge. They are **not** 8am Charge-C/D scan ids. Do
+not add them to that scan. Charge-C/D stay charge novels
+(job names + colocate). Synonym family + weather-only-pass
++ Charge-C/D live in this file only.
+
 One leaf per turn. Before grain, mixed dump → `write-spec`. After
 grain, mixed dump → `write-design`. No grain → stop for design/plan.
 After a spike pick: stale → `write-spec` (wins over “design” /
@@ -27,8 +33,8 @@ product choices (vendor / API).
 | Leaf | New required section |
 |---|---|
 | `write-spec` | **Approaches** — 2–3 real alternatives, trade-offs, recommended pick. Pick includes stack (language / bundler / test runner / page vs framework) when the dump did not settle one. **Open decisions spike** — at least two real vendor/product options, each with short pros/cons, compare/contrast, and whether it would change MVP In/Out, grain, later cuts, auth, data shape, or tests. |
-| `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Interface + first impl **name the job** — synonym family, not one token. `${Location\|Position\|Coordinates\|similar}Provider` (or Client / Adapter / Gateway / Source) GREEN. Same weather dump: `DevicePosition` + `BrowserDevicePosition` GREEN. Requiring `LocationProvider` as the only accepted token RED. Charge dump: `CardCharger` + `StripeCardCharger` (or `PaymentClient` / `ChargeGateway` family) GREEN. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold`). Superpowers does not dictate type names. User class lists remain hints. |
-| `write-plan` (weather or charge) | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (the rule, not “the Location tree”): capability folder first, port + first impl together, tests next to the file. Acceptable nests: `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`. Weather synonyms (`src/DevicePosition/…`) and charge (`src/Charge/…` / `src/Payment/…`) both GREEN. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Fail requiring `LocationProvider` paths as the only pass. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. Greenfield weather/charge only — not `follow-house`. |
+| `write-design` | Every **cut** states error / failure states that cut owns, and how that cut is tested (faked vs real). Short notes, not test code. Each owned failure is also a **type** in that cut (see **in-cut-errors**). Interface + first impl **name the job** — synonym family, not one token. `${Location\|Position\|Coordinates\|similar}Provider` (or Client / Adapter / Gateway / Source) GREEN. Same weather dump: `DevicePosition` + `BrowserDevicePosition` GREEN. Requiring `LocationProvider` as the only accepted token RED. Charge dump: `CardCharger` + `StripeCardCharger` (or `PaymentClient` / `ChargeGateway` family) GREEN. Fail cute / poetry names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold`). Superpowers does not dictate type names. User class lists remain hints. **mentioned-types:** every mentioned non-primitive collaborator or data type exists as a class / type / interface in the owning cut. Weather and charge both. Do not require weather tokens on charge. Do not require the spelling `Receipt`. Do not require Money / Catalog. Catalog stays Out for charge. Money is not a required cut unless In names more than one currency. |
+| `write-plan` (weather or charge) | **File map** before the stacked-PR list: exact paths + responsibility, using this design’s cut names. **Colocate by cut** (the rule, not “the Location tree”): capability folder first, port + first impl together, tests next to the file. Acceptable nests: `Capability/Provider/`, `Capability/CapabilityProvider/`, `CapabilityProvider/`. Weather synonyms (`src/DevicePosition/…`) and charge (`src/Charge/…` / `src/Payment/…`) both GREEN. Mentioned types and in-cut error types appear in the **owning cut** folder. Fail a greenfield `errors/` directory. Each stacked PR names the files it touches. Spike first as `shape-task` **with the same option/impact list**, not a one-liner. Fail a flat `src/*.ts` dump with every cut in one directory. Fail requiring `domain/` / `ports/` / `adapters/` / `views/` as the only legal tree. Fail a distant `tests/` tree. Fail a mixed-cut dump folder. Fail requiring `LocationProvider` paths as the only pass. Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR. Greenfield weather/charge only — not `follow-house`. |
 | `write-plan` (existing repo) | **follow-house** (existing-repo novels only; not Charge-C/D). GREEN if the File map copies the repo’s existing test root, naming, and FP vs OO. RED only if it invents a second convention (colocate on a `tests/` house, or distant `tests/` on a colocated house). Do not score Superpowers File map. Charge-C/D and weather-only-pass stay greenfield. |
 
 ### follow-house (existing-repo novels only)
@@ -69,6 +75,8 @@ were not in this file’s GREEN/RED tables.
 | **demote-ladder** | `write-spec`; agent wants to skip the weather-API spike | Spike stays, **or** demote names the default **and** why later cuts would not change | Demoted / silent / Approaches-default without that pair |
 | **silent-only-forced** | `write-spec`; dump did not force a stack | Stack compared or explained. Silent only if the dump already forced the stack (or only one legal option). | Silent on stack while inferring a weather spike |
 | **sibling-from-open-path** | Router handoff to a leaf | Read `../write-*/SKILL.md` from **this** `SKILL.md`’s directory, or from the path used to open it | Cwd-only `skills/in-progress/...` after a symlink / plugin copy, then stopped |
+| **mentioned-types** | `write-design` after grain, **weather or charge** dump | Every mentioned non-primitive collaborator or data type exists as a class / type / interface in the owning cut (TypeScript type/interface is enough for a DTO with no behavior). Not a new cut unless it has interface + first impl + error/test notes. File map lists it. Synonym names GREEN. Do not require weather tokens on charge. Do not require the spelling `Receipt`. Catalog stays Out for charge. Money is not a required cut unless In names more than one currency. | Charge What/In names a receipt and there is no receipt-or-synonym type. Weather What/In names today’s weather / the user’s location as a thing and there is no type. A mentioned collaborator exists only as prose. |
+| **in-cut-errors** | `write-design` / `write-plan` after grain, **weather or charge** dump | Each owned failure is a type (class / type / interface) **inside that cut’s folder**. Greenfield: type lives with the cut. Existing repo: follow-house. Synonym failure names GREEN (denied / failed-fetch / declined / processor-failed). Not `ChargeDeclined` as the only token. | Error notes with no error type. Greenfield File map puts error types in `errors/`. |
 
 ## Still-hold baselines (do not split scorers)
 
@@ -113,6 +121,9 @@ do not diverge on these ids:
 | **demote-without-ladder** | `write-spec` | Weather API demoted / silent / Approaches-default without a named default **and** why later cuts would not change |
 | **silent-stack-unforced** | `write-spec`; dump did not force a stack | Silent on stack while inferring a weather spike |
 | **cwd-sibling-miss** | Router handoff after a symlink / plugin copy | Cwd-only `skills/in-progress/...` Read, then stopped; did not resolve from the open `SKILL.md` path |
+| **omit-mentioned-type** | `write-design` after grain, **weather or charge** dump | A mentioned non-primitive has no class / type / interface in the owning cut. Charge: receipt named in What/In, no receipt-or-synonym type. Weather: today’s weather / location named as a thing, no type. Do not require weather tokens on charge. Do not require the spelling `Receipt`. Do not fail missing Money / Catalog (Catalog is Out; Money only if In names more than one currency). |
+| **omit-error-type** | `write-design` after grain, **weather or charge** dump | A cut has an error / failure **note** and no error **type** (class / type / interface). Synonym job names; not `ChargeDeclined` as the only token. |
+| **errors-dir-greenfield** | `write-plan` after grain + a design, **weather or charge** (greenfield) | File map puts owned error types in an `errors/` directory. Greenfield weather/charge only. Do **not** fail a house that already uses `errors/` (`follow-house`). |
 
 ## GREEN A — write-spec (before grain, mixed dump)
 
@@ -140,9 +151,12 @@ Score the **rule**, not the weather spelling.
   `ComposeToday`). Fail cute one-word cuts.
 - Superpowers does not dictate type names. User class lists
   remain hints.
-- Every cut also has an **error / failure** note and a **test**
-  note (faked vs real). Notes are short. Out items are seams
-  only. No resize.
+- Every cut also has an **error / failure** note, an **error
+  type** in that cut, and a **test** note (faked vs real).
+  Notes are short. Out items are seams only. No resize.
+- **mentioned-types:** What/In names today’s weather / the
+  user’s location as things → those exist as types in the
+  owning cuts (synonym family). Do not require one spelling.
 
 ## GREEN D — write-plan (after grain, weather dump)
 
@@ -159,12 +173,13 @@ Score the **rule**, not the weather Location tree.
 - Scaffold (`package.json`, `vite.config`, `index.html`) may sit at the page cut / composition PR, not inside every port folder.
 - Each stacked PR names the files it touches.
 - File-map paths match the PRs. No TBD. No 2–5 minute code novel.
+- Mentioned types and in-cut error types sit in the owning
+  cut folder. RED: greenfield `errors/` directory.
 - After-pick / Approaches ≠ spike / error+test notes unchanged.
 
 ## GREEN Charge-C — write-design (after grain, charge dump)
 
-Different domain, same letters. If weather Location is the only
-pass, the letter does not scale.
+Charge novel. Job names + colocate stay here.
 
 - Input: `charge-dump.md`. Do not open `charge-eval.md`,
   `weather-eval.md`, or this file.
@@ -174,10 +189,13 @@ pass, the letter does not scale.
   `PaymentClient` + `StripePaymentClient`, `ChargeGateway` +
   `BraintreeChargeGateway`, or equivalent synonym family.
 - RED: cute names (`Till`, `Gold`, `TodayTill`,
-  `ComposeCharge`). RED: requiring weather `LocationProvider`
-  (or the weather Location tree) as the pass.
+  `ComposeCharge`).
+- **mentioned-types** / **in-cut-errors** are separate ids
+  (not 8am).
 
 ## GREEN Charge-D — write-plan (after grain, charge dump)
+
+Charge novel.
 
 - Spike first (which payment processor) with real options +
   impact. Not a one-liner. Not swallowed.
@@ -186,9 +204,48 @@ pass, the letter does not scale.
 - GREEN: `src/Charge/…`, `src/Payment/…`, or
   `src/ChargeGateway/…` using any of the three accepted nests.
 - RED: flat `src/*.ts` with every cut in one directory.
-- RED: requiring the weather Location tree as the only pass.
 - No TBD. No 2–5 minute code novel. Scaffold at the page /
   composition cut.
+- **mentioned-types** / **in-cut-errors** are separate ids
+  (not 8am).
+
+## GREEN mentioned-types — write-design (weather or charge)
+
+Stable id: **mentioned-types**. Not an 8am Charge-C/D
+scan id. Works on weather **and** charge. Do not require
+weather tokens on charge.
+
+- After grain. Leaf: `write-design`.
+- If What / In / a cut names a collaborator or data type
+  that is not a primitive / array / tuple / equivalent,
+  that thing exists as a class, type, or interface in the
+  **owning cut** (TypeScript type/interface is enough for
+  a DTO with no behavior). Not a new cut unless it has
+  interface + first impl + error/test notes.
+- Charge: What/In names a receipt → a receipt-or-synonym
+  type exists. Do **not** require the spelling `Receipt`.
+  Catalog stays Out. Money is not a required cut unless In
+  names more than one currency.
+- Weather: What/In names today’s weather / the user’s
+  location as things → those exist as types (synonym
+  family). Do not require one spelling.
+- write-plan File map lists those types in the owning cut.
+
+## GREEN in-cut-errors — write-design / write-plan (weather or charge)
+
+Stable id: **in-cut-errors**. Not an 8am Charge-C/D scan
+id. Works on weather **and** charge. Do not require
+weather tokens on charge.
+
+- After grain.
+- Each owned failure is a type inside that cut’s folder.
+  Greenfield: type lives with the cut. Existing repo:
+  follow-house (folder / naming / FP vs OO).
+- Synonym failure names GREEN (denied / failed-fetch /
+  declined / processor-failed). Not `ChargeDeclined` as
+  the only token.
+- Error notes still required. Notes without a type RED.
+- write-plan File map: greenfield `errors/` RED.
 
 ## GREEN follow-house — write-plan (after grain, existing repo)
 
@@ -364,6 +421,38 @@ Hole: no existing-repo predicate. Greenfield
 `distant-tests` / `flat-src-map` stay the right RED on
 weather/charge dumps. Do not score Superpowers File map.
 
+## RED-Y — omit-mentioned-type (pre-letter)
+
+Follow current `write-design` after grain. Weather or
+charge dump. Current letter: name the job; error **notes**;
+no mentioned-type slot.
+Expect: a charge design that names a receipt in What/In
+and never types it still GREEN. A weather design that
+names today’s weather / location as things and never types
+them still GREEN. Hole: mentioned non-primitives can stay
+prose. Do not require the spelling `Receipt`. Do not
+require Money / Catalog.
+
+## RED-Z — omit-error-type (pre-letter)
+
+Follow current `write-design` after grain. Weather or
+charge dump. Current letter: every cut owns an error
+**note**. No error **type**.
+Expect: declined / failed-fetch / denied notes with no
+class / type / interface still GREEN. Hole: notes without
+a type. Synonym job names; not `ChargeDeclined` as the
+only token.
+
+## RED-AA — errors-dir-greenfield (pre-letter)
+
+Follow current `write-plan` + File map after grain, using
+a design’s cuts, on a weather or charge dump (greenfield).
+Current letter: colocate-by-cut; no in-cut error-type
+rule.
+Expect: a File map that puts owned failures in `errors/`
+still GREEN. Hole: greenfield `errors/` is legal today.
+Do **not** fail a house that already uses `errors/`.
+
 ## GREEN observed (after the letters)
 
 Ban: `docs/superpowers/**`, `weather-eval.md`, `house-eval.md`,
@@ -453,3 +542,18 @@ this file. Fresh `generalPurpose` subagents.
 
 - Router reads `../write-*/SKILL.md` from this `SKILL.md`’s directory,
   or from the path used to open it. Still real — do not drop the prose.
+
+### mentioned-types
+
+- Weather or charge. Mentioned non-primitives exist as types
+  in the owning cut and on the File map. Charge receipt →
+  receipt-or-synonym type. Do not require the spelling
+  `Receipt`. Do not require weather tokens on charge. Do
+  not require Money / Catalog.
+
+### in-cut-errors
+
+- Weather or charge. Owned failures are types in the cut
+  folder (greenfield) or the house place. Error notes with
+  no type fail. Greenfield `errors/` fails. Synonym
+  failure names; not `ChargeDeclined` as the only token.

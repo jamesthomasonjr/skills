@@ -54,49 +54,62 @@ the class-design job. The user does not have to list classes.
    (what is faked vs real). Short notes, not test code, not a plan,
    not stories. Current inventory only. Well-defined SOLID cuts, not
    a grab bag of helpers. Names **the job**: a reader with only the
-   file map must know what the cut does. Accept **synonym** job
-   names, not one token — `${Location|Position|Coordinates|similar}Provider`
-   (or Client / Adapter / Gateway / Source). Same idea for the
-   other cuts and for a different domain. Examples (not a fixture
-   list): `DevicePosition` + `BrowserDevicePosition` (weather);
-   `CardCharger` + `StripeCardCharger` (charge). Role + adapter is
-   fine. TypeScript-style is fine. Do not use poetry or cute
-   one-word names (`Here`, `Place`, `TodayBoard`, `ComposeToday`,
-   `Till`, `Gold`). Requiring `LocationProvider` as the only
-   accepted token is RED. Superpowers does not dictate type
-   names. If an existing repo already names the job (functions
+   file map must know what the cut does. Role + adapter is fine.
+   TypeScript-style is fine. Do not use poetry or cute one-word
+   names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`,
+   `Gold`). If an existing repo already names the job (functions
    or types), follow those house names. Do not invent a class
    / Provider family against a function-module house. A user
    class list remains a hint. Do not pull Out in to “prove”
    error paths.
+
+   **Mentioned types:** If a cut or type names another
+   collaborator or data type that is not a primitive / array /
+   tuple / equivalent, that thing exists as a class, type, or
+   interface (language-appropriate: a TypeScript type or
+   interface is enough for a DTO with no behavior). Put it in
+   the **owning cut** as a type, not a new cut, unless it has
+   interface + first impl + error/test notes. Include it in
+   these cuts. Do not invent extra domain types the In does
+   not name.
+
+   **Error types:** Each owned failure is a type (class / type
+   / interface) **inside that cut’s folder**, plus the error
+   note. Not an `errors/` directory unless follow-house says
+   the repo already uses `errors/`. Greenfield → the type
+   lives with the cut. Existing repo → follow-house for
+   folder, naming, and FP vs OO.
 4. **Later-feature seams** — how Out work would widen a cut (thin now,
    fat adapter later). Notes, **not** inventory. Do not pull Out into
    inventory to “prove” ISP.
 5. **Close** — hand back. Do not write the plan. Do not resize.
 
 Every cut has an interface, a first implementation, an error note,
-and a test note. Interface + first impl name the job. Cuts must
-cover the sized outcome. If a cut is not split (not thin), write
-why.
+an error type, and a test note. Interface + first impl name the
+job. Cuts must cover the sized outcome. If a cut is not split
+(not thin), write why.
 
 ## Rationalizations
 
 | Excuse | Reality |
 |---|---|
 | “They didn’t list classes, so I cannot design” | Derive cuts from the sized work. |
-| “They dumped LocationProvider, so that is the design” | Hint only. Derive from the sized outcome. |
+| “They dumped a class list, so that is the design” | Hint only. Derive from the sized outcome. |
 | “Here / Place / TodayBoard is shorter” | Fail cute one-word / poetry names. Name the job. |
-| “GREEN requires LocationProvider exactly” | Synonyms GREEN (`DevicePosition`, `CardCharger`, …). That token as the only pass is RED. |
-| “LocationProvider is the SOLID name” | Follow the house. Function modules stay functions. |
+| “That dump token is the SOLID name” | Follow the house. Function modules stay functions. |
 | “They dumped classes first, so start there” | No grain. Point at `write-spec` → `size-work`. |
 | “Design this — no grain, but they didn’t list classes” | Still no grain. Stop. |
-| “I’ll add the 10-day story so the ISP seam is real” | Seams are notes. Out stays Out. |
+| “I’ll add the later-feature so the ISP seam is real” | Seams are notes. Out stays Out. |
 | “This should be an epic now that we have three cuts” | Do not resize. Cuts are not children. |
 | “I’ll write the stacked-PR plan while the types are fresh” | New message. This leaf is design. |
 | “They named a vendor and said design, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. If they said “plan this” and the pick is not stale, that is `write-plan`. |
 | “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. |
-| “Errors wait for the class list / the plan” | Every cut owns an error note and a test note now. |
-| “I’ll pull 10-day in so the failed-fetch path is real” | Out stays Out. Error notes are not stories. |
+| “Errors wait for the class list / the plan” | Every cut owns an error note, an error type, and a test note now. |
+| “The note is enough; the type waits for impl” | The cut owns the type now. |
+| “I’ll put all failures in errors/” | Greenfield: type lives with the cut. House: follow-house. |
+| “It’s just a string on the page” | If What/In names it as a thing, type it in the owning cut. |
+| “I’ll invent extra domain types to be complete” | Type what In names. Do not invent the rest. |
+| “I’ll pull the later-feature in so the failed-fetch path is real” | Out stays Out. Error notes are not stories. |
 
 ## Failures
 
@@ -104,12 +117,15 @@ why.
 - Designing before grain (plain “design this” or a class dump)
 - Cuts without an interface + first impl
 - Cute / poetry / one-word cut names that do not name the job
-- Requiring `LocationProvider` or any Superpowers dump string as the only accepted token
 - Inventing class / Provider names against an existing function-module house
 - A cut with interface + impl but no error note and no test note
+- Error notes with no error type in that cut
+- A mentioned non-primitive collaborator or data type with no
+  class / type / interface in the owning cut
+- Error types in an `errors/` directory on greenfield
 - Designing after a pick that would change In/Out or grain
 - Taking a non-stale “plan this” because no design exists yet
-- Adding Out items (multi-day, URL-query) to inventory
+- Adding Out items to inventory
 - Resizing or writing Path
 - Implementation plan or 2–5 minute steps
 - Class list treated as size-work inventory
