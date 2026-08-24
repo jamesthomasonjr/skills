@@ -37,13 +37,12 @@ One determining child → a one-item path.
 
 Do **not** pad-to-one (add a dummy so the path is one). Do **not**
 drop-to-one (drop determining titles so the path is one). Those
-recreate an old parked-card Path. There is no count floor.
+recreate an old Path. There is no count floor.
 
-If five user-perceivable inventory titles all determine done
-(example: today’s weather for my location), Critical path lists
-those five titles. Omit only titles that do **not** determine done.
-Out items (multi-day / URL-query) are not in the inventory and stay
-off the path.
+If five user-perceivable inventory titles all determine done,
+Critical path lists those five titles. Omit only titles that do
+**not** determine done. Out items are not in the inventory and
+stay off the path.
 
 Matching priority order is **fine when that is the sequence**.
 
@@ -67,16 +66,16 @@ Independence test — fail **any** one and they are not parallel:
 - Shared file (including a migration)
 - Shared contract (type, schema, API, event shape)
 - Open decision (“what does X mean”), including an open vendor /
-  API pick (which weather service)
+  API pick
 
 Write exactly `None` when nothing passes. `None` is success. Inventing
 a set to look useful is the defect.
 
 While a vendor / API decision that later cuts depend on is still
 open, Parallel is **`None`**. Do not invent independent story
-workstreams around an unsettled weather API.
+workstreams around an unsettled vendor / API.
 
-Stories that share the weather API contract or one page also fail
+Stories that share a vendor / API contract or one page also fail
 independence. Parallel is **`None`**. That is not a one-story Path.
 
 Do not dispatch agents from a set. `next-work` / `handoff-work` / the
@@ -120,15 +119,15 @@ this same three-part block. Do not grow a review-brief skill.
 | Excuse | Reality |
 |---|---|
 | “They look like separate workstreams” | Shared migration, type, or meaning → path, not Parallel. |
-| “Stories can start while we pick the weather API” | Open vendor / API is an open decision. Parallel is `None`. |
+| “Stories can start while we pick the vendor / API” | Open vendor / API is an open decision. Parallel is `None`. |
 | “None looks like I didn't try” | `None` is the correct pass. Inventing a set is the miss. |
 | “Priority already sequences them” | Matching priority is fine when that is the sequence. Copy it only then. |
 | “Every child on the path is a miss” | If every child determines done, list them. Parallel `None` may follow. |
 | “I'll drop one to stay at five” | Do not drop a required child. There is no count cap. |
 | “I'll add a second so the path is at least two” | One determining child is a one-item path. Do not pad. |
-| “The parked card was one story / Parallel None, so Path is one title” | Parallel `None` is the coupling. If five titles determine done, list five. |
+| “The old Path was one story / Parallel None, so Path is one title” | Parallel `None` is the coupling. If five titles determine done, list five. |
 | “I'll add a dummy so the path is one” | pad-to-one is a fail. No count floor. |
-| “I'll keep one title so it matches the old card” | drop-to-one is a fail. Omit only non-determining titles. |
+| “I'll keep one title so it matches the old Path” | drop-to-one is a fail. Omit only non-determining titles. |
 | “Not every child means drop one” | Omit only children that do not determine done. |
 | “I'll reorder the inventory so the path is obvious” | Leave inventory order. Put sequence under Path. |
 | “I'll launch agents for the Parallel sets” | This family does not dispatch. Hand back. |
@@ -145,7 +144,7 @@ this same three-part block. Do not grow a review-brief skill.
 - Padding the path with a non-determining child to reach a minimum count
 - pad-to-one: add a dummy so Critical path is one title
 - drop-to-one: drop determining titles so Critical path is one title
-- Weather GREEN Path that is one title / Parallel None because the old parked card said so
+- Path that is one title / Parallel None because an old Path said so
 - Reshuffling a path that already matches priority
 - Inventory priority rewritten to match Path
 - Path buried in Constraints, or placed after Open questions / Close

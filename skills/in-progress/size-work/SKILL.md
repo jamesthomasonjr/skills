@@ -32,7 +32,7 @@ Use [levels.md](levels.md). Explicit labels from the user win.
 |---|---|
 | Multi-outcome theme, platform bet, year/quarter, several pillars | `shape-initiative` |
 | Coherent multi-capability outcome; “epic” | `shape-epic` |
-| One **user-perceivable** capability; “feature”; “add X to the product”; a write-spec blob (today’s weather here; later features Out; standards as labels; vendor still a spike) | `shape-feature` (not epic — SOLID / “three cuts” do not bump) |
+| One **user-perceivable** capability; “feature”; “add X to the product”; a write-spec blob (one user-perceivable outcome; later features Out; standards as labels; vendor still a spike) | `shape-feature` (not epic — SOLID / “three cuts” do not bump) |
 | As a / I want / so that; one journey; “story”; user-framed bug fix **with a known locus** | `shape-story` |
 | Chore / cleanup / tech debt; rename / migrate / wire CI / “add a retry\|index\|log\|guard”; known bug/flake with clear locus **and no As-a framing**; spike with **one clear decision question** (time box optional) | `shape-task` |
 | Vague / intermittent with **no** actionable locus (“something’s broken,” “flaky sometimes” alone) | **Stop** — hand off to diagnosing/triage; do not shape |
@@ -83,10 +83,10 @@ Then follow that shape skill. Do not keep a second shaping procedure here.
 - Restating the paths.md hard-rule list here
 - Dispatching agents because Parallel might exist
 - Epic because SOLID, ISP, stacked PRs, or a later cut count
-- `LocationProvider` / class / provider as a story
+- Class / provider name as a story
 - Failing a 3–9 / five-story feature inventory as over-split
-- Swallowing the weather API spike into a production story
+- Swallowing an open vendor/API spike into a production story
 - Handing off to Superpowers brainstorming or writing-plans after a write-spec blob
-- Weather Path of one title to match the old parked card (pad-to-one or drop-to-one)
-- Ask-once a weather write-spec blob into a single story to shrink Path
+- pad-to-one or drop-to-one to match an old Path
+- Ask-once a write-spec blob into a single story to shrink Path
 - Announcing `write-design` after `shape-story` (story branch next is `write-spec`)

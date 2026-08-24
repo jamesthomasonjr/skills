@@ -70,7 +70,7 @@ Recommend one in a single sentence, ask once, then stop until they
 answer — unless they already said “just pick,” in which case pick
 the larger level and proceed.
 
-A write-spec weather blob (today’s weather here; later features Out)
+A write-spec blob (one user-perceivable outcome; later features Out)
 is **feature**. Do not ask-once into a single story to shrink Path.
 If a genuine ask-once lands on story, that leaf’s next is
 `write-spec` on the story — not `write-design`. See **After a
@@ -92,7 +92,7 @@ by default. Largest fit. It is **not** an epic.
 
 Ask-once (`shape-story`) only when feature and story both
 **genuinely** fit. Do not ask-once into a single story to shrink
-Path. A weather blob remains **feature**.
+Path. A write-spec blob remains **feature**.
 
 **Next leaf follows the shape that ran.** Announce. Do not invoke.
 Do not hand off to Superpowers brainstorming or writing-plans.
@@ -110,10 +110,9 @@ Standards (SOLID, ISP, stacked PRs) and a later cut count (“three
 cuts”) **never** bump grain. They are not capabilities and not
 inventory children.
 
-Class / provider / interface names (`LocationProvider`,
-`WeatherSource`, …) are **not** stories, features, or tasks. Those
-are `write-design` cuts after grain. Listing one as an inventory
-child is a fail.
+Class / provider / interface names are **not** stories, features,
+or tasks. Those are `write-design` cuts after grain. Listing one
+as an inventory child is a fail.
 
 `shape-feature` inventory stays **3–9** user stories. Five is in
 band. Do not fail five as over-split. Do not add a “one user-story
@@ -121,15 +120,14 @@ child” rule.
 
 Path follows [paths.md](paths.md): every determining inventory
 title, no count floor. If five user-perceivable stories all
-determine today’s weather for my location, Critical path lists
-those titles. Out (multi-day / URL-query) stays out of inventory
-and off the path. Parallel `None` if they share the weather API
-contract or one page — that is **not** a one-story Path. Do not
-pad-to-one or drop-to-one to match an old parked card.
+determine done, Critical path lists those titles. Out stays out
+of inventory and off the path. Parallel `None` if they share a
+vendor/API contract or one page — that is **not** a one-story
+Path. Do not pad-to-one or drop-to-one to match an old Path.
 
-An open vendor / API decision (which weather service) stays a
-separate `shape-task` (spike flavor) — a **decision brief**, not a
-production story, not swallowed into the feature inventory.
+An open vendor / API decision stays a separate `shape-task`
+(spike flavor) — a **decision brief**, not a production story,
+not swallowed into the feature inventory.
 
 ## Outcomes
 
