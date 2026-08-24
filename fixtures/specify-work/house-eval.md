@@ -6,9 +6,10 @@ Not a Charge-C/D scorer. Not a third 8am novel. Greenfield
 Charge-C/D and weather-only-pass stay on `charge-dump.md` /
 `weather-dump.md`.
 
-Existing tree: `house-repo/` — `lib/geo/` function modules,
-`tests/geo/` (distant from `lib/`), not classes, not
-`src/Location/Provider/`.
+Existing tree: `house-repo/` —
+`lib/geo/position.js` + `tests/geo/position.test.js`
+(function modules; `tests/` distant from `lib/`), not
+classes, not `src/Location/Provider/`.
 
 | Slot | Value |
 |---|---|

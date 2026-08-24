@@ -73,10 +73,10 @@ from scratch.
    `domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
    `src/*.ts` dump. Acceptable greenfield nests (do not require
    one spelling; invented generic names): `src/Port/Provider/`,
-   `src/Port/PortProvider/`, `src/PortProvider/`. Existing-repo
-   illustration:
-   `lib/geo/…` + `tests/geo/…` — match that house. Same shape
-   for each cut on greenfield.
+   `src/Port/PortProvider/`, `src/PortProvider/`. Existing
+   repo → match `lib/` + `tests/` + function-modules (or
+   whatever tree is on disk). Same shape for each cut on
+   greenfield.
 
    **Named types** and **in-cut errors:** if In, a cut, or
    this File map names a non-primitive, that name exists as

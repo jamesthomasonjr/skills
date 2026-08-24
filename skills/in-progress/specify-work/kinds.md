@@ -252,13 +252,9 @@ src/Port/Provider/Port.test.ts
 src/Port/Provider/FirstImpl.test.ts
 ```
 
-Existing-repo illustration (match that house; do not rewrite
-it to the greenfield nests):
-
-```
-lib/geo/position.js
-tests/geo/position.test.js
-```
+Existing repo → match `lib/` + `tests/` + function-modules
+(or whatever tree is on disk). Do not rewrite it to the
+greenfield nests.
 
 Same shape for each cut on greenfield. Job names on the types
 or functions, not `Here` / `Place` / `TodayBoard` / `Till` /

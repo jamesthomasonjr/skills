@@ -263,8 +263,9 @@ not score Superpowers File map.
   this file.
 - Grain exists (parked in `house-eval.md`). Leaf: `write-plan`.
 - **GREEN if** the File map copies the repo’s existing test
-  root, naming, and FP vs OO. This house: `tests/` root,
-  `lib/geo/` function modules (`getDevicePosition`).
+  root, naming, and FP vs OO. This house:
+  `lib/geo/position.js` + `tests/geo/position.test.js`
+  (`tests/` root, function modules, `getDevicePosition`).
 - **RED only if** it invents a second convention (colocate
   on a `tests/` house, or distant `tests/` on a colocated
   house). Example of inventing: `src/Location/Provider/` +
