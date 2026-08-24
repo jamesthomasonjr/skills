@@ -63,31 +63,29 @@ the class-design job. The user does not have to list classes.
    class list remains a hint. Do not pull Out in to “prove”
    error paths.
 
-   **Mentioned types:** If a cut or type names another
-   collaborator or data type that is not a primitive / array /
-   tuple / equivalent, that thing exists as a class, type, or
-   interface (language-appropriate: a TypeScript type or
-   interface is enough for a DTO with no behavior). Put it in
-   the **owning cut** as a type, not a new cut, unless it has
-   interface + first impl + error/test notes. Include it in
-   these cuts. Do not invent extra domain types the In does
-   not name.
+   **Named types:** If In, a cut, or the File map names a
+   non-primitive collaborator or data type, that name must
+   exist as a class, type, interface, or enum in the
+   **owning cut**. Language picks the shape (TS type is
+   fine for an anemic DTO). Primitive / array / tuple of
+   primitives do not spawn a type. Not a new cut unless it
+   has interface + first impl + error/test notes. Not the
+   name Receipt. Catalog stays out (we never named it).
+   Money stays out unless In says more than one currency.
 
-   **Error types:** Each owned failure is a type (class / type
-   / interface) **inside that cut’s folder**, plus the error
-   note. Not an `errors/` directory unless follow-house says
-   the repo already uses `errors/`. Greenfield → the type
-   lives with the cut. Existing repo → follow-house for
-   folder, naming, and FP vs OO.
+   **In-cut errors:** Each cut’s error note includes an
+   in-cut error type (or enum), not an `errors/` folder.
+   Greenfield colocate; house still wins if the repo
+   already has `errors/`.
 4. **Later-feature seams** — how Out work would widen a cut (thin now,
    fat adapter later). Notes, **not** inventory. Do not pull Out into
    inventory to “prove” ISP.
 5. **Close** — hand back. Do not write the plan. Do not resize.
 
-Every cut has an interface, a first implementation, an error note,
-an error type, and a test note. Interface + first impl name the
-job. Cuts must cover the sized outcome. If a cut is not split
-(not thin), write why.
+Every cut has an interface, a first implementation, an error note
+that includes an in-cut error type (or enum), and a test note.
+Interface + first impl name the job. Cuts must cover the sized
+outcome. If a cut is not split (not thin), write why.
 
 ## Rationalizations
 
@@ -104,11 +102,11 @@ job. Cuts must cover the sized outcome. If a cut is not split
 | “I’ll write the stacked-PR plan while the types are fresh” | New message. This leaf is design. |
 | “They named a vendor and said design, so proceed” | If the pick would change In/Out or grain, stop. Point at `write-spec` → `size-work`. If they said “plan this” and the pick is not stale, that is `write-plan`. |
 | “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. |
-| “Errors wait for the class list / the plan” | Every cut owns an error note, an error type, and a test note now. |
-| “The note is enough; the type waits for impl” | The cut owns the type now. |
-| “I’ll put all failures in errors/” | Greenfield: type lives with the cut. House: follow-house. |
-| “It’s just a string on the page” | If What/In names it as a thing, type it in the owning cut. |
-| “I’ll invent extra domain types to be complete” | Type what In names. Do not invent the rest. |
+| “Errors wait for the class list / the plan” | The error note includes an in-cut error type (or enum) now. |
+| “The note is enough; the type waits for impl” | The note includes the type. |
+| “I’ll put all failures in errors/” | Greenfield colocate. House still wins if the repo already has `errors/`. |
+| “It’s just a string on the page” | If In names it, it exists in the owning cut. |
+| “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Catalog stays out. Money stays out unless In says more than one currency. |
 | “I’ll pull the later-feature in so the failed-fetch path is real” | Out stays Out. Error notes are not stories. |
 
 ## Failures
@@ -119,10 +117,11 @@ job. Cuts must cover the sized outcome. If a cut is not split
 - Cute / poetry / one-word cut names that do not name the job
 - Inventing class / Provider names against an existing function-module house
 - A cut with interface + impl but no error note and no test note
-- Error notes with no error type in that cut
-- A mentioned non-primitive collaborator or data type with no
-  class / type / interface in the owning cut
-- Error types in an `errors/` directory on greenfield
+- Error notes that omit an in-cut error type (or enum)
+- A name in In / a cut / the File map with no class / type /
+  interface / enum in the owning cut
+- Error types in an `errors/` folder on greenfield when the
+  house does not already use `errors/`
 - Designing after a pick that would change In/Out or grain
 - Taking a non-stale “plan this” because no design exists yet
 - Adding Out items to inventory

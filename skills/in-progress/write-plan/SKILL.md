@@ -33,7 +33,7 @@ from scratch.
   not substitute a dump’s class names for this design’s names.
   If no design is in-thread, still plan one stacked PR per
   collaborator the sized outcome needs; derive those cuts the
-  same way `write-design` would (names the job; mentioned types
+  same way `write-design` would (names the job; named types
   and in-cut error types included).
 - Do **not** use a 2–5 minute step list as the contract.
 - A spike (open product/API decision) stays a separate `shape-task`.
@@ -78,10 +78,14 @@ from scratch.
    `lib/geo/…` + `tests/geo/…` — match that house. Same shape
    for each cut on greenfield.
 
-   **Mentioned types** and **error types** appear in the owning
-   cut (greenfield) or where the house already puts that kind of
-   type. Greenfield: not an `errors/` directory. Existing repo:
-   follow-house for folder, naming, and FP vs OO.
+   **Named types** and **in-cut errors:** if In, a cut, or
+   this File map names a non-primitive, that name exists as
+   a class, type, interface, or enum in the **owning cut**.
+   Each cut’s error note includes an in-cut error type (or
+   enum), not an `errors/` folder. Greenfield colocate;
+   house still wins if the repo already has `errors/`.
+   Primitive / array / tuple of primitives do not spawn a
+   type.
 
    Scaffold (`package.json`, `vite.config`, `index.html`) can
    sit at the page cut / composition PR. Before the stacked-PR
@@ -91,11 +95,11 @@ from scratch.
    **names the files it touches**. Name the GitHub stacked-PR
    workflow as the standard, not as inventory.
 4. **Close** — cheap self-review (no TBD; file-map paths match the
-   PRs; names match the design cuts; mentioned types and error
-   types sit with the cut on greenfield, or follow the house;
-   colocate by cut when greenfield; follow the house when a
-   tree already exists), then hand back. Do not implement. Do
-   not resize.
+   PRs; names match the design cuts; named types and in-cut
+   error types sit with the cut on greenfield; house still
+   wins if the repo already has `errors/`; colocate by cut
+   when greenfield; follow the house when a tree already
+   exists), then hand back. Do not implement. Do not resize.
 
 ## Rationalizations
 
@@ -114,8 +118,8 @@ from scratch.
 | “Colocate-by-cut always wins” | Only when there is no house. Colocate on a `tests/` house, or distant `tests/` on a colocated house, is a second convention. |
 | “domain/ports/adapters/views is the SOLID tree” | Not the only legal tree. Greenfield: colocate by cut. House: match the house. |
 | “Every port folder needs package.json” | Scaffold sits at the page cut / composition PR. |
-| “I’ll put all failures in errors/” | Greenfield: type lives with the cut. House: follow-house. |
-| “Mentioned types are implied by the cut” | File map lists them in the owning cut. |
+| “I’ll put all failures in errors/” | Greenfield colocate. House still wins if the repo already has `errors/`. |
+| “Named types are implied by the cut” | If the File map names it, it exists in the owning cut. |
 | “I’ll add the later-feature so the stack is complete” | Out stays Out. |
 | “The plan is obvious, so I’ll start the first PR” | Hand back. New message to implement. |
 | “They said spec this then build” | Finish the named leaf. Do not build. |
@@ -135,8 +139,10 @@ from scratch.
 - File map is one dump folder that mixes every cut (mixed-cut
   map)
 - File map puts owned error types in `errors/` (greenfield /
-  no house)
-- File map omits a mentioned type or in-cut error type
+  no house, and the house does not already use `errors/`)
+- File map names a non-primitive with no class / type /
+  interface / enum in the owning cut
+- File map omits an in-cut error type (or enum)
 - File map invents a second convention on an existing-repo
   prompt (colocate on a `tests/` house, or distant `tests/`
   on a colocated house)

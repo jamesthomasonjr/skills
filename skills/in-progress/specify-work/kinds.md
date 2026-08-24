@@ -43,17 +43,18 @@ grain” still requires grain; it is not a bypass. After grain,
 Every `write-design` cut states, as **short notes** (not test code,
 not a plan, not size-work stories):
 
-- **Error / failure** states that cut owns. Each owned failure
-  is a **type** (class / type / interface) **inside that cut’s
-  folder**, plus the note. Not an `errors/` directory unless
-  follow-house says the repo already uses `errors/`.
+- **Error / failure** states that cut owns. Each cut’s error
+  note includes an in-cut error type (or enum), not an
+  `errors/` folder. Greenfield colocate; house still wins if
+  the repo already has `errors/`.
 - **How that cut is tested** — what is faked vs real.
 
 Do not wait for a class list. Do not pull Out requirements in to
 “prove” error paths. Do not emit 2–5 minute steps.
 
 Failure: a cut has interface + first impl but no error note and
-no test note. Failure: error notes with no error type.
+no test note. Failure: an error note that omits an in-cut
+error type (or enum).
 
 Every cut’s **interface + first implementation** names the
 **job**. A reader who has only the file map — no design prose —
@@ -61,19 +62,15 @@ must know what the cut does.
 
 Role + adapter is fine. TypeScript-style is fine.
 
-**Mentioned types:** If a cut or type names another
-collaborator or data type that is not a primitive / array /
-tuple / equivalent, that thing exists as a class, type, or
-interface (language-appropriate: TypeScript type or interface
-is enough for a DTO with no behavior). Put it in the **owning
-cut** as a type, not a new cut, unless it has interface +
-first impl + error/test notes. Include it in the design cuts
-and in the File map. Do not invent extra domain types the In
-does not name.
-
-**Greenfield / no house →** the type lives with the cut.
-**Existing repo →** follow-house for folder, naming, and
-FP vs OO.
+**Named types:** If In, a cut, or the File map names a
+non-primitive collaborator or data type, that name must
+exist as a class, type, interface, or enum in the **owning
+cut**. Language picks the shape (TS type is fine for an
+anemic DTO). Primitive / array / tuple of primitives do not
+spawn a type. Not a new cut unless it has interface + first
+impl + error/test notes. Not the name Receipt. Catalog
+stays out (we never named it). Money stays out unless In
+says more than one currency.
 
 RED: poetry / vibe / cute one-word names (`Here`, `Place`,
 `TodayBoard`, `ComposeToday`, `Till`, `Gold`).
@@ -262,9 +259,13 @@ or functions, not `Here` / `Place` / `TodayBoard` / `Till` /
 `Gold`. Follow house type / function names when a tree
 already exists.
 
-**Mentioned types** and **error types** appear in the owning
-cut (greenfield) or where the house already puts that kind of
-type. Greenfield: not an `errors/` directory.
+**Named types** and **in-cut errors:** if In, a cut, or this
+File map names a non-primitive, that name exists as a class,
+type, interface, or enum in the **owning cut**. Each cut’s
+error note includes an in-cut error type (or enum), not an
+`errors/` folder. Greenfield colocate; house still wins if
+the repo already has `errors/`. Primitive / array / tuple
+of primitives do not spawn a type.
 
 RED (greenfield / no house): all cuts dumped in `src/*.ts`
 with every cut in one directory.
@@ -274,9 +275,12 @@ RED (greenfield / no house): requiring a distant `tests/`
 tree.
 RED (greenfield / no house): one dump folder that mixes
 every cut.
-RED (greenfield / no house): owned error types in `errors/`.
-RED (greenfield / no house): omitting a mentioned type or
-in-cut error type.
+RED (greenfield / no house): owned error types in `errors/`
+when the house does not already use `errors/`.
+RED (greenfield / no house): a named non-primitive with no
+class / type / interface / enum in the owning cut.
+RED (greenfield / no house): omitting an in-cut error type
+(or enum).
 RED (existing repo): inventing a second convention
 (colocate on a `tests/` house, or distant `tests/` on a
 colocated house).
@@ -296,8 +300,9 @@ Do not add bite-size TDD steps, complete test / impl code blocks,
 or an execution handoff.
 
 Cheap self-review: no TBD; file-map paths match the PRs;
-signatures / names match the design cuts; mentioned types
-and error types sit with the cut on greenfield; colocate by
+signatures / names match the design cuts; named types and
+in-cut error types sit with the cut on greenfield; house
+still wins if the repo already has `errors/`; colocate by
 cut when greenfield; **follow the house** when a tree
 already exists.
 
@@ -308,8 +313,11 @@ hexagonal `domain/ports/adapters/views` as the only legal
 tree. Failure (greenfield): distant `tests/` tree. Failure
 (greenfield): one dump folder that mixes every cut
 (mixed-cut map). Failure (greenfield): error types in
-`errors/`. Failure (greenfield): omitting a mentioned type
-or in-cut error type. Failure (existing repo): inventing a
+`errors/` when the house does not already use `errors/`.
+Failure (greenfield): a named non-primitive with no class /
+type / interface / enum in the owning cut. Failure
+(greenfield): omitting an in-cut error type (or enum).
+Failure (existing repo): inventing a
 second convention (colocate on a `tests/` house, or distant
 `tests/` on a colocated house).
 
@@ -360,11 +368,11 @@ is the unlabeled table only.
 | “Vendor settled and they said plan this, but there is no design yet, so write-design” | False when the pick is not stale. User label wins. `write-plan` derives cuts the same way `write-design` would. |
 | “The pick landed, so spec then size then design this turn” | One leaf. Do not auto-continue that loop. |
 | “Approaches picked a stack, so continue to design” | Close. Point at `size-work`. |
-| “Cuts have interface and impl; errors wait for the plan” | Every cut owns an error note, an error type, and a test note now. |
-| “The note is enough; the type waits for impl” | The cut owns the type now. |
-| “I’ll put all failures in errors/” | Greenfield: type lives with the cut. House: follow-house. |
-| “It’s just a string on the page” | If What/In names it as a thing, type it in the owning cut. |
-| “I’ll invent extra domain types to be complete” | Type what In names. Do not invent the rest. |
+| “Cuts have interface and impl; errors wait for the plan” | The error note includes an in-cut error type (or enum) now. |
+| “The note is enough; the type waits for impl” | The note includes the type. |
+| “I’ll put all failures in errors/” | Greenfield colocate. House still wins if the repo already has `errors/`. |
+| “It’s just a string on the page” | If In, a cut, or the File map names it, it exists in the owning cut. |
+| “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Catalog stays out. Money stays out unless In says more than one currency. |
 | “Stacked PRs imply the paths” | Emit a File map with exact paths before the PR list. |
 | “Writing-plans uses 2–5 minute TDD steps” | This family’s plan unit is a stacked PR + File map, not a code novel. |
 | “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |
@@ -391,16 +399,17 @@ is the unlabeled table only.
 - Non-stale pick + “plan this” taken as `write-design` because no design exists yet, or because the unlabeled table said “only cuts” / “next unfinished”
 - Auto-continuing the after-pick loop (spec → size → design) in one turn
 - A cut with interface + first impl but no error note and no test note
-- Error notes with no error type in that cut
-- A mentioned non-primitive collaborator or data type with no class / type / interface in the owning cut
+- Error notes that omit an in-cut error type (or enum)
+- A name in In / a cut / the File map with no class / type / interface / enum in the owning cut
 - Cute / poetry cut names (`Here`, `Place`, `TodayBoard`, `ComposeToday`, `Till`, `Gold` as the only names)
 - Plan with stacked PRs and no paths
 - File map is a flat `src/*.ts` dump with every cut in one directory (greenfield / no house)
 - File map requires `domain/` / `ports/` / `adapters/` / `views/` as the only tree (greenfield / no house)
 - File map requires a distant `tests/` tree (greenfield / no house)
 - File map is one dump folder that mixes every cut (mixed-cut map)
-- File map puts owned error types in `errors/` (greenfield / no house)
-- File map omits a mentioned type or in-cut error type
+- File map puts owned error types in `errors/` (greenfield / no house, and the house does not already use `errors/`)
+- File map names a non-primitive with no class / type / interface / enum in the owning cut
+- File map omits an in-cut error type (or enum)
 - File map invents a second convention on an existing-repo prompt (colocate on a `tests/` house, or distant `tests/` on a colocated house)
 - 2–5 minute step list / code novel as the plan contract
 - Aborting `write-spec` because a mixed dump mentioned classes
