@@ -69,9 +69,7 @@ the class-design job. The user does not have to list classes.
    **owning cut**. Language picks the shape (TS type is
    fine for an anemic DTO). Primitive / array / tuple of
    primitives do not spawn a type. Not a new cut unless it
-   has interface + first impl + error/test notes. Not the name Receipt.
-   Catalog stays out (we never named it). Money stays out
-   unless In says more than one currency.
+   has interface + first impl + error/test notes.
 
    **In-cut errors:** Each cut’s error note includes an
    in-cut error type (or enum), not an `errors/` folder.
@@ -106,7 +104,7 @@ outcome. If a cut is not split (not thin), write why.
 | “The note is enough; the type waits for impl” | The note includes the type. |
 | “I’ll put all failures in errors/” | Greenfield colocate. House still wins if the repo already has `errors/`. |
 | “It’s just a string on the page” | If In names it, it exists in the owning cut. |
-| “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Catalog stays out. Money stays out unless In says more than one currency. |
+| “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Type what In names. |
 | “I’ll pull the later-feature in so the failed-fetch path is real” | Out stays Out. Error notes are not stories. |
 
 ## Failures

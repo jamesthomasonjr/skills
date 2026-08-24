@@ -68,9 +68,7 @@ exist as a class, type, interface, or enum in the **owning
 cut**. Language picks the shape (TS type is fine for an
 anemic DTO). Primitive / array / tuple of primitives do not
 spawn a type. Not a new cut unless it has interface + first
-impl + error/test notes. Not the name Receipt. Catalog
-stays out (we never named it). Money stays out unless In
-says more than one currency.
+impl + error/test notes.
 
 RED: poetry / vibe / cute one-word names (`Here`, `Place`,
 `TodayBoard`, `ComposeToday`, `Till`, `Gold`).
@@ -229,7 +227,7 @@ the convention. GREEN if the File map copies the repo’s
 existing test root, naming, and FP vs OO. RED **only** if
 the plan invents a second convention (colocate on a
 `tests/` house, or distant `tests/` on a colocated house).
-Example of inventing: `src/<Capability>/Provider/` +
+Example of inventing: `src/Port/Provider/` +
 classes against a `tests/` + function-module house. Do
 **not** fail house-style `tests/` or flat `src` on an
 existing-repo prompt.
@@ -240,11 +238,19 @@ to the file they cover — not a distant `tests/` tree. Not a
 mandatory `domain/` / `ports/` / `adapters/` / `views/` tree.
 Not a flat `src/*.ts` dump.
 
-Do not require one nest spelling. Acceptable **on greenfield**:
+Do not require one nest spelling. Acceptable **on greenfield**
+(shape only — invented generic names, not a fixture list):
 
-- `src/<Capability>/Provider/`
-- `src/<Capability>/<CapabilityProvider>/`
-- `src/<CapabilityProvider>/`
+- `src/Port/Provider/`
+- `src/Port/PortProvider/`
+- `src/PortProvider/`
+
+```
+src/Port/Provider/Port.ts
+src/Port/Provider/FirstImpl.ts
+src/Port/Provider/Port.test.ts
+src/Port/Provider/FirstImpl.test.ts
+```
 
 Existing-repo illustration (match that house; do not rewrite
 it to the greenfield nests):
@@ -372,7 +378,7 @@ is the unlabeled table only.
 | “The note is enough; the type waits for impl” | The note includes the type. |
 | “I’ll put all failures in errors/” | Greenfield colocate. House still wins if the repo already has `errors/`. |
 | “It’s just a string on the page” | If In, a cut, or the File map names it, it exists in the owning cut. |
-| “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Catalog stays out. Money stays out unless In says more than one currency. |
+| “I’ll invent extra domain types to be complete” | Primitive / array / tuple of primitives do not spawn a type. Type what In names. |
 | “Stacked PRs imply the paths” | Emit a File map with exact paths before the PR list. |
 | “Writing-plans uses 2–5 minute TDD steps” | This family’s plan unit is a stacked PR + File map, not a code novel. |
 | “Here / Place is shorter” | Fail cute one-word cuts. Name the job. |

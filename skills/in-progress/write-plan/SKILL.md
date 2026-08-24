@@ -63,7 +63,7 @@ from scratch.
    copies the repo’s existing test root, naming, and FP vs
    OO. RED **only** if the plan invents a second convention
    (colocate on a `tests/` house, or distant `tests/` on a
-   colocated house). Example of inventing: `src/<Capability>/Provider/`
+   colocated house). Example of inventing: `src/Port/Provider/`
    + classes against a `tests/` + function-module house. Do
    **not** fail house-style `tests/` or flat `src` on an
    existing-repo prompt.
@@ -72,9 +72,9 @@ from scratch.
    file they cover. Not a distant `tests/` tree. Not a mandatory
    `domain/` / `ports/` / `adapters/` / `views/` tree. Not a flat
    `src/*.ts` dump. Acceptable greenfield nests (do not require
-   one spelling): `src/<Capability>/Provider/`,
-   `src/<Capability>/<CapabilityProvider>/`,
-   `src/<CapabilityProvider>/`. Existing-repo illustration:
+   one spelling; invented generic names): `src/Port/Provider/`,
+   `src/Port/PortProvider/`, `src/PortProvider/`. Existing-repo
+   illustration:
    `lib/geo/…` + `tests/geo/…` — match that house. Same shape
    for each cut on greenfield.
 
