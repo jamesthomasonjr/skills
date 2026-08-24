@@ -9,7 +9,7 @@ the only sizer scorecard, and it does not say “do not run size-work.”
 | Slot | Value |
 |---|---|
 | Grain | `shape-feature` (not epic). Do not ask-once into a single story to shrink Path. After `shape-feature`, next is `write-design` (then `write-plan`). Do not invoke. |
-| Inventory | 3–9 user stories (five OK). Fail epic. Fail class / provider children. Do **not** fail five as over-split. |
+| Inventory | Follows journeys / domains (five OK). Do not pad-to-N or merge-to-fit-N. Fail epic. Fail class / provider children. Do **not** fail five as over-split. |
 | Out | URL-query location; multi-day (3/7/10-day) forecast |
 | Path | Every determining inventory title. No count floor. If five user-perceivable stories all determine today’s weather for my location, list those five titles. Omit only titles that do not determine done. Out (multi-day / URL-query) stays out of inventory and off the path. **Not** the old parked Path (one story / Parallel None). |
 | Parallel | `None` if the stories share the weather API contract or one page (open vendor is one such shared decision). That is not a one-story Path. |

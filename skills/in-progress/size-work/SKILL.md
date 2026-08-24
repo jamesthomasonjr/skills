@@ -91,7 +91,8 @@ Then follow that shape skill. Do not keep a second shaping procedure here.
 - Dispatching agents because Parallel might exist
 - Epic because SOLID, ISP, stacked PRs, or a later cut count
 - Class / provider name as a story
-- Failing a 3–9 / five-story feature inventory as over-split
+- Failing a mid-size / five-story feature inventory as over-split
+- pad-to-N or merge-to-fit-N on inventory (same class as pad-to-one / drop-to-one)
 - Swallowing an open vendor/API spike into a production story
 - Handing off to Superpowers brainstorming or writing-plans after a write-spec blob
 - pad-to-one or drop-to-one to match an old Path

@@ -18,6 +18,19 @@ feature padded with extra stories. YAGNI: drop unused
 capabilities from inventory. Do not invent types here — named
 types live in specify-work `mentioned-types`.
 
+## Inventory
+
+Inventory **follows journeys / domains** (scales with the
+outcome). Grain still follows complexity (feature vs epic vs
+initiative). Do **not** pad children to hit a floor. Do **not**
+merge or drop necessary children to hit a ceiling. A mid-size
+list is fine (five is still OK). Do not fail five as over-split.
+Do not add a “one user-story child” rule.
+
+RED: **pad-to-N** (dummy children to hit a floor) and
+**merge-to-fit-N** (merge or drop necessary children to hit a
+ceiling). Same class as pad-to-one / drop-to-one on Path.
+
 ## Hierarchy
 
 ```
@@ -65,7 +78,7 @@ Bugs and chores are **kinds** of work, not extra hierarchy levels. Route by grai
 | Thin As-a wrapping an **undiagnosed** failure (As-a present, **no** locus) | **Stop** / diagnosing — **wins** over `shape-story`. Do not brief a story you cannot point at. |
 | Systemic reliability theme (“fix all of notifications”) | Classify on **scope** (epic/feature), not on the word “bug” |
 
-Never wrap a one-line fix in a fake As a / I want / so that. Never force a 3–9 story inventory for a single known bug.
+Never wrap a one-line fix in a fake As a / I want / so that. Never pad a story inventory for a single known bug.
 
 ## Spikes and research
 
@@ -130,9 +143,9 @@ Class / provider / interface names are **not** stories, features,
 or tasks. Those are `write-design` cuts after grain. Listing one
 as an inventory child is a fail.
 
-`shape-feature` inventory stays **3–9** user stories. Five is in
-band. Do not fail five as over-split. Do not add a “one user-story
-child” rule.
+`shape-feature` inventory follows **Inventory** (journeys /
+domains). A mid-size list is fine (five OK). Do not pad-to-N or
+merge-to-fit-N. Do not fail five as over-split.
 
 Path follows [paths.md](paths.md): every determining inventory
 title, no count floor. If five user-perceivable stories all

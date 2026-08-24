@@ -11,10 +11,11 @@ or a 2–5 minute TDD plan as the size-work close.
 Compose: `write-spec` → `size-work` → `write-design` → `write-plan`.
 This family sizes. It does not write the spec, design, or plan.
 
-JT override (wins over a “one user-story child” rule): **five**
-weather stories are acceptable. Do **not** fail a 3–9 / five-story
-feature inventory as over-split. Fail epic. Fail class / provider
-children. Keep the 3–9 band as-is.
+JT override (wins over a “one user-story child” rule): inventory
+**follows journeys / domains**. A mid-size list is fine (**five**
+weather stories are acceptable). Do **not** fail a mid-size /
+five-story feature inventory as over-split. Do **not** pad-to-N
+or merge-to-fit-N. Fail epic. Fail class / provider children.
 
 Parked specify-work card (`weather-eval.md`) is **not** the only
 sizer scorecard. Run `size-work`.
@@ -24,7 +25,7 @@ sizer scorecard. Run `size-work`.
 | Leaf | Required |
 |---|---|
 | `size-work` | Classify `shape-feature` (not epic). SOLID / ISP / stacked PRs / “three cuts” do not bump. Do not ask-once into a single story to shrink Path. |
-| `shape-feature` | User-story inventory **3–9** (five OK). Each child is As a / I want / so that (or equivalent user-value). Path = every determining title (no count floor). If five stories all determine today’s weather for my location, list those five. Out stays off the path. **Not** the old parked Path (one story / Parallel None). Parallel **`None`** if they share the weather API contract or one page. Weather API is a separate `shape-task` (decision brief), not a production story, not swallowed. Close announces `write-design` (then `write-plan`). |
+| `shape-feature` | User-story inventory **follows journeys / domains** (five OK). Do not pad-to-N or merge-to-fit-N. Each child is As a / I want / so that (or equivalent user-value). Path = every determining title (no count floor). If five stories all determine today’s weather for my location, list those five. Out stays off the path. **Not** the old parked Path (one story / Parallel None). Parallel **`None`** if they share the weather API contract or one page. Weather API is a separate `shape-task` (decision brief), not a production story, not swallowed. Close announces `write-design` (then `write-plan`). |
 | `shape-task` (API spike) | Decision brief. Done-when = pick + why, not shipped code. After a vendor spike, next is `write-design` / `write-plan`, or `write-spec` if the pick would stale In/Out. Not writing-plans. |
 | `shape-story` | Suggested next is `specify-work` / `write-spec` on **that story**. Not `write-design`. Not brainstorming / Spec Kit / `/to-spec`. Ask-once only when feature and story both genuinely fit. |
 
@@ -34,7 +35,9 @@ sizer scorecard. Run `size-work`.
 |---|---|---|
 | **epic-for-solid** | Size the weather-spec blob; SOLID / ISP / stacked PRs / “three cuts” named | Classifies `shape-epic`, or emits an epic inventory, because of standards or a later cut count |
 | **provider-as-story** | Size the weather-spec blob; class / provider pressure | `LocationProvider` / `WeatherSource` / any class or provider name appears as a story, feature, or task child |
-| **five-as-oversplit** | Size the weather-spec blob; inventory lands at five user stories | Fails or collapses the inventory because “five is over-split” / “Skill Craft wanted one child” |
+| **five-as-oversplit** | Size the weather-spec blob; inventory lands at a mid-size list (five OK) | Fails or collapses the inventory because “five is over-split” / “Skill Craft wanted one child” |
+| **pad-to-N** | Size the weather-spec blob; journeys already cover the outcome | Adds dummy children so the inventory hits a floor (same class as pad-to-one) |
+| **merge-to-fit-N** | Size the weather-spec blob; mid-size list of necessary journeys | Merges or drops necessary children to hit a ceiling (same class as drop-to-one) |
 | **swallow-api** | Size the weather-spec blob | Weather API is a production story, or is missing as a separate `shape-task` spike |
 | **parallel-while-open** | Size the weather-spec blob; fan-out pressure | Parallel is not `None` while stories share the weather API contract / one page / open vendor |
 | **pad-to-one** | Size the weather-spec blob; five determining stories | Adds a dummy so Critical path is one title |
@@ -47,8 +50,9 @@ sizer scorecard. Run `size-work`.
 
 - Leaf: `shape-feature` (router classified feature; not epic). Did
   **not** ask-once into a single story to shrink Path.
-- Inventory: 3–9 user stories. Five is a pass. Each child is user-value
-  (As a / I want / so that or equivalent).
+- Inventory: follows journeys / domains. A mid-size list is fine
+  (five is a pass). Do not pad-to-N or merge-to-fit-N. Each child
+  is user-value (As a / I want / so that or equivalent).
 - Out stays Out (URL-query, multi-day). Not children. Not on the path.
 - Path: every determining inventory title. No count floor. If five
   user-perceivable stories all determine today’s weather for my
@@ -119,4 +123,5 @@ That successor is **retargeted**.
 
 Existing work-sizing A–K and Path A–K still hold, except C’s
 suggested-next name (see GREEN C successor). Do not add a letter
-that fails a 3–9 / five-story feature inventory as over-split.
+that fails a mid-size / five-story feature inventory as over-split.
+pad-to-N and merge-to-fit-N are fails.

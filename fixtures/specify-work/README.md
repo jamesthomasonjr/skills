@@ -8,7 +8,7 @@ repo, `docs/superpowers/`, or `weather-eval.md` as the product.
 | Path | What it is |
 |---|---|
 | `weather-dump.md` | User thought process (input) |
-| `weather-eval.md` | Parked eval card (not input). Grain is 3–9 stories (five OK). |
+| `weather-eval.md` | Parked eval card (not input). Grain follows journeys / domains (five OK). |
 | `charge-dump.md` | Second-domain user thought process (input). Checkout / charge-a-card. |
 | `charge-eval.md` | Parked eval card for the charge dump (not input). |
 | `eval-letters.md` | RED/GREEN letters for Approaches, cut notes, File map, synonym job names, colocate-by-cut, second-domain scale, follow-house, and PIN prose (not input) |
