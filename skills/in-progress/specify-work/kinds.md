@@ -4,6 +4,26 @@ Shared letter for `specify-work` and `write-*`. Those skills are
 **REQUIRED** to follow this file. If wording here conflicts with a
 `SKILL.md` summary, **this file wins**.
 
+<HARD-GATE>
+This family is conversation-only unless they named a sink. Do not
+implement, scaffold, or edit application code. Do not open a second
+specify leaf in this turn. Do not invoke `size-work`. Named Close
+is the only terminal: write the document, then stop.
+</HARD-GATE>
+
+Leaves may announce the recipe once (`Using write-spec to sharpen
+one outcome.`). That is not a mandatory-invoke tax.
+
+## Section length
+
+Caps for the user-facing spec. Do not ask “does this look right?”
+after each section.
+
+- **Outcome** — 1–2 sentences.
+- **Approaches** — 2–3 bullets + pick. Not a design essay.
+- **Open decisions** — visibility ladder + options. Not a design
+  essay.
+
 ## Two kinds
 
 | Kind | What it is | Where it lives | What it may change |
@@ -43,6 +63,7 @@ grain” still requires grain; it is not a bypass. After grain,
 Every `write-design` cut states, as **short notes** (not test code,
 not a plan, not size-work stories):
 
+- **What it does / how you use it / what it depends on**
 - **Error / failure** states that cut owns. Each cut’s error
   note includes an in-cut error type (or enum), not an
   `errors/` folder. Greenfield colocate; house still wins if
@@ -52,9 +73,10 @@ not a plan, not size-work stories):
 Do not wait for a class list. Do not pull Out requirements in to
 “prove” error paths. Do not emit 2–5 minute steps.
 
-Failure: a cut has interface + first impl but no error note and
-no test note. Failure: an error note that omits an in-cut
-error type (or enum).
+Failure: a cut has interface + first impl but no what / how-you-use-it /
+depends notes. Failure: a cut has interface + first impl but no
+error note and no test note. Failure: an error note that omits
+an in-cut error type (or enum).
 
 Every cut’s **interface + first implementation** names the
 **job**. A reader who has only the file map — no design prose —
@@ -83,7 +105,8 @@ A user class list remains a hint.
 ## Open decisions
 
 `write-spec` **infers** unanswered external or product choices. Do
-not require the dump to name them.
+not require the dump to name them. Ladder + options. Not a design
+essay.
 
 Apply the visibility ladder **without a cut prerequisite**. Gate on
 the **outcome / MVP In**, not on cuts. `write-spec` does not wait
@@ -148,11 +171,11 @@ make it silent or a default-without-ladder.
 is not inventory. This is not cuts. This is not Path. This is not
 a reason to auto-continue into design or plan. Do not grill.
 
-Required section: **2–3 real alternatives**, trade-offs, then a
-recommended pick and why. Alternatives are **stack / architecture**
-(language, bundler, test runner, page vs framework) — not the
-vendor list from Open decisions. When the dump did not settle a
-stack, the pick includes how we build.
+Required section: **2–3 bullets** (real alternatives), trade-offs,
+then a recommended pick and why. Not a design essay. Alternatives
+are **stack / architecture** (language, bundler, test runner, page
+vs framework) — not the vendor list from Open decisions. When the
+dump did not settle a stack, the pick includes how we build.
 
 Compose with **Open decisions** (do not duplicate that ladder
 here):
@@ -205,13 +228,15 @@ runner code or a 2–5 minute TDD novel.
 
 ## After write-spec
 
-The spec is a feature-shaped outcome plus In / Out / approaches /
-spikes-with-options / labels. It is not an epic. It is not a class
-inventory. It is not a Path. size-work reads requirements in
-In/Out, not Standards, not providers, not Approaches.
+The spec is a feature-shaped outcome (1–2 sentences) plus In /
+Out / approaches / spikes-with-options / labels. It is not an
+epic. It is not a class inventory. It is not a Path. size-work
+reads requirements in In/Out, not Standards, not providers, not
+Approaches.
 
-size-work inventory is **3–9** user stories (**five OK**). This
-family must not assert one story, and must not treat five as
+size-work inventory **follows journeys / domains**. A mid-size
+list is fine (five OK). Do not pad to a floor or merge to a
+ceiling. Do not assert one story, and do not treat five as
 over-split. Fail epic. Fail class / provider children.
 
 ## File map
@@ -231,6 +256,10 @@ Example of inventing: `src/Port/Provider/` +
 classes against a `tests/` + function-module house. Do
 **not** fail house-style `tests/` or flat `src` on an
 existing-repo prompt.
+
+If the plan already has to touch an unwieldy house file, it
+**may split** that file. Do not invent a second convention.
+Do not require a split on files the plan is not touching.
 
 **Greenfield / no house → colocate by cut.** Capability / cut
 folder first, then port + first impl together. Tests sit next
@@ -301,7 +330,9 @@ one-liner). Do not swallow it.
 Do not add bite-size TDD steps, complete test / impl code blocks,
 or an execution handoff.
 
-Cheap self-review: no TBD; file-map paths match the PRs;
+`write-plan` **Self-review** (agent check, not recitable
+output): no TBD; file-map paths match the PRs + house; an
+unwieldy house file already being touched may split;
 signatures / names match the design cuts; named types and
 in-cut error types sit with the cut on greenfield; house
 still wins if the repo already has `errors/`; colocate by
@@ -400,6 +431,7 @@ is the unlabeled table only.
 - After a pick that would change In/Out or grain, continuing to `write-design` or `write-plan` without re-running `write-spec`
 - Non-stale pick + “plan this” taken as `write-design` because no design exists yet, or because the unlabeled table said “only cuts” / “next unfinished”
 - Auto-continuing the after-pick loop (spec → size → design) in one turn
+- A cut with interface + first impl but no what / how-you-use-it / depends notes
 - A cut with interface + first impl but no error note and no test note
 - Error notes that omit an in-cut error type (or enum)
 - A name in In / a cut / the File map with no class / type / interface / enum in the owning cut
