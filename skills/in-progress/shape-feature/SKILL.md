@@ -1,17 +1,20 @@
 ---
 name: shape-feature
 description: >-
-  Shape a feature brief and user-story inventory. Use when size-work hands
-  off feature-level work, or the user explicitly asks to break a feature
-  into user stories for later specs.
+  Use when size-work hands off feature-level work, or the user
+  asks to break a feature into user stories.
 disable-model-invocation: true
 ---
 
 # Shape feature
 
+Announce once: `Using shape-feature to inventory user stories.`
+
 Turn a feature-scale description into a brief and a **user-story inventory**. One level only.
 
-**REQUIRED:** Follow [../size-work/levels.md](../size-work/levels.md) and [../size-work/paths.md](../size-work/paths.md).
+**REQUIRED:** Follow [../size-work/levels.md](../size-work/levels.md)
+**HARD-GATE**, **After a write-spec blob** and
+[../size-work/paths.md](../size-work/paths.md).
 
 ## Hard rules
 
@@ -24,20 +27,31 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 - Do not write a full spec, Given/When/Then catalog, or implementation plan.
 - Do not implement.
 - Follow [../size-work/paths.md](../size-work/paths.md). Emit **Path** after the user-story inventory. Do not dispatch agents.
-- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** — conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes**.
 - Mixed-turn build or dispatch request: finish this shape, then **hand back**.
 
 ## Output contract (in order)
 
 1. **Title**
 2. **Problem** — who hurts and why (2–4 sentences)
-3. **Outcome** — what “shipped” means for users
+3. **Outcome** — 1–2 sentences; what “shipped” means for users
 4. **Boundaries** — in / out
 5. **Constraints** — dependencies and non-user-facing chores that must not appear as inventory children (or “None”)
 6. **User-story inventory** — 3–9 stories; each: short title + As a / I want / so that + priority. No acceptance scenarios yet. Do not reshuffle this order to match Path.
-7. **Path** — follow [../size-work/paths.md](../size-work/paths.md): Critical path (every inventory title that determines done, in dependency order; omit only titles that do not determine done; no count floor or cap; matching priority is fine when that is the sequence). If five user-perceivable stories all determine done, list those five titles. Do not pad-to-one or drop-to-one. Parallel (`None` if they share a vendor/API contract or one page). Why coupled (omit if none). Inventory items only. Out stays off the path. Do not dispatch.
+7. **Path** — **REQUIRED:** follow [../size-work/paths.md](../size-work/paths.md). Inventory items only. Out stays off the path. Do not dispatch.
 8. **Open questions** — decisions a later spec must settle (bullets)
-9. **Close** — this leaf is `shape-feature`. After a write-spec blob, announce `write-design` as next (then `write-plan`) and **stop**. Do not invoke them. Do not hand off to Superpowers brainstorming or writing-plans. Do not ask-once into a single story to shrink Path. Otherwise ask which story to deepen with `shape-story`, or stop. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off. Mixed-turn build or dispatch request: **hand back**.
+9. **Close** — **Terminal:** after a write-spec blob, announce `write-design` as next (then `write-plan`) and **stop**. Do not invoke them. Do not hand off to Superpowers brainstorming or writing-plans. Otherwise ask which story to deepen with `shape-story`, or stop. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off. Mixed-turn build or dispatch request: **hand back**.
+
+## Self-review
+
+Agent check. Fix inline. Do not re-emit this list.
+
+1. **Placeholders** — no TBD, TODO, or incomplete sections.
+2. **Stories** — 3–9 user-value children; five is in band. No class / provider names.
+3. **Spike** — open vendor / API is a `shape-task`, not a production story.
+4. **In/Out** — Out stays out of inventory and off the path.
+5. **Path** — after the inventory; follows paths.md.
+6. **Close** — announces next; does not invoke `write-design` or Superpowers.
 
 ## Rationalizations
 
@@ -50,16 +64,7 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 | “SOLID / three cuts means this is an epic” | Labels and later cuts do not bump grain. Stay `shape-feature`. |
 | “I’ll add a class / provider name so the inventory is real” | Class / provider names are not stories. |
 | “The vendor / API is a story” | Separate `shape-task` spike. Decision brief, not a production story. |
-| “I’ll skip Path until they pick a story” | Path is part of this shape, after the inventory. |
 | “These stories can all start; I’ll dispatch” | Write Parallel or `None`. Do not dispatch. |
-| “I’ll put the path after Close” | Path comes after the inventory, before Open questions. |
-| “These don’t share a file, so they’re parallel” | Shared contract or open decision still fails. `None` if nothing else passes. |
-| “Every child on the path is a miss” | If every story determines done, list them. |
-| “I'll add a second so the path is at least two” | One determining story is a one-item path. Do not pad. |
-| “The old Path was one story / Parallel None, so Path is one title” | Parallel `None` is the coupling. If five determine done, list five. |
-| “I'll add a dummy so the path is one” | pad-to-one is a fail. |
-| “I'll keep one title so it matches the old Path” | drop-to-one is a fail. |
-| “The path matches priority, so I must reshuffle” | Matching priority is fine when that is the sequence. |
 
 ## Failures
 
@@ -72,9 +77,4 @@ Turn a feature-scale description into a brief and a **user-story inventory**. On
 - Expanding every story into a brief in this turn
 - Handing off to Superpowers brainstorming or writing-plans after a write-spec blob
 - Skipping Path, or putting it before the inventory / after Open questions
-- Inventing Parallel for a shared contract / file / open decision
-- Dropping a required story to avoid listing every child, or to fit a count cap
-- Padding the path with a non-determining story to reach a minimum count
-- pad-to-one or drop-to-one so Critical path is one title
-- Path of one title / Parallel None because an old Path said so
 - Dispatching agents

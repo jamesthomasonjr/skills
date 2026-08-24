@@ -1,22 +1,29 @@
 ---
 name: size-work
 description: >-
-  Router for work sizing. Use when the user describes work to break down,
-  size, classify, or plan at initiative/epic/feature/story/task grain,
-  including chores, tech debt, known bugs, or spikes/research, or asks what
-  level a body of work is before specifying or building.
+  Use when the user describes work to break down, size, classify, or
+  plan at initiative/epic/feature/story/task grain, including chores,
+  tech debt, known bugs, or spikes/research, or asks what level a body
+  of work is before specifying or building.
 ---
 
 # Size work
+
+Announce once: `Using size-work to classify grain.`
 
 Classify the work, then hand off. This skill does **not** shape charters, inventories, or briefs.
 
 **REQUIRED:** Read [levels.md](levels.md) before classifying.
 
+<HARD-GATE>
+Follow [levels.md](levels.md) **HARD-GATE**. Conversation-only unless
+they named a sink. Do not implement. Do not write a full spec, design
+doc, or implementation plan. Do not open a second shape leaf. Named
+Close on the leaf is the only terminal.
+</HARD-GATE>
+
 ## Hard rules
 
-- Do not implement, scaffold, or edit application code.
-- Do not write a full spec, design doc, or implementation plan.
 - Do not invent child lists in the router — that is the shape skill’s job.
 - Outcomes follow [levels.md](levels.md) **Outcomes** — stay conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
 - Mixed turn (“break this down, then build it”): classify, hand off to the shape skill, finish shaping, then **hand back**. Do not build in this turn.

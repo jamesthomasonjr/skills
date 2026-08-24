@@ -1,29 +1,32 @@
 ---
 name: specify-work
 description: >-
-  Router for specifying work. Use when the user wants a spec, design, or
-  implementation plan, or dumps a product idea to sharpen before sizing.
-  Classifies which document they need and hands off; does not write the
-  spec, design, or plan.
+  Use when the user wants a spec, design, or implementation plan, or
+  dumps a product idea to sharpen before sizing.
 ---
 
 # Specify work
+
+Announce once: `Using specify-work to classify which document.`
 
 Classify which document they need, announce, then hand off. This skill
 does **not** write the spec, design, or plan.
 
 **REQUIRED:** Read [kinds.md](kinds.md) before classifying.
 
+<HARD-GATE>
+Follow [kinds.md](kinds.md) **HARD-GATE**. Conversation-only unless
+they named a sink. Do not implement. Do not write the spec, design,
+or plan in this router. Do not open a second specify leaf. Do not
+invoke `size-work`. Named Close on the leaf is the only terminal.
+</HARD-GATE>
+
 ## Hard rules
 
-- Do not implement, scaffold, or edit application code.
-- Do not write the spec, design, or plan in the router.
 - Do not size, write Path, or emit an inventory.
 - Do not hand size-work a class list. Follow [kinds.md](kinds.md).
-- Outcomes: conversation-only unless they named a sink.
 - Mixed turn (“spec this then build”): pass the build request through.
   The leaf finishes, then **hands back**. Do not build.
-- Do not auto-continue to a second specify leaf in this turn.
 - Read sibling skills from **this file’s directory**, not cwd.
 
 ## 1. Classify
@@ -46,29 +49,8 @@ pick** when that pick would stale Outcome / In / Out or grain.
 | Size / shape / break down / how big / inventory / Path | **Out of family** — `size-work` / `shape-*`. Stop. |
 | Review / debug / what’s next | **Out of family** — matching family. Stop. |
 
-Follow [kinds.md](kinds.md) **Compose order**. User label wins when
-they name **only one** document, except after a spike pick that
-would stale Outcome / In / Out or grain.
-
-- **Before grain:** spec+design+plan or a mixed dump → `write-spec`.
-  Separate. Do not abort on classes.
-- **After a spike pick:** follow [kinds.md](kinds.md) **After a
-  spike pick** in order. Stale → `write-spec` (wins over labels).
-  Not stale + one named document → that leaf. Not stale + mixed /
-  just the pick → unlabeled table. One leaf. Do not auto-continue
-  spec → size → design. Point at `size-work` when grain is stale;
-  do not invoke it.
-- **After grain:** spec+design+plan, a re-sent mixed dump, or
-  design+plan → `write-design` first, then **hand back**. Do not
-  re-run `write-spec` unless they explicitly asked to rewrite the
-  spec or change In/Out, or a just-landed pick would stale it. Do
-  not skip to `write-plan`.
-- **After grain, spec only** (explicit rewrite / In/Out change) →
-  `write-spec`.
-- **After grain, plan only** → `write-plan` (unless a just-landed
-  pick would stale In/Out).
-- **After grain, design only** → `write-design` (unless a
-  just-landed pick would stale In/Out).
+**REQUIRED:** follow [kinds.md](kinds.md) **Compose order** and
+**After a spike pick**.
 
 ## 2. Announce and hand off
 

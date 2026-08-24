@@ -1,30 +1,30 @@
 ---
 name: shape-story
 description: >-
-  Produce a spec-ready user-story brief. Use when size-work hands off a
-  user story (including a user-framed bug fix), or the user wants enough
-  context for a future agent to write a spec without writing the spec yet.
+  Use when size-work hands off a user story (including a user-framed
+  bug fix), or the user wants enough context for a later spec.
 disable-model-invocation: true
 ---
 
 # Shape story
 
+Announce once: `Using shape-story to brief one journey.`
+
 Produce a **spec-ready brief** for one user story. Not a spec. Not an implementation.
 
-**REQUIRED:** Follow [../size-work/levels.md](../size-work/levels.md).
+**REQUIRED:** Follow [../size-work/levels.md](../size-work/levels.md)
+**HARD-GATE**, **After a write-spec blob**.
 
 ## Hard rules
 
 - Do not write a full Spec Kit `spec.md`, Superpowers design doc, or implementation plan.
 - Do not implement or scaffold.
 - Do not silently split into tasks; if the story is too large, say so and offer split stories or `shape-task` for pure chores.
-- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes** — conversation-only unless they named a sink (publish there) or asked for a tracker skill/prompt (hand off after shaping).
+- Outcomes: follow [../size-work/levels.md](../size-work/levels.md) **Outcomes**.
 - Mixed-turn build request: finish this brief, then hand back.
-- Next is `specify-work` / `write-spec` on **this** story. If they
-  arrived because they picked story at a genuine ask-once after a
-  write-spec blob, that next is still `write-spec` — not
-  `write-design`, not Superpowers. This leaf does not emit a
-  feature inventory. `write-design` needs one.
+- Next is `specify-work` / `write-spec` on **this** story. Follow
+  [../size-work/levels.md](../size-work/levels.md) **After a write-spec
+  blob**. This leaf does not emit a feature inventory.
 
 ## Output contract (in order)
 
@@ -36,7 +36,17 @@ Produce a **spec-ready brief** for one user story. Not a spec. Not an implementa
 6. **Edge cases to explore later** — bullets
 7. **Dependencies / assumptions**
 8. **Suggested next step** — name `specify-work` / `write-spec`. Do **not** require Superpowers brainstorming, Spec Kit `/speckit.specify`, or mattpocock `/to-spec`. Do **not** run the specify path in this turn unless the user sends a **new** message asking for it after the brief.
-9. **Close** — confirm the brief is enough, or ask one clarifying question if a blocker remains. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
+9. **Close** — **Terminal:** confirm the brief is enough, or ask one clarifying question if a blocker remains. Hand back. If they named a sink, publish per Outcomes; if they want a tracker skill next, hand off.
+
+## Self-review
+
+Agent check. Fix inline. Do not re-emit this list.
+
+1. **Placeholders** — no TBD, TODO, or incomplete sections.
+2. **Brief, not spec** — no functional-requirements catalog or full GWT suite.
+3. **Next** — names `write-spec`, not `write-design` or Superpowers.
+4. **No Path** — Path is `shape-epic` / `shape-feature` only.
+5. **Thin-brief** — another agent could start a spec from this alone.
 
 ## Thin-brief test
 

@@ -2,6 +2,22 @@
 
 Shared vocabulary for `size-work` and `shape-*`. Prefer the **largest** level that still fits. Explicit user labels win (“this is an epic”).
 
+<HARD-GATE>
+This family is conversation-only unless they named a sink. Do not
+implement, scaffold, or edit application code. Do not open a second
+shape leaf in this turn. Named Close is the only terminal: finish
+the charter, inventory, or brief, then hand back.
+</HARD-GATE>
+
+Leaves may announce the recipe once (`Using shape-feature to
+inventory user stories.`). That is not a mandatory-invoke tax.
+
+**Decompose first.** Several independent user-perceivable
+capabilities are a larger level (epic / initiative), not one
+feature padded with extra stories. YAGNI: drop unused
+capabilities from inventory. Do not invent types here — named
+types live in specify-work `mentioned-types`.
+
 ## Hierarchy
 
 ```
