@@ -69,9 +69,9 @@ the class-design job. The user does not have to list classes.
    **owning cut**. Language picks the shape (TS type is
    fine for an anemic DTO). Primitive / array / tuple of
    primitives do not spawn a type. Not a new cut unless it
-   has interface + first impl + error/test notes. Not the
-   name Receipt. Catalog stays out (we never named it).
-   Money stays out unless In says more than one currency.
+   has interface + first impl + error/test notes. Not the name Receipt.
+   Catalog stays out (we never named it). Money stays out
+   unless In says more than one currency.
 
    **In-cut errors:** Each cut’s error note includes an
    in-cut error type (or enum), not an `errors/` folder.
