@@ -14,7 +14,7 @@ Read-only, defect-first review of **this change**. May return `No findings.`
 
 **REQUIRED:** Follow [../review-changes/gates.md](../review-changes/gates.md). Read it before writing findings. Resolve that path from this file’s directory, not cwd. After `~/.cursor/skills/review-defects` symlink, a bare `gates.md` read misses.
 
-Do not paste the six gates into this file. If any gate is shaky, **drop**. When in doubt, drop — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss.
+Do not paste the five gates into this file. If any gate is shaky, **drop**. When in doubt, drop — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss.
 
 **Procedure files** (same letter as `gates.md`; do not weaken it):
 
@@ -25,20 +25,19 @@ Only these, and only when they appear in the comparison:
 
 Not procedure: README, design spec, implementation plan, ordinary docs, comments in app code.
 
-When a procedure file is in the comparison, an **unsatisfiable pair of instructions** is a finding. All six gates can be true:
+When a procedure file is in the comparison, an **unsatisfiable pair of instructions** is a finding. All five gates can be true:
 
 1. Correctness of the procedure (the next agent cannot follow both letters).
 2. Discrete and actionable (name the two letters and the file:line).
 3. Introduced by this change.
 4. Demonstrable from the procedure text and, if present, fixtures/GREEN that already follow one letter and violate the other. This is the call path. It does not require application runtime.
 5. Concrete bad outcome: the next agent does the wrong stop, path, dispatch, empty pass, or drop of a required step. Victim is the next agent, not an end user.
-6. The author would probably fix it if they knew.
 
 Still **DROP**: wording nits, missing nice-to-have sections, “could be clearer,” a count band the author kept on purpose when the rest of the letter already agrees, speculative “an agent might misread,” ordinary README/docs prose, plan/spec/design with no procedure diff (still out of family → `shape-*`).
 
 “When in doubt, drop” still applies to app code and to shaky procedure nits. It does **not** authorize dropping a demonstrated unsatisfiable pair in a procedure file.
 
-Do not apply this rule to app-code contradictions unless they already pass today’s six gates the original way.
+Do not apply this rule to app-code contradictions unless they already pass today’s five gates the original way.
 
 **Advertised paths** (same letter as `gates.md`; do not weaken it):
 
@@ -54,14 +53,13 @@ Gate 4: hook/tool stdin shape and the extractor in this comparison are the call 
 
 “No live harness eval” / “it might fail in production” is not a drop for that class. Do not park that class in Assessment residual.
 
-All six gates can be true:
+All five gates can be true:
 
 1. Correctness of the advertised path (the hook, header, or extractor cannot do what this change claims).
 2. Discrete and actionable (name the claim and the stdin/extractor miss; file:line).
 3. Introduced by this change.
 4. Demonstrable from the hook/tool stdin shape and the extractor in this comparison. This is the call path. Live harness eval is not required.
 5. Concrete bad outcome: the advertised auto-exec never runs for the victim of the claim. Designed idle-when-no-handoff does not cover a hook that can never see a handoff.
-6. The author would probably fix it if they knew.
 
 Still **DROP**: wording nits, speculative “might break” with no this-PR advertised path, pre-existing host gaps (at most one Assessment residual line), plan/spec with no procedure or advertised-path diff (still out of family → `shape-*`).
 
