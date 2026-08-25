@@ -2,16 +2,15 @@
 
 Shared playbook for `review-changes` and `review-defects`. The leaf is **REQUIRED** to follow this file. The router does not restate it.
 
-Flag a finding only when **all six** are true. If any gate is shaky, **drop**. When in doubt about impact, drop — except a demonstrated unsatisfiable pair in a procedure file (see Procedure files) or a this-PR advertised-path miss (see Advertised paths).
+Flag a finding only when **all five** are true. If any gate is shaky, **drop**. When in doubt about impact, drop — except a demonstrated unsatisfiable pair in a procedure file (see Procedure files) or a this-PR advertised-path miss (see Advertised paths).
 
-## Six gates
+## Five gates
 
 1. Meaningful correctness / security / performance / maintainability.
 2. Discrete and actionable.
 3. Introduced by this change, not pre-existing.
 4. Affected scenario or call path demonstrable from the code.
 5. Names a **concrete bad outcome** (what breaks, for whom).
-6. The author would probably fix it if they knew about it.
 
 ## Suppressions
 
@@ -32,7 +31,7 @@ Assign only to survivors:
 - `P0` — universal release blocker or critical failure (does not depend on exotic inputs).
 - `P1` — urgent defect that should be fixed next.
 - `P2` — ordinary defect that should be fixed.
-- `P3` — low-impact issue that is still worth fixing (and still passes all six gates).
+- `P3` — low-impact issue that is still worth fixing (and still passes all five gates).
 
 A naming nit is not a P3. It is dropped.
 
@@ -55,20 +54,19 @@ Only these, and only when they appear in the comparison:
 
 Not procedure: README, design spec, implementation plan, ordinary docs, comments in app code.
 
-When a procedure file is in the comparison, an **unsatisfiable pair of instructions** is a finding. All six gates can be true:
+When a procedure file is in the comparison, an **unsatisfiable pair of instructions** is a finding. All five gates can be true:
 
 1. Correctness of the procedure (the next agent cannot follow both letters).
 2. Discrete and actionable (name the two letters and the file:line).
 3. Introduced by this change.
 4. Demonstrable from the procedure text and, if present, fixtures/GREEN that already follow one letter and violate the other. This is the call path. It does not require application runtime.
 5. Concrete bad outcome: the next agent does the wrong stop, path, dispatch, empty pass, or drop of a required step. Victim is the next agent, not an end user.
-6. The author would probably fix it if they knew.
 
 Still **DROP**: wording nits, missing nice-to-have sections, “could be clearer,” a count band the author kept on purpose when the rest of the letter already agrees, speculative “an agent might misread,” ordinary README/docs prose, plan/spec/design with no procedure diff (still out of family → `shape-*`).
 
 “When in doubt, drop” still applies to app code and to shaky procedure nits. It does **not** authorize dropping a demonstrated unsatisfiable pair in a procedure file.
 
-Do not apply this rule to app-code contradictions unless they already pass today’s six gates the original way.
+Do not apply this rule to app-code contradictions unless they already pass today’s five gates the original way.
 
 ## Advertised paths
 
@@ -84,14 +82,13 @@ Gate 4: hook/tool stdin shape and the extractor in this comparison are the call 
 
 “No live harness eval” / “it might fail in production” is not a drop for that class. Do not park that class in Assessment residual.
 
-All six gates can be true:
+All five gates can be true:
 
 1. Correctness of the advertised path (the hook, header, or extractor cannot do what this change claims).
 2. Discrete and actionable (name the claim and the stdin/extractor miss; file:line).
 3. Introduced by this change.
 4. Demonstrable from the hook/tool stdin shape and the extractor in this comparison. This is the call path. Live harness eval is not required.
 5. Concrete bad outcome: the advertised auto-exec never runs for the victim of the claim. Designed idle-when-no-handoff does not cover a hook that can never see a handoff.
-6. The author would probably fix it if they knew.
 
 Still **DROP**: wording nits, speculative “might break” with no this-PR advertised path, pre-existing host gaps (at most one Assessment residual line), plan/spec with no procedure or advertised-path diff (still out of family → `shape-*`).
 
