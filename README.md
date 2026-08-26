@@ -22,16 +22,16 @@ Claude Code can also load this repo as a plugin via [`.claude-plugin/plugin.json
 
 Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills in `personal/` and `in-progress/` stay local to this repo.
 
-### Cursor Cloud Agents
+### Cursor and Codex/ChatGPT Cloud Agents
 
-Cloud Agents run on isolated VMs and do not inherit laptop `~/.cursor/skills`, Cursor plugin installs, or GitHub Remote Rules. They do load skills from `~/.cursor/skills/` on the VM.
+Cloud Agents run on isolated VMs and do not inherit laptop skill installs, Cursor plugin installs, or GitHub Remote Rules. Cursor loads skills from `~/.cursor/skills/` on the VM; Codex/ChatGPT cloud uses `$CODEX_HOME/skills/`, which defaults to `~/.codex/skills/`.
 
 This repo's [`.cursor/environment.json`](.cursor/environment.json) runs [`scripts/install-cloud-agent-skills.sh`](scripts/install-cloud-agent-skills.sh) in two places:
 
-- `install` — during a Build, on the default-branch checkout. Clones [jeighty/supersuit](https://github.com/jeighty/supersuit) (and this repo if it is not already the workspace), then links skills.
+- `install` — during a Build, on the default-branch checkout. Clones [jeighty/supersuit](https://github.com/jeighty/supersuit) (and this repo if it is not already the workspace), then links skills into both Cursor and Codex skill homes.
 - `start` — on each agent boot, after the requested branch is checked out. Runs `--link-only` so a feature branch that adds a promoted skill is linked without re-cloning supersuit.
 
-The script is idempotent, works with bash 3.2, and does not install `personal/` or `in-progress/`.
+The script is idempotent, works with bash 3.2, and does not install `personal/` or `in-progress/`. By default it uses `~/.cache/cloud-agent-skill-src` for cloned sources and links into `~/.cursor/skills` plus `${CODEX_HOME:-~/.codex}/skills`. Override `SKILL_TARGET_DIRS` with a colon-separated list to choose different targets.
 
 ```bash
 ./scripts/install-cloud-agent-skills.sh

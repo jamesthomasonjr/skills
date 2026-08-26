@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Install jeighty/supersuit and this repo's promoted skills into ~/.cursor/skills.
-# Intended for Cursor Cloud Agent environment setup. Safe to re-run.
+# Install jeighty/supersuit and this repo's promoted skills for cloud agents.
+# Intended for Cursor and Codex/ChatGPT Cloud Agent environment setup. Safe to re-run.
 # Compatible with bash 3.2 (macOS /usr/bin/env bash).
 set -euo pipefail
 
-SKILLS_DIR="${HOME}/.cursor/skills"
-SRC_DIR="${HOME}/.cursor/skill-src"
+CODEX_HOME="${CODEX_HOME:-${HOME}/.codex}"
+SKILL_TARGET_DIRS="${SKILL_TARGET_DIRS:-${HOME}/.cursor/skills:${CODEX_HOME}/skills}"
+SRC_DIR="${AGENT_SKILL_SRC_DIR:-${HOME}/.cache/cloud-agent-skill-src}"
 SUPERSUIT_URL="https://github.com/jeighty/supersuit"
 SUPERSUIT_SLUG="jeighty/supersuit"
 JT_SKILLS_URL="https://github.com/jamesthomasonjr/skills"
@@ -17,10 +18,18 @@ usage() {
   cat <<'EOF'
 Usage: install-cloud-agent-skills.sh [--link-only]
 
-  (default)   Clone/refresh checkouts, then symlink skills into ~/.cursor/skills.
+  (default)   Clone/refresh checkouts, then symlink skills into cloud agent homes.
   --link-only Relink from existing checkouts. Used as Cloud Agent start so a
               feature-branch checkout picks up promoted skills added after the
               Build snapshot. Does not fetch or clone.
+
+Environment:
+  CODEX_HOME             Codex home used for the Codex skill target.
+                         Defaults to ~/.codex.
+  SKILL_TARGET_DIRS      Colon-separated skill target directories.
+                         Defaults to ~/.cursor/skills:$CODEX_HOME/skills.
+  AGENT_SKILL_SRC_DIR    Checkout cache for cloned skill sources.
+                         Defaults to ~/.cache/cloud-agent-skill-src.
 EOF
 }
 
@@ -42,7 +51,33 @@ if [ "$#" -gt 0 ]; then
   done
 fi
 
-mkdir -p "${SKILLS_DIR}" "${SRC_DIR}"
+each_skill_target_dir() {
+  local dirs="${SKILL_TARGET_DIRS}"
+  local dir
+
+  while [ -n "${dirs}" ]; do
+    case "${dirs}" in
+      *:*)
+        dir="${dirs%%:*}"
+        dirs="${dirs#*:}"
+        ;;
+      *)
+        dir="${dirs}"
+        dirs=""
+        ;;
+    esac
+
+    [ -n "${dir}" ] || continue
+    printf '%s\n' "${dir}"
+  done
+}
+
+mkdir -p "${SRC_DIR}"
+while IFS= read -r target_dir || [ -n "${target_dir}" ]; do
+  mkdir -p "${target_dir}"
+done <<EOF
+$(each_skill_target_dir)
+EOF
 
 abs_path() {
   (cd "$1" && pwd)
@@ -185,9 +220,19 @@ ${names}
 EOF
 }
 
+print_skill_target_dirs() {
+  local target_dir
+  while IFS= read -r target_dir || [ -n "${target_dir}" ]; do
+    printf '  %s\n' "${target_dir}"
+  done <<EOF
+$(each_skill_target_dir)
+EOF
+}
+
 link_skill_dirs() {
   local src_root="$1"
   local dest_dir="$2"
+  local record_names="${3:-1}"
   local skill_dir name dest src_abs
   local nullglob_was_on=0
 
@@ -209,7 +254,9 @@ link_skill_dirs() {
       rm -rf "${dest}"
     fi
     ln -sfn "${src_abs}" "${dest}"
-    append_linked_name "${name}"
+    if [ "${record_names}" -eq 1 ]; then
+      append_linked_name "${name}"
+    fi
   done
   if [ "${nullglob_was_on}" -eq 0 ]; then
     shopt -u nullglob
@@ -227,10 +274,12 @@ require_checkout() {
 }
 
 if [ "${LINK_ONLY}" -eq 1 ]; then
-  echo "Relinking Cloud Agent skills into ${SKILLS_DIR}"
+  echo "Relinking Cloud Agent skills into:"
 else
-  echo "Installing Cloud Agent skills into ${SKILLS_DIR}"
+  echo "Installing Cloud Agent skills into:"
 fi
+print_skill_target_dirs
+echo "Using source checkout cache at ${SRC_DIR}"
 
 supersuit_src="${SRC_DIR}/supersuit"
 if [ "${LINK_ONLY}" -eq 1 ]; then
@@ -254,12 +303,24 @@ else
 fi
 
 reset_linked_names
-link_skill_dirs "${supersuit_src}/skills" "${SKILLS_DIR}"
+first_target=1
+while IFS= read -r target_dir || [ -n "${target_dir}" ]; do
+  link_skill_dirs "${supersuit_src}/skills" "${target_dir}" "${first_target}"
+  first_target=0
+done <<EOF
+$(each_skill_target_dir)
+EOF
 supersuit_linked="${_linked_names}"
 
 reset_linked_names
-link_skill_dirs "${jt_src}/skills/engineering" "${SKILLS_DIR}"
-link_skill_dirs "${jt_src}/skills/productivity" "${SKILLS_DIR}"
+first_target=1
+while IFS= read -r target_dir || [ -n "${target_dir}" ]; do
+  link_skill_dirs "${jt_src}/skills/engineering" "${target_dir}" "${first_target}"
+  link_skill_dirs "${jt_src}/skills/productivity" "${target_dir}" "${first_target}"
+  first_target=0
+done <<EOF
+$(each_skill_target_dir)
+EOF
 jt_linked="${_linked_names}"
 
 echo
@@ -270,4 +331,5 @@ echo "Linked $(count_linked_names "${jt_linked}") promoted JT skill(s) (engineer
 print_linked_names "${jt_linked}"
 
 echo "Skipped personal/ and in-progress/."
-echo "Done. Skills are in ${SKILLS_DIR}"
+echo "Done. Skills are in:"
+print_skill_target_dirs
