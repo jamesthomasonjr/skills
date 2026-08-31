@@ -106,7 +106,7 @@ Do **not** restate `gates.md`. Do **not** apply it.
 
 **Pass to `review-intent` only:** PR body / commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes / orient dumps are not procedure context. Do not dump the whole orient transcript into intent.
 
-**Do not pass** the PR body, commit message, onboard dumps, orient dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes to `review-blind`. Do not run `review-blind` in a window that already had those. Do not pass orient / onboard dumps to `review-verify`.
+**Do not pass** the PR body, commit message, onboard dumps, orient dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes to `review-blind`. Do not run `review-blind` in a window that already had those.
 
 Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). Both seats emit candidates only. Do not skip a seat.
 
@@ -116,7 +116,7 @@ If this harness cannot open a fresh context for a seat, **stop** and say so. Do 
 
 If two signals conflict, isolation wins over following a seat in this turn.
 
-Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with both candidate lists. Isolation is not a duty of `review-verify`. Do not keep a second review procedure here. Do not skip the verifier.
+Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with both candidate lists. Isolation is not a duty of `review-verify`. Parent-held orient / onboard dumps in that window are GREEN. Do not keep a second review procedure here. Do not skip the verifier.
 
 ## Isolation
 
@@ -126,6 +126,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “This harness cannot open a fresh context — withhold is enough” | Stop and say so. Withhold is not isolation. |
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
 | “The parent already has orient / onboard; the seat will ignore it” | Parent-held dumps are GREEN. Copying them into the blind prompt or running the seat in that window is a leak. |
+| “Withhold orient from review-verify; it Follows in the parent” | Verify runs in the parent. Parent-held dumps there are GREEN. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
 | “Orient the file list first, then fan out” | Wrapper priming may do that. This router does not. |
 
