@@ -8,14 +8,17 @@ description: >-
 
 # Review changes
 
-Classify the review target, announce the comparison, then hand off. This skill does **not** review and does **not** write findings.
+Classify the review target, announce the comparison, then fan out to both
+seats and fan in to the verifier. This skill does **not** review and does
+**not** write findings.
 
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments.
-- Do not apply [gates.md](gates.md). Do not write findings. That is `review-defects`.
-- Mixed turn (“review this, then fix it”): pass the fix request through. The leaf finishes the review, then hands back. Do not implement in this turn.
-- Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read `review-defects`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
+- Do not apply [gates.md](gates.md). Do not write findings. That is `review-verify`.
+- Do not Read `gates.md` in this skill. Seats do not read it.
+- Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
+- Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the seats or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
 - Focus is an optional user-named phrase, not a menu. Do not infer modes.
 
@@ -60,7 +63,7 @@ User labels win.
 
 ## 2. Classify
 
-| Signal | Comparison passed to the leaf |
+| Signal | Comparison passed to the seats |
 |---|---|
 | Uncommitted / working tree / “what I just changed” | Working tree vs HEAD (staged, unstaged, untracked) |
 | Named commit | That commit vs its parent |
@@ -73,33 +76,46 @@ If two signals both appear, user label wins; if still tied, ask once. Stop until
 
 **Commands to pass:**
 
-- Working tree: file list = union of `git diff HEAD --name-only` and `git ls-files --others --exclude-standard`. Pass **both** the tracked diff command (`git diff HEAD`) **and** the untracked paths. Untracked files are first-class: the leaf must Read each, or `git diff --no-index -- /dev/null <path>`. Do **not** `git add`. Untracked-only is a real comparison — not empty, not `Nothing to review.` `git diff HEAD` alone is not the comparison.
+- Working tree: file list = union of `git diff HEAD --name-only` and `git ls-files --others --exclude-standard`. Pass **both** the tracked diff command (`git diff HEAD`) **and** the untracked paths. Untracked files are first-class: the seats must Read each, or `git diff --no-index -- /dev/null <path>`. Do **not** `git add`. Untracked-only is a real comparison — not empty, not `Nothing to review.` `git diff HEAD` alone is not the comparison.
 - Named commit: `git diff <commit>^ <commit>` (first parent for merges).
 - Branch / PR / no-target: `git diff $(git merge-base <tip> <base>)...<tip>`. Not `...HEAD` when `<tip>` is a named **non-base** ref other than HEAD. Not `@{upstream}` as `<base>`. Not a named default as `<tip>`.
 - Named patch: the diff file itself; file list from its hunks.
 
 ## 3. Announce and hand off
 
-**Out of family:** one or two sentences, name `shape-*` (or a later plan-review skill), **stop**. Do not read the leaf. Do not write a design critique. A `SKILL.md` or required playbook in the file list is in family — hand off.
+**Out of family:** one or two sentences, name `shape-*` (or a later plan-review skill), **stop**. Do not read a seat or `review-verify`. Do not write a design critique. A `SKILL.md` or required playbook in the file list is in family — hand off.
 
 **Empty / unresolvable:** if they can still name a target, ask once and stop. Otherwise write exactly `Nothing to review.` and stop.
 
 Otherwise one line: which comparison and why (short).
 
-Read **sibling** skill files resolved from **this file’s directory**, not from cwd. `../review-defects/SKILL.md` means “next to this skill,” i.e. the `review-defects` folder that sits beside `review-changes`. After `~/.cursor/skills/<name>` symlink or a plugin copy, `skills/engineering/review-*/SKILL.md` does not exist.
+Read **sibling** skill files resolved from **this file’s directory**, not from cwd. `../review-intent/SKILL.md` means “next to this skill,” i.e. the `review-intent` folder that sits beside `review-changes`. After `~/.cursor/skills/<name>` symlink or a plugin copy, `skills/engineering/review-*/SKILL.md` does not exist.
 
-If a cwd-relative Read of `../review-defects/SKILL.md` misses (user workspace is a different repo), resolve the sibling from the path you used to open **this** `SKILL.md`, or invoke the leaf by name.
+If a cwd-relative Read of a sibling misses (user workspace is a different repo), resolve the sibling from the path you used to open **this** `SKILL.md`, or invoke the skill by name.
 
-- [../review-defects/SKILL.md](../review-defects/SKILL.md)
-- [gates.md](gates.md)
+Read the **seats** first. Do **not** Read `review-verify` until both seats have emitted candidates. Do **not** Read `gates.md` in this skill.
 
-Do **not** restate gates.md. Pass: comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase if they named one.
+- [../review-intent/SKILL.md](../review-intent/SKILL.md)
+- [../review-blind/SKILL.md](../review-blind/SKILL.md)
 
-Then follow `review-defects`. Do not keep a second review procedure here.
+Do **not** restate `gates.md`. Do **not** apply it.
+
+**Pass to both seats:** comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase if they named one.
+
+**Pass to `review-intent` only:** PR body / commit message / procedure context when present.
+
+**Do not pass** the PR body or commit message to `review-blind`. That withhold is compose.
+
+Fan out to both seats (they emit candidates only). Follow `review-blind` without the PR body or commit message. Follow `review-intent` with those. Do not skip a seat.
+
+Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it with both candidate lists. Do not keep a second review procedure here. Do not skip the verifier.
 
 ## Red flags
 
 - Writing findings in the router
+- Applying gates in the router or telling a seat to read `gates.md`
+- Skipping a seat or handing the diff straight to `review-verify`
+- Passing the PR body or commit message to `review-blind`
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu
 - Implementing because the bug is obvious

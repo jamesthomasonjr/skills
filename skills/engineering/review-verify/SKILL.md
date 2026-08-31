@@ -1,18 +1,20 @@
 ---
-name: review-defects
+name: review-verify
 description: >-
-  Defect-first read-only review of a specified comparison. Use when
-  review-changes hands off, or the user explicitly wants findings against
-  a named diff, commit, branch, or working tree. May return No findings.
-  Does not implement.
+  Verifier for defect-first review. Use when review-changes hands off
+  after both seats. Combines candidates, applies gates, writes Findings /
+  Assessment / Close. May return No findings. Does not implement.
 disable-model-invocation: true
 ---
 
-# Review defects
+# Review verify
 
-Read-only, defect-first review of **this change**. May return `No findings.`
+Read-only verifier for **this change**. Combines seat candidates, applies
+gates, writes Findings / Assessment / Close. May return `No findings.`
 
-**REQUIRED:** Follow [../review-changes/gates.md](../review-changes/gates.md). Read it before writing findings. Resolve that path from this file’s directory, not cwd. After `~/.cursor/skills/review-defects` symlink, a bare `gates.md` read misses.
+Does **not** generate a fresh candidate list from the diff.
+
+**REQUIRED:** Follow [../review-changes/gates.md](../review-changes/gates.md). Read it before writing findings. Resolve that path from this file’s directory, not cwd. After `~/.cursor/skills/review-verify` symlink, a bare `gates.md` read misses.
 
 Do not paste the five gates into this file. If any gate is shaky, **drop**. When in doubt, drop — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss.
 
@@ -68,19 +70,20 @@ Still **DROP**: wording nits, speculative “might break” with no this-PR adve
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Review the passed comparison only. Do not tour the rest of the repo.
+- Verify the merged seat candidates only. Do not generate a fresh candidate list from the diff. Do not tour the rest of the repo.
 - Mixed turn (“review this, then fix it”): finish this review, then **hand back**. Do not implement. **Do not edit in this turn even if the user already asked for a fix** — that message is the review, not an implement go-ahead. They must send a **new message** after the review. Do not discard the fix request.
 - If invoked with a plan/spec/design and no procedure file in the comparison: stop. Out of family. Point at `shape-*`. Do not produce findings. Do not grill that prose. A `SKILL.md` or required playbook in the file list is not a plan — inspect it.
 - If invoked with no comparison: cheap-resolve as `review-changes` would. Empty/unresolvable → `Nothing to review.`
+- If the seats have not handed over candidate lists, **stop**. Point at `review-changes`. Do not invent a list from the diff.
 
 ## Procedure
 
-If this is a stop path (empty/unresolvable, or plan/spec/design with no procedure file in the comparison), skip steps 1–5. Write only the stop.
+If this is a stop path (empty/unresolvable, plan/spec/design with no procedure file in the comparison, or seats have not handed over lists), skip steps 1–5. Write only the stop.
 
-1. Inspect the complete comparison. For working tree: `git diff HEAD` **and** every untracked path in the file list. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not skip them because they are absent from `git diff HEAD`. Do not `git add`. Untracked-only is a real comparison: do not write `Nothing to review.` or `No findings.` without inspecting those files.
-   For a named patch or branch/PR three-dot: inspect that complete diff, plus enough surrounding code and tests to confirm each candidate.
-2. Continue through the whole diff after the first issue. Do not stop at one finding. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
-3. Apply every gate in `gates.md` to each candidate. Drop if any is shaky — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. When a procedure file is in the file list, apply the Procedure files letter. When this change’s own hook, header, or extractor advertises a path, apply the Advertised paths letter. Live harness eval is not required for that class. Do not require application runtime for a procedure-file pair.
+1. Take both seat candidate lists. Combine, dedupe, organize. Do not add a candidate that neither seat emitted.
+2. Inspect enough of the comparison to apply the gates to those candidates — not to hunt a new list. For working tree: `git diff HEAD` **and** every untracked path in the file list when a candidate overlaps them. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not `git add`.
+   For a named patch or branch/PR three-dot: inspect the overlapping hunks plus enough surrounding code and tests to confirm each merged candidate.
+3. Apply every gate in `gates.md` to each merged candidate. Drop if any is shaky — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. When a procedure file is in the file list, apply the Procedure files letter. When this change’s own hook, header, or extractor advertises a path, apply the Advertised paths letter. Live harness eval is not required for that class. Do not require application runtime for a procedure-file pair.
 4. Skip everything under Suppressions — including when they said “nits are fine” or “flag anything.”
 5. Assign P0–P3 only to survivors.
 6. If this is a **stop path**, write only that stop (below). Otherwise write the output contract. Then stop (or hand back).
@@ -91,6 +94,7 @@ These are **not** empty reviews. Do **not** emit Findings, Assessment, or Close.
 
 - Empty or unresolvable target: exactly `Nothing to review.`
 - Plan / spec / design with no procedure file in the comparison: 1–2 sentences, point at `shape-*`, stop.
+- Seats have not handed over candidate lists: 1–2 sentences, point at `review-changes`, stop.
 
 ## Output contract (in order)
 
@@ -106,7 +110,7 @@ Otherwise always emit these three blocks, in this order, with these headings:
 
    **Or**, if none survive: this block is exactly `No findings.`
 
-2. **Assessment** — 1–3 sentences: target + comparison, material test gaps, residual pre-existing risk (at most one line). No merge stamp. No LGTM.
+2. **Assessment** — 1–3 sentences: target + comparison, material test gaps, residual pre-existing risk (at most one line). When a seat emitted an unused helper or other pre-existing candidate and it was dropped, that drop is this residual line — seen, not silent. No merge stamp. No LGTM. Do not name a gate here.
 
 3. **Close** — required heading, one line. Mixed-turn: review is done; they must send a **new message** to implement. Otherwise: the review is finished (do not add findings).
 
@@ -132,16 +136,19 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “Thorough means more findings” | Thorough means every qualifying defect, and nothing else. |
 | “They asked me to be a critical reviewer of a plan” | Out of family when no procedure file is in the comparison. Stop. Point at `shape-*`. Do not grill that prose. |
 | “Always emit Findings / Assessment / Close” | Only after a real comparison. Stop paths skip the contract. Do not wrap `Nothing to review.` |
-| “git diff HEAD was empty, so nothing to review” | Untracked files are not in `git diff HEAD`. Inspect them. Do not `git add`. |
+| “git diff HEAD was empty, so nothing to review” | Untracked files are not in `git diff HEAD`. Inspect them when a candidate overlaps. Do not `git add`. |
 | “Designed idle-when-no-handoff covers this” | Idle is for no handoff. An extractor that can never see this hook’s stdin is a finding. |
 | “No live harness eval” | Gate 4 for this class is stdin shape + extractor. Live eval is not required. |
-| “Park it in Assessment residual” | Residual is host-not-advertised. A this-PR advertised-path miss is a numbered finding. |
+| “Park it in Assessment residual” | Residual is host-not-advertised or a dropped pre-existing candidate. A this-PR advertised-path miss is a numbered finding. |
 | “hooks.json is a procedure file / unsatisfiable pair” | Do not stretch that rule onto `hooks.json` or ordinary docs. Use the advertised-path letter. |
 | “Host has not advertised native-worktree — finding” | Residual-or-empty. Never a numbered finding. |
+| “I’ll scan the diff for anything the seats missed” | Do not generate a fresh list. Verify the merged candidates. |
+| “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Assessment residual, not silent. |
 
 ## Failures
 
 - Invented findings on a clean change
+- A fresh candidate list this leaf generated from the diff
 - Style / naming / comment nits as findings
 - Pre-existing issue as a numbered finding
 - Whole-repo review outside the comparison
@@ -152,7 +159,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Reviewing a plan/spec/design as if it were a code diff
 - Grilling a design instead of stopping out of family
 - Wrapping `Nothing to review.` or a `shape-*` stop in Findings / Assessment / Close
-- Skipping untracked working-tree files because `git diff HEAD` is empty
+- Skipping untracked working-tree files a candidate overlaps because `git diff HEAD` is empty
 - Dropping a demonstrated unsatisfiable pair in a procedure file
 - Treating a `SKILL.md` or required playbook as plan/spec prose
 - Requiring application runtime before a procedure-file pair can survive
@@ -160,3 +167,4 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Parking that class in Assessment residual
 - Stretching the procedure-file rule onto `hooks.json` or ordinary docs
 - Numbering a host-not-advertised capability gap
+- Silent drop of a seat-emitted unused helper with no Assessment residual

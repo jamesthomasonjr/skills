@@ -1,6 +1,8 @@
 # Review gates
 
-Shared playbook for `review-changes` and `review-defects`. The leaf is **REQUIRED** to follow this file. The router does not restate it.
+Verifier playbook for the review family. `review-verify` is **REQUIRED**
+to follow this file. The router does not apply it and does not restate
+it. Seats generate candidates and do not apply this file.
 
 Flag a finding only when **all five** are true. If any gate is shaky, **drop**. When in doubt about impact, drop — except a demonstrated unsatisfiable pair in a procedure file (see Procedure files) or a this-PR advertised-path miss (see Advertised paths).
 
