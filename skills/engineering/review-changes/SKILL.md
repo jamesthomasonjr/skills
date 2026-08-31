@@ -102,11 +102,11 @@ Do **not** restate `gates.md`. Do **not** apply it.
 
 **Pass to both seats:** comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase if they named one.
 
-**Pass to `review-intent` only:** PR body / procedure context when present.
+**Pass to `review-intent` only:** PR body / commit message / procedure context when present.
 
-**Do not pass** the PR body or `context.md` to `review-blind`. That withhold is compose.
+**Do not pass** the PR body or commit message to `review-blind`. That withhold is compose.
 
-Fan out to both seats (they emit candidates only). Follow `review-blind` without the PR body or `context.md`. Follow `review-intent` with those. Do not skip a seat.
+Fan out to both seats (they emit candidates only). Follow `review-blind` without the PR body or commit message. Follow `review-intent` with those. Do not skip a seat.
 
 Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it with both candidate lists. Do not keep a second review procedure here. Do not skip the verifier.
 
@@ -115,7 +115,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Writing findings in the router
 - Applying gates in the router or telling a seat to read `gates.md`
 - Skipping a seat or handing the diff straight to `review-verify`
-- Passing the PR body or `context.md` to `review-blind`
+- Passing the PR body or commit message to `review-blind`
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu
 - Implementing because the bug is obvious

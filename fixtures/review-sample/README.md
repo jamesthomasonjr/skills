@@ -2,7 +2,7 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: `review-changes` classifies the comparison, fans out to `review-intent` (PR/docs-aware) and `review-blind` (comparison only; no PR body / `context.md`), then `review-verify` applies `gates.md` to the merged candidates. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+Protocol: `review-changes` classifies the comparison, fans out to `review-intent` (PR/docs-aware) and `review-blind` (comparison only; no PR body or commit message), then `review-verify` applies `gates.md` to the merged candidates. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
 
 `src/` is the parent (pre-change). Each file in `changes/` is a proposed patch against that parent.
 

@@ -3,7 +3,8 @@ name: review-blind
 description: >-
   Comparison-only candidate seat for defect-first review. Use when
   review-changes hands off. Generates candidates only. Does not receive
-  the PR body. Does not apply gates and does not write Findings. Read-only.
+  the PR body or commit message. Does not apply gates and does not write
+  Findings. Read-only.
 disable-model-invocation: true
 ---
 
@@ -12,7 +13,7 @@ disable-model-invocation: true
 Comparison-only seat. Generate **candidates** only. This skill does
 **not** apply gates and does **not** write Findings / Assessment / Close.
 
-The router does **not** pass the PR body or `context.md`. Do not fetch
+The router does **not** pass the PR body or commit message. Do not fetch
 them. Do not read a procedure dump the router withheld. That withhold
 is compose.
 
@@ -22,7 +23,7 @@ including ones the intent seat would skip without the PR body.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Do not read the PR body, `context.md`, or other withheld procedure dumps.
+- Do not read the PR body, commit message, or other withheld procedure dumps.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change. Emit unused helpers and similar comparison-only candidates.
@@ -34,7 +35,7 @@ including ones the intent seat would skip without the PR body.
 
 1. Inspect the complete comparison. For working tree: `git diff HEAD` **and** every untracked path in the file list. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not skip them because they are absent from `git diff HEAD`. Do not `git add`.
    For a named patch or branch/PR three-dot: inspect that complete diff, plus enough surrounding code to name a candidate.
-2. Do not open the PR body or `context.md` to “understand intent.” Comparison only.
+2. Do not open the PR body or commit message to “understand intent.” Comparison only.
 3. Continue through the whole diff after the first candidate. Do not stop at one. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
 4. Write the candidate list. Include unused helpers when they are visible in the comparison. Stop. Do not apply gates. Do not assign P0–P3. Do not write the envelope.
 
@@ -62,7 +63,7 @@ No Findings. No Assessment. No Close. No severity.
 
 ## Failures
 
-- Reading the PR body, `context.md`, or a withheld procedure dump
+- Reading the PR body, commit message, or a withheld procedure dump
 - Applying `gates.md` or reading it
 - Writing Findings / Assessment / Close
 - Dropping unused helpers or other comparison-only candidates as pre-existing
