@@ -93,7 +93,7 @@ Read **sibling** skill files resolved from **this file’s directory**, not from
 
 If a cwd-relative Read of a sibling misses (user workspace is a different repo), resolve the sibling from the path you used to open **this** `SKILL.md`, or invoke the skill by name.
 
-Read the **seats** first. Do **not** Read `review-verify` or [gates.md](gates.md) until both seats have emitted candidates.
+Read the **seats** first. Do **not** Read `review-verify` until both seats have emitted candidates. Do **not** Read `gates.md` in this skill.
 
 - [../review-intent/SKILL.md](../review-intent/SKILL.md)
 - [../review-blind/SKILL.md](../review-blind/SKILL.md)
