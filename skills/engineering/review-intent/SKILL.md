@@ -12,7 +12,7 @@ disable-model-invocation: true
 Docs- and PR-aware seat. Generate **candidates** only. This skill does
 **not** apply gates and does **not** write Findings / Assessment / Close.
 
-This seat also runs in a fresh context. That context **does** include the PR body / commit message / procedure context the router passed.
+This seat also runs in a fresh context. That context **does** include the PR body / commit message / procedure context the router passed. Orient dumps are **not** automatic procedure context (same rule as GREEN tables). The router does not dump the whole orient transcript here.
 
 The router passes the comparison plus PR body / procedure context when
 those exist. This seat owns advertised-path and procedure-clash
@@ -21,7 +21,7 @@ candidates. It may also emit other intent- or docs-aware candidates.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Run in a fresh context. That context includes the PR body / commit message / procedure context the router passed.
+- Run in a fresh context. That context includes the PR body / commit message / procedure context the router passed. Orient dumps are not procedure context.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change. Emit it.
@@ -58,6 +58,7 @@ No Findings. No Assessment. No Close. No severity.
 | “Not introduced by this change — drop it” | Emit it. The verifier drops. |
 | “Write Findings so they see a review” | Envelope is `review-verify`. |
 | “No PR body, so skip advertised-path / procedure-clash” | Those classes are this seat when the router passed context. |
+| “Parent has orient — treat it as procedure context” | Orient dumps are not procedure context. Use what the router passed. |
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 
 ## Failures

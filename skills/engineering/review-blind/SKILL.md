@@ -15,12 +15,16 @@ Comparison-only seat. Generate **candidates** only. This skill does
 
 This seat must start in a fresh context that contains only the
 router-passed comparison, not the parent's window. The router does
-**not** pass the PR body, commit message, or GREEN tables / fixture protocol / scoring notes. Do not fetch them. Do not read a procedure
-dump the router withheld.
+**not** pass the PR body, commit message, onboard dumps, orient dumps,
+or GREEN tables / fixture protocol / scoring notes. Do not fetch them.
+Do not read a procedure dump the router withheld. Do not Read
+`orient-*` / catch-me-up dumps.
 
-Fetching the PR body, commit message, or GREEN tables / fixture protocol / scoring notes is a Failure. Running in a window that
-already had the PR body, onboard, implementing turn, or GREEN tables / fixture protocol / scoring notes is also a Failure — even if this
-skill says not to use it.
+Fetching the PR body, commit message, onboard dumps, orient dumps, or
+GREEN tables / fixture protocol / scoring notes is a Failure. Running
+in a window that already had the PR body, onboard, orient dumps,
+implementing turn, or GREEN tables / fixture protocol / scoring notes
+is also a Failure — even if this skill says not to use it.
 
 This seat may emit unused helpers and other comparison-only candidates,
 including ones the intent seat would skip without the PR body.
@@ -28,8 +32,8 @@ including ones the intent seat would skip without the PR body.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Start in a fresh context that contains only the router-passed comparison. A window that already had the PR body, onboard, implementing turn, or GREEN tables / fixture protocol / scoring notes is a Failure.
-- Do not read the PR body, commit message, GREEN tables / fixture protocol / scoring notes, or other withheld dumps.
+- Start in a fresh context that contains only the router-passed comparison. A window that already had the PR body, onboard, orient dumps, implementing turn, or GREEN tables / fixture protocol / scoring notes is a Failure.
+- Do not read the PR body, commit message, onboard dumps, orient dumps, GREEN tables / fixture protocol / scoring notes, or other withheld dumps.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change. Emit unused helpers and similar comparison-only candidates.
@@ -62,6 +66,7 @@ No Findings. No Assessment. No Close. No severity.
 | Excuse | Reality |
 |---|---|
 | “Read the PR so I understand intent” | Withhold is the job. Comparison only. |
+| “Read orient-* so I understand the files” | Withhold. Do not fetch orient / onboard dumps. |
 | “I’m in the parent window but I won’t use the body” | The window already had it. Isolation failed. |
 | “Apply gates.md; I’m being thorough” | Thorough is emit. Gates are `review-verify`. |
 | “Unused helpers were not introduced by this change — drop” | Emit them. The verifier drops. |
@@ -70,8 +75,8 @@ No Findings. No Assessment. No Close. No severity.
 
 ## Failures
 
-- Reading the PR body, commit message, GREEN tables / fixture protocol / scoring notes, or a withheld dump
-- Running in a window that already had the PR body, onboard, implementing turn, or GREEN tables / fixture protocol / scoring notes
+- Reading the PR body, commit message, onboard dumps, orient dumps, GREEN tables / fixture protocol / scoring notes, or a withheld dump
+- Running in a window that already had the PR body, onboard, orient dumps, implementing turn, or GREEN tables / fixture protocol / scoring notes
 - Applying `gates.md` or reading it
 - Writing Findings / Assessment / Close
 - Dropping unused helpers or other comparison-only candidates as pre-existing

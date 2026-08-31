@@ -18,6 +18,7 @@ seats and fan in to the verifier. This skill does **not** review and does
 - Do not apply [gates.md](gates.md). Do not write findings. That is `review-verify`.
 - Do not Read `gates.md` in this skill. Seats do not read it.
 - Run each seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
+- Do not run catch-me-up / orient-*. Orient is wrapper priming, not a seat and not a required step in this skill.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the seats or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
@@ -103,13 +104,13 @@ Do **not** restate `gates.md`. Do **not** apply it.
 
 **Pass to both seats:** comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase if they named one.
 
-**Pass to `review-intent` only:** PR body / commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes are not procedure context.
+**Pass to `review-intent` only:** PR body / commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes / orient dumps are not procedure context. Do not dump the whole orient transcript into intent.
 
-**Do not pass** the PR body, commit message, onboard dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes to `review-blind`. Do not run `review-blind` in a window that already had those.
+**Do not pass** the PR body, commit message, onboard dumps, orient dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes to `review-blind`. Do not run `review-blind` in a window that already had those. Do not pass orient / onboard dumps to `review-verify`.
 
 Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). Both seats emit candidates only. Do not skip a seat.
 
-The parent may hold the PR body — it has to pass it to `review-intent`. Reading sibling `SKILL.md` files to know what to dispatch is fine.
+The parent may hold the PR body — it has to pass it to `review-intent`. The parent may already hold orient / onboard dumps from wrapper priming (catch-me-up / orient-* on the cheap-resolve file list, then this router). That is GREEN, not a leak. This skill does not run catch-me-up / orient-*. Orient is not a seat and not a required step here. Reading sibling `SKILL.md` files to know what to dispatch is fine.
 
 If this harness cannot open a fresh context for a seat, **stop** and say so. Do not follow that seat in this turn. Withhold is not isolation.
 
@@ -124,15 +125,18 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Follow the seat in this turn; just don’t paste the body” | Isolation wins. Fresh context or stop. |
 | “This harness cannot open a fresh context — withhold is enough” | Stop and say so. Withhold is not isolation. |
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
+| “The parent already has orient / onboard; the seat will ignore it” | Parent-held dumps are GREEN. Copying them into the blind prompt or running the seat in that window is a leak. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
+| “Orient the file list first, then fan out” | Wrapper priming may do that. This router does not. |
 
 ## Red flags
 
 - Writing findings in the router
 - Applying gates in the router or telling a seat to read `gates.md`
 - Skipping a seat or handing the diff straight to `review-verify`
-- Parent leaked the PR body (or commit message / onboard / implementing turn / GREEN tables / fixture protocol / scoring notes) into the blind prompt or into the blind child's window
-- Child fetched the PR body / commit message anyway
+- Parent leaked the PR body (or commit message / onboard / orient dumps / implementing turn / GREEN tables / fixture protocol / scoring notes) into the blind prompt or into the blind child's window
+- Child fetched the PR body / commit message / onboard / orient dumps anyway
+- Running catch-me-up / orient-* from this skill, or treating orient as a fourth seat
 - Following a seat in this turn because the harness could not open a fresh context
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu

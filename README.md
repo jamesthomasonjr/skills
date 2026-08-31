@@ -61,7 +61,7 @@ These split on one axis: who can invoke them. **User-invoked** skills are reache
 - **[review-changes](./skills/engineering/review-changes/SKILL.md)** — Router for defect-first code review. Use when reviewing a change, PR, commit, or working tree. Classifies the comparison; fans out to seats then the verifier; does not review.
 - **[next-work](./skills/engineering/next-work/SKILL.md)** — Router for choosing the next piece of work. Use when asking what’s next or for a handoff prompt. Classifies the path; does not rank and does not write the handoff.
 
-`review-changes` fans out to [review-intent](./skills/engineering/review-intent/SKILL.md) + [review-blind](./skills/engineering/review-blind/SKILL.md) in fresh contexts, then [review-verify](./skills/engineering/review-verify/SKILL.md) applies `gates.md`.
+Live path: a wrapper may prime the parent with catch-me-up / orient-* on the cheap-resolve file list, then invoke `review-changes`. The parent may hold those dumps. Seats still run in fresh contexts: [review-intent](./skills/engineering/review-intent/SKILL.md) + [review-blind](./skills/engineering/review-blind/SKILL.md), then [review-verify](./skills/engineering/review-verify/SKILL.md) applies `gates.md`.
 
 The size-work family (`size-work`, `shape-initiative`, `shape-epic`, `shape-feature`, `shape-story`, `shape-task`) is in [`skills/in-progress/`](./skills/in-progress/) so it can be worked with specify-work as one workflow. It is not installed by the plugin.
 
