@@ -2,7 +2,7 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: `review-changes` classifies the comparison, then fans out. Each seat runs isolated: a fresh context containing only what the router passed (plus that seat's `SKILL.md`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, or the implementing turn. Then `review-verify` applies `gates.md` to the merged candidates. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+Protocol: `review-changes` classifies the comparison, then fans out. Each seat runs isolated: a fresh context containing only what the router passed (plus that seat's `SKILL.md`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes. Then `review-verify` applies `gates.md` to the merged candidates. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
 
 GREEN isolation is scored on the seat dump: the blind window contained only the comparison. It is not scored on the Findings block. Silence from `review-blind` is not a verify drop.
 

@@ -103,9 +103,9 @@ Do **not** restate `gates.md`. Do **not** apply it.
 
 **Pass to both seats:** comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase if they named one.
 
-**Pass to `review-intent` only:** PR body / commit message / procedure context when present.
+**Pass to `review-intent` only:** PR body / commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes are not procedure context.
 
-**Do not pass** the PR body, commit message, onboard dumps, or the implementing turn to `review-blind`. Do not run `review-blind` in a window that already had those.
+**Do not pass** the PR body, commit message, onboard dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes to `review-blind`. Do not run `review-blind` in a window that already had those.
 
 Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). Both seats emit candidates only. Do not skip a seat.
 
@@ -124,13 +124,14 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Follow the seat in this turn; just don’t paste the body” | Isolation wins. Fresh context or stop. |
 | “This harness cannot open a fresh context — withhold is enough” | Stop and say so. Withhold is not isolation. |
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
+| “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
 
 ## Red flags
 
 - Writing findings in the router
 - Applying gates in the router or telling a seat to read `gates.md`
 - Skipping a seat or handing the diff straight to `review-verify`
-- Parent leaked the PR body (or commit message / onboard / implementing turn) into the blind prompt or into the blind child's window
+- Parent leaked the PR body (or commit message / onboard / implementing turn / GREEN tables / fixture protocol / scoring notes) into the blind prompt or into the blind child's window
 - Child fetched the PR body / commit message anyway
 - Following a seat in this turn because the harness could not open a fresh context
 - Reviewing the whole repo because the target was vague
