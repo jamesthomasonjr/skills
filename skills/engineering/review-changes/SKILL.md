@@ -17,6 +17,7 @@ seats and fan in to the verifier. This skill does **not** review and does
 - Read-only. No edits, no commits, no pushes, no GitHub review comments.
 - Do not apply [gates.md](gates.md). Do not write findings. That is `review-verify`.
 - Do not Read `gates.md` in this skill. Seats do not read it.
+- Run each seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the seats or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
@@ -102,20 +103,37 @@ Do **not** restate `gates.md`. Do **not** apply it.
 
 **Pass to both seats:** comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase if they named one.
 
-**Pass to `review-intent` only:** PR body / commit message / procedure context when present.
+**Pass to `review-intent` only:** PR body / commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes are not procedure context.
 
-**Do not pass** the PR body or commit message to `review-blind`. That withhold is compose.
+**Do not pass** the PR body, commit message, onboard dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes to `review-blind`. Do not run `review-blind` in a window that already had those.
 
-Fan out to both seats (they emit candidates only). Follow `review-blind` without the PR body or commit message. Follow `review-intent` with those. Do not skip a seat.
+Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). Both seats emit candidates only. Do not skip a seat.
 
-Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it with both candidate lists. Do not keep a second review procedure here. Do not skip the verifier.
+The parent may hold the PR body — it has to pass it to `review-intent`. Reading sibling `SKILL.md` files to know what to dispatch is fine.
+
+If this harness cannot open a fresh context for a seat, **stop** and say so. Do not follow that seat in this turn. Withhold is not isolation.
+
+If two signals conflict, isolation wins over following a seat in this turn.
+
+Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with both candidate lists. Isolation is not a duty of `review-verify`. Do not keep a second review procedure here. Do not skip the verifier.
+
+## Isolation
+
+| Excuse | Reality |
+|---|---|
+| “Follow the seat in this turn; just don’t paste the body” | Isolation wins. Fresh context or stop. |
+| “This harness cannot open a fresh context — withhold is enough” | Stop and say so. Withhold is not isolation. |
+| “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
+| “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
 
 ## Red flags
 
 - Writing findings in the router
 - Applying gates in the router or telling a seat to read `gates.md`
 - Skipping a seat or handing the diff straight to `review-verify`
-- Passing the PR body or commit message to `review-blind`
+- Parent leaked the PR body (or commit message / onboard / implementing turn / GREEN tables / fixture protocol / scoring notes) into the blind prompt or into the blind child's window
+- Child fetched the PR body / commit message anyway
+- Following a seat in this turn because the harness could not open a fresh context
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu
 - Implementing because the bug is obvious
