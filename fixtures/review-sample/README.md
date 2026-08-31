@@ -2,6 +2,8 @@
 
 Tiny pricing module used to test the review skill family.
 
+Protocol: `review-changes` classifies the comparison, fans out to `review-intent` (PR/docs-aware) and `review-blind` (comparison only; no PR body / `context.md`), then `review-verify` applies `gates.md` to the merged candidates. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+
 `src/` is the parent (pre-change). Each file in `changes/` is a proposed patch against that parent.
 
 | Diff | What it is | Expected GREEN |
@@ -16,7 +18,7 @@ Tiny pricing module used to test the review skill family.
 | `changes/advertised-path-miss.diff` | Stop stdin `session_id`/`stop_hook_active` vs `_extract_handoff` `id`/`from`/`on`; `HOST_EXEC` claims Stop auto-exec | Numbered finding |
 | `changes/host-gap.diff` | Host has not advertised `native-worktree` yet | Residual-or-empty — not a numbered finding |
 
-`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs.
+`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs. GREEN is **seen-and-dropped**: a seat may emit them as candidates; the verifier drops them and parks at most one residual line in Assessment. Silent never-seen is not GREEN. Do not name a gate in the output envelope.
 
 Procedure parent: `procedure/`. Those diffs are against that tree (`-p1` from `fixtures/review-sample/`). `SKILL.md` and `paths.md` are procedure files. README and `docs/plan.md` are not.
 
