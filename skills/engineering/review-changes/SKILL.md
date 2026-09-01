@@ -26,7 +26,7 @@ This skill does **not** review and does **not** write findings.
 - After announce, run each gatherer in a fresh context. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
 - Run each seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
 - After gatherers, fan `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security or the other specialists.
-- Do not run catch-me-up / orient-*. Orient is wrapper priming, not a seat and not a required step in this skill. Do not skip a gatherer because the parent already holds that briefing.
+- Wrapper priming is not a required step. It is not a seat. Do not skip a gatherer because the parent already holds that briefing.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the gatherers, seats, or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
@@ -90,7 +90,7 @@ Fan out: after gatherers, run `review-blind`, `review-security`, `review-perform
 
 The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. The parent may hold the reconstruct blob — it seeds intent from that blob. That seed is GREEN. Onboard has no seat to seed; the parent may still hold that product. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. The blind candidate list (`title — path:line` entries, including leftovers) in the intent window is RED. A reconstruct sentence that names a helper is not that leak. Reconstruct blob in a specialist window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
 
-A wrapper may already have primed the parent with catch-me-up / orient-* on the file list `review-scope` returned, then invoked this router. That wrapper dump in the **verify** Follow stays GREEN. This skill does not run catch-me-up / orient-*. Orient is not a seat and not a required step here. Skipping a gatherer because that dump exists is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
+A wrapper may already have primed the parent on the file list `review-scope` returned, then invoked this router. That parent-held seed dump in the **verify** Follow stays GREEN. Wrapper priming is not a required step. It is not a seat. Skipping a gatherer because that dump exists is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
 
 If this harness cannot open a fresh context for a seat, **stop** and say so. Do not follow that seat in this turn. Withhold is not isolation.
 
@@ -126,7 +126,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Withhold orient from review-verify; it Follows in the parent” | Verify runs in the parent. Wrapper-then-router parent-held wrapper orient there stays GREEN. |
 | “Paste the review-scope follow transcript so the seat sees how we resolved” | Seats get the announced comparison / command / file list, not the follow transcript. Stuffing that dump into blind is RED. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
-| “Orient the file list first, then fan out” | Wrapper priming may do that. This router does not. Gatherers write the products. |
+| “Orient the file list first, then fan out” | This skill does not prime the parent. Gatherers write the products. |
 | “Read the security playbook so I can brief the seats” | A security seat Reads its own file. `review-changes` and `review-blind` do not. |
 | “Read a specialist playbook so I can brief the seats” | A specialist Reads its own file. `review-changes` and `review-blind` do not. |
 | “Copy the playbook into the blind prompt so it knows the threats” | Playbook in the blind dump is a leak. |
@@ -153,7 +153,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Fanning specialists after intent instead of with blind
 - Gatherer products, the reconstruct blob, or specialist playbooks pasted into the `review-verify` prompt as extra input (parent-held in that Follow window is not this leak)
 - A seat swallowed leftovers or applied gates
-- Running catch-me-up / orient-* from this skill, or treating orient as a fourth seat
+- Running wrapper priming from this skill, or treating wrapper priming as a seat
 - Following a seat in this turn because the harness could not open a fresh context
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu
