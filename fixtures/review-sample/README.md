@@ -2,13 +2,17 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: `review-changes` classifies the comparison, then fans out. Each seat runs isolated: a fresh context containing only what the router passed (plus that seat's `SKILL.md`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, or GREEN tables / fixture protocol / scoring notes. Then `review-verify` applies `gates.md` to the merged candidates. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+Protocol: `review-changes` classifies the comparison, then fans out. Each seat runs isolated: a fresh context containing only what the router passed (plus that seat's `SKILL.md`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security` Reads its own playbook in that window. Then `review-verify` applies `gates.md` to the merged candidates. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
 
 GREEN isolation is scored on the seat dump: the blind window contained only the comparison. It is not scored on the Findings block. Silence from `review-blind` is not a verify drop.
 
 GREEN parent-held orient: a wrapper primed the parent with catch-me-up / orient-* on the cheap-resolve file list, then invoked `review-changes`. The parent holds that dump. Seats open fresh. The blind dump has no orient. Parent-held orient is not a leak. `review-changes` does not run orient.
 
 RED leaked orient: the parent copied orient into the `review-blind` prompt or window, or the child fetched it.
+
+GREEN security playbook: the playbook is in the `review-security` dump only. The child Reads its own file in that window. `review-changes` and `review-blind` do not Read it.
+
+RED leaked playbook: the parent copied the security playbook / OWASP lists / CWE lists into the `review-blind` prompt or window, or the child fetched it.
 
 Score those letters on the seat dumps, same Failures as isolation. Do not add an isolation-only fixture diff. Do not reopen the GREEN rows below.
 
@@ -26,7 +30,7 @@ Score those letters on the seat dumps, same Failures as isolation. Do not add an
 | `changes/advertised-path-miss.diff` | Stop stdin `session_id`/`stop_hook_active` vs `_extract_handoff` `id`/`from`/`on`; `HOST_EXEC` claims Stop auto-exec | Numbered finding |
 | `changes/host-gap.diff` | Host has not advertised `native-worktree` yet | Residual-or-empty — not a numbered finding |
 
-`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs. GREEN is **seen-and-dropped**: a seat may emit them as candidates; the verifier drops them and parks at most one residual line in Assessment. Silent never-seen is not GREEN. Do not name a gate in the output envelope.
+`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs. GREEN is **seen-and-dropped**: a seat may emit them as candidates; the verifier drops them and parks at most one residual line in Assessment. Silent never-seen is not GREEN. Security leftovers visible in the comparison are the same class: emit, never swallow. Do not name a gate in the output envelope.
 
 Procedure parent: `procedure/`. Those diffs are against that tree (`-p1` from `fixtures/review-sample/`). `SKILL.md` and `paths.md` are procedure files. README and `docs/plan.md` are not.
 
