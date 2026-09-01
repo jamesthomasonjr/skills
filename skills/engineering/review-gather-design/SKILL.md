@@ -17,7 +17,7 @@ gates, and does **not** write findings or candidates.
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments.
 - Do not review. Do not write findings. Do not apply `gates.md`. Do not Read it.
-- Do not fan out to seats. Do not Follow `review-intent`, `review-blind`, `review-security`, or `review-verify`.
+- Do not fan out to seats. Do not Follow `review-intent`, `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, `review-checklist`, or `review-verify`.
 - Do not write candidates. Do not write Findings / Assessment / Close.
 - Do not hand off to another skill. This skill writes the product.
 - Do not dump a whole design doc. Excerpt the sections that cover the file list.
