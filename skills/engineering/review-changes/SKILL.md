@@ -96,7 +96,7 @@ If this harness cannot open a fresh context for a seat, **stop** and say so. Do 
 
 If two signals conflict, isolation wins over following a seat in this turn.
 
-Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with every announced seat candidate list. Isolation is not a duty of `review-verify`. Parent-held gatherer products in that window are GREEN (including onboard). Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not paste those products, the blob, or those playbooks into the verify prompt as extra input — that extra-briefing is RED. Wrapper-then-router parent-held *wrapper* orient in that window stays GREEN. Candidate lists only. Do not keep a second review procedure here. Do not skip the verifier.
+Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with every announced seat candidate list. Isolation is not a duty of `review-verify`. Parent-held gatherer products in that window are GREEN (including onboard). Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not paste those products, the blob, or those playbooks into the verify prompt as extra input — that extra-briefing is RED. Parent-held seed dump in that Follow window stays GREEN. Candidate lists only. Do not keep a second review procedure here. Do not skip the verifier.
 
 ## Isolation
 
@@ -123,7 +123,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Paste the reconstruct blob into review-verify as a fourth input” | Extra-briefing is the paste. All announced seat lists. Parent-held blob in that Follow window is GREEN. |
 | “Paste specialist playbooks into review-verify as extra input” | Extra-briefing is the paste. Candidate lists only. Parent-held playbooks in that Follow window are GREEN. |
 | “Withhold gatherer products from review-verify; the window already has them” | Verify Follows in the parent. Parent-held there (including onboard and the reconstruct blob) is GREEN. A fourth-input paste is the leak. |
-| “Withhold orient from review-verify; it Follows in the parent” | Verify runs in the parent. Wrapper-then-router parent-held wrapper orient there stays GREEN. |
+| “Withhold the seed dump from review-verify; it Follows in the parent” | Verify runs in the parent. Parent-held seed dump in that Follow stays GREEN. |
 | “Paste the review-scope follow transcript so the seat sees how we resolved” | Seats get the announced comparison / command / file list, not the follow transcript. Stuffing that dump into blind is RED. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
 | “Orient the file list first, then fan out” | This skill does not prime the parent. Gatherers write the products. |
