@@ -12,7 +12,7 @@ disable-model-invocation: true
 Docs- and PR-aware seat. Generate **candidates** only. This skill does
 **not** apply gates and does **not** write Findings / Assessment / Close.
 
-This seat also runs in a fresh context. That context **does** include the comparison, the PR body / design excerpt / commit message / procedure context the router passed, and the reconstructed-intent blob. Orient dumps and the onboard product are **not** procedure context (same rule as GREEN tables). Leftover titles from the blind candidate list are **not** procedure context and are **not** candidates to copy. The security playbook is not procedure context. The router does not dump a gatherer follow transcript here.
+This seat also runs in a fresh context. That context **does** include the comparison, the PR body / design excerpt / commit message / procedure context the router passed, and the reconstructed-intent blob. Orient dumps and the onboard product are **not** procedure context (same rule as GREEN tables). The blind candidate list (`title — path:line` entries, including leftovers) is **not** procedure context and is **not** a list of candidates to copy. The reconstruct blob may name what the diff appears to do. The security playbook is not procedure context. The router does not dump a gatherer follow transcript here.
 
 The router passes the comparison plus the PR-body and design-excerpt
 products when those exist, plus the reconstruct blob. This seat owns
@@ -22,11 +22,11 @@ other intent- or docs-aware candidates.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Run in a fresh context. That context includes the comparison, the PR body / design excerpt / commit message / procedure context the router passed, and the reconstructed-intent blob. Orient dumps and the onboard product are not procedure context. Leftover titles from the blind candidate list are not procedure context and are not candidates to copy. The security playbook is not procedure context. A window that already had leftover titles from blind is a Failure.
+- Run in a fresh context. That context includes the comparison, the PR body / design excerpt / commit message / procedure context the router passed, and the reconstructed-intent blob. Orient dumps and the onboard product are not procedure context. The blind candidate list (`title — path:line` entries, including leftovers) is not procedure context and is not a list of candidates to copy. The reconstruct blob may name what the diff appears to do. The security playbook is not procedure context. The blind candidate list in this window is a Failure. A reconstruct sentence that names a helper is not that Failure.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change. Emit it.
-- Review the passed comparison plus the PR / design / procedure context and the reconstruct blob the router passed. Do not tour the rest of the repo. Do not treat leftover titles from the blind sibling as candidates to copy.
+- Review the passed comparison plus the PR / design / procedure context and the reconstruct blob the router passed. Do not tour the rest of the repo. Do not treat the blind candidate list as candidates to copy.
 - Mixed turn (“review this, then fix it”): candidates only, then hand back to the compose. Do not implement.
 - If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.`
 - If invoked with a plan/spec/design and no procedure file in the comparison: `No candidates.` Point at `review-changes` (out of family is the router’s stop).
@@ -35,7 +35,7 @@ other intent- or docs-aware candidates.
 
 1. Inspect the complete comparison. For working tree: `git diff HEAD` **and** every untracked path in the file list. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not skip them because they are absent from `git diff HEAD`. Do not `git add`.
    For a named patch or branch/PR three-dot: inspect that complete diff, plus enough surrounding code to name a candidate.
-2. Read the PR body / design excerpt / procedure context and the reconstruct blob the router passed. Use them. Advertised-path misses and procedure clashes are this seat’s job when that context is present. Leftover titles from the blind sibling are not this context.
+2. Read the PR body / design excerpt / procedure context and the reconstruct blob the router passed. Use them. Advertised-path misses and procedure clashes are this seat’s job when that context is present. The blind candidate list is not this context.
 3. Continue through the whole diff after the first candidate. Do not stop at one. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
 4. Write the candidate list. Stop. Do not apply gates. Do not assign P0–P3. Do not write the envelope.
 
@@ -60,7 +60,8 @@ No Findings. No Assessment. No Close. No severity.
 | “Write Findings so they see a review” | Envelope is `review-verify`. |
 | “No PR body, so skip advertised-path / procedure-clash” | Those classes are this seat when the router passed context. |
 | “Parent has orient / onboard — treat it as procedure context” | Orient dumps and the onboard product are not procedure context. Use what the router passed. |
-| “Blind leftover titles are procedure context — copy them” | Leftover titles from the sibling are not procedure context and not candidates to copy. The blob is the seed. |
+| “Blind leftover titles are procedure context — copy them” | The sibling’s candidate list is not procedure context and not a list to copy. The blob is the seed. |
+| “The blob named a leftover helper — this window is already dirty” | A reconstruct sentence that names a helper is not the list. The list is the leak. |
 | “Parent has the security playbook — treat it as procedure context” | The playbook is not procedure context. Use what the router passed. |
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 
@@ -72,6 +73,6 @@ No Findings. No Assessment. No Close. No severity.
 - Implementing, editing, committing, pushing, or posting a GitHub review
 - Skipping advertised-path or procedure-clash when the router passed that context
 - Treating the security playbook, an orient dump, or the onboard product as procedure context
-- Treating leftover titles from the blind sibling as procedure context or as candidates to copy
-- A window that already had leftover titles from the blind candidate list
+- Treating the blind candidate list (`title — path:line` entries, including leftovers) as procedure context or as candidates to copy
+- The blind candidate list (`title — path:line` entries, including leftovers) was passed into this window. A reconstruct sentence that names a helper is not this Failure.
 - Touring the repo outside the comparison

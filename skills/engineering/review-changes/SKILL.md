@@ -24,7 +24,7 @@ Fan in to the verifier on the three candidate lists. This skill does
 - Do not open a fresh child for `review-scope`. Scope stays Follow-in-parent.
 - After announce, run each gatherer in a fresh context. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
 - Run each seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
-- After gatherers, fan `review-blind` and `review-security` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass leftover titles from blind into intent. Do not pass the blob to security.
+- After gatherers, fan `review-blind` and `review-security` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security.
 - Do not run catch-me-up / orient-*. Orient is wrapper priming, not a seat and not a required step in this skill. Do not skip a gatherer because the parent already holds that briefing.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the gatherers, seats, or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
@@ -69,7 +69,7 @@ Do **not** restate `gates.md`. Do **not** apply it. Do **not** Read the security
 
 **Pass to all three seats:** the announced comparison, comparison command, and file list only, mixed-turn fix request if any, optional focus phrase if they named one. Do not pass a different comparison. Do not pass a gatherer follow transcript. Do not pass the `review-scope` follow transcript.
 
-**Pass to `review-intent` only:** the `review-gather-pr` product (PR body) and the `review-gather-design` product (design excerpt) when those products are nonempty, plus commit message / procedure context when present, plus the reconstructed-intent blob `review-blind` emitted. GREEN tables / fixture protocol / scoring notes / orient dumps / the onboard product are not procedure context. Leftover titles from the blind candidate list are not procedure context. The security playbook is not procedure context. Do not dump a gatherer follow transcript into intent. Do not pass leftover titles from blind.
+**Pass to `review-intent` only:** the `review-gather-pr` product (PR body) and the `review-gather-design` product (design excerpt) when those products are nonempty, plus commit message / procedure context when present, plus the reconstructed-intent blob `review-blind` emitted. GREEN tables / fixture protocol / scoring notes / orient dumps / the onboard product are not procedure context. The blind candidate list is not procedure context. The security playbook is not procedure context. Do not dump a gatherer follow transcript into intent. Do not pass that list (`title — path:line` entries, including leftovers). A reconstruct sentence that names a helper is not that list.
 
 Onboard has no seat to seed. Do **not** pass the onboard product to `review-intent`, `review-blind`, or `review-security`. The parent may hold it.
 
@@ -81,7 +81,7 @@ A security seat Reads its own file. `review-changes` and `review-blind` do not. 
 
 Fan out: after gatherers, run `review-blind` and `review-security` **in parallel**, each in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). The security seat’s window is that comparison plus its own playbook — child Read of `playbook.md` is GREEN. Intent is the sequential edge: wait for the reconstruct blob, then run `review-intent` in a fresh context that contains the comparison, the PR-body and design-excerpt products, and that blob. Do not wait on leftover titles. All three seats emit candidates only. Blind also emits the reconstruct blob as a separate product. Do not skip a seat.
 
-The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. The parent may hold the reconstruct blob — it seeds intent from that blob. That seed is GREEN. Onboard has no seat to seed; the parent may still hold that product. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. Leftover titles from blind in the intent window are RED. Reconstruct blob in the security window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
+The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. The parent may hold the reconstruct blob — it seeds intent from that blob. That seed is GREEN. Onboard has no seat to seed; the parent may still hold that product. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. The blind candidate list (`title — path:line` entries, including leftovers) in the intent window is RED. A reconstruct sentence that names a helper is not that leak. Reconstruct blob in the security window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
 
 A wrapper may already have primed the parent with catch-me-up / orient-* on the file list `review-scope` returned, then invoked this router. That wrapper dump in the **verify** Follow stays GREEN. This skill does not run catch-me-up / orient-*. Orient is not a seat and not a required step here. Skipping a gatherer because that dump exists is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read the security playbook to dispatch.
 
@@ -105,7 +105,8 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Seed the gatherer follow transcript so the seat sees the research” | Seed the product only. Score the product in the parent seed, not the follow transcript. |
 | “Copy the gatherer product into review-blind so it has context” | Product or transcript in blind is RED. |
 | “Fan intent with blind and security; the blob can catch up” | Sequential edge is intent. Wait on the reconstruct blob, then run intent. |
-| “Pass leftover titles from blind so intent can copy them” | Leftover titles in the intent window are RED. The blob is the seed. |
+| “Pass leftover titles from blind so intent can copy them” | The blind candidate list (`title — path:line`) in the intent window is RED. The blob is the seed. A reconstruct sentence that names a helper is not this leak. |
+| “The blob named a leftover helper — RED the intent window” | The blob may name what the diff appears to do. The list is the leak, not a reconstruct sentence. |
 | “Pass the reconstruct blob to security so it knows intent” | Blob in the security window is RED. Security fans with blind. Comparison + playbook only. |
 | “Stuff the blob back into blind as extra briefing” | Blind produces the blob. Extra briefing in that window is RED. |
 | “Fold the blob into the blind candidate list so there is one dump” | The blob is its own dump product. Do not fold it into the candidate list. |
@@ -132,7 +133,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Parent leaked the PR body (or commit message / onboard / orient dumps / gatherer products / gatherer follow transcripts / the reconstructed-intent blob as extra briefing / implementing turn / GREEN tables / fixture protocol / scoring notes / the security playbook / OWASP lists / CWE lists / the `review-scope` follow transcript) into the blind prompt or into the blind child's window
 - Child fetched the PR body / commit message / onboard / orient dumps / gatherer products anyway
 - Blind child fetched the security playbook / OWASP lists / CWE lists
-- Leftover titles from the blind candidate list in the intent window
+- The blind candidate list (`title — path:line` entries, including leftovers) passed into the intent window (a reconstruct sentence that names a helper is not this leak)
 - Reconstruct blob in the security window, or security Read of that blob
 - Fanning intent in parallel with blind and security instead of waiting on the blob
 - Gatherer products or the reconstruct blob pasted into the `review-verify` prompt as a fourth input (parent-held in that Follow window is not this leak)
