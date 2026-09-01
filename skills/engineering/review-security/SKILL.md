@@ -61,8 +61,8 @@ No Findings. No Assessment. No Close. No severity.
 | Excuse | Reality |
 |--------|---------|
 | “Apply gates so only introduced issues pass” | Seats do not apply `gates.md`. Emit the candidate. |
-| “Not introduced / only newly reachable — drop it” | Emit it. The verifier drops. Swallow is never-seen. |
-| “Could be OWASP A01, but there’s no path — skip” | Emit it. The verifier drops. |
+| “Not introduced / only newly reachable — drop it” | Emit it. Swallow is never-seen, not a named residual. |
+| “Could be A01 — emit the category title” | Category name with no sink is not a candidate. |
 | “Write Findings so they see a review” | Envelope is `review-verify`. |
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 | “Audit the whole repo; security is the codebase” | Comparison only. This seat is not an existing-codebase audit. |
@@ -72,6 +72,7 @@ No Findings. No Assessment. No Close. No severity.
 - Applying `gates.md` or reading it
 - Writing Findings / Assessment / Close
 - Dropping a leftover or other comparison-visible candidate as pre-existing / not-introduced / only-newly-reachable
+- Emitting a category title, “could be A01,” or Top 10 recitation with no sink
 - Implementing, editing, committing, pushing, or posting a GitHub review
 - Touring the repo outside the comparison
 - Auditing “the codebase” instead of the passed comparison

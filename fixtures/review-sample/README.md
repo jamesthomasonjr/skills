@@ -30,7 +30,7 @@ Score those letters on the seat dumps, same Failures as isolation. Do not add an
 | `changes/advertised-path-miss.diff` | Stop stdin `session_id`/`stop_hook_active` vs `_extract_handoff` `id`/`from`/`on`; `HOST_EXEC` claims Stop auto-exec | Numbered finding |
 | `changes/host-gap.diff` | Host has not advertised `native-worktree` yet | Residual-or-empty — not a numbered finding |
 
-`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs. GREEN is **seen-and-dropped**: a seat may emit them as candidates; the verifier drops them and parks at most one residual line in Assessment. Silent never-seen is not GREEN. Security leftovers visible in the comparison are the same class: emit, never swallow. Do not name a gate in the output envelope.
+`unusedFormatCents` in `pricing.js` and `refundOrder` in `refunds.js` are **pre-existing**. They must not become numbered findings on the clean diffs. GREEN is **seen-and-dropped**: a seat may emit them as candidates; the verifier drops them and parks at most one residual line in Assessment. Silent never-seen is not GREEN. Security leftovers visible in the comparison are the same class: emit, never swallow. A category title, “could be A01” with no path, or a generic Top 10 recitation is not a security candidate. Do not name a gate in the output envelope.
 
 Procedure parent: `procedure/`. Those diffs are against that tree (`-p1` from `fixtures/review-sample/`). `SKILL.md` and `paths.md` are procedure files. README and `docs/plan.md` are not.
 
