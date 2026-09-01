@@ -52,13 +52,13 @@ Read the **seats** first. Do **not** Read `review-verify` until all three seats 
 
 Do **not** restate `gates.md`. Do **not** apply it. Do **not** Read the security playbook.
 
-**Pass to all three seats:** the comparison, comparison command, and file list `review-scope` returned, mixed-turn fix request if any, optional focus phrase if they named one. Do not pass a different comparison.
+**Pass to all three seats:** the announced comparison, comparison command, and file list only, mixed-turn fix request if any, optional focus phrase if they named one. Do not pass a different comparison. Do not pass the `review-scope` follow transcript.
 
 **Pass to `review-intent` only:** PR body / commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes / orient dumps are not procedure context. The security playbook is not procedure context. Do not dump the whole orient transcript into intent.
 
 A security seat Reads its own file. `review-changes` and `review-blind` do not. Do not copy playbook bytes into the blind prompt.
 
-**Do not pass** the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists to `review-blind`. Do not run `review-blind` in a window that already had those.
+**Do not pass** the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or the `review-scope` follow transcript to `review-blind` (or as extra briefing). Pass the announced comparison / command / file list only. Do not run `review-blind` in a window that already had those.
 
 Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). The security seat’s window is that comparison plus its own playbook — child Read of `playbook.md` is GREEN. All three seats emit candidates only. Do not skip a seat.
 
@@ -80,6 +80,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “The parent already has orient / onboard; the seat will ignore it” | Parent-held dumps are GREEN. Copying them into the blind prompt or running the seat in that window is a leak. |
 | “Withhold orient from review-verify; it Follows in the parent” | Verify runs in the parent. Parent-held dumps there are GREEN. |
 | “Open a fresh child for review-scope so isolation is clean” | Follow `review-scope` in the parent. A fresh child for scope is the gatherer shape, parked. |
+| “Paste the review-scope follow transcript so the seat sees how we resolved” | Seats get the announced comparison / command / file list, not the follow transcript. Stuffing that dump into blind is RED. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
 | “Orient the file list first, then fan out” | Wrapper priming may do that. This router does not. |
 | “Read the security playbook so I can brief the seats” | A security seat Reads its own file. `review-changes` and `review-blind` do not. |
@@ -93,7 +94,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Skipping a seat or handing the diff straight to `review-verify`
 - Duplicating `review-scope` tables, or passing seats a different comparison than it returned
 - Opening a fresh child for `review-scope` instead of Following in the parent
-- Parent leaked the PR body (or commit message / onboard / orient dumps / implementing turn / GREEN tables / fixture protocol / scoring notes / the security playbook / OWASP lists / CWE lists) into the blind prompt or into the blind child's window
+- Parent leaked the PR body (or commit message / onboard / orient dumps / implementing turn / GREEN tables / fixture protocol / scoring notes / the security playbook / OWASP lists / CWE lists / the `review-scope` follow transcript) into the blind prompt or into the blind child's window
 - Child fetched the PR body / commit message / onboard / orient dumps anyway
 - Blind child fetched the security playbook / OWASP lists / CWE lists
 - A seat swallowed leftovers or applied gates
