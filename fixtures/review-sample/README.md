@@ -2,9 +2,15 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope`, announces the comparison it returned, then fans out. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security`’s window is the comparison plus its own playbook — child Read of that playbook is GREEN. Then `review-verify` takes all three seat lists and applies `gates.md`. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope` **in the parent**, announces the comparison it returned, then fans out. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security`’s window is the comparison plus its own playbook — child Read of that playbook is GREEN. Then `review-verify` takes all three seat lists and applies `gates.md`. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
 
-Score comparison on the dumps: each seat’s comparison command matches what `review-scope` announced. Wrong base/tip (self-upstream, named default as `<tip>`) stay RED — those letters live in `review-scope` prose. Do not reopen the GREEN rows below.
+Score comparison on the dumps: each seat’s comparison command matches what `review-scope` returned. Wrong base/tip (self-upstream, named default as `<tip>`) stay RED — those letters live in `review-scope` prose. Wrong window is RED. Do not reopen the GREEN rows below.
+
+GREEN parent-held scope: `review-changes` Follows `review-scope` in the parent. The parent holds that comparison dump. Seats open fresh and receive that same comparison. Parent-held scope is not a leak.
+
+RED fresh child for scope: the router opened a fresh context for `review-scope` instead of Following in the parent. That is the gatherer shape, parked.
+
+RED stuffed scope into blind: the parent copied the `review-scope` dump into the `review-blind` prompt or window, or the **blind** child fetched it.
 
 GREEN isolation is scored on the seat dump: the blind window contained only the comparison. It is not scored on the Findings block. Silence from `review-blind` is not a verify drop.
 

@@ -19,7 +19,6 @@ findings.
 - Read-only. No edits, no commits, no pushes, no GitHub review comments.
 - Do not review. Do not write findings. Do not apply `gates.md`. Do not Read it.
 - Do not fan out to seats. Do not Follow `review-intent`, `review-blind`, `review-security`, or `review-verify`.
-- Do not run catch-me-up / orient-*.
 - Do not turn “the codebase” into a comparison. An existing-codebase audit is a later consumer, not this skill inventing a target.
 - Focus is an optional user-named phrase, not a menu. Do not infer modes.
 - Return the comparison to the consumer, then stop. Do not announce. Do not write `Nothing to review.` or `No candidates.` — the consumer writes its own empty stop.

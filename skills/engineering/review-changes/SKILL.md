@@ -28,11 +28,11 @@ review and does **not** write findings.
 
 ## 1. Resolve
 
-**REQUIRED:** Follow [../review-scope/SKILL.md](../review-scope/SKILL.md). Resolve that path from **this file’s directory**, not from cwd. Same sibling-path rule as the seats: `../review-scope/SKILL.md` means “next to this skill.” After `~/.cursor/skills/<name>` symlink or a plugin copy, `skills/engineering/review-*/SKILL.md` does not exist.
+**REQUIRED:** Follow [../review-scope/SKILL.md](../review-scope/SKILL.md) **in the parent**. Resolve that path from **this file’s directory**, not from cwd. Same sibling-path rule as the seats: `../review-scope/SKILL.md` means “next to this skill.” After `~/.cursor/skills/<name>` symlink or a plugin copy, `skills/engineering/review-*/SKILL.md` does not exist.
 
 If a cwd-relative Read of a sibling misses (user workspace is a different repo), resolve the sibling from the path you used to open **this** `SKILL.md`, or invoke the skill by name.
 
-`review-scope` returns the comparison, comparison command, and file list — or **empty** / **unresolvable**. Do not re-run its tables. Do not invent a different comparison.
+`review-scope` returns the comparison, comparison command, and file list — or **empty** / **unresolvable**. Do not re-run its tables. Do not invent a different comparison. Do not open a fresh child for `review-scope`. That is the gatherer shape, parked.
 
 ## 2. Announce and hand off
 
@@ -79,6 +79,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
 | “The parent already has orient / onboard; the seat will ignore it” | Parent-held dumps are GREEN. Copying them into the blind prompt or running the seat in that window is a leak. |
 | “Withhold orient from review-verify; it Follows in the parent” | Verify runs in the parent. Parent-held dumps there are GREEN. |
+| “Open a fresh child for review-scope so isolation is clean” | Follow `review-scope` in the parent. A fresh child for scope is the gatherer shape, parked. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
 | “Orient the file list first, then fan out” | Wrapper priming may do that. This router does not. |
 | “Read the security playbook so I can brief the seats” | A security seat Reads its own file. `review-changes` and `review-blind` do not. |
@@ -91,6 +92,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Applying gates in the router or telling a seat to read `gates.md`
 - Skipping a seat or handing the diff straight to `review-verify`
 - Duplicating `review-scope` tables, or passing seats a different comparison than it returned
+- Opening a fresh child for `review-scope` instead of Following in the parent
 - Parent leaked the PR body (or commit message / onboard / orient dumps / implementing turn / GREEN tables / fixture protocol / scoring notes / the security playbook / OWASP lists / CWE lists) into the blind prompt or into the blind child's window
 - Child fetched the PR body / commit message / onboard / orient dumps anyway
 - Blind child fetched the security playbook / OWASP lists / CWE lists
