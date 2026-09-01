@@ -1,6 +1,6 @@
 {
   "name": "jamesthomasonjr-skills",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "James Thomason Jr's personal agent skills for Cursor, Claude Code, and other coding agents.",
   "author": {
     "name": "James Thomason Jr",
@@ -26,6 +26,9 @@
     "./skills/engineering/debug-feedback-loop",
     "./skills/engineering/review-changes",
     "./skills/engineering/review-scope",
+    "./skills/engineering/review-gather-pr",
+    "./skills/engineering/review-gather-design",
+    "./skills/engineering/review-gather-onboard",
     "./skills/engineering/review-intent",
     "./skills/engineering/review-blind",
     "./skills/engineering/review-security",
