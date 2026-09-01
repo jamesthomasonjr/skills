@@ -27,7 +27,7 @@ candidates. It may also emit other intent- or docs-aware candidates.
 - Do not drop a candidate because it was not introduced by this change. Emit it.
 - Review the passed comparison plus the PR / procedure context the router passed. Do not tour the rest of the repo.
 - Mixed turn (“review this, then fix it”): candidates only, then hand back to the compose. Do not implement.
-- If invoked with no comparison: cheap-resolve as `review-changes` would. Empty/unresolvable → `No candidates.`
+- If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.`
 - If invoked with a plan/spec/design and no procedure file in the comparison: `No candidates.` Point at `review-changes` (out of family is the router’s stop).
 
 ## Procedure

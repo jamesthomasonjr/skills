@@ -73,7 +73,7 @@ Still **DROP**: wording nits, speculative “might break” with no this-PR adve
 - Verify the merged seat candidates only. Do not generate a fresh candidate list from the diff. Do not tour the rest of the repo.
 - Mixed turn (“review this, then fix it”): finish this review, then **hand back**. Do not implement. **Do not edit in this turn even if the user already asked for a fix** — that message is the review, not an implement go-ahead. They must send a **new message** after the review. Do not discard the fix request.
 - If invoked with a plan/spec/design and no procedure file in the comparison: stop. Out of family. Point at `shape-*`. Do not produce findings. Do not grill that prose. A `SKILL.md` or required playbook in the file list is not a plan — inspect it.
-- If invoked with no comparison: cheap-resolve as `review-changes` would. Empty/unresolvable → `Nothing to review.`
+- If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `Nothing to review.`
 - If all three seats have not handed over candidate lists, **stop**. Point at `review-changes`. Do not invent a list from the diff. Do not merge two lists and skip the third.
 
 ## Procedure

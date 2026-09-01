@@ -41,7 +41,7 @@ including ones the intent seat would skip without the PR body.
 - Do not drop a candidate because it was not introduced by this change. Emit unused helpers and similar comparison-only candidates.
 - Review the passed comparison only. Do not tour the rest of the repo.
 - Mixed turn (“review this, then fix it”): candidates only, then hand back to the compose. Do not implement.
-- If invoked with no comparison: cheap-resolve as `review-changes` would. Empty/unresolvable → `No candidates.`
+- If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.`
 
 ## Procedure
 

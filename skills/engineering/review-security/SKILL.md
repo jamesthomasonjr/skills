@@ -36,7 +36,7 @@ candidates.
 - Do not drop a candidate because it was not introduced by this change, or because it is only “newly reachable.” Emit leftovers visible in the comparison. Swallow is never-seen.
 - Review the passed comparison only. Do not tour the rest of the repo. Do not audit “the codebase.”
 - Mixed turn (“review this, then fix it”): candidates only, then hand back to the compose. Do not implement.
-- If invoked with no comparison: cheap-resolve as `review-changes` would. Empty/unresolvable → `No candidates.`
+- If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.`
 - If invoked with a plan/spec/design and no procedure file in the comparison: `No candidates.` Point at `review-changes` (out of family is the router’s stop).
 
 ## Procedure
