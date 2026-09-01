@@ -23,7 +23,7 @@ Never a numbered finding:
 - Anything a linter, formatter, or typechecker already enforces.
 - Speculative “might break” with no demonstrable call path. A this-PR advertised-path miss is not speculative (see Advertised paths).
 - Intentional behavior the diff is clearly aiming at. Designed idle-when-no-handoff does not cover a hook whose extractor can never see a handoff.
-- Pre-existing issues — at most **one residual-risk line** in Assessment, never a numbered finding. Host-not-advertised (example: native-worktree) is this residual class. A this-PR advertised-path miss is not.
+- Pre-existing issues — never a numbered finding. Host-not-advertised (example: native-worktree) is at most **one** Assessment residual line, separate from leftover lines, not counted in the 1–3 sentence cap. Seat-emitted leftovers that were dropped: Assessment names **each** leftover as extra lines under that heading (title + file:line), one leftover per line. Those leftover lines are not counted in the 1–3 sentence cap. Do not mix leftover titles with the host-not-advertised line. Do not number leftovers. A this-PR advertised-path miss is not residual.
 - A “Minor / nit / consider” bucket. There is no such bucket. Listing nits then labeling them “nits only” is still a failed empty pass.
 
 ## Severity
