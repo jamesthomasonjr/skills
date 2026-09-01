@@ -17,7 +17,12 @@ This seat’s window is the **comparison plus its own playbook**. Start
 in a fresh context. The router passes the comparison, comparison
 command, file list, mixed-turn fix request if any, and an optional
 focus phrase. It does **not** pass the playbook. It does **not**
-pass the onboard product. Onboard has no seat to seed.
+pass the onboard product. It does **not** pass the reconstructed-intent
+blob. Onboard has no seat to seed. This seat still fans with
+`review-blind`. The blob is not in this window.
+
+Do **not** Read the reconstruct blob. A window that already had it
+is a Failure.
 
 Child Read of [playbook.md](playbook.md) in this window is GREEN.
 Resolve that path from this file’s directory, not cwd. A
@@ -31,7 +36,7 @@ candidates.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Start in a fresh context whose window is the comparison plus this seat’s own playbook. Child Read of `playbook.md` is GREEN.
+- Start in a fresh context whose window is the comparison plus this seat’s own playbook. Child Read of `playbook.md` is GREEN. Do not Read the reconstructed-intent blob. A window that already had the blob is a Failure.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change, or because it is only “newly reachable.” Emit leftovers visible in the comparison. Swallow is never-seen.
@@ -71,6 +76,7 @@ No Findings. No Assessment. No Close. No severity.
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 | “Audit the whole repo; security is the codebase” | Comparison only. This seat is not an existing-codebase audit. |
 | “Fresh context means comparison only — skip playbook.md” | That is the blind letter. This window is comparison plus own playbook. Child Read is GREEN. |
+| “Read the reconstruct blob so I know intent” | Withhold. The blob in this window is a Failure. |
 
 ## Failures
 
@@ -81,3 +87,4 @@ No Findings. No Assessment. No Close. No severity.
 - Implementing, editing, committing, pushing, or posting a GitHub review
 - Touring the repo outside the comparison
 - Auditing “the codebase” instead of the passed comparison
+- Reading the reconstructed-intent blob, or running in a window that already had it

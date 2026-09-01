@@ -2,33 +2,39 @@
 name: review-blind
 description: >-
   Comparison-only candidate seat for defect-first review. Use when
-  review-changes hands off. Generates candidates only. Does not receive
-  the PR body, commit message, or the security playbook. Does not apply
-  gates and does not write Findings. Read-only.
+  review-changes hands off. Emits candidates and a reconstructed-intent
+  blob. Does not receive the PR body, commit message, or the security
+  playbook. Does not apply gates and does not write Findings. Read-only.
 disable-model-invocation: true
 ---
 
 # Review blind
 
-Comparison-only seat. Generate **candidates** only. This skill does
-**not** apply gates and does **not** write Findings / Assessment / Close.
+Comparison-only seat. Generate **candidates** and a separate
+**reconstructed-intent blob**. This skill does **not** apply gates
+and does **not** write Findings / Assessment / Close. Do **not**
+fold the blob into the candidate list.
 
 This seat must start in a fresh context that contains only the
 router-passed comparison, not the parent's window. The router does
 **not** pass the PR body, commit message, onboard dumps, orient dumps,
-gatherer products, gatherer follow transcripts, GREEN tables /
-fixture protocol / scoring notes, or the security playbook / OWASP
-lists / CWE lists. Do not fetch them. Do not read a procedure dump
-the router withheld. Do not Read gatherer products or follow
-transcripts. Do not Read the security playbook.
+gatherer products, gatherer follow transcripts, a reconstructed-intent
+blob as extra briefing, GREEN tables / fixture protocol / scoring
+notes, or the security playbook / OWASP lists / CWE lists. Do not
+fetch them. Do not read a procedure dump the router withheld. Do not
+Read gatherer products or follow transcripts. Do not Read the
+security playbook. This seat **produces** the reconstruct blob; it
+does not receive one.
 
 Fetching the PR body, commit message, onboard dumps, orient dumps,
-gatherer products, gatherer follow transcripts, GREEN tables /
-fixture protocol / scoring notes, or the security playbook / OWASP
-lists / CWE lists is a Failure. Running in a window that already had
-the PR body, onboard, orient dumps, gatherer products, implementing
-turn, GREEN tables / fixture protocol / scoring notes, or the security
-playbook is also a Failure — even if this skill says not to use it.
+gatherer products, gatherer follow transcripts, a reconstructed-intent
+blob as extra briefing, GREEN tables / fixture protocol / scoring
+notes, or the security playbook / OWASP lists / CWE lists is a
+Failure. Running in a window that already had the PR body, onboard,
+orient dumps, gatherer products, a reconstructed-intent blob as extra
+briefing, implementing turn, GREEN tables / fixture protocol /
+scoring notes, or the security playbook is also a Failure — even if
+this skill says not to use it.
 
 This seat may emit unused helpers and other comparison-only candidates,
 including ones the intent seat would skip without the PR body.
@@ -36,14 +42,14 @@ including ones the intent seat would skip without the PR body.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Start in a fresh context that contains only the router-passed comparison. A window that already had the PR body, onboard, orient dumps, gatherer products, implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook is a Failure.
-- Do not read the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or other withheld dumps.
+- Start in a fresh context that contains only the router-passed comparison. A window that already had the PR body, onboard, orient dumps, gatherer products, a reconstructed-intent blob as extra briefing, implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook is a Failure.
+- Do not read the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, a reconstructed-intent blob as extra briefing, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or other withheld dumps.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change. Emit unused helpers and similar comparison-only candidates.
 - Review the passed comparison only. Do not tour the rest of the repo.
-- Mixed turn (“review this, then fix it”): candidates only, then hand back to the compose. Do not implement.
-- If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.`
+- Mixed turn (“review this, then fix it”): candidates and the reconstruct blob, then hand back to the compose. Do not implement.
+- If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.` Empty blob.
 
 ## Procedure
 
@@ -51,7 +57,7 @@ including ones the intent seat would skip without the PR body.
    For a named patch or branch/PR three-dot: inspect that complete diff, plus enough surrounding code to name a candidate.
 2. Do not open the PR body, commit message, gatherer products, or the security playbook to “understand intent” or “know the threats.” Comparison only.
 3. Continue through the whole diff after the first candidate. Do not stop at one. Do not read files outside the file list except to demonstrate a call path for a candidate that already overlaps the diff.
-4. Write the candidate list. Include unused helpers when they are visible in the comparison. Stop. Do not apply gates. Do not assign P0–P3. Do not write the envelope.
+4. Write the candidate list. Include unused helpers when they are visible in the comparison. Then emit the reconstructed-intent blob (or beside the list). Stop. Do not apply gates. Do not assign P0–P3. Do not write the envelope. Do not fold the blob into the list.
 
 ## Candidates
 
@@ -63,7 +69,24 @@ Then one short why. No patch. No suggestion block.
 
 **Or**, if none: exactly `No candidates.`
 
+The reconstructed-intent blob is **not** a candidate. Do not fold it into this list.
+
 No Findings. No Assessment. No Close. No severity.
+
+## Reconstructed intent
+
+A short reconstruction of what this comparison appears to be doing,
+from the diff only. Its own dump product. After or beside the
+candidate list — never inside it.
+
+Not leftover titles. Not Findings. Not gates. Not extra briefing
+this seat was passed.
+
+If this comparison exists: always emit the blob — including when
+the candidate list is exactly `No candidates.` Intent needs it.
+
+If there is no comparison (empty/unresolvable): empty blob. Write
+exactly `No candidates.` and stop.
 
 ## Rationalizations
 
@@ -76,14 +99,20 @@ No Findings. No Assessment. No Close. No severity.
 | “Apply gates.md; I’m being thorough” | Thorough is emit. Gates are `review-verify`. |
 | “Unused helpers were not introduced by this change — drop” | Emit them. The verifier drops. |
 | “Write Findings so they see a review” | Envelope is `review-verify`. |
+| “Fold the reconstruct blob into the candidate list” | The blob is its own dump product. Candidates stay `title — path:line` or `No candidates.` |
+| “Leftover titles are the reconstruction” | Reconstruct is what the diff appears to do. Not leftover titles. |
+| “No candidates, so skip the blob” | A comparison still gets a blob. Empty blob only if no comparison. |
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 
 ## Failures
 
-- Reading the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or a withheld dump
-- Running in a window that already had the PR body, onboard, orient dumps, gatherer products, implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook
+- Reading the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, a reconstructed-intent blob as extra briefing, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or a withheld dump
+- Running in a window that already had the PR body, onboard, orient dumps, gatherer products, a reconstructed-intent blob as extra briefing, implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook
 - Applying `gates.md` or reading it
 - Writing Findings / Assessment / Close
+- Folding the reconstructed-intent blob into the candidate list
+- Writing leftover titles, Findings, or gates as the reconstruct blob
+- Skipping the reconstruct blob when a comparison exists
 - Dropping unused helpers or other comparison-only candidates as pre-existing
 - Implementing, editing, committing, pushing, or posting a GitHub review
 - Touring the repo outside the comparison
