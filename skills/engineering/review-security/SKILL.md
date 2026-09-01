@@ -16,7 +16,8 @@ Security-candidate seat. Generate **candidates** only. This skill does
 This seat’s window is the **comparison plus its own playbook**. Start
 in a fresh context. The router passes the comparison, comparison
 command, file list, mixed-turn fix request if any, and an optional
-focus phrase. It does **not** pass the playbook.
+focus phrase. It does **not** pass the playbook. It does **not**
+pass the onboard product. Onboard has no seat to seed.
 
 Child Read of [playbook.md](playbook.md) in this window is GREEN.
 Resolve that path from this file’s directory, not cwd. A

@@ -68,13 +68,15 @@ Do **not** restate `gates.md`. Do **not** apply it. Do **not** Read the security
 
 **Pass to `review-intent` only:** the `review-gather-pr` product (PR body) and the `review-gather-design` product (design excerpt) when those products are nonempty, plus commit message / procedure context when present. GREEN tables / fixture protocol / scoring notes / orient dumps / the onboard product are not procedure context. The security playbook is not procedure context. Do not dump a gatherer follow transcript into intent.
 
+Onboard has no seat to seed. Do **not** pass the onboard product to `review-intent`, `review-blind`, or `review-security`. The parent may hold it.
+
 A security seat Reads its own file. `review-changes` and `review-blind` do not. Do not copy playbook bytes into the blind prompt.
 
-**Do not pass** the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, the implementing turn, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or the `review-scope` follow transcript to `review-blind` (or as extra briefing). Pass the announced comparison / command / file list only. Do not run `review-blind` in a window that already had those.
+**Do not pass** the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, the implementing turn, GREEN tables / fixture protocol / scoring notes, the security playbook / OWASP lists / CWE lists, or the `review-scope` follow transcript to `review-blind`. Pass the announced comparison / command / file list only. Do not run `review-blind` in a window that already had those. Do not paste gatherer products into the `review-verify` prompt as a fourth input. Parent-held products in the verify Follow are not that leak.
 
 Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). The security seat’s window is that comparison plus its own playbook — child Read of `playbook.md` is GREEN. All three seats emit candidates only. Do not skip a seat.
 
-The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
+The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. Onboard has no seat to seed; the parent may still hold that product. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
 
 A wrapper may already have primed the parent with catch-me-up / orient-* on the file list `review-scope` returned, then invoked this router. That wrapper dump in the **verify** Follow stays GREEN. This skill does not run catch-me-up / orient-*. Orient is not a seat and not a required step here. Skipping a gatherer because that dump exists is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read the security playbook to dispatch.
 
@@ -82,7 +84,7 @@ If this harness cannot open a fresh context for a seat, **stop** and say so. Do 
 
 If two signals conflict, isolation wins over following a seat in this turn.
 
-Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with the three candidate lists. Isolation is not a duty of `review-verify`. Candidate lists only — do not paste gatherer dumps as extra briefing (that is RED). Wrapper-then-router parent-held *wrapper* orient in that window stays GREEN. Do not keep a second review procedure here. Do not skip the verifier.
+Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with the three candidate lists. Isolation is not a duty of `review-verify`. Parent-held gatherer products in that window are GREEN (including onboard). Do not paste those products into the verify prompt as a fourth input — that extra-briefing is RED. Wrapper-then-router parent-held *wrapper* orient in that window stays GREEN. Candidate lists only. Do not keep a second review procedure here. Do not skip the verifier.
 
 ## Isolation
 
@@ -97,7 +99,8 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Open a fresh child for review-scope so isolation is clean” | Follow `review-scope` in the parent. Fresh child for scope is still RED. |
 | “Seed the gatherer follow transcript so the seat sees the research” | Seed the product only. Score the product in the parent seed, not the follow transcript. |
 | “Copy the gatherer product into review-blind so it has context” | Product or transcript in blind is RED. |
-| “Paste gatherer dumps into review-verify as extra briefing” | Verify gets the three candidate lists. Gatherer dump extra-briefing verify is RED. |
+| “Paste gatherer products into review-verify as a fourth input” | Extra-briefing is the paste. Candidate lists only. Parent-held products in that Follow window are GREEN. |
+| “Withhold gatherer products from review-verify; the window already has them” | Verify Follows in the parent. Parent-held there (including onboard) is GREEN. A fourth-input paste is the leak. |
 | “Withhold orient from review-verify; it Follows in the parent” | Verify runs in the parent. Wrapper-then-router parent-held wrapper orient there stays GREEN. |
 | “Paste the review-scope follow transcript so the seat sees how we resolved” | Seats get the announced comparison / command / file list, not the follow transcript. Stuffing that dump into blind is RED. |
 | “GREEN tables / fixture protocol / scoring notes are not the PR body” | They still brief the seat. Withhold. |
@@ -118,7 +121,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Parent leaked the PR body (or commit message / onboard / orient dumps / gatherer products / gatherer follow transcripts / implementing turn / GREEN tables / fixture protocol / scoring notes / the security playbook / OWASP lists / CWE lists / the `review-scope` follow transcript) into the blind prompt or into the blind child's window
 - Child fetched the PR body / commit message / onboard / orient dumps / gatherer products anyway
 - Blind child fetched the security playbook / OWASP lists / CWE lists
-- Gatherer dumps pasted into `review-verify` as extra briefing
+- Gatherer products pasted into the `review-verify` prompt as a fourth input (parent-held in that Follow window is not this leak)
 - A seat swallowed leftovers or applied gates
 - Running catch-me-up / orient-* from this skill, or treating orient as a fourth seat
 - Following a seat in this turn because the harness could not open a fresh context
