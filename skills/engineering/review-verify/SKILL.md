@@ -110,7 +110,15 @@ Otherwise always emit these three blocks, in this order, with these headings:
 
    **Or**, if none survive: this block is exactly `No findings.`
 
-2. **Assessment** — 1–3 sentences: target + comparison, material test gaps. Host-not-advertised residual: at most one line, never leftover titles. When a seat emitted leftovers (unused helpers or other pre-existing candidates) and they were dropped, name **each** leftover (title + file:line), still under this heading. That class is not capped at one line. Silent drop is a Failure. Same leftover every review is the tracker; dropping it because it was named last PR is never-seen again. No Leftovers heading. No merge stamp. No LGTM. Do not name a gate here.
+2. **Assessment** — still this heading, in this order:
+
+   1–3 sentences: target + comparison, material test gaps only. That cap does not count leftover names or the host-not-advertised residual.
+
+   Host-not-advertised residual: at most one separate line, never leftover titles. Not a leftover line. Not counted in the sentence cap.
+
+   Seat-emitted leftovers that were dropped: extra lines under this heading, one leftover per line (title + file:line). Name **each**. These lines are not counted in the 1–3 sentence cap. Silent drop is a Failure. Same leftover every review is the tracker; dropping it because it was named last PR is never-seen again.
+
+   No Leftovers heading. No merge stamp. No LGTM. Do not name a gate here. Do not number leftovers.
 
 3. **Close** — required heading, one line. Mixed-turn: review is done; they must send a **new message** to implement. Otherwise: the review is finished (do not add findings).
 
@@ -145,6 +153,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “I’ll scan the diff for anything the seats missed” | Do not generate a fresh list. Verify the merged candidates. |
 | “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Assessment names each leftover. Not silent. |
 | “At most one residual line — pick one leftover” | That cap is host-not-advertised only. Name each seat-emitted leftover. |
+| “1–3 sentences — compress leftovers to one” | That cap is target / comparison / test gaps only. Leftover names are extra lines under Assessment. |
 | “We said this leftover last PR” | Repeating it every review is the tracker. Dropping it is never-seen again. |
 | “A Leftovers heading keeps them somewhere” | Fourth block. Minor-bucket bleed. Stay under Assessment. |
 | “Fold leftover titles into the host-gap residual” | Mix reopens host-gap. Host-not-advertised is a separate one-line residual. |
@@ -173,7 +182,9 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Stretching the procedure-file rule onto `hooks.json` or ordinary docs
 - Numbering a host-not-advertised capability gap
 - Silent drop of a seat-emitted leftover
+- Compressing leftover names to fit the 1–3 sentence cap
 - Mixing leftover titles with the host-not-advertised residual
 - A Leftovers heading
+- Numbering leftovers
 - Dropping a leftover because it was named last PR
 - Merging two lists and skipping the third
