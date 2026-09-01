@@ -2,7 +2,7 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: `review-changes` classifies the comparison, then fans out. Each seat runs isolated: a fresh context containing only what the router passed (plus that seat's `SKILL.md`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security` Reads its own playbook in that window. Then `review-verify` applies `gates.md` to the merged candidates. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+Protocol: `review-changes` classifies the comparison, then fans out. Each seat runs isolated in a fresh context. `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security`’s window is the comparison plus its own playbook — child Read of that playbook is GREEN. Then `review-verify` takes all three seat lists and applies `gates.md`. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
 
 GREEN isolation is scored on the seat dump: the blind window contained only the comparison. It is not scored on the Findings block. Silence from `review-blind` is not a verify drop.
 
@@ -10,11 +10,11 @@ GREEN parent-held orient: a wrapper primed the parent with catch-me-up / orient-
 
 RED leaked orient: the parent copied orient into the `review-blind` prompt or window, or the child fetched it.
 
-GREEN security playbook: the playbook is in the `review-security` dump only. The child Reads its own file in that window. `review-changes` and `review-blind` do not Read it.
+GREEN security playbook: the playbook is in the `review-security` dump only. The security seat Reads its own playbook in that window. That Read is GREEN. `review-changes` and `review-blind` do not Read it.
 
-RED leaked playbook: the parent copied the security playbook / OWASP lists / CWE lists into the `review-blind` prompt or window, or the child fetched it.
+RED leaked playbook: the parent copied the security playbook / OWASP lists / CWE lists into the `review-blind` prompt or window, or the **blind** child fetched it. A `review-security` Read of its own playbook is not this Failure.
 
-Score those letters on the seat dumps, same Failures as isolation. Do not add an isolation-only fixture diff. Do not reopen the GREEN rows below.
+Score playbook letters on the seat dumps. RED Failures are a blind-window playbook or a blind-child fetch — not a security-seat Read of `playbook.md`. Do not add an isolation-only fixture diff. Do not reopen the GREEN rows below.
 
 `src/` is the parent (pre-change). Each file in `changes/` is a proposed patch against that parent.
 

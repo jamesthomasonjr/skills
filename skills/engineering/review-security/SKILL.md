@@ -13,13 +13,16 @@ disable-model-invocation: true
 Security-candidate seat. Generate **candidates** only. This skill does
 **not** apply gates and does **not** write Findings / Assessment / Close.
 
-This seat must start in a fresh context that contains only what the
-router passed. The router passes the comparison, comparison command,
-file list, mixed-turn fix request if any, and an optional focus phrase.
-It does **not** pass this playbook. Read [playbook.md](playbook.md)
-in this window. Resolve that path from this file’s directory, not cwd.
+This seat’s window is the **comparison plus its own playbook**. Start
+in a fresh context. The router passes the comparison, comparison
+command, file list, mixed-turn fix request if any, and an optional
+focus phrase. It does **not** pass the playbook.
 
-`review-changes` and `review-blind` do not Read the playbook.
+Child Read of [playbook.md](playbook.md) in this window is GREEN.
+Resolve that path from this file’s directory, not cwd. A
+comparison-only window is the **blind** letter — not this seat.
+
+`review-changes` or `review-blind` Reading the playbook is RED.
 
 **REQUIRED:** Follow [playbook.md](playbook.md). Read it before writing
 candidates.
@@ -27,7 +30,7 @@ candidates.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Start in a fresh context that contains only the router-passed comparison. Read this seat’s own playbook here.
+- Start in a fresh context whose window is the comparison plus this seat’s own playbook. Child Read of `playbook.md` is GREEN.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change, or because it is only “newly reachable.” Emit leftovers visible in the comparison. Swallow is never-seen.
@@ -66,6 +69,7 @@ No Findings. No Assessment. No Close. No severity.
 | “Write Findings so they see a review” | Envelope is `review-verify`. |
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 | “Audit the whole repo; security is the codebase” | Comparison only. This seat is not an existing-codebase audit. |
+| “Fresh context means comparison only — skip playbook.md” | That is the blind letter. This window is comparison plus own playbook. Child Read is GREEN. |
 
 ## Failures
 

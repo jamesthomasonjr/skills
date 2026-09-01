@@ -111,7 +111,7 @@ A security seat Reads its own file. `review-changes` and `review-blind` do not. 
 
 **Do not pass** the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists to `review-blind`. Do not run `review-blind` in a window that already had those.
 
-Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). All three seats emit candidates only. Do not skip a seat.
+Fan out: run **each** seat in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). The security seat’s window is that comparison plus its own playbook — child Read of `playbook.md` is GREEN. All three seats emit candidates only. Do not skip a seat.
 
 The parent may hold the PR body — it has to pass it to `review-intent`. The parent may already hold orient / onboard dumps from wrapper priming (catch-me-up / orient-* on the cheap-resolve file list, then this router). That is GREEN, not a leak. This skill does not run catch-me-up / orient-*. Orient is not a seat and not a required step here. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read the security playbook to dispatch.
 
