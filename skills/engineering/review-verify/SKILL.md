@@ -110,11 +110,11 @@ Otherwise always emit these three blocks, in this order, with these headings:
 
    **Or**, if none survive: this block is exactly `No findings.`
 
-2. **Assessment** — 1–3 sentences: target + comparison, material test gaps, residual pre-existing risk (at most one line). When a seat emitted an unused helper or other pre-existing candidate and it was dropped, that drop is this residual line — seen, not silent. No merge stamp. No LGTM. Do not name a gate here.
+2. **Assessment** — 1–3 sentences: target + comparison, material test gaps. Host-not-advertised residual: at most one line, never leftover titles. When a seat emitted leftovers (unused helpers or other pre-existing candidates) and they were dropped, name **each** leftover (title + file:line), still under this heading. That class is not capped at one line. Silent drop is a Failure. Same leftover every review is the tracker; dropping it because it was named last PR is never-seen again. No Leftovers heading. No merge stamp. No LGTM. Do not name a gate here.
 
 3. **Close** — required heading, one line. Mixed-turn: review is done; they must send a **new message** to implement. Otherwise: the review is finished (do not add findings).
 
-No other sections. No “Nice to have.” No praise. No nit list after `No findings.`
+No other sections. No “Nice to have.” No praise. No nit list after `No findings.` No Leftovers heading.
 
 ## Rationalizations
 
@@ -122,7 +122,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 |---|---|
 | “Empty report looks unfinished” | `No findings.` is success. Inventing a finding is the failure. |
 | “Nits help the author” / “nits are fine” / “flag anything” | Nits are not findings. Drop them. Complete ≠ whitespace. |
-| “This pre-existing bug is serious” | Residual-risk line in Assessment. Never a numbered finding. |
+| “This pre-existing bug is serious” | Assessment names each seat-emitted leftover. Never a numbered finding. |
 | “It might fail in production” | Speculative → drop unless this PR advertised the path. For that class, stdin shape + extractor is the call path. Live eval is not required. |
 | “When in doubt, flag it” | When in doubt, **drop** — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. |
 | “Gate 5 wants a runtime user break” | Procedure victim is the next agent. Wrong stop / path / dispatch / empty pass / dropped step is the outcome. |
@@ -139,11 +139,15 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “git diff HEAD was empty, so nothing to review” | Untracked files are not in `git diff HEAD`. Inspect them when a candidate overlaps. Do not `git add`. |
 | “Designed idle-when-no-handoff covers this” | Idle is for no handoff. An extractor that can never see this hook’s stdin is a finding. |
 | “No live harness eval” | Gate 4 for this class is stdin shape + extractor. Live eval is not required. |
-| “Park it in Assessment residual” | Residual is host-not-advertised or a dropped pre-existing candidate. A this-PR advertised-path miss is a numbered finding. |
+| “Park it in Assessment residual” | Host-not-advertised residual is one line. Seat-emitted leftovers are named under Assessment, not this residual line. A this-PR advertised-path miss is a numbered finding. |
 | “hooks.json is a procedure file / unsatisfiable pair” | Do not stretch that rule onto `hooks.json` or ordinary docs. Use the advertised-path letter. |
 | “Host has not advertised native-worktree — finding” | Residual-or-empty. Never a numbered finding. |
 | “I’ll scan the diff for anything the seats missed” | Do not generate a fresh list. Verify the merged candidates. |
-| “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Assessment residual, not silent. |
+| “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Assessment names each leftover. Not silent. |
+| “At most one residual line — pick one leftover” | That cap is host-not-advertised only. Name each seat-emitted leftover. |
+| “We said this leftover last PR” | Repeating it every review is the tracker. Dropping it is never-seen again. |
+| “A Leftovers heading keeps them somewhere” | Fourth block. Minor-bucket bleed. Stay under Assessment. |
+| “Fold leftover titles into the host-gap residual” | Mix reopens host-gap. Host-not-advertised is a separate one-line residual. |
 | “Both seats handed over — merge those two” | Three lists. A skipped security list makes leftovers never-seen. |
 
 ## Failures
@@ -168,5 +172,8 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Parking that class in Assessment residual
 - Stretching the procedure-file rule onto `hooks.json` or ordinary docs
 - Numbering a host-not-advertised capability gap
-- Silent drop of a seat-emitted unused helper with no Assessment residual
+- Silent drop of a seat-emitted leftover
+- Mixing leftover titles with the host-not-advertised residual
+- A Leftovers heading
+- Dropping a leftover because it was named last PR
 - Merging two lists and skipping the third
