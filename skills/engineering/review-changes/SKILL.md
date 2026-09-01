@@ -19,7 +19,7 @@ This skill does **not** review and does **not** write findings.
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments.
-- Do not apply [gates.md](gates.md). Do not write findings. That is `review-verify`.
+- Do not apply `gates.md`. Do not write findings. That is `review-verify`.
 - Do not Read `gates.md` in this skill. Seats do not read it.
 - Do not duplicate `review-scope` tables here. Follow that sibling; pass what it returned.
 - Do not open a fresh child for `review-scope`. Scope stays Follow-in-parent.

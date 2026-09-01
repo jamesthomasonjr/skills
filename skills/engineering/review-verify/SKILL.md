@@ -14,7 +14,7 @@ gates, writes Findings / Assessment / Close. May return `No findings.`
 
 Does **not** generate a fresh candidate list from the diff.
 
-**REQUIRED:** Follow [../review-changes/gates.md](../review-changes/gates.md). Read it before writing findings. Resolve that path from this file’s directory, not cwd. After `~/.cursor/skills/review-verify` symlink, a bare `gates.md` read misses.
+**REQUIRED:** Follow [gates.md](gates.md). Read it before writing findings. `gates.md` is this skill’s sibling — resolve it from this file’s directory, not cwd. After `~/.cursor/skills/review-verify` symlink, a cwd-relative `gates.md` read misses.
 
 Do not paste the five gates into this file. If any gate is shaky, **drop**. When in doubt, drop — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss.
 
