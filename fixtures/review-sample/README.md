@@ -2,15 +2,27 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope` **in the parent**, announces the comparison it returned, then fans out. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). `review-intent` gets PR/docs context when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security`’s window is the comparison plus its own playbook — child Read of that playbook is GREEN. Then `review-verify` takes all three seat lists and applies `gates.md`. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close.
+Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope` **in the parent**, announces the comparison it returned, then fans `review-gather-pr` / `review-gather-design` / `review-gather-onboard` as **fresh children** and seeds from their **products**. Then fans the three seats. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). `review-intent` gets the PR-body and design-excerpt products when present. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, the implementing turn, GREEN tables / fixture protocol / scoring notes, or the security playbook / OWASP lists / CWE lists. `review-security`’s window is the comparison plus its own playbook — child Read of that playbook is GREEN. Then `review-verify` takes all three seat lists and applies `gates.md`. Isolation is not a duty of the verifier. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close. Gatherers return a product and stop. They do not write `Nothing to review.`
 
 Score comparison on the dumps: each seat’s comparison command matches what `review-scope` returned. Wrong base/tip (self-upstream, named default as `<tip>`) stay RED — those letters live in `review-scope` prose. Wrong window is RED. Do not reopen the GREEN rows below.
 
+Score gatherer products in the **parent seed**, not the gatherer follow transcript.
+
 GREEN parent-held scope: `review-changes` Follows `review-scope` in the parent. The parent holds that comparison dump. Seats open fresh and receive that same comparison. Parent-held scope is not a leak.
 
-RED fresh child for scope: the router opened a fresh context for `review-scope` instead of Following in the parent. That is the gatherer shape, parked.
+RED fresh child for scope: the router opened a fresh context for `review-scope` instead of Following in the parent. Scope stays Follow-in-parent.
 
 RED stuffed scope into blind: the parent copied the `review-scope` dump into the `review-blind` prompt or window, or the **blind** child fetched it.
+
+GREEN fresh-child gatherer: after announce, the router opened a fresh context for each of `review-gather-pr`, `review-gather-design`, and `review-gather-onboard`. Fresh child for these is GREEN (the opposite of `review-scope`).
+
+GREEN parent-seeded product: the parent seeded `review-intent` from the gatherer **product** (PR body, design excerpt when nonempty). Score that seed. The follow transcript is not the seed.
+
+RED product or transcript in blind: the parent copied a gatherer product or follow transcript into the `review-blind` prompt or window, or the **blind** child fetched it.
+
+RED gatherer dump extra-briefing verify: the parent pasted gatherer dumps into `review-verify` as extra briefing. Verify takes the three candidate lists. Wrapper-then-router parent-held *wrapper* orient in that Follow stays GREEN.
+
+RED skip-because-parent-has-orient: the router skipped a gatherer because the parent already held an orient / onboard dump.
 
 GREEN isolation is scored on the seat dump: the blind window contained only the comparison. It is not scored on the Findings block. Silence from `review-blind` is not a verify drop.
 
