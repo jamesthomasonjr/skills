@@ -31,9 +31,8 @@ comparison-only window is the **blind** letter — not this seat.
 `review-changes` or `review-blind` Reading the playbook is RED.
 
 This seat stays **comparison-only**. A candidate is a behavior the
-old side still had that this diff drops. Do not tour the repo. Do
-not run catch-me-up / orient-*. Touring the repo is the parked
-audit skill, not this seat.
+old side still had that this diff drops. Do not tour the repo.
+Touring the repo is the parked audit skill, not this seat.
 
 **REQUIRED:** Follow [playbook.md](playbook.md). Read it before writing
 candidates.
@@ -45,7 +44,7 @@ candidates.
 - Do not read or apply `gates.md`. Do not drop a candidate to “save the verifier work.”
 - Do not write Findings / Assessment / Close. That envelope is `review-verify`.
 - Do not drop a candidate because it was not introduced by this change, or because it is only “newly reachable.” Emit leftovers visible in the comparison. Swallow is never-seen.
-- Review the passed comparison only. Do not tour the rest of the repo. Do not audit “the codebase.” Do not run catch-me-up / orient-*.
+- Review the passed comparison only. Do not tour the rest of the repo. Do not audit “the codebase.”
 - Mixed turn (“review this, then fix it”): candidates only, then hand back to the compose. Do not implement.
 - If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `No candidates.`
 - If invoked with a plan/spec/design and no procedure file in the comparison: `No candidates.` Point at `review-changes` (out of family is the router’s stop).
@@ -77,7 +76,6 @@ No Findings. No Assessment. No Close. No severity.
 | “Apply gates so only introduced issues pass” | Seats do not apply `gates.md`. Emit the candidate. |
 | “Not introduced / only newly reachable — drop it” | Emit it. Swallow is never-seen, not a named residual. |
 | “Tour the repo so I know what still works” | Comparison only. The audit skill is parked. |
-| “Run catch-me-up / orient first so I see the old behavior” | Do not. This seat is not that skill. |
 | “Write Findings so they see a review” | Envelope is `review-verify`. |
 | “I’ll just fix it while I’m here” | Seat turn is read-only. Hand back to the compose. |
 | “Audit the whole repo; regression is the codebase” | Comparison only. This seat is not an existing-codebase audit. |
@@ -89,7 +87,7 @@ No Findings. No Assessment. No Close. No severity.
 - Applying `gates.md` or reading it
 - Writing Findings / Assessment / Close
 - Dropping a leftover or other comparison-visible candidate as pre-existing / not-introduced / only-newly-reachable
-- Touring the repo, or running catch-me-up / orient-*, to find old behavior
+- Touring the repo to find old behavior
 - Implementing, editing, committing, pushing, or posting a GitHub review
 - Auditing “the codebase” instead of the passed comparison
 - Reading the reconstructed-intent blob, or running in a window that already had it

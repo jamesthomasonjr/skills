@@ -17,8 +17,8 @@ A candidate names what breaks and where the sink is. This seat is
 **comparison-only**. Emit a candidate when the comparison shows a
 behavior the old side still had that this diff drops.
 
-Do not tour the repo. Do not run catch-me-up / orient-*. Touring
-the repo is the parked audit skill, not this playbook.
+Do not tour the repo. Touring the repo is the parked audit skill,
+not this playbook.
 
 ## Not a candidate
 

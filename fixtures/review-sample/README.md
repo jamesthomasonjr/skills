@@ -66,7 +66,7 @@ GREEN parent-held specialist playbooks in the verify Follow: the parent held tho
 
 GREEN no checklist path: no user-named checklist file → exact `No candidates.` Do not invent a path.
 
-GREEN regression comparison-only: `review-regression` stays comparison plus own playbook. Touring the repo is the audit skill. Do not plant catch-me-up / orient.
+GREEN regression comparison-only: `review-regression` stays comparison plus own playbook. Do not tour the repo.
 
 Score playbook letters on the seat dumps. RED Failures are a blind-window playbook, a router Read, or a blind-child fetch — not a specialist-seat Read of `playbook.md`. Do not add an isolation-only fixture diff. Do not reopen the GREEN rows below.
 
