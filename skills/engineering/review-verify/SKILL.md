@@ -2,7 +2,7 @@
 name: review-verify
 description: >-
   Verifier for defect-first review. Use when review-changes hands off
-  after both seats. Combines candidates, applies gates, writes Findings /
+  after all seats. Combines candidates, applies gates, writes Findings /
   Assessment / Close. May return No findings. Does not implement.
 disable-model-invocation: true
 ---
@@ -74,13 +74,13 @@ Still **DROP**: wording nits, speculative “might break” with no this-PR adve
 - Mixed turn (“review this, then fix it”): finish this review, then **hand back**. Do not implement. **Do not edit in this turn even if the user already asked for a fix** — that message is the review, not an implement go-ahead. They must send a **new message** after the review. Do not discard the fix request.
 - If invoked with a plan/spec/design and no procedure file in the comparison: stop. Out of family. Point at `shape-*`. Do not produce findings. Do not grill that prose. A `SKILL.md` or required playbook in the file list is not a plan — inspect it.
 - If invoked with no comparison: cheap-resolve as `review-changes` would. Empty/unresolvable → `Nothing to review.`
-- If the seats have not handed over candidate lists, **stop**. Point at `review-changes`. Do not invent a list from the diff.
+- If all three seats have not handed over candidate lists, **stop**. Point at `review-changes`. Do not invent a list from the diff. Do not merge two lists and skip the third.
 
 ## Procedure
 
-If this is a stop path (empty/unresolvable, plan/spec/design with no procedure file in the comparison, or seats have not handed over lists), skip steps 1–5. Write only the stop.
+If this is a stop path (empty/unresolvable, plan/spec/design with no procedure file in the comparison, or all three seats have not handed over lists), skip steps 1–5. Write only the stop.
 
-1. Take both seat candidate lists. Combine, dedupe, organize. Do not add a candidate that neither seat emitted.
+1. Take all three seat candidate lists. Combine, dedupe, organize. Do not add a candidate that no seat emitted. Do not wait on two lists.
 2. Inspect enough of the comparison to apply the gates to those candidates — not to hunt a new list. For working tree: `git diff HEAD` **and** every untracked path in the file list when a candidate overlaps them. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not `git add`.
    For a named patch or branch/PR three-dot: inspect the overlapping hunks plus enough surrounding code and tests to confirm each merged candidate.
 3. Apply every gate in `gates.md` to each merged candidate. Drop if any is shaky — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. When a procedure file is in the file list, apply the Procedure files letter. When this change’s own hook, header, or extractor advertises a path, apply the Advertised paths letter. Live harness eval is not required for that class. Do not require application runtime for a procedure-file pair.
@@ -94,7 +94,7 @@ These are **not** empty reviews. Do **not** emit Findings, Assessment, or Close.
 
 - Empty or unresolvable target: exactly `Nothing to review.`
 - Plan / spec / design with no procedure file in the comparison: 1–2 sentences, point at `shape-*`, stop.
-- Seats have not handed over candidate lists: 1–2 sentences, point at `review-changes`, stop.
+- All three seats have not handed over candidate lists: 1–2 sentences, point at `review-changes`, stop.
 
 ## Output contract (in order)
 
@@ -144,6 +144,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “Host has not advertised native-worktree — finding” | Residual-or-empty. Never a numbered finding. |
 | “I’ll scan the diff for anything the seats missed” | Do not generate a fresh list. Verify the merged candidates. |
 | “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Assessment residual, not silent. |
+| “Both seats handed over — merge those two” | Three lists. A skipped security list makes leftovers never-seen. |
 
 ## Failures
 
@@ -168,3 +169,4 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Stretching the procedure-file rule onto `hooks.json` or ordinary docs
 - Numbering a host-not-advertised capability gap
 - Silent drop of a seat-emitted unused helper with no Assessment residual
+- Merging two lists and skipping the third
