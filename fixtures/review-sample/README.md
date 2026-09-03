@@ -2,7 +2,7 @@
 
 Tiny pricing module used to test the review skill family.
 
-Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope` **in the parent**, announces the comparison it returned, then fans `review-gather-pr` / `review-gather-design` / `review-gather-onboard` as **fresh children** and seeds from their **products**. Then fans `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). `review-intent` gets the PR-body and design-excerpt products when present, plus the reconstruct blob. The blind candidate list (`title — path:line` entries, including leftovers) is not passed into that window. The blob may name what the diff appears to do. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, the implementing turn, GREEN tables / fixture protocol / scoring notes, or specialist playbooks / OWASP lists / CWE lists. Blind still emits `candidates` / `No candidates.` plus a **separate** reconstructed-intent blob. Do not fold that blob into the candidate list. `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` still fan with blind. Each window is the comparison plus its own playbook — child Read of that playbook is GREEN (checklist: plus a user-named file when they named one). The reconstruct blob is not in those windows. Then `review-verify` Follows **in the parent** on every announced seat list, Reads its own sibling `gates.md` from that skill’s directory (not cwd), and applies it. Isolation is not a duty of the verifier. Parent-held gatherer products in that window are GREEN. Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not pass the blob or those playbooks to verify as extra input. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close. Gatherers return a product and stop. They do not write `Nothing to review.` Onboard has no seat to seed — `review-intent` gets PR body + design excerpt + the reconstruct blob. Do not pass onboard to `review-security` or the other specialists. The parent may hold the onboard product; that hold is not a verify leak. Score sequential letters on the dumps, not the agent.
+Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope` **in the parent**, announces the comparison it returned, chooses the pack **once** from the caller (`full` default / `core` opt-in), then fans `review-gather-pr` / `review-gather-design` / `review-gather-onboard` as **fresh children** and seeds from their **products**. Skip a gatherer only when the parent already holds that gatherer’s **product** (PR body / design excerpt). Primer dump ≠ product. Default `full` then fans `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). Identical comparison **bytes** across parallel seats stay GREEN. Do not stuff playbooks into that shared seed. Intent’s seed stays PR+design+blob — do not cache it with the others. `review-intent` gets the PR-body and design-excerpt products when present, plus the reconstruct blob. The blind candidate list (`title — path:line` entries, including leftovers) is not passed into that window. The blob may name what the diff appears to do. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, the implementing turn, GREEN tables / fixture protocol / scoring notes, or specialist playbooks / OWASP lists / CWE lists. Blind stays comparison-only on either pack. Blind still emits `candidates` / `No candidates.` plus a **separate** reconstructed-intent blob. Do not fold that blob into the candidate list. `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` still fan with blind when announced. Each window is the comparison plus its own playbook — child Read of that playbook is GREEN (checklist: plus a user-named file when they named one). The reconstruct blob is not in those windows. Then `review-verify` Follows **in the parent** on every announced seat list, Reads its own sibling `gates.md` from that skill’s directory (not cwd), and applies it. Isolation is not a duty of the verifier. Parent-held gatherer products in that window are GREEN. Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not pass the pack name, the blob, those products, or those playbooks to verify as extra input. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Close. Gatherers return a product and stop. They do not write `Nothing to review.` Onboard has no seat to seed — `review-intent` gets PR body + design excerpt + the reconstruct blob. Do not pass onboard to `review-security` or the other specialists. The parent may hold the onboard product; that hold is not a verify leak. Score sequential letters on the dumps, not the agent. Score packs on the dumps: the announced set versus the lists verify took.
 
 Score comparison on the dumps: each seat’s comparison command matches what `review-scope` returned. Wrong base/tip (self-upstream, named default as `<tip>`) stay RED — those letters live in `review-scope` prose. Wrong window is RED. Do not reopen the GREEN rows below.
 
@@ -14,7 +14,7 @@ RED fresh child for scope: the router opened a fresh context for `review-scope` 
 
 RED stuffed scope into blind: the parent copied the `review-scope` dump into the `review-blind` prompt or window, or the **blind** child fetched it.
 
-GREEN fresh-child gatherer: after announce, the router opened a fresh context for each of `review-gather-pr`, `review-gather-design`, and `review-gather-onboard`. Fresh child for these is GREEN (the opposite of `review-scope`).
+GREEN fresh-child gatherer: after announce, the router opened a fresh context for each gatherer the parent did not already hold a **product** for. Fresh child for these is GREEN (the opposite of `review-scope`).
 
 GREEN parent-seeded product: the parent seeded `review-intent` from the gatherer **product** (PR body, design excerpt when nonempty). Score that seed. The follow transcript is not the seed. Onboard has no seat to seed.
 
@@ -25,6 +25,10 @@ RED product or transcript in blind: the parent copied a gatherer product or foll
 RED gatherer dump extra-briefing verify: the parent pasted gatherer products into the `review-verify` prompt as a **fourth input**. Candidate lists only. Parent-held products already in that window are not this Failure.
 
 RED skip-because-parent-has-orient: the router skipped a gatherer because the parent already held an orient / onboard dump.
+
+GREEN gatherer skip-because-product: the router skipped a gatherer because the parent already held that gatherer’s **product** (PR body / design excerpt). Parent-held product in the verify Follow stays GREEN.
+
+RED skip-because-primer: the router skipped a gatherer because the parent held a primer dump. Primer dump ≠ product. Skip-because-primer stays RED.
 
 GREEN isolation is scored on the seat dump: the blind window received only the comparison. The reconstructed-intent blob in that dump is this seat’s own product, not extra briefing. It is not scored on the Findings block. Silence from `review-blind` is not a verify drop.
 
@@ -54,13 +58,27 @@ RED leaked specialist playbook: the parent copied a specialist playbook into the
 
 RED reconstruct blob in a specialist window: the reconstruct blob was in the performance / logic / regression / checklist window, or that child Read it. Those seats fan with blind. Comparison + own playbook only.
 
-GREEN fan with blind: after gatherers, the router fanned `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` in parallel. Intent still waits on the reconstruct blob.
+GREEN fan with blind: after gatherers, pack `full` (default) fanned `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` in parallel. Intent still waits on the reconstruct blob.
 
 RED specialists after intent: the router fanned those specialists after intent instead of with blind.
 
 GREEN verify all announced lists: `review-verify` took every announced seat candidate list. Skip a specialist and leftovers are never-seen (same #31 miss).
 
 RED skip a specialist list: the verifier merged a subset and skipped an announced seat.
+
+GREEN pack full: pack `full` (default or caller-named) announced today’s six (blind, security, performance, logic, regression, checklist) in parallel plus intent sequential. Verify took every announced list.
+
+GREEN pack core: caller named `core`. Announced blind + intent + security only. Verify took those three lists. Unannounced specialists (performance / logic / regression / checklist) are absent from the dumps. Absent unannounced is not never-seen.
+
+RED missing announced list: an announced seat list never reached verify (same #31 never-seen). Unannounced specialists are not this Failure.
+
+RED mid-run invent / dynamic omit: the router added a seat the pack did not announce, or dropped an announced seat because the diff “didn’t need” it. Pack is chosen once. Inventing a pack from the diff is this Failure.
+
+GREEN blind comparison-only either pack: the blind dump is comparison only on `full` and on `core`.
+
+GREEN shared comparison bytes: identical comparison bytes across parallel announced seats. Stuffing playbooks into that shared seed is RED (router / blind Read). Intent’s seed stays PR+design+blob — do not cache it with the others.
+
+Score packs on the dumps: the announced set versus the lists verify took. Do not score the agent.
 
 GREEN parent-held specialist playbooks in the verify Follow: the parent held those playbooks or products, then `review-verify` Followed in that window. Parent-held there is GREEN. Pasting them as extra briefing / extra input is RED. Candidate lists only.
 
