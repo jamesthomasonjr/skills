@@ -3,14 +3,15 @@ name: review-verify
 description: >-
   Verifier for defect-first review. Use when review-changes hands off
   after announced seats. Combines candidates, applies gates, writes Findings /
-  Assessment / Close. May return No findings. Does not implement.
+  Assessment / Follow-ups (omit if empty). May return No findings. Does not implement.
 disable-model-invocation: true
 ---
 
 # Review verify
 
 Read-only verifier for **this change**. Combines seat candidates, applies
-gates, writes Findings / Assessment / Close. May return `No findings.`
+gates, writes Findings / Assessment / Follow-ups (omit Follow-ups when
+there are no seat-emitted leftovers). May return `No findings.`
 
 Does **not** generate a fresh candidate list from the diff.
 
@@ -88,9 +89,9 @@ If this is a stop path (empty/unresolvable, plan/spec/design with no procedure f
 5. Assign P0–P3 only to survivors.
 6. If this is a **stop path**, write only that stop (below). Otherwise write the output contract. Then stop (or hand back).
 
-## Stop paths (no three-block contract)
+## Stop paths (no envelope)
 
-These are **not** empty reviews. Do **not** emit Findings, Assessment, or Close.
+These are **not** empty reviews. Do **not** emit Findings, Assessment, or Follow-ups.
 
 - Empty or unresolvable target: exactly `Nothing to review.`
 - Plan / spec / design with no procedure file in the comparison: 1–2 sentences, point at `shape-*`, stop.
@@ -100,7 +101,7 @@ These are **not** empty reviews. Do **not** emit Findings, Assessment, or Close.
 
 Skip this entire section on stop paths.
 
-Otherwise always emit these three blocks, in this order, with these headings:
+Otherwise emit these headings, in this order:
 
 1. **Findings** — one entry per survivor, severity-first:
 
@@ -110,19 +111,27 @@ Otherwise always emit these three blocks, in this order, with these headings:
 
    **Or**, if none survive: this block is exactly `No findings.`
 
-2. **Assessment** — still this heading, in this order:
+   Mixed-turn (“review this, then fix it”): after this block, one line — they must send a **new message** to implement. Not a heading.
 
-   1–3 sentences: target + comparison, material test gaps only. That cap does not count leftover names or the host-not-advertised residual.
+2. **Assessment** — still this heading:
 
-   Host-not-advertised residual: at most one separate line, never leftover titles. Not a leftover line. Not counted in the sentence cap.
+   1–3 sentences: target + comparison, material test gaps only. No leftover names under this heading.
 
-   Seat-emitted leftovers that were dropped: extra lines under this heading, one leftover per line (title + file:line). Name **each**. These lines are not counted in the 1–3 sentence cap. Silent drop is a Failure. Same leftover every review is the tracker; dropping it because it was named last PR is never-seen again.
+   Host-not-advertised residual: at most one separate line, never leftover titles. Not a leftover line. Not mixed into Follow-ups. Not counted in the sentence cap.
 
-   No Leftovers heading. No merge stamp. No LGTM. Do not name a gate here. Do not number leftovers.
+   No merge stamp. No LGTM. Do not name a gate here.
 
-3. **Close** — required heading, one line. Mixed-turn: review is done; they must send a **new message** to implement. Otherwise: the review is finished (do not add findings).
+3. **Follow-ups** — only seat-emitted leftovers that failed gate 3. One leftover per line (`title — path:line`). Unnumbered. Name **each**. Same contents as leftover lines that used to sit under Assessment.
 
-No other sections. No “Nice to have.” No praise. No nit list after `No findings.` No Leftovers heading.
+   Omit this heading when there are none. Do not require it.
+
+   Not G5 nits. Not speculative drops. Not `dropped: N`. Those are minor-bucket bleed.
+
+   Silent drop is a Failure. Same leftover every review is the tracker; dropping it because it was named last PR is never-seen again.
+
+   Do not number leftovers. Do not mix leftover titles with the host-not-advertised residual.
+
+No Close. No other sections. No “Nice to have.” No praise. No nit list after `No findings.`
 
 ## Rationalizations
 
@@ -130,7 +139,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 |---|---|
 | “Empty report looks unfinished” | `No findings.` is success. Inventing a finding is the failure. |
 | “Nits help the author” / “nits are fine” / “flag anything” | Nits are not findings. Drop them. Complete ≠ whitespace. |
-| “This pre-existing bug is serious” | Assessment names each seat-emitted leftover. Never a numbered finding. |
+| “This pre-existing bug is serious” | Follow-ups names each seat-emitted leftover. Never a numbered finding. Assessment stays 1–3 sentences. |
 | “It might fail in production” | Speculative → drop unless this PR advertised the path. For that class, stdin shape + extractor is the call path. Live eval is not required. |
 | “When in doubt, flag it” | When in doubt, **drop** — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. |
 | “Gate 5 wants a runtime user break” | Procedure victim is the next agent. Wrong stop / path / dispatch / empty pass / dropped step is the outcome. |
@@ -143,20 +152,23 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “A Minor section keeps the nits somewhere” | There is no nit bucket. Drop them. Listing nits then calling them nits is still a fail. |
 | “Thorough means more findings” | Thorough means every qualifying defect, and nothing else. |
 | “They asked me to be a critical reviewer of a plan” | Out of family when no procedure file is in the comparison. Stop. Point at `shape-*`. Do not grill that prose. |
-| “Always emit Findings / Assessment / Close” | Only after a real comparison. Stop paths skip the contract. Do not wrap `Nothing to review.` |
+| “Always emit Findings / Assessment / Close” | Findings and Assessment after a real comparison. Follow-ups only when leftovers exist. No Close. Stop paths skip the envelope. Do not wrap `Nothing to review.` |
 | “git diff HEAD was empty, so nothing to review” | Untracked files are not in `git diff HEAD`. Inspect them when a candidate overlaps. Do not `git add`. |
 | “Designed idle-when-no-handoff covers this” | Idle is for no handoff. An extractor that can never see this hook’s stdin is a finding. |
 | “No live harness eval” | Gate 4 for this class is stdin shape + extractor. Live eval is not required. |
-| “Park it in Assessment residual” | Host-not-advertised residual is one line. Seat-emitted leftovers are named under Assessment, not this residual line. A this-PR advertised-path miss is a numbered finding. |
+| “Park it in Assessment residual” | Host-not-advertised residual is one line. Seat-emitted leftovers are named under Follow-ups, not this residual line. A this-PR advertised-path miss is a numbered finding. |
 | “hooks.json is a procedure file / unsatisfiable pair” | Do not stretch that rule onto `hooks.json` or ordinary docs. Use the advertised-path letter. |
 | “Host has not advertised native-worktree — finding” | Residual-or-empty. Never a numbered finding. |
 | “I’ll scan the diff for anything the seats missed” | Do not generate a fresh list. Verify the merged candidates. |
-| “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Assessment names each leftover. Not silent. |
-| “At most one residual line — pick one leftover” | That cap is host-not-advertised only. Name each seat-emitted leftover. |
-| “1–3 sentences — compress leftovers to one” | That cap is target / comparison / test gaps only. Leftover names are extra lines under Assessment. |
+| “Drop unused helpers before listing them” | Seats emit them. This leaf drops them. Follow-ups names each leftover. Not silent. |
+| “At most one residual line — pick one leftover” | That cap is host-not-advertised only. Name each seat-emitted leftover under Follow-ups. |
+| “1–3 sentences — compress leftovers to one” | That cap is target / comparison / test gaps only. Leftover names live under Follow-ups, not Assessment. |
 | “We said this leftover last PR” | Repeating it every review is the tracker. Dropping it is never-seen again. |
-| “A Leftovers heading keeps them somewhere” | Fourth block. Minor-bucket bleed. Stay under Assessment. |
-| “Fold leftover titles into the host-gap residual” | Mix reopens host-gap. Host-not-advertised is a separate one-line residual. |
+| “A leftover heading is fourth-block bleed, so it can’t exist” | Isolation is fresh context or stop. Follow-ups is leftover home when seats emitted leftovers that failed gate 3. Omit when none. G5 nits / speculative / `dropped: N` under Follow-ups is the bleed. |
+| “Fold leftover titles into the host-gap residual” | Mix reopens host-gap. Host-not-advertised is a separate one-line Assessment residual. Leftovers stay under Follow-ups. |
+| “Put G5 nits / dropped: N under Follow-ups so they have a home” | Minor-bucket bleed. Drop them. Follow-ups is leftovers only. |
+| “Always emit Follow-ups / Close” | Omit Follow-ups when there are none. Close is dropped. Mixed-turn is one line after Findings. |
+| “Same bug class as last PR — number the leftover” | Gate 3 is the merge bar. Do not reopen GREEN. Numbering a leftover is still a finding. |
 | “Both seats handed over — merge those two” | Every announced list. A skipped announced specialist list makes leftovers never-seen (same #31 miss). An unannounced specialist is not a skipped list. |
 | “Wait for six lists; that is the family” | Announced set. Do not hard-code six. |
 | “Pack is core, so a missing announced security list is fine” | Missing announced is still #31. |
@@ -180,7 +192,7 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Merge stamp / LGTM theater
 - Reviewing a plan/spec/design as if it were a code diff
 - Grilling a design instead of stopping out of family
-- Wrapping `Nothing to review.` or a `shape-*` stop in Findings / Assessment / Close
+- Wrapping `Nothing to review.` or a `shape-*` stop in Findings / Assessment / Follow-ups
 - Skipping untracked working-tree files a candidate overlaps because `git diff HEAD` is empty
 - Dropping a demonstrated unsatisfiable pair in a procedure file
 - Treating a `SKILL.md` or required playbook as plan/spec prose
@@ -191,8 +203,11 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Numbering a host-not-advertised capability gap
 - Silent drop of a seat-emitted leftover
 - Compressing leftover names to fit the 1–3 sentence cap
+- Leftover names under Assessment
 - Mixing leftover titles with the host-not-advertised residual
-- A Leftovers heading
+- G5 nits, speculative drops, or `dropped: N` under Follow-ups
+- A required Follow-ups heading when there are none
+- A Close heading
 - Numbering leftovers
 - Dropping a leftover because it was named last PR
 - Merging a subset of lists and skipping an announced seat
