@@ -18,7 +18,14 @@ mkdir -p ~/.claude/skills
 ln -sfn "$PWD/skills/engineering/<skill-name>" ~/.claude/skills/<skill-name>
 ```
 
-Claude Code can also load this repo as a plugin via [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json).
+Claude Code can also load this repo as a plugin via [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json), or add it as a marketplace and install the plugin from there:
+
+```
+/plugin marketplace add jamesthomasonjr/skills
+/plugin install jamesthomasonjr-skills@jamesthomasonjr-skills
+```
+
+See [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
 Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills in `personal/` and `in-progress/` stay local to this repo.
 
