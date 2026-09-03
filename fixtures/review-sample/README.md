@@ -14,7 +14,7 @@ RED fresh child for scope: the router opened a fresh context for `review-scope` 
 
 RED stuffed scope into blind: the parent copied the `review-scope` dump into the `review-blind` prompt or window, or the **blind** child fetched it.
 
-GREEN fresh-child gatherer: after announce, the router opened a fresh context for each of `review-gather-pr`, `review-gather-design`, and `review-gather-onboard`. Fresh child for these is GREEN (the opposite of `review-scope`).
+GREEN fresh-child gatherer: after announce, the router opened a fresh context for each gatherer the parent did not already hold a **product** for. Fresh child for these is GREEN (the opposite of `review-scope`).
 
 GREEN parent-seeded product: the parent seeded `review-intent` from the gatherer **product** (PR body, design excerpt when nonempty). Score that seed. The follow transcript is not the seed. Onboard has no seat to seed.
 

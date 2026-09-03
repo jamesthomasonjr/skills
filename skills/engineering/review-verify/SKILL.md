@@ -2,7 +2,7 @@
 name: review-verify
 description: >-
   Verifier for defect-first review. Use when review-changes hands off
-  after all seats. Combines candidates, applies gates, writes Findings /
+  after announced seats. Combines candidates, applies gates, writes Findings /
   Assessment / Close. May return No findings. Does not implement.
 disable-model-invocation: true
 ---
@@ -70,17 +70,17 @@ Still **DROP**: wording nits, speculative “might break” with no this-PR adve
 ## Hard rules
 
 - Read-only. No edits, no commits, no pushes, no GitHub review comments. Do not create a fix branch.
-- Verify the merged seat candidates only. Do not generate a fresh candidate list from the diff. Do not tour the rest of the repo. Every announced seat candidate list. Do not take the reconstructed-intent blob as a fourth / extra input. Parent-held gatherer products, parent-held reconstruct blob, and parent-held specialist playbooks in this Follow window are GREEN (same #30 shape). A pasted extra input is RED extra-briefing.
+- Verify the merged seat candidates only. Do not generate a fresh candidate list from the diff. Do not tour the rest of the repo. Every announced seat candidate list. Do not hard-code six. Unannounced specialists are not a missing list. A missing announced list is still a stop (same #31 miss). Do not take a pasted pack name, reconstructed-intent blob, gatherer product, or specialist playbook as a fourth / extra input. Parent-held gatherer products, parent-held reconstruct blob, and parent-held specialist playbooks in this Follow window are GREEN (same #30 shape). A pasted extra input is RED extra-briefing.
 - Mixed turn (“review this, then fix it”): finish this review, then **hand back**. Do not implement. **Do not edit in this turn even if the user already asked for a fix** — that message is the review, not an implement go-ahead. They must send a **new message** after the review. Do not discard the fix request.
 - If invoked with a plan/spec/design and no procedure file in the comparison: stop. Out of family. Point at `shape-*`. Do not produce findings. Do not grill that prose. A `SKILL.md` or required playbook in the file list is not a plan — inspect it.
 - If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `Nothing to review.`
-- If any announced seat has not handed over a candidate list, **stop**. Point at `review-changes`. Do not invent a list from the diff. Do not merge a subset and skip a seat.
+- If any announced seat has not handed over a candidate list, **stop**. Point at `review-changes`. Do not invent a list from the diff. Do not merge a subset and skip an announced seat. Do not wait on an unannounced specialist.
 
 ## Procedure
 
 If this is a stop path (empty/unresolvable, plan/spec/design with no procedure file in the comparison, or any announced seat has not handed over a list), skip steps 1–5. Write only the stop.
 
-1. Take every announced seat candidate list. Combine, dedupe, organize. Do not add a candidate that no seat emitted. Do not wait on a subset. Do not take a pasted gatherer product, reconstructed-intent blob, or specialist playbook as extra input. Parent-held products, parent-held blob, and parent-held playbooks already in this window are GREEN.
+1. Take every announced seat candidate list. Combine, dedupe, organize. Do not add a candidate that no seat emitted. Do not wait on a subset. Do not hard-code six lists. Do not take a pasted pack name, gatherer product, reconstructed-intent blob, or specialist playbook as extra input. Parent-held products, parent-held blob, and parent-held playbooks already in this window are GREEN.
 2. Inspect enough of the comparison to apply the gates to those candidates — not to hunt a new list. For working tree: `git diff HEAD` **and** every untracked path in the file list when a candidate overlaps them. Untracked files are first-class — Read each, or `git diff --no-index -- /dev/null <path>`. Do not `git add`.
    For a named patch or branch/PR three-dot: inspect the overlapping hunks plus enough surrounding code and tests to confirm each merged candidate.
 3. Apply every gate in `gates.md` to each merged candidate. Drop if any is shaky — except a demonstrated unsatisfiable pair in a procedure file or a this-PR advertised-path miss. When a procedure file is in the file list, apply the Procedure files letter. When this change’s own hook, header, or extractor advertises a path, apply the Advertised paths letter. Live harness eval is not required for that class. Do not require application runtime for a procedure-file pair.
@@ -157,7 +157,11 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 | “We said this leftover last PR” | Repeating it every review is the tracker. Dropping it is never-seen again. |
 | “A Leftovers heading keeps them somewhere” | Fourth block. Minor-bucket bleed. Stay under Assessment. |
 | “Fold leftover titles into the host-gap residual” | Mix reopens host-gap. Host-not-advertised is a separate one-line residual. |
-| “Both seats handed over — merge those two” | Every announced list. A skipped specialist list makes leftovers never-seen (same #31 miss). |
+| “Both seats handed over — merge those two” | Every announced list. A skipped announced specialist list makes leftovers never-seen (same #31 miss). An unannounced specialist is not a skipped list. |
+| “Wait for six lists; that is the family” | Announced set. Do not hard-code six. |
+| “Pack is core, so a missing announced security list is fine” | Missing announced is still #31. |
+| “Performance was unannounced — treat as never-seen leftover” | Unannounced is not never-seen. |
+| “Paste the pack name so I know which lists” | Extra-briefing RED. Announced lists only. |
 | “Paste gatherer products so verify has context” | All announced lists. A fourth-input / extra-input paste is RED. Parent-held in this window is GREEN. |
 | “Paste the reconstruct blob as a fourth input” | All announced lists. Parent-held blob in this Follow is GREEN. The paste is RED extra-briefing. |
 | “Paste specialist playbooks so verify has context” | All announced lists. Parent-held playbooks in this Follow are GREEN. The paste is RED extra-briefing. |
@@ -192,4 +196,5 @@ No other sections. No “Nice to have.” No praise. No nit list after `No findi
 - Numbering leftovers
 - Dropping a leftover because it was named last PR
 - Merging a subset of lists and skipping an announced seat
-- Taking the reconstructed-intent blob or a specialist playbook as a fourth / extra input (parent-held in this Follow window is not this leak)
+- Waiting on an unannounced specialist, or hard-coding six lists
+- Taking a pasted pack name, reconstructed-intent blob, or a specialist playbook as a fourth / extra input (parent-held in this Follow window is not this leak)

@@ -3,17 +3,17 @@ name: review-changes
 description: >-
   Router for defect-first code review. Use when the user asks to review
   a change, PR, commit, working tree, or what they just changed. Follows
-  review-scope, gathers products, fans blind, security, and the four
-  specialists, then intent; does not review. Read-only.
+  review-scope, gathers products, announces a caller-named pack (full
+  default, core opt-in), fans announced seats; does not review. Read-only.
 ---
 
 # Review changes
 
-Follow `review-scope`, announce the comparison it returned, fan gatherers
-as fresh children, then fan `review-blind`, `review-security`,
-`review-performance`, `review-logic`, `review-regression`, and
-`review-checklist` in parallel. Intent waits on the reconstructed-intent
-blob, then runs. Fan in to the verifier on every announced seat list.
+Follow `review-scope`, announce the comparison it returned, choose the
+caller-named pack once (`full` default, `core` opt-in), fan gatherers
+as fresh children, then fan that pack’s announced seats. Intent waits
+on the reconstructed-intent blob, then runs. Fan in to the verifier on
+every announced seat list.
 This skill does **not** review and does **not** write findings.
 
 ## Hard rules
@@ -23,14 +23,38 @@ This skill does **not** review and does **not** write findings.
 - Do not Read `gates.md` in this skill. Seats do not read it.
 - Do not duplicate `review-scope` tables here. Follow that sibling; pass what it returned.
 - Do not open a fresh child for `review-scope`. Scope stays Follow-in-parent.
-- After announce, run each gatherer in a fresh context. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
-- Run each seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
-- After gatherers, fan `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security or the other specialists.
-- Wrapper priming is not a required step. It is not a seat. Do not skip a gatherer because the parent already holds a primer dump.
+- After announce, run each gatherer in a fresh context unless the parent already holds that gatherer’s **product** (PR body / design excerpt). Primer dump ≠ product. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
+- Run each announced seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
+- After gatherers, fan that pack’s **announced** parallel seats. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security or the other announced specialists.
+- Choose the pack **once** from the caller (named `full` / `core`, or default `full`). Do not infer `core` from “quick,” “light,” or “small.” Do not invent a pack from the diff. Do not add or drop a seat mid-run.
+- Wrapper priming is not a required step. It is not a seat. Do not skip a gatherer because the parent already holds a primer dump. Skip a gatherer only when the parent already holds that gatherer’s product.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the gatherers, seats, or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
 - Focus is an optional user-named phrase, not a menu. Do not infer modes.
+
+## Packs
+
+Choose the pack **once** from the caller. Named `full` or `core`, or
+default `full`. Do not infer `core` from “quick,” “light,” or “small.”
+Do not invent a pack from the diff. Do not add or drop a seat mid-run.
+
+Light and heavy are **announce**, not omit.
+
+- `full` (default): announce `review-blind`, `review-security`,
+  `review-performance`, `review-logic`, `review-regression`, and
+  `review-checklist` in parallel. Intent waits on the reconstructed-intent
+  blob, then runs. Verify waits on every announced list (those six +
+  intent).
+- `core` (caller opt-in): announce `review-blind`, `review-intent`, and
+  `review-security` only. Fan blind and security in parallel. Intent
+  waits on the reconstruct blob, then runs. Verify waits on those three
+  lists. Performance / logic / regression / checklist are **unannounced**
+  — not never-seen.
+
+A missing **announced** list is still #31 never-seen RED. An unannounced
+specialist is not a missing list. Inventing a seat or silently omitting
+an announced one is RED.
 
 ## 1. Resolve
 
@@ -46,11 +70,11 @@ If a cwd-relative Read of a sibling misses (user workspace is a different repo),
 
 **Empty / unresolvable:** if they can still name a target, ask once and stop. Otherwise write exactly `Nothing to review.` and stop.
 
-Otherwise one line: which comparison `review-scope` returned and why (short).
+Otherwise one line: which comparison `review-scope` returned and why (short). Announce the pack (`full` default / caller-named `core`) and that pack’s seats.
 
 Read **sibling** skill files resolved from **this file’s directory**, not from cwd.
 
-Fan gatherers as **fresh children** — the opposite of `review-scope`. Each child contains only the announced comparison, comparison command, and file list (plus that gatherer’s own `SKILL.md`). Take the **product** back. Do not seed a gatherer follow transcript. Do not skip a gatherer because the parent already holds a briefing. Do not write `Nothing to review.` from a gatherer’s empty product — empty product means seed nothing for that slot.
+Fan gatherers as **fresh children** — the opposite of `review-scope`. Each child contains only the announced comparison, comparison command, and file list (plus that gatherer’s own `SKILL.md`). Take the **product** back. Do not seed a gatherer follow transcript. Skip a gatherer only when the parent already holds that gatherer’s **product** (PR body / design excerpt). A primer dump is not that product. Skip-because-primer is RED. Do not write `Nothing to review.` from a gatherer’s empty product — empty product means seed nothing for that slot.
 
 - [../review-gather-pr/SKILL.md](../review-gather-pr/SKILL.md) — product: PR body
 - [../review-gather-design/SKILL.md](../review-gather-design/SKILL.md) — product: design excerpt
@@ -60,7 +84,7 @@ If this harness cannot open a fresh context for a gatherer, **stop** and say so.
 
 ## 3. Hand off seats and verify
 
-Read the **seats** first. Do **not** Read `review-verify` until all announced seats have emitted candidates. Do **not** Read `gates.md` in this skill.
+Read the **announced** seats first. Do **not** Read `review-verify` until all announced seats have emitted candidates. Do **not** Read `gates.md` in this skill. Do not Read an unannounced specialist playbook. Do not fan an unannounced seat.
 
 - [../review-intent/SKILL.md](../review-intent/SKILL.md)
 - [../review-blind/SKILL.md](../review-blind/SKILL.md)
@@ -70,33 +94,35 @@ Read the **seats** first. Do **not** Read `review-verify` until all announced se
 - [../review-regression/SKILL.md](../review-regression/SKILL.md)
 - [../review-checklist/SKILL.md](../review-checklist/SKILL.md)
 
+This list is the family. Fan only the announced set.
+
 Do **not** restate `gates.md`. Do **not** apply it. Do **not** Read a specialist playbook.
 
 **Pass to all announced seats:** the announced comparison, comparison command, and file list only, mixed-turn fix request if any, optional focus phrase if they named one. Do not pass a different comparison. Do not pass a gatherer follow transcript. Do not pass the `review-scope` follow transcript.
 
 **Pass to `review-intent` only:** the `review-gather-pr` product (PR body) and the `review-gather-design` product (design excerpt) when those products are nonempty, plus commit message / procedure context when present, plus the reconstructed-intent blob `review-blind` emitted. GREEN tables / fixture protocol / scoring notes / primer dumps / the onboard product are not procedure context. The blind candidate list is not procedure context. Specialist playbooks are not procedure context. Do not dump a gatherer follow transcript into intent. Do not pass that list (`title — path:line` entries, including leftovers). A reconstruct sentence that names a helper is not that list.
 
-**Pass to `review-checklist` only:** the user-named checklist path if the caller named one. If they did not name a file, seed no file. Do not invent a path. The seat then returns `No candidates.`
+**Pass to `review-checklist` only** (when that seat is announced): the user-named checklist path if the caller named one. If they did not name a file, seed no file. Do not invent a path. The seat then returns `No candidates.` Do not fan checklist when the pack left it unannounced.
 
 Onboard has no seat to seed. Do **not** pass the onboard product to `review-intent`, `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, or `review-checklist`. The parent may hold it.
 
 A specialist seat Reads its own file. `review-changes` and `review-blind` do not. Do not copy playbook bytes into the blind prompt.
 
-**Do not pass** the reconstructed-intent blob to `review-security`, `review-performance`, `review-logic`, `review-regression`, or `review-checklist`. Those seats still fan with blind. Each window is comparison plus own playbook only (checklist: plus a user-named file when they named one). A window that already had the blob is a leak.
+**Do not pass** the reconstructed-intent blob to `review-security` or to any other announced specialist. Announced specialists still fan with blind. Each window is comparison plus own playbook only (checklist: plus a user-named file when they named one). A window that already had the blob is a leak.
 
-**Do not pass** the PR body, commit message, onboard dumps, primer dumps, gatherer products, gatherer follow transcripts, the reconstructed-intent blob as extra briefing, the implementing turn, GREEN tables / fixture protocol / scoring notes, specialist playbooks / OWASP lists / CWE lists, or the `review-scope` follow transcript to `review-blind`. Pass the announced comparison / command / file list only. Blind **produces** the blob; stuffing it into the blind window as extra briefing is RED. Do not run `review-blind` in a window that already had those withheld dumps. Do not paste gatherer products, the reconstruct blob, or specialist playbooks into the `review-verify` prompt as extra input. Parent-held products, parent-held blob, and parent-held playbooks in the verify Follow are not that leak.
+**Do not pass** the PR body, commit message, onboard dumps, primer dumps, gatherer products, gatherer follow transcripts, the reconstructed-intent blob as extra briefing, the implementing turn, GREEN tables / fixture protocol / scoring notes, specialist playbooks / OWASP lists / CWE lists, or the `review-scope` follow transcript to `review-blind`. Pass the announced comparison / command / file list only. Blind **produces** the blob; stuffing it into the blind window as extra briefing is RED. Do not run `review-blind` in a window that already had those withheld dumps. Do not paste the pack name, gatherer products, the reconstruct blob, or specialist playbooks into the `review-verify` prompt as extra input. Parent-held products, parent-held blob, and parent-held playbooks in the verify Follow are not that leak.
 
-Fan out: after gatherers, run `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` **in parallel**, each in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). Each specialist seat’s window is that comparison plus its own playbook — child Read of `playbook.md` is GREEN. Checklist also gets the user-named file when they named one; otherwise seed no file. Intent is the sequential edge: wait for the reconstruct blob, then run `review-intent` in a fresh context that contains the comparison, the PR-body and design-excerpt products, and that blob. Do not wait on leftover titles. All announced seats emit candidates only. Blind also emits the reconstruct blob as a separate product. Do not skip a seat.
+Fan out: after gatherers, run the pack’s **announced** parallel seats, each in a fresh context that contains only what this router passed (plus that seat's own `SKILL.md` as procedure). Pass the same comparison **bytes** to every parallel announced seat. That shared seed is GREEN. Do not stuff playbooks into that seed (`review-changes` / `review-blind` Read of a playbook is RED). Each announced specialist seat’s window is that comparison plus its own playbook — child Read of `playbook.md` is GREEN. Checklist also gets the user-named file when they named one; otherwise seed no file. Intent is the sequential edge: wait for the reconstruct blob, then run `review-intent` in a fresh context that contains the comparison, the PR-body and design-excerpt products, and that blob. Do not cache intent’s seed with the parallel seats. Do not wait on leftover titles. All announced seats emit candidates only. Blind also emits the reconstruct blob as a separate product. Do not skip an announced seat. Do not invent an unannounced seat.
 
 The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. The parent may hold the reconstruct blob — it seeds intent from that blob. That seed is GREEN. Onboard has no seat to seed; the parent may still hold that product. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. The blind candidate list (`title — path:line` entries, including leftovers) in the intent window is RED. A reconstruct sentence that names a helper is not that leak. Reconstruct blob in a specialist window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
 
-A wrapper may already have primed the parent on the file list `review-scope` returned, then invoked this router. That parent-held primer dump in the **verify** Follow stays GREEN. Wrapper priming is not a required step. It is not a seat. Skipping a gatherer because that dump exists is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
+A wrapper may already have primed the parent on the file list `review-scope` returned, then invoked this router. That parent-held primer dump in the **verify** Follow stays GREEN. Wrapper priming is not a required step. It is not a seat. Skipping a gatherer because that dump exists is RED. Skipping a gatherer because the parent already holds that gatherer’s **product** is GREEN. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
 
 If this harness cannot open a fresh context for a seat, **stop** and say so. Do not follow that seat in this turn. Withhold is not isolation.
 
 If two signals conflict, isolation wins over following a seat in this turn.
 
-Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with every announced seat candidate list. Isolation is not a duty of `review-verify`. Parent-held gatherer products in that window are GREEN (including onboard). Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not paste those products, the blob, or those playbooks into the verify prompt as extra input — that extra-briefing is RED. Parent-held primer dumps in that Follow window stay GREEN. Candidate lists only. Do not keep a second review procedure here. Do not skip the verifier.
+Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and follow it **in the parent** with every announced seat candidate list. Isolation is not a duty of `review-verify`. Parent-held gatherer products in that window are GREEN (including onboard). Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not paste the pack name, those products, the blob, or those playbooks into the verify prompt as extra input — that extra-briefing is RED. Parent-held primer dumps in that Follow window stay GREEN. Candidate lists only. Do not keep a second review procedure here. Do not skip the verifier.
 
 ## Isolation
 
@@ -107,7 +133,8 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
 | “The parent already has primer dumps; the seat will ignore it” | Parent-held primer dumps are GREEN in verify. Copying them into the blind prompt or running the seat in that window is a leak. |
 | “Skip the gatherer; the parent already has a primer dump” | Skipping because the parent has a primer dump is RED. Fan the gatherer. |
-| “Follow the gatherer in the parent; I already have the files” | Fresh child for each gatherer is GREEN. Product back, then seed. |
+| “Skip the gatherer; the parent already holds the PR body / design excerpt” | Parent-held **product** is the skip. Primer dump ≠ product. That skip is GREEN. |
+| “Follow the gatherer in the parent; I already have the files” | Fresh child unless the parent already holds that product. Follow-in-parent is still RED. |
 | “Open a fresh child for review-scope so isolation is clean” | Follow `review-scope` in the parent. Fresh child for scope is still RED. |
 | “Seed the gatherer follow transcript so the seat sees the research” | Seed the product only. Score the product in the parent seed, not the follow transcript. |
 | “Copy the gatherer product into review-blind so it has context” | Product or transcript in blind is RED. |
@@ -119,6 +146,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Pass the reconstruct blob to performance / logic / regression / checklist” | Blob in a specialist window is RED. Those seats fan with blind. Comparison + playbook only. |
 | “Stuff the blob back into blind as extra briefing” | Blind produces the blob. Extra briefing in that window is RED. |
 | “Fold the blob into the blind candidate list so there is one dump” | The blob is its own dump product. Do not fold it into the candidate list. |
+| “Paste the pack name into review-verify so it knows the set” | Extra-briefing is the paste. Every announced list. Do not paste the pack name as a fourth / extra input. |
 | “Paste gatherer products into review-verify as a fourth input” | Extra-briefing is the paste. Candidate lists only. Parent-held products in that Follow window are GREEN. |
 | “Paste the reconstruct blob into review-verify as a fourth input” | Extra-briefing is the paste. All announced seat lists. Parent-held blob in that Follow window is GREEN. |
 | “Paste specialist playbooks into review-verify as extra input” | Extra-briefing is the paste. Candidate lists only. Parent-held playbooks in that Follow window are GREEN. |
@@ -130,8 +158,13 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “Read the security playbook so I can brief the seats” | A security seat Reads its own file. `review-changes` and `review-blind` do not. |
 | “Read a specialist playbook so I can brief the seats” | A specialist Reads its own file. `review-changes` and `review-blind` do not. |
 | “Copy the playbook into the blind prompt so it knows the threats” | Playbook in the blind dump is a leak. |
-| “Skip performance / logic / regression / checklist; this diff looks clean” | Fan every announced seat. Skip is never-seen leftovers (same #31 miss). |
-| “Skip checklist; no file was named” | Fan the seat. Seed no file. The seat returns `No candidates.` Missing list is never-seen leftovers. |
+| “Skip performance / logic / regression / checklist; this diff looks clean” | Pack is chosen once. Mid-run omit of an announced seat is RED (same #31 miss). Choosing `core` because the diff looks clean is inventing a pack. |
+| “Skip performance; pack is `core` so they were not announced” | Unannounced is not never-seen. That skip is the announce, not an omit. |
+| “Add performance; this looks hot even though pack is `core`” | Inventing a seat mid-run is RED. |
+| “Wait for six lists; that is the family” | Verify waits on every **announced** list. Do not hard-code six. |
+| “Stuff playbooks into the shared comparison seed so every seat has them” | Identical comparison bytes across parallel seats stay GREEN. Playbooks in that seed are RED (router / blind Read). |
+| “Cache intent’s seed with the parallel seats” | Intent’s seed stays PR+design+blob. Do not cache it with the others. |
+| “Skip checklist; no file was named” | If checklist is announced: fan the seat. Seed no file. The seat returns `No candidates.` Missing announced list is never-seen leftovers. |
 | “Invent CHECKLIST.md; they forgot to name one” | Seed no file. Do not invent a path. |
 | “The security child will ignore leftovers / apply gates” | Seats emit leftovers. Swallow is never-seen. Gates are `review-verify`. |
 
@@ -139,7 +172,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 
 - Writing findings in the router
 - Applying gates in the router or telling a seat to read `gates.md`
-- Skipping a seat or handing the diff straight to `review-verify`
+- Skipping an announced seat or handing the diff straight to `review-verify`
 - Skipping a gatherer because the parent already holds a primer dump
 - Following a gatherer in this turn, or seeding its follow transcript
 - Duplicating `review-scope` tables, or passing seats a different comparison than it returned
@@ -151,12 +184,15 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Reconstruct blob in a specialist window, or a specialist Read of that blob
 - Fanning intent in parallel with blind and the specialists instead of waiting on the blob
 - Fanning specialists after intent instead of with blind
-- Gatherer products, the reconstruct blob, or specialist playbooks pasted into the `review-verify` prompt as extra input (parent-held in that Follow window is not this leak)
+- Pack name, gatherer products, the reconstruct blob, or specialist playbooks pasted into the `review-verify` prompt as extra input (parent-held in that Follow window is not this leak)
 - A seat swallowed leftovers or applied gates
 - Running wrapper priming from this skill, or treating wrapper priming as a seat
 - Following a seat in this turn because the harness could not open a fresh context
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu
+- Inferring `core` from “quick,” “light,” or “small,” or inventing a pack from the diff
+- Inventing a seat or omitting an announced one mid-run
+- Pasting the pack name into the `review-verify` prompt as extra input
 - Inventing a checklist path
 - Implementing because the bug is obvious
 - Treating a plan/spec as a code review
