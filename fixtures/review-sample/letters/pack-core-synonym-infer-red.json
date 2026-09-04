@@ -1,0 +1,28 @@
+{
+  "id": "pack-core-synonym-infer-red",
+  "letter": "RED pack-core synonym-infer",
+  "expected": "RED",
+  "score": "pack",
+  "dump": {
+    "role": "router",
+    "caller_pack": "core",
+    "caller_named_core": false,
+    "inferred_core_from": "quick",
+    "announced_seats": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "verify_lists": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "seat_dumps": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "text": "caller: light / quick / small review\npack: core (inferred from quick)\nannounced: review-blind, review-intent, review-security\nverify lists: review-blind, review-intent, review-security"
+  }
+}

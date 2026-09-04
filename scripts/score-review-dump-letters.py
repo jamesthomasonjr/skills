@@ -223,6 +223,104 @@ def score_playbook_child_read(dump: dict[str, Any]) -> tuple[str, str]:
     return "RED", "playbook child-Read not shown on a specialist seat"
 
 
+LEFTOVER_LINE = re.compile(r".+\s+—\s+\S+:\d+")
+NUMBERED_LEFTOVER = re.compile(r"(?:\[P[0-3]\]|\d+\.)\s+\S.+\s+—\s+\S+:\d+")
+DROPPED_N = re.compile(r"dropped:\s*\d+", re.I)
+FOLLOW_UPS_BLEED = {"g5-nit", "speculative", "dropped-n"}
+
+
+def section_body(text: str, heading: str) -> str | None:
+    match = re.search(rf"^## {re.escape(heading)}\s*$", text, re.M)
+    if not match:
+        return None
+    rest = text[match.end() :]
+    next_heading = re.search(r"^## ", rest, re.M)
+    return rest[: next_heading.start()] if next_heading else rest
+
+
+def leftover_names(dump: dict[str, Any]) -> list[str]:
+    names: list[str] = []
+    for item in dump.get("leftovers") or []:
+        if isinstance(item, dict):
+            name = item.get("name") or item.get("title")
+            if name:
+                names.append(str(name))
+        elif isinstance(item, str) and item:
+            names.append(item)
+    return names
+
+
+def score_follow_ups(dump: dict[str, Any]) -> tuple[str, str]:
+    text = dump.get("text") or ""
+    leftovers = list(dump.get("leftovers") or [])
+    follow_ups = list(dump.get("follow_ups") or [])
+    assessment = dump.get("assessment") or ""
+    findings_text = dump.get("findings_text") or section_body(text, "Findings") or ""
+    follow_text = dump.get("follow_ups_text") or section_body(text, "Follow-ups") or ""
+    assessment_text = assessment or section_body(text, "Assessment") or ""
+    has_heading = dump.get("has_follow_ups_heading")
+    if has_heading is None:
+        has_heading = section_body(text, "Follow-ups") is not None
+    names = leftover_names(dump)
+
+    if dump.get("leftover_numbered_as_finding") or NUMBERED_LEFTOVER.search(
+        findings_text
+    ):
+        return "RED", "leftover numbered as a finding"
+    for item in dump.get("findings") or []:
+        if isinstance(item, dict) and item.get("leftover") and item.get("severity"):
+            return "RED", "leftover numbered as a finding"
+
+    bleed = dump.get("follow_ups_bleed")
+    if bleed in FOLLOW_UPS_BLEED or DROPPED_N.search(follow_text):
+        return "RED", "G5 nits / dropped: N under Follow-ups"
+    for item in follow_ups:
+        if isinstance(item, dict) and (
+            item.get("g5_nit") or item.get("speculative") or item.get("dropped_n")
+        ):
+            return "RED", "G5 nits / dropped: N under Follow-ups"
+
+    if dump.get("leftover_in_assessment"):
+        return "RED", "leftover stuffed into Assessment"
+    for name in names:
+        if name and name in assessment_text:
+            return "RED", "leftover stuffed into Assessment"
+
+    if leftovers:
+        if not has_heading:
+            return "RED", "leftovers missing Follow-ups"
+        if len(follow_ups) != len(leftovers):
+            return "RED", "Follow-ups missing a leftover"
+        for item in follow_ups:
+            if not isinstance(item, dict):
+                return "RED", "Follow-ups line is not title — path:line"
+            title = item.get("title") or ""
+            path = item.get("path") or ""
+            line = f"{title} — {path}"
+            if item.get("severity") or item.get("numbered"):
+                return "RED", "leftover numbered as a finding"
+            if not title or not path or not LEFTOVER_LINE.search(line):
+                return "RED", "Follow-ups line is not title — path:line"
+        return "GREEN", "leftovers under Follow-ups"
+
+    if has_heading or follow_ups:
+        return "RED", "Follow-ups heading when empty"
+    return "GREEN", "omit Follow-ups when empty"
+
+
+def score_scope_follow(dump: dict[str, Any]) -> tuple[str, str]:
+    if dump.get("scope_fresh_child") or dump.get("scope_reader") == "fresh-child":
+        return "RED", "fresh child for scope"
+    if dump.get("followed_review_scope") is False:
+        return "RED", "fresh child for scope"
+    held = list(dump.get("held") or [])
+    parent_held = dump.get("parent_held_scope") or "comparison" in held
+    if dump.get("followed_review_scope") and dump.get("scope_reader") == "parent":
+        if parent_held:
+            return "GREEN", "parent-held scope"
+    return "RED", "scope was not Follow-in-parent"
+
+
 def score_playbook_leak(dump: dict[str, Any]) -> tuple[str, str]:
     role = dump.get("role")
     seat = dump.get("seat")
@@ -251,6 +349,8 @@ SCORERS = {
     "gatherer-skip": score_gatherer_skip,
     "playbook-child-read": score_playbook_child_read,
     "playbook-leak": score_playbook_leak,
+    "follow-ups": score_follow_ups,
+    "scope-follow": score_scope_follow,
 }
 
 

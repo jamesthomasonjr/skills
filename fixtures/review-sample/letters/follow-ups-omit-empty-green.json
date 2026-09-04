@@ -1,0 +1,19 @@
+{
+  "id": "follow-ups-omit-empty-green",
+  "letter": "GREEN leftover Follow-ups",
+  "expected": "GREEN",
+  "score": "follow-ups",
+  "dump": {
+    "role": "verifier",
+    "leftovers": [],
+    "follow_ups": [],
+    "has_follow_ups_heading": false,
+    "findings": [],
+    "findings_text": "No findings.",
+    "assessment": "Target is clean-rename.diff versus src/. Comparison was inspected.",
+    "leftover_numbered_as_finding": false,
+    "leftover_in_assessment": false,
+    "follow_ups_bleed": null,
+    "text": "## Findings\nNo findings.\n## Assessment\nTarget is clean-rename.diff versus src/. Comparison was inspected."
+  }
+}

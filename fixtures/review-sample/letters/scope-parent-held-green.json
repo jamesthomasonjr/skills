@@ -1,0 +1,15 @@
+{
+  "id": "scope-parent-held-green",
+  "letter": "GREEN parent-held scope",
+  "expected": "GREEN",
+  "score": "scope-follow",
+  "dump": {
+    "role": "router",
+    "followed_review_scope": true,
+    "scope_reader": "parent",
+    "scope_fresh_child": false,
+    "parent_held_scope": true,
+    "held": ["comparison"],
+    "text": "Follow review-scope in parent. Parent holds comparison dump. Seats open fresh and receive that same comparison."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "follow-ups-leftover-green",
+  "letter": "GREEN leftover Follow-ups",
+  "expected": "GREEN",
+  "score": "follow-ups",
+  "dump": {
+    "role": "verifier",
+    "leftovers": [
+      {
+        "name": "unusedFormatCents",
+        "title": "unusedFormatCents",
+        "path": "src/pricing.js:3"
+      },
+      {
+        "name": "refundOrder",
+        "title": "refundOrder",
+        "path": "src/refunds.js:1"
+      }
+    ],
+    "follow_ups": [
+      {
+        "title": "unusedFormatCents",
+        "path": "src/pricing.js:3"
+      },
+      {
+        "title": "refundOrder",
+        "path": "src/refunds.js:1"
+      }
+    ],
+    "has_follow_ups_heading": true,
+    "findings": [],
+    "findings_text": "No findings.",
+    "assessment": "Target is nits-only.diff versus src/. Comparison was inspected.",
+    "leftover_numbered_as_finding": false,
+    "leftover_in_assessment": false,
+    "follow_ups_bleed": null,
+    "text": "## Findings\nNo findings.\n## Assessment\nTarget is nits-only.diff versus src/. Comparison was inspected.\n## Follow-ups\nunusedFormatCents — src/pricing.js:3\nrefundOrder — src/refunds.js:1"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "follow-ups-numbered-finding-red",
+  "letter": "RED leftover numbered as a finding",
+  "expected": "RED",
+  "score": "follow-ups",
+  "dump": {
+    "role": "verifier",
+    "leftovers": [
+      {
+        "name": "unusedFormatCents",
+        "title": "unusedFormatCents",
+        "path": "src/pricing.js:3"
+      }
+    ],
+    "follow_ups": [],
+    "has_follow_ups_heading": false,
+    "findings": [
+      {
+        "title": "unusedFormatCents",
+        "path": "src/pricing.js:3",
+        "severity": "P3",
+        "leftover": true
+      }
+    ],
+    "findings_text": "[P3] unusedFormatCents — src/pricing.js:3",
+    "assessment": "Target is nits-only.diff versus src/. Comparison was inspected.",
+    "leftover_numbered_as_finding": true,
+    "leftover_in_assessment": false,
+    "follow_ups_bleed": null,
+    "text": "## Findings\n[P3] unusedFormatCents — src/pricing.js:3\n\nPre-existing unused helper is still reachable.\n## Assessment\nTarget is nits-only.diff versus src/. Comparison was inspected."
+  }
+}

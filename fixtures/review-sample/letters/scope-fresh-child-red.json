@@ -1,0 +1,15 @@
+{
+  "id": "scope-fresh-child-red",
+  "letter": "RED fresh child for scope",
+  "expected": "RED",
+  "score": "scope-follow",
+  "dump": {
+    "role": "router",
+    "followed_review_scope": false,
+    "scope_reader": "fresh-child",
+    "scope_fresh_child": true,
+    "parent_held_scope": false,
+    "held": [],
+    "text": "Opened a fresh context for review-scope instead of Following in the parent."
+  }
+}
