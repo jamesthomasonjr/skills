@@ -5,7 +5,6 @@ description: >-
   module, or the codebase — leftovers and pre-existing defects are
   in-scope as findings. Not a change, PR, or working-tree review.
   Read-only.
-disable-model-invocation: true
 ---
 
 # Review audit
@@ -30,9 +29,9 @@ This skill does **not** review a change. It does **not** Follow
 - Do not apply `gates.md`. Do not drop a leftover because it was not
   introduced by a change. Gate 3 is change-review’s merge bar, not
   this consumer.
-- Do not plant `catch-me-up`, `orient-repo`, `orient-module`, or
-  `orient-function` as required seats. Wrapper priming is not a
-  required step. A parent-held primer product may seed the tour.
+- Wrapper priming is not a required step. It is not a seat. A
+  parent-held primer dump may seed the tour. Do not plant primer
+  dumps as required seats.
 - Mixed turn (“audit this, then fix it”): finish this audit, then
   **hand back**. Do not implement. They must send a **new message**
   after the audit.
@@ -76,10 +75,9 @@ family**.
 
 If this is a stop path, skip this section.
 
-If the parent already holds an onboard summary or orient dump for
-**this scope**, use that product as a primer (file list / map). Do
-not re-run those skills. Do not treat a primer dump as a required
-seat.
+If the parent already holds a primer dump for **this scope**, use
+that product (file list / map). Wrapper priming is not a required
+step. Do not treat a primer dump as a required seat.
 
 You may Follow `review-gather-onboard` for a file list of the
 resolved scope. That is a **product**, not a seat. Skip it when the
@@ -182,7 +180,7 @@ A naming nit is not a P3. It is dropped.
 | “Apply `gates.md` so the bar matches review-verify” | `gates.md` is change-review. Do not apply it. |
 | “Follow review-scope; the codebase is a comparison” | Scope, not comparison. `review-scope` stays change-review. |
 | “Fan review-regression; it already looks for leftovers” | That seat is comparison-only. Do not teach it to tour. |
-| “REQUIRED: catch-me-up / orient-* first” | Not a required seat. Use a parent-held primer if one exists. |
+| “REQUIRED: wrapper priming / primer dump first” | Not a required step. Use a parent-held primer dump if one exists. |
 | “Skip the leftover; change-review already named it” | This consumer’s job is existing debt. Silent drop is never-seen. |
 | “Nits are fine / flag anything” | Nits are still dropped. Leftovers are not nits. |
 | “I’ll just fix it while I’m here” | Audit turn is read-only. Hand back. |
@@ -195,7 +193,7 @@ A naming nit is not a P3. It is dropped.
 - Turning “the codebase” into a `review-scope` comparison
 - Fanning a change-review seat or applying `gates.md`
 - Parking a leftover under Follow-ups, or dropping it as Gate 3
-- Planting catch-me-up / orient-* as a required seat
+- Planting wrapper priming / primer dumps as a required seat
 - Numbering a style nit
 - Whole-repo swallow that ignores the named path
 - Implementing, editing, committing, pushing, or posting a GitHub review
