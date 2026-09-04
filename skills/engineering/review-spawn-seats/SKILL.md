@@ -22,7 +22,7 @@ table here. Same packs, same seeds, same gates, same HARNESS-STOP.
 
 ## Inputs (from the router, already built)
 
-- The **announced set**: gatherer slots (`review-gather-pr`, `review-gather-design`, `review-gather-onboard` minus any product-skip the router already applied) and the announced seat slots of the pack the router chose. Ordering is part of the input: gatherers, then the parallel seats, then `review-intent` after the reconstruct blob.
+- The **announced set for this call**: the slots the router hands in this helper call only. The router makes separate calls — gatherer slots (`review-gather-pr`, `review-gather-design`, `review-gather-onboard` minus any product-skip the router already applied), then the pack’s parallel seat slots, then `review-intent` alone after the reconstruct blob. Seats that ran in an earlier or later call are not this call’s set and are not missing from it.
 - **Seed bytes** per slot, built by the router:
   - **comparison-seed** — announced comparison, comparison command, file list, mixed-turn fix request if any, optional focus phrase. Every gatherer and every parallel seat gets these same bytes. Checklist additionally gets the user-named file when the caller named one.
   - **intent-seed** — comparison-seed plus the PR-body and design-excerpt products (when nonempty), commit message / procedure context when present, and the reconstruct blob `review-blind` emitted. Built after blind returns. Intent only.
@@ -58,17 +58,19 @@ When the Task tool is present, nest. Do not prefer CloudAgent because it “runs
 
 ## Return contract
 
+**Announced set = the slots handed in this helper call only.** The router hands gatherers, then the parallel seats, then intent as separate calls; a full return for this call’s slots is GREEN even when other announced seats ran in an earlier or later call. A partial return among *this* call’s slots is RED.
+
 Return exactly one of:
 
-1. **Full dumps** — one dump per announced slot, the whole set, in slot order. A gatherer dump is its product or **empty**. A seat dump is its candidate list (blind: plus the reconstruct blob as a separate product). Return them byte-for-byte; do not summarize, trim, dedupe, or judge.
+1. **Full dumps** — one dump per slot handed in this call, the whole set, in slot order. A gatherer dump is its product or **empty**. A seat dump is its candidate list (blind: plus the reconstruct blob as a separate product). Return them byte-for-byte; do not summarize, trim, dedupe, or judge.
 2. **HARNESS-STOP** — one or two sentences naming the slot that could not start and the primitive that failed (`no nested Task tool`, `CloudAgent launch rejected for review-blind`, `neither Task nor CloudAgent launch on this host`). Return no dumps with it — not the ones that did start.
 
-Never a subset. Never “five of six, checklist did not come back.” If any announced slot did not start or did not return, the whole call is HARNESS-STOP. The router stops on it; `review-verify` never sees a partial set.
+Never a subset. Never “five of six, checklist did not come back.” If any slot handed in this call did not start or did not return, the whole call is HARNESS-STOP. The router stops on it; `review-verify` never sees a partial set.
 
 ## This helper does not
 
 1. **Own pack policy.** It does not add, drop, or re-order announced slots. It does not re-announce `core` because a seat failed, because the host lacks Task, or because CloudAgents are expensive. It does not read the caller’s words at all. The router chose the pack once; the helper spawns what it was handed.
-2. **Return partially.** All dumps or a named stop. A partial list is RED even when the missing slot “would have been `No candidates.`”.
+2. **Return partially.** All dumps for this call’s slots or a named stop. A partial list is RED even when the missing slot “would have been `No candidates.`”. Intent absent from the parallel-seat call is not partial — it belongs to the next call.
 3. **Pick from synonyms.** Back end comes from harness facts only. “Grok” / “quick” / “Medium” / “cloud” never choose a primitive.
 4. **Build seeds.** It receives comparison-seed and intent-seed bytes already built. It does not fetch the PR body, design excerpt, blob, or file list itself. It does not add “helpful context” to a seed. It does not copy a playbook into blind or a blob into a specialist.
 5. **Run verify.** `review-verify` Follows in the parent on the returned dumps. The helper never spawns a verify child, never applies `gates.md`, never writes Findings / Assessment / Follow-ups, never writes `No findings.`
@@ -84,6 +86,7 @@ Never a subset. Never “five of six, checklist did not come back.” If any ann
 | “CloudAgents run in parallel anyway — launch intent with blind” | Intent waits on the reconstruct blob on every back end. Launch it after blind returns. |
 | “Regression’s CloudAgent never came back — hand verify the six that did” | Partial return is RED. Named HARNESS-STOP, no dumps. |
 | “The missing seat would have been `No candidates.` anyway” | An announced list that never existed is never-seen (#31). Stop. |
+| “Intent is not in this return, so the parallel-seat call is partial” | Announced set is per call. Intent is handed in its own call after the blob. Six of six parallel seats back is a full return. |
 | “Drop the failed seat; it was not core” | Announced is announced. Dropping mid-run is the router’s RED, and the helper does not own the set. |
 | “Add the PR body to the comparison-seed so cloud seats have context” | Seeds arrive built. Adding to them is a leak into blind and every specialist. |
 | “Spawn a verify CloudAgent too, so the whole review is isolated” | Verify Follows in the parent. Isolation is not its duty. The helper never spawns it. |
@@ -93,7 +96,7 @@ Never a subset. Never “five of six, checklist did not come back.” If any ann
 
 - Choosing Task vs CloudAgent from “Grok”, “quick”, “light”, “Medium”, “small”, “cloud”, or the model name
 - Reviewing inline when neither primitive is present, or when one launch fails
-- Returning fewer dumps than announced slots without a HARNESS-STOP
+- Returning fewer dumps than the slots handed in this call without a HARNESS-STOP
 - Returning dumps alongside a HARNESS-STOP
 - Re-announcing `core`, dropping a slot, or adding a slot
 - Launching `review-intent` with blind, or with a placeholder blob

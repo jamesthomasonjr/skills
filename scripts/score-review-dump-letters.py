@@ -245,11 +245,18 @@ def score_host_pick(dump: dict[str, Any]) -> tuple[str, str]:
 
 def score_spawn_return(dump: dict[str, Any]) -> tuple[str, str]:
     text = dump.get("text") or ""
+    # announced_slots is the set handed in this helper call only; the router
+    # makes separate calls for gatherers, parallel seats, and intent.
     announced = list(dump.get("announced_slots") or [])
     returned = list(dump.get("returned_dumps") or [])
+    run_announced = dump.get("run_announced_slots")
     stop = dump.get("stop")
     if not announced:
-        return "RED", "no announced set"
+        return "RED", "no announced set for this call"
+    if run_announced is not None:
+        outside = [slot for slot in announced if slot not in run_announced]
+        if outside:
+            return "RED", "call slot not announced for the run: " + ", ".join(outside)
     if dump.get("intent_waited_on_blob") is False:
         return "RED", "cloud intent fanned with blind"
     if stop == "harness":

@@ -331,6 +331,36 @@ fail_scorer "partial-return" "${SCORER}" --sample-dir "${tmp}/review-sample"
 cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-full-green.json" \
   "${tmp}/review-sample/letters/spawn-return-full-green.json"
 
+echo "== per-call full return GREEN must still fail on a partial within the call =="
+python3 - "${tmp}/review-sample/letters/spawn-return-per-call-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["returned_dumps"].remove("review-regression")
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "partial-return within this call" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-per-call-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-per-call-green.json"
+
+echo "== per-call GREEN must not hand a slot the run never announced =="
+python3 - "${tmp}/review-sample/letters/spawn-return-per-call-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["run_announced_slots"].remove("review-checklist")
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "call slot outside the run's announced set" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-per-call-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-per-call-green.json"
+
 echo "== full return GREEN must not launch intent with blind =="
 python3 - "${tmp}/review-sample/letters/spawn-return-full-green.json" <<'PY'
 import json, sys
