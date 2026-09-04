@@ -145,3 +145,14 @@ Right: `git diff $(git merge-base <tip> <base>)...<tip>` where `<base>` is `orig
 Working tree: file list = `git diff HEAD --name-only` ∪ `git ls-files --others --exclude-standard`. Untracked files are first-class (Read or `git diff --no-index -- /dev/null <path>`). Do not `git add`. Untracked-only is not `Nothing to review.`
 
 This is not a real product. Do not edit `src/` during review tests.
+
+## Dump-letter scorer
+
+Replay recorded seat/router window dumps (no live review agents):
+
+```bash
+./scripts/score-review-dump-letters.sh
+./scripts/test-score-review-dump-letters.sh
+```
+
+Cases in `letters/` cite the GREEN/RED letter headings in this file. The nine-row Expected GREEN table is locked by `green-table.lock.md` — the scorer fails if those rows move.

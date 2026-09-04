@@ -1,0 +1,17 @@
+{
+  "id": "gatherer-skip-product-green",
+  "letter": "GREEN gatherer skip-because-product",
+  "expected": "GREEN",
+  "score": "gatherer-skip",
+  "dump": {
+    "role": "router",
+    "skipped_gatherers": [
+      {
+        "name": "review-gather-pr",
+        "reason": "held-product"
+      }
+    ],
+    "held": ["pr-body"],
+    "text": "held: pr-body (review-gather-pr product)\nskipped: review-gather-pr because parent already holds that product\nfanned: review-gather-design, review-gather-onboard"
+  }
+}
