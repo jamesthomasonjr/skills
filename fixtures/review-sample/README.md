@@ -4,7 +4,9 @@ Tiny pricing module used to test the review skill family.
 
 Protocol: comparison still comes from cheap-resolve rules, now in `review-scope`. `review-changes` Follows `review-scope` **in the parent**, announces the comparison it returned, chooses the pack **once** from the caller (`full` default / `core` opt-in; do not infer `core` from “quick” / “light” / “small”), then fans `review-gather-pr` / `review-gather-design` / `review-gather-onboard` as **fresh children** and seeds from their **products**. Skip a gatherer only when the parent already holds that gatherer’s **product** (PR body / design excerpt). A held onboard summary is not that skip — onboard has no seat to seed, always fan that gatherer. Primer dump ≠ product. Default `full` then fans `review-blind`, `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` **in parallel**. Intent waits on the reconstructed-intent blob, then runs. Each seat runs isolated in a fresh context and still receives that same comparison (commands, file list, untracked first-class, no self-upstream, named default is `<base>` not `<tip>`). Identical comparison **bytes** across parallel seats stay GREEN. Do not stuff playbooks into that shared seed. Intent’s seed stays PR+design+blob — do not cache it with the others. `review-intent` gets the PR-body and design-excerpt products when present, plus the reconstruct blob. The blind candidate list (`title — path:line` entries, including leftovers) is not passed into that window. The blob may name what the diff appears to do. `review-blind` gets the comparison only — not the PR body, commit message, onboard dumps, orient dumps, gatherer products, gatherer follow transcripts, the implementing turn, GREEN tables / fixture protocol / scoring notes, or specialist playbooks / OWASP lists / CWE lists. Blind stays comparison-only on either pack. Blind still emits `candidates` / `No candidates.` plus a **separate** reconstructed-intent blob. Do not fold that blob into the candidate list. `review-security`, `review-performance`, `review-logic`, `review-regression`, and `review-checklist` still fan with blind when announced. Each window is the comparison plus its own playbook — child Read of that playbook is GREEN (checklist: plus a user-named file when they named one). The reconstruct blob is not in those windows. Then `review-verify` Follows **in the parent** on every announced seat list, Reads its own sibling `gates.md` from that skill’s directory (not cwd), and applies it. Isolation is not a duty of the verifier. Parent-held gatherer products in that window are GREEN. Parent-held reconstruct blob in that window is GREEN (same #30 shape). Parent-held specialist playbooks in that window are GREEN. Do not pass the pack name, the blob, those products, or those playbooks to verify as extra input. Seats emit candidates. They do not apply `gates.md` and do not write Findings / Assessment / Follow-ups. Gatherers return a product and stop. They do not write `Nothing to review.` Onboard has no seat to seed — `review-intent` gets PR body + design excerpt + the reconstruct blob. Do not pass onboard to `review-security` or the other specialists. The parent may hold the onboard product; that hold is not a verify leak. Score sequential letters on the dumps, not the agent. Score Follow-ups on the envelope; leftover emit still on dumps. Score packs on the dumps: the announced set versus the lists verify took.
 
-Score HARNESS-STOP on the dumps: router dump stops without envelope; seat dumps absent.
+Score HARNESS-STOP on the dumps: router dump stops without envelope; seat dumps absent. The stop covers nested Task missing, a CloudAgent launch that failed for an announced slot, and a partial helper return alike.
+
+Score spawn letters on the helper dump: back end picked from harness facts; the whole announced set returned or one named stop; intent after the blob on either back end.
 
 Score comparison on the dumps: each seat’s comparison command matches what `review-scope` returned. Wrong base/tip (self-upstream, named default as `<tip>`) stay RED — those letters live in `review-scope` prose. Wrong window is RED. Do not reopen the GREEN rows below.
 
@@ -124,17 +126,39 @@ RED leftover stuffed into Assessment sentence cap: leftover names still appear u
 
 Stop paths still skip the envelope (no Findings / Assessment / Follow-ups).
 
-GREEN HARNESS-STOP: after a comparison was announced, the harness cannot open a fresh context for a gatherer or an announced seat. Router dump is a brief stop naming that (cannot open a fresh context / cannot fan). No Findings / Assessment / Follow-ups. Seat dumps absent. This is not `Nothing to review.` and not a `shape-*` stop.
+GREEN HARNESS-STOP: after a comparison was announced, a gatherer or an announced seat cannot start on this host — no nested Task tool and no CloudAgent launch primitive, or a CloudAgent launch for that slot was rejected / never returned, or `review-spawn-seats` handed back a subset. Router dump is a brief stop naming the slot and the primitive (cannot open a fresh context / cannot fan / cannot launch). No Findings / Assessment / Follow-ups. Seat dumps absent. This is not `Nothing to review.` and not a `shape-*` stop. Nested-Task-missing is one case of this letter, not the whole letter.
 
 RED HARNESS-STOP envelope: after that hard stop, the router dump still has Findings / Assessment / Follow-ups.
 
-RED HARNESS-STOP inline: the router reviewed inline as one agent (followed a gatherer or seat in this turn, or pretended seats ran).
+RED HARNESS-STOP inline: the router reviewed inline as one agent (followed a gatherer or seat in this turn, or pretended seats ran). Same RED on a CloudAgent host: never review inline because a launch failed.
 
 RED HARNESS-STOP empty pass: after HARNESS-STOP, the dump writes `No findings.` or an empty pass as if seats ran.
 
 Procedure parent: `procedure/`. Those diffs are against that tree (`-p1` from `fixtures/review-sample/`). `SKILL.md` and `paths.md` are procedure files. README and `docs/plan.md` are not.
 
 Hook parent: `hook/`. Those diffs are against that tree (`-p1` from `fixtures/review-sample/`). A this-PR advertised path is a finding. A host-not-advertised capability is residual-or-empty.
+
+## Spawn helper letters (dual harness)
+
+`review-changes` starts gatherers and announced seats through `review-spawn-seats`. That helper picks the back end from **harness facts** (nested Task / subagent tool present → Task nest; absent with a CloudAgent launch primitive present → CloudAgent fan; neither → HARNESS-STOP). `cloud-seat` is an invocation mode of the same router — same packs, same comparison-seed / intent-seed, same gates, same HARNESS-STOP. There is no `review-changes-cloud` sibling and no lighter cloud pack. Score these on the router dump and the helper dump, not the agent.
+
+GREEN spawn-fail HARNESS-STOP: an announced seat or a required gatherer could not start (nested Task tool missing, CloudAgent launch rejected or never returned). The router dump is a brief HARNESS-STOP naming that slot. Verify took no lists. Pack was not re-announced. No slot was dropped. No Findings / Assessment / Follow-ups. No `No findings.`
+
+RED spawn-fail thinner merge: after a slot failed to start, the seats that did start were merged and handed to verify (or the verifier merged them). An announced list that never existed is never-seen (same #31 miss).
+
+RED spawn-fail synonym-core: after a slot failed to start (or because the host lacks a Task tool), the router re-announced `core` or dropped the failed seat so the run could finish. A harness miss never thins the pack. Same RED as pack-core synonym-infer, from a harness fact instead of a word.
+
+GREEN host pick from harness facts: the helper dump shows the harness facts it probed and a pick that follows them — Task tool present → `task-nest`; Task tool absent and CloudAgent launch present → `cloud-fan`; neither → HARNESS-STOP. Basis is `harness-facts`.
+
+RED wrong-primitive: the helper picked Task vs CloudAgent from a name or tier word (“Grok”, “Grok Bot”, “quick”, “light”, “Medium”, “small”, “cloud”, the model name) instead of harness facts, or the pick contradicts the facts (Task tool present but fanned CloudAgents; Task tool absent but claimed a Task nest).
+
+GREEN full return for the announced set: the helper returned one dump per announced slot — the whole set — or returned no dumps with one named HARNESS-STOP. Intent launched only after the blind dump was back.
+
+RED partial-return: the helper returned a nonempty subset of the announced set without a HARNESS-STOP, or returned dumps alongside a HARNESS-STOP. “Five of seven, the rest did not come back” is this letter.
+
+RED cloud intent fanned with blind: on the CloudAgent back end, `review-intent` was launched with `review-blind` because agents can run concurrently. Intent waits on the reconstruct blob on every host.
+
+GREEN verify parent-Follow either mode: `review-verify` Followed in the parent on a Task nest and in cloud-seat mode alike. It is not a spawned slot. Parent-held products / blob / playbooks / primer dumps in that Follow stay GREEN. Pasting them as a fourth input stays RED.
 
 ## Branch / PR comparison (not a stored patch)
 

@@ -1,0 +1,31 @@
+{
+  "id": "spawn-return-full-green",
+  "letter": "GREEN full return for the announced set",
+  "expected": "GREEN",
+  "score": "spawn-return",
+  "dump": {
+    "role": "spawn-helper",
+    "back_end": "cloud-fan",
+    "announced_slots": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "returned_dumps": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "intent_waited_on_blob": true,
+    "stop": null,
+    "text": "back end: cloud-fan\nannounced: review-blind, review-security, review-performance, review-logic, review-regression, review-checklist (parallel); review-intent (after blob)\nreturned: one dump per announced slot (7 of 7)"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "partial-return-red",
+  "letter": "RED partial-return",
+  "expected": "RED",
+  "score": "spawn-return",
+  "dump": {
+    "role": "spawn-helper",
+    "back_end": "cloud-fan",
+    "announced_slots": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "returned_dumps": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-intent"
+    ],
+    "intent_waited_on_blob": true,
+    "stop": null,
+    "text": "back end: cloud-fan\nannounced: 7 slots\nreturned: 5 of 7 (regression and checklist CloudAgents did not come back); handing the five to verify"
+  }
+}

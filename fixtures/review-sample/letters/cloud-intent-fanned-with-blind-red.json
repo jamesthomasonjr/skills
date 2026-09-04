@@ -1,0 +1,23 @@
+{
+  "id": "cloud-intent-fanned-with-blind-red",
+  "letter": "RED cloud intent fanned with blind",
+  "expected": "RED",
+  "score": "spawn-return",
+  "dump": {
+    "role": "spawn-helper",
+    "back_end": "cloud-fan",
+    "announced_slots": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "returned_dumps": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "intent_waited_on_blob": false,
+    "stop": null,
+    "text": "back end: cloud-fan\nCloudAgents run in parallel anyway, so review-intent launched with review-blind and review-security\nreturned: 3 of 3 (intent window had no reconstruct blob)"
+  }
+}

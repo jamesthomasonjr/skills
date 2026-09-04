@@ -1,0 +1,18 @@
+{
+  "id": "harness-stop-cloud-launch-green",
+  "letter": "GREEN HARNESS-STOP",
+  "expected": "GREEN",
+  "score": "harness-stop",
+  "dump": {
+    "role": "router",
+    "announced_comparison": true,
+    "stop": "harness",
+    "has_findings": false,
+    "has_assessment": false,
+    "has_follow_ups": false,
+    "has_no_findings": false,
+    "inline_review": false,
+    "seat_dumps": [],
+    "text": "announced: git diff $(git merge-base HEAD origin/main)...HEAD -- src/pricing.js\nharness facts: no nested Task tool; CloudAgent launch present\nHARNESS-STOP: cannot launch a CloudAgent for announced seat review-blind (launch rejected). Stopping."
+  }
+}

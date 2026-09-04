@@ -1,0 +1,17 @@
+{
+  "id": "wrong-primitive-red",
+  "letter": "RED wrong-primitive",
+  "expected": "RED",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": true,
+      "cloud_agent_launch": true
+    },
+    "picked": "cloud-fan",
+    "pick_basis": "synonym",
+    "inferred_from": "Grok",
+    "text": "caller mentioned Grok Bot, so this must be the CloudAgent path\npicked: cloud-fan (inferred from Grok)\nharness facts not consulted: nested Task tool is actually present"
+  }
+}
