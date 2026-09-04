@@ -1,0 +1,14 @@
+{
+  "id": "playbook-child-read-green",
+  "letter": "GREEN specialist playbook",
+  "expected": "GREEN",
+  "score": "playbook-child-read",
+  "dump": {
+    "role": "seat",
+    "seat": "review-logic",
+    "window": ["comparison", "playbook"],
+    "reads": ["playbook.md"],
+    "reader": "child",
+    "text": "window: review-logic\npresent: comparison; playbook.md\nreads: child Read playbook.md"
+  }
+}

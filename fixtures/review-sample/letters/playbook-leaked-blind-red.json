@@ -1,0 +1,14 @@
+{
+  "id": "playbook-leaked-blind-red",
+  "letter": "RED leaked specialist playbook",
+  "expected": "RED",
+  "score": "playbook-leak",
+  "dump": {
+    "role": "seat",
+    "seat": "review-blind",
+    "window": ["comparison", "playbook"],
+    "reads": ["review-logic/playbook.md"],
+    "reader": "blind-child",
+    "text": "window: review-blind\npresent: comparison; review-logic/playbook.md\nreads: blind-child Read playbook.md"
+  }
+}

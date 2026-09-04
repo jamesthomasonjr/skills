@@ -1,0 +1,40 @@
+{
+  "id": "pack-full-green",
+  "letter": "GREEN pack full",
+  "expected": "GREEN",
+  "score": "pack",
+  "dump": {
+    "role": "router",
+    "caller_pack": "full",
+    "caller_named_core": false,
+    "inferred_core_from": null,
+    "announced_seats": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "verify_lists": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "seat_dumps": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "text": "pack: full (default)\nannounced: review-blind, review-security, review-performance, review-logic, review-regression, review-checklist (parallel); review-intent (sequential)\nverify lists: review-blind, review-security, review-performance, review-logic, review-regression, review-checklist, review-intent"
+  }
+}

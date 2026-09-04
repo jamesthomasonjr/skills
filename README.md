@@ -106,3 +106,14 @@ When adding a promoted skill:
 4. Add its path to `.claude-plugin/plugin.json`.
 
 See [CLAUDE.md](CLAUDE.md) for the full conventions.
+
+## Review dump letters
+
+Replay recorded `fixtures/review-sample/` window dumps and score GREEN/RED letters against the locked tables. This does **not** spin live review agents.
+
+```bash
+./scripts/score-review-dump-letters.sh
+./scripts/test-score-review-dump-letters.sh
+```
+
+Letter text stays in [`fixtures/review-sample/README.md`](./fixtures/review-sample/README.md). Cases in `fixtures/review-sample/letters/` cite those headings. The nine-row Expected GREEN table is byte-locked.

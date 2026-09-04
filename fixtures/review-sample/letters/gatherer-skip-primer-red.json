@@ -1,0 +1,17 @@
+{
+  "id": "gatherer-skip-primer-red",
+  "letter": "RED skip-because-primer",
+  "expected": "RED",
+  "score": "gatherer-skip",
+  "dump": {
+    "role": "router",
+    "skipped_gatherers": [
+      {
+        "name": "review-gather-pr",
+        "reason": "primer"
+      }
+    ],
+    "held": ["primer"],
+    "text": "held: primer dump\nskipped: review-gather-pr because parent held a primer dump"
+  }
+}

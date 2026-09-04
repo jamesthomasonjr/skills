@@ -1,0 +1,14 @@
+{
+  "id": "isolation-red-leaked-playbook",
+  "letter": "RED leaked playbook",
+  "expected": "RED",
+  "score": "isolation",
+  "dump": {
+    "role": "seat",
+    "seat": "review-blind",
+    "window": ["comparison", "playbook"],
+    "produced": ["reconstruct-blob", "candidates"],
+    "reads": ["playbook.md"],
+    "text": "window: review-blind\ncomparison: git diff $(git merge-base HEAD origin/main)...HEAD -- src/pricing.js\nleaked: review-security/playbook.md"
+  }
+}
