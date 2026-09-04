@@ -1,0 +1,30 @@
+{
+  "id": "follow-ups-assessment-stuffed-red",
+  "letter": "RED leftover stuffed into Assessment sentence cap",
+  "expected": "RED",
+  "score": "follow-ups",
+  "dump": {
+    "role": "verifier",
+    "leftovers": [
+      {
+        "name": "unusedFormatCents",
+        "title": "unusedFormatCents",
+        "path": "src/pricing.js:3"
+      },
+      {
+        "name": "refundOrder",
+        "title": "refundOrder",
+        "path": "src/refunds.js:1"
+      }
+    ],
+    "follow_ups": [],
+    "has_follow_ups_heading": false,
+    "findings": [],
+    "findings_text": "No findings.",
+    "assessment": "Target is nits-only.diff versus src/. Leftovers unusedFormatCents and refundOrder remain.",
+    "leftover_numbered_as_finding": false,
+    "leftover_in_assessment": true,
+    "follow_ups_bleed": null,
+    "text": "## Findings\nNo findings.\n## Assessment\nTarget is nits-only.diff versus src/. Leftovers unusedFormatCents and refundOrder remain."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "gatherer-skip-onboard-red",
+  "letter": "RED skip onboard gatherer",
+  "expected": "RED",
+  "score": "gatherer-skip",
+  "dump": {
+    "role": "router",
+    "skipped_gatherers": [
+      {
+        "name": "review-gather-onboard",
+        "reason": "held-product"
+      }
+    ],
+    "held": ["onboard-summary"],
+    "text": "held: onboard summary / primer\nskipped: review-gather-onboard because parent holds onboard summary\nnot fanned: review-gather-onboard"
+  }
+}

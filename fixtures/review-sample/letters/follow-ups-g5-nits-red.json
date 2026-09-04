@@ -1,0 +1,32 @@
+{
+  "id": "follow-ups-g5-nits-red",
+  "letter": "RED G5 nits / speculative / `dropped: N` under Follow-ups",
+  "expected": "RED",
+  "score": "follow-ups",
+  "dump": {
+    "role": "verifier",
+    "leftovers": [
+      {
+        "name": "unusedFormatCents",
+        "title": "unusedFormatCents",
+        "path": "src/pricing.js:3"
+      }
+    ],
+    "follow_ups": [
+      {
+        "title": "Could be clearer",
+        "path": "src/pricing.js:7",
+        "g5_nit": true
+      }
+    ],
+    "has_follow_ups_heading": true,
+    "findings": [],
+    "findings_text": "No findings.",
+    "assessment": "Target is nits-only.diff versus src/. Comparison was inspected.",
+    "leftover_numbered_as_finding": false,
+    "leftover_in_assessment": false,
+    "follow_ups_bleed": "dropped-n",
+    "follow_ups_text": "Could be clearer — src/pricing.js:7\ndropped: 1",
+    "text": "## Findings\nNo findings.\n## Assessment\nTarget is nits-only.diff versus src/. Comparison was inspected.\n## Follow-ups\nCould be clearer — src/pricing.js:7\ndropped: 1"
+  }
+}
