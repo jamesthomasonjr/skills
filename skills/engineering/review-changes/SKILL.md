@@ -23,14 +23,15 @@ This skill does **not** review and does **not** write findings.
 - Do not Read `gates.md` in this skill. Seats do not read it.
 - Do not duplicate `review-scope` tables here. Follow that sibling; pass what it returned.
 - Do not open a fresh child for `review-scope`. Scope stays Follow-in-parent.
-- After announce, run each gatherer in a fresh context unless the parent already holds that gatherer’s **product** (PR body / design excerpt). Onboard always fans — a held onboard summary is not that skip. Primer dump ≠ product. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
-- Run each announced seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
+- After announce, run each gatherer in a fresh context unless the parent already holds that gatherer’s **product** (PR body / design excerpt). Onboard always fans — a held onboard summary is not that skip. Primer dump ≠ product. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, write a brief HARNESS-STOP naming that (cannot open a fresh context / cannot fan) and stop. No Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline as one agent.
+- Run each announced seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, write a brief HARNESS-STOP naming that (cannot open a fresh context / cannot fan) and stop. No Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline as one agent. Withhold is not isolation.
 - After gatherers, fan that pack’s **announced** parallel seats. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security or the other announced specialists.
 - Choose the pack **once** from the caller (named `full` / `core`, or default `full`). Do not infer `core` from “quick,” “light,” or “small.” Do not invent a pack from the diff. Do not add or drop a seat mid-run.
 - Wrapper priming is not a required step. It is not a seat. Do not skip a gatherer because the parent already holds a primer dump. Skip a gatherer only when the parent already holds that gatherer’s product (PR body / design excerpt). Onboard has no seat to seed — always fan that gatherer. A held onboard summary is not skip GREEN.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the gatherers, seats, or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
+- After a comparison was announced, if the harness cannot fan a gatherer or announced seat: brief HARNESS-STOP (cannot open a fresh context / cannot fan), then stop. No Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline as one agent. This is not `Nothing to review.` and not a `shape-*` stop.
 - Focus is an optional user-named phrase, not a menu. Do not infer modes.
 
 ## Packs
@@ -80,7 +81,9 @@ Fan gatherers as **fresh children** — the opposite of `review-scope`. Each chi
 - [../review-gather-design/SKILL.md](../review-gather-design/SKILL.md) — product: design excerpt
 - [../review-gather-onboard/SKILL.md](../review-gather-onboard/SKILL.md) — product: onboard summary of that file list. Always fan. Parent-held onboard summary is not a skip.
 
-If this harness cannot open a fresh context for a gatherer, **stop** and say so. Do not follow that gatherer in this turn.
+**HARNESS-STOP:** after a comparison was announced, if this harness cannot open a fresh context for a gatherer or announced seat: one or two sentences naming that (cannot open a fresh context / cannot fan), **stop**. Do not emit Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline as one agent. Seat dumps stay absent. This is not `Nothing to review.` and not a `shape-*` stop.
+
+If this harness cannot open a fresh context for a gatherer, write that **HARNESS-STOP** and **stop**. Do not follow that gatherer in this turn.
 
 ## 3. Hand off seats and verify
 
@@ -118,7 +121,7 @@ The parent may hold gatherer **products** — it seeds intent from the PR body a
 
 A wrapper may already have primed the parent on the file list `review-scope` returned, then invoked this router. That parent-held primer dump in the **verify** Follow stays GREEN. Wrapper priming is not a required step. It is not a seat. Skipping a gatherer because that dump exists is RED. Skipping a gatherer because the parent already holds that gatherer’s **product** (PR body / design excerpt) is GREEN. Skipping onboard because the parent holds an onboard summary is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
 
-If this harness cannot open a fresh context for a seat, **stop** and say so. Do not follow that seat in this turn. Withhold is not isolation.
+If this harness cannot open a fresh context for a seat, write that **HARNESS-STOP** and **stop**. Do not follow that seat in this turn. Withhold is not isolation.
 
 If two signals conflict, isolation wins over following a seat in this turn.
 
@@ -129,7 +132,10 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | Excuse | Reality |
 |---|---|
 | “Follow the seat in this turn; just don’t paste the body” | Isolation wins. Fresh context or stop. |
-| “This harness cannot open a fresh context — withhold is enough” | Stop and say so. Withhold is not isolation. |
+| “This harness cannot open a fresh context — withhold is enough” | HARNESS-STOP. Brief stop naming cannot open a fresh context / cannot fan. Withhold is not isolation. No Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline. |
+| “Cannot fan — emit Findings / Assessment / Follow-ups anyway” | HARNESS-STOP. Brief stop. No envelope. |
+| “Cannot fan — review inline as one agent so seats still ran” | Isolation wins. Stop. Do not review inline. |
+| “Cannot fan — write `No findings.` so the review looks finished” | That is an empty pass after HARNESS-STOP. Stop only. |
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
 | “The parent already has primer dumps; the seat will ignore it” | Parent-held primer dumps are GREEN in verify. Copying them into the blind prompt or running the seat in that window is a leak. |
 | “Skip the gatherer; the parent already has a primer dump” | Skipping because the parent has a primer dump is RED. Fan the gatherer. |
@@ -191,6 +197,9 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - A seat swallowed leftovers or applied gates
 - Running wrapper priming from this skill, or treating wrapper priming as a seat
 - Following a seat in this turn because the harness could not open a fresh context
+- Emitting Findings / Assessment / Follow-ups after HARNESS-STOP
+- Writing `No findings.` after HARNESS-STOP
+- Reviewing inline as one agent when the harness cannot fan
 - Reviewing the whole repo because the target was vague
 - Inferring a focus menu
 - Inferring `core` from “quick,” “light,” or “small,” or inventing a pack from the diff
