@@ -60,6 +60,7 @@ These split on one axis: who can invoke them. **User-invoked** skills are reache
 - **[debug-feedback-loop](./skills/engineering/debug-feedback-loop/SKILL.md)** — Feedback-loop-first debugging for flaky, unreproducible, recurring, or performance issues.
 - **[prioritize-work](./skills/engineering/prioritize-work/SKILL.md)** — Rank or select the next piece of work from a resolved set. Picks one item. Does not write the handoff.
 - **[handoff-work](./skills/engineering/handoff-work/SKILL.md)** — Package context and a copy-pasteable prompt for the next agent for a specified item. Does not re-rank.
+- **[review-audit](./skills/engineering/review-audit/SKILL.md)** — Existing-codebase audit of a named path, module, or the codebase. Leftovers and pre-existing defects are numbered findings. Not a change review.
 
 **Model-invoked**
 
@@ -69,6 +70,8 @@ These split on one axis: who can invoke them. **User-invoked** skills are reache
 - **[next-work](./skills/engineering/next-work/SKILL.md)** — Router for choosing the next piece of work. Use when asking what’s next or for a handoff prompt. Classifies the path; does not rank and does not write the handoff.
 
 Live path: `review-changes` Follows [review-scope](./skills/engineering/review-scope/SKILL.md) in the parent, announces the comparison, chooses the pack once (`full` default / `core` opt-in), then fans [review-gather-pr](./skills/engineering/review-gather-pr/SKILL.md) / [review-gather-design](./skills/engineering/review-gather-design/SKILL.md) / [review-gather-onboard](./skills/engineering/review-gather-onboard/SKILL.md) as fresh children and seeds from their products (skip only a held PR body / design excerpt; onboard always fans). Pack `full` (default) fans [review-blind](./skills/engineering/review-blind/SKILL.md) + [review-security](./skills/engineering/review-security/SKILL.md) + [review-performance](./skills/engineering/review-performance/SKILL.md) + [review-logic](./skills/engineering/review-logic/SKILL.md) + [review-regression](./skills/engineering/review-regression/SKILL.md) + [review-checklist](./skills/engineering/review-checklist/SKILL.md) in parallel, then [review-intent](./skills/engineering/review-intent/SKILL.md) with the reconstruct blob. Pack `core` (caller opt-in) announces blind + intent + security only. Then [review-verify](./skills/engineering/review-verify/SKILL.md) applies its sibling `gates.md` on every announced seat list and writes Findings, Assessment, Follow-ups (omit if empty). No Close. If the harness cannot fan a gatherer or announced seat, HARNESS-STOP: say so and stop. That is a stop path, not an empty review. Scope stays Follow-in-parent. Seats stay isolated. A wrapper may still prime the parent with catch-me-up / orient-*; that is not a required router step. Specialist playbooks are only in their own windows. The reconstruct blob is only in the intent window (and may sit parent-held in the verify Follow).
+
+Audit path: `review-audit` takes a named path, module, or “the codebase.” It tours that scope and writes Findings. Pre-existing debt is a numbered finding, not a Follow-ups leftover. It does not Follow `review-scope`, does not fan change-review seats, and does not apply `gates.md`. Parent-held orient/onboard products may seed the tour; those skills are not required seats.
 
 The size-work family (`size-work`, `shape-initiative`, `shape-epic`, `shape-feature`, `shape-story`, `shape-task`) is in [`skills/in-progress/`](./skills/in-progress/) so it can be worked with specify-work as one workflow. It is not installed by the plugin.
 
@@ -117,3 +120,12 @@ Replay recorded `fixtures/review-sample/` window dumps and score GREEN/RED lette
 ```
 
 Letter text stays in [`fixtures/review-sample/README.md`](./fixtures/review-sample/README.md). Cases in `fixtures/review-sample/letters/` cite those headings. The nine-row Expected GREEN table is byte-locked.
+
+Existing-codebase audit letters are a **separate** consumer. Replay `fixtures/review-audit/` dumps without live audit agents:
+
+```bash
+./scripts/score-review-audit-dump-letters.sh
+./scripts/test-score-review-audit-dump-letters.sh
+```
+
+Do not add those letters to the review-sample GREEN table.

@@ -11,3 +11,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Score recorded review dump letters
         run: ./scripts/test-score-review-dump-letters.sh
+      - name: Score recorded review-audit dump letters
+        run: ./scripts/test-score-review-audit-dump-letters.sh

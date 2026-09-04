@@ -1,0 +1,21 @@
+{
+  "id": "leftover-as-follow-up-red",
+  "letter": "RED leftover parked under Follow-ups",
+  "expected": "RED",
+  "score": "leftover-finding",
+  "dump": {
+    "role": "audit",
+    "scope": "fixtures/review-sample/src",
+    "scope_kind": "path",
+    "comparison": null,
+    "used_review_scope": false,
+    "used_review_regression": false,
+    "used_review_verify": false,
+    "applied_gates_md": false,
+    "dropped_as_gate3": false,
+    "required_seats": [],
+    "findings": [],
+    "has_follow_ups_leftovers": true,
+    "text": "## Findings\n\nNo findings.\n\n## Assessment\n\nAudited fixtures/review-sample/src.\n\n## Follow-ups\n\nRemove unused helper — fixtures/review-sample/src/pricing.js:3"
+  }
+}

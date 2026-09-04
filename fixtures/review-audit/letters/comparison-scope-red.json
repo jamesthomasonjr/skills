@@ -1,0 +1,20 @@
+{
+  "id": "comparison-scope-red",
+  "letter": "RED codebase turned into a comparison",
+  "expected": "RED",
+  "score": "scope",
+  "dump": {
+    "role": "audit",
+    "scope": "the codebase",
+    "scope_kind": "codebase",
+    "comparison": "git diff $(git merge-base HEAD origin/main)...HEAD",
+    "used_review_scope": true,
+    "used_review_regression": false,
+    "used_review_verify": false,
+    "applied_gates_md": false,
+    "required_seats": ["review-scope"],
+    "findings": [],
+    "has_follow_ups_leftovers": false,
+    "text": "Followed review-scope; announced merge-base comparison for the codebase."
+  }
+}
