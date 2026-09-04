@@ -23,11 +23,11 @@ This skill does **not** review and does **not** write findings.
 - Do not Read `gates.md` in this skill. Seats do not read it.
 - Do not duplicate `review-scope` tables here. Follow that sibling; pass what it returned.
 - Do not open a fresh child for `review-scope`. Scope stays Follow-in-parent.
-- After announce, run each gatherer in a fresh context unless the parent already holds that gatherer’s **product** (PR body / design excerpt). Primer dump ≠ product. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
+- After announce, run each gatherer in a fresh context unless the parent already holds that gatherer’s **product** (PR body / design excerpt). Onboard always fans — a held onboard summary is not that skip. Primer dump ≠ product. Do not follow a gatherer in this turn. If the harness cannot open a fresh context, stop and say so.
 - Run each announced seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If the harness cannot open a fresh context, stop and say so. Withhold is not isolation.
 - After gatherers, fan that pack’s **announced** parallel seats. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security or the other announced specialists.
 - Choose the pack **once** from the caller (named `full` / `core`, or default `full`). Do not infer `core` from “quick,” “light,” or “small.” Do not invent a pack from the diff. Do not add or drop a seat mid-run.
-- Wrapper priming is not a required step. It is not a seat. Do not skip a gatherer because the parent already holds a primer dump. Skip a gatherer only when the parent already holds that gatherer’s product.
+- Wrapper priming is not a required step. It is not a seat. Do not skip a gatherer because the parent already holds a primer dump. Skip a gatherer only when the parent already holds that gatherer’s product (PR body / design excerpt). Onboard has no seat to seed — always fan that gatherer. A held onboard summary is not skip GREEN.
 - Mixed turn (“review this, then fix it”): pass the fix request through. The verifier finishes the review, then hands back. Do not implement in this turn.
 - Out of family (“review this plan / spec / design”): stop. Point at `shape-*` (or a later plan-review skill). Do not read the gatherers, seats, or `review-verify`. Do not grill the prose as a design reviewer. A `SKILL.md` or required playbook in the file list is not this signal — hand off.
 - Empty or unresolvable target: ask once or stop with exactly `Nothing to review.`
@@ -74,11 +74,11 @@ Otherwise one line: which comparison `review-scope` returned and why (short). An
 
 Read **sibling** skill files resolved from **this file’s directory**, not from cwd.
 
-Fan gatherers as **fresh children** — the opposite of `review-scope`. Each child contains only the announced comparison, comparison command, and file list (plus that gatherer’s own `SKILL.md`). Take the **product** back. Do not seed a gatherer follow transcript. Skip a gatherer only when the parent already holds that gatherer’s **product** (PR body / design excerpt). A primer dump is not that product. Skip-because-primer is RED. Do not write `Nothing to review.` from a gatherer’s empty product — empty product means seed nothing for that slot.
+Fan gatherers as **fresh children** — the opposite of `review-scope`. Each child contains only the announced comparison, comparison command, and file list (plus that gatherer’s own `SKILL.md`). Take the **product** back. Do not seed a gatherer follow transcript. Skip a gatherer only when the parent already holds that gatherer’s **product** (PR body / design excerpt). A held onboard summary is not that skip — onboard always fans. A primer dump is not that product. Skip-because-primer is RED. Do not write `Nothing to review.` from a gatherer’s empty product — empty product means seed nothing for that slot.
 
 - [../review-gather-pr/SKILL.md](../review-gather-pr/SKILL.md) — product: PR body
 - [../review-gather-design/SKILL.md](../review-gather-design/SKILL.md) — product: design excerpt
-- [../review-gather-onboard/SKILL.md](../review-gather-onboard/SKILL.md) — product: onboard summary of that file list
+- [../review-gather-onboard/SKILL.md](../review-gather-onboard/SKILL.md) — product: onboard summary of that file list. Always fan. Parent-held onboard summary is not a skip.
 
 If this harness cannot open a fresh context for a gatherer, **stop** and say so. Do not follow that gatherer in this turn.
 
@@ -116,7 +116,7 @@ Fan out: after gatherers, run the pack’s **announced** parallel seats, each in
 
 The parent may hold gatherer **products** — it seeds intent from the PR body and design excerpt. That seed is GREEN. The parent may hold the reconstruct blob — it seeds intent from that blob. That seed is GREEN. Onboard has no seat to seed; the parent may still hold that product. Seeding a gatherer follow transcript is RED. Product or transcript in the blind prompt or window is RED. The blind candidate list (`title — path:line` entries, including leftovers) in the intent window is RED. A reconstruct sentence that names a helper is not that leak. Reconstruct blob in a specialist window is RED. After gatherers land, seed from those products; do not seed parent-held raw dumps in their place.
 
-A wrapper may already have primed the parent on the file list `review-scope` returned, then invoked this router. That parent-held primer dump in the **verify** Follow stays GREEN. Wrapper priming is not a required step. It is not a seat. Skipping a gatherer because that dump exists is RED. Skipping a gatherer because the parent already holds that gatherer’s **product** is GREEN. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
+A wrapper may already have primed the parent on the file list `review-scope` returned, then invoked this router. That parent-held primer dump in the **verify** Follow stays GREEN. Wrapper priming is not a required step. It is not a seat. Skipping a gatherer because that dump exists is RED. Skipping a gatherer because the parent already holds that gatherer’s **product** (PR body / design excerpt) is GREEN. Skipping onboard because the parent holds an onboard summary is RED. Reading sibling `SKILL.md` files to know what to dispatch is fine. Do not Read a specialist playbook to dispatch.
 
 If this harness cannot open a fresh context for a seat, **stop** and say so. Do not follow that seat in this turn. Withhold is not isolation.
 
@@ -133,7 +133,9 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “The parent already has the body; the seat will ignore it” | A window that already had it is a leak. |
 | “The parent already has primer dumps; the seat will ignore it” | Parent-held primer dumps are GREEN in verify. Copying them into the blind prompt or running the seat in that window is a leak. |
 | “Skip the gatherer; the parent already has a primer dump” | Skipping because the parent has a primer dump is RED. Fan the gatherer. |
-| “Skip the gatherer; the parent already holds the PR body / design excerpt” | Parent-held **product** is the skip. Primer dump ≠ product. That skip is GREEN. |
+| “Skip onboard; the parent already holds an onboard summary” | Onboard has no seat to seed. Always fan. A held onboard summary is not skip GREEN (too close to a primer dump). |
+| “Skip the gatherer; the parent already holds the PR body / design excerpt” | Parent-held **product** is the skip. Primer dump ≠ product. Onboard summary is not this skip. That skip is GREEN. |
+| “They asked for a light / quick / small review — announce core” | Do not infer `core` from those synonyms. GREEN pack-core is only “caller named `core`.” |
 | “Follow the gatherer in the parent; I already have the files” | Fresh child unless the parent already holds that product. Follow-in-parent is still RED. |
 | “Open a fresh child for review-scope so isolation is clean” | Follow `review-scope` in the parent. Fresh child for scope is still RED. |
 | “Seed the gatherer follow transcript so the seat sees the research” | Seed the product only. Score the product in the parent seed, not the follow transcript. |
@@ -174,6 +176,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Applying gates in the router or telling a seat to read `gates.md`
 - Skipping an announced seat or handing the diff straight to `review-verify`
 - Skipping a gatherer because the parent already holds a primer dump
+- Skipping onboard because the parent already holds an onboard summary
 - Following a gatherer in this turn, or seeding its follow transcript
 - Duplicating `review-scope` tables, or passing seats a different comparison than it returned
 - Opening a fresh child for `review-scope` instead of Following in the parent
