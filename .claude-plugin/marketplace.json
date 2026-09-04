@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "James Thomason Jr's personal agent skills for Cursor, Claude Code, and other coding agents.",
-    "version": "0.21.0"
+    "version": "0.22.0"
   },
   "plugins": [
     {
