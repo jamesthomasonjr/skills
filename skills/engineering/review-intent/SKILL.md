@@ -15,7 +15,10 @@ Docs- and PR-aware seat. Generate **candidates** only. This skill does
 This seat also runs in a fresh context. That context **does** include the comparison, the PR body / design excerpt / commit message / procedure context the router passed, and the reconstructed-intent blob. Orient dumps and the onboard product are **not** procedure context (same rule as GREEN tables). The blind candidate list (`title — path:line` entries, including leftovers) is **not** procedure context and is **not** a list of candidates to copy. The reconstruct blob may name what the diff appears to do. Specialist playbooks are not procedure context. The router does not dump a gatherer follow transcript here.
 
 The router passes the comparison plus the PR-body and design-excerpt
-products when those exist, plus the reconstruct blob. This seat owns
+products when those exist, plus the reconstruct blob. The router calls
+that seed the **intent-seed**; it is built after `review-blind` returns
+and is the same bytes on a nested Task child and on a CloudAgent. This
+seat starts only after that blob exists — never with blind. This seat owns
 advertised-path and procedure-clash candidates. It may also emit
 other intent- or docs-aware candidates.
 

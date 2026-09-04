@@ -75,7 +75,8 @@ Still **DROP**: wording nits, speculative “might break” with no this-PR adve
 - Mixed turn (“review this, then fix it”): finish this review, then **hand back**. Do not implement. **Do not edit in this turn even if the user already asked for a fix** — that message is the review, not an implement go-ahead. They must send a **new message** after the review. Do not discard the fix request.
 - If invoked with a plan/spec/design and no procedure file in the comparison: stop. Out of family. Point at `shape-*`. Do not produce findings. Do not grill that prose. A `SKILL.md` or required playbook in the file list is not a plan — inspect it.
 - If invoked with no comparison: cheap-resolve as `review-scope` would. Empty/unresolvable → `Nothing to review.`
-- If any announced seat has not handed over a candidate list, **stop**. Point at `review-changes`. Do not invent a list from the diff. Do not merge a subset and skip an announced seat. Do not wait on an unannounced specialist.
+- If any announced seat has not handed over a candidate list, **stop**. Point at `review-changes`. Do not invent a list from the diff. Do not merge a subset and skip an announced seat. Do not wait on an unannounced specialist. A seat whose child or CloudAgent never started or never returned is this same missing list — the router owns that HARNESS-STOP; this leaf does not verify the seats that did return.
+- This skill Follows in the parent on every host. It is not a spawned seat on a Task nest and not a CloudAgent in cloud-seat mode. Isolation is not its duty.
 
 ## Procedure
 
@@ -170,6 +171,8 @@ No Close. No other sections. No “Nice to have.” No praise. No nit list after
 | “Always emit Follow-ups / Close” | Omit Follow-ups when there are none. Close is dropped. Mixed-turn is one line after Findings. |
 | “Same bug class as last PR — number the leftover” | Gate 3 is the merge bar. Do not reopen GREEN. Numbering a leftover is still a finding. |
 | “Both seats handed over — merge those two” | Every announced list. A skipped announced specialist list makes leftovers never-seen (same #31 miss). An unannounced specialist is not a skipped list. |
+| “Regression’s CloudAgent never came back — merge the six that did” | Thinner merge is the same #31 miss. Stop. Point at `review-changes`; that is its HARNESS-STOP. |
+| “Run me as a CloudAgent too so verify is isolated” | Verify Follows in the parent. Isolation is not this leaf’s duty. |
 | “Wait for six lists; that is the family” | Announced set. Do not hard-code six. |
 | “Pack is core, so a missing announced security list is fine” | Missing announced is still #31. |
 | “Performance was unannounced — treat as never-seen leftover” | Unannounced is not never-seen. |
@@ -210,6 +213,7 @@ No Close. No other sections. No “Nice to have.” No praise. No nit list after
 - A Close heading
 - Numbering leftovers
 - Dropping a leftover because it was named last PR
-- Merging a subset of lists and skipping an announced seat
+- Merging a subset of lists and skipping an announced seat — including the seats that did return after one child or CloudAgent never started
 - Waiting on an unannounced specialist, or hard-coding six lists
+- Running as a spawned seat or CloudAgent instead of Following in the parent
 - Taking a pasted pack name, reconstructed-intent blob, or a specialist playbook as a fourth / extra input (parent-held in this Follow window is not this leak)
