@@ -1,0 +1,29 @@
+{
+  "id": "parent-held-primer-green",
+  "letter": "GREEN parent-held primer",
+  "expected": "GREEN",
+  "score": "primer",
+  "dump": {
+    "role": "audit",
+    "scope": "fixtures/review-sample/src",
+    "scope_kind": "path",
+    "comparison": null,
+    "used_review_scope": false,
+    "used_review_regression": false,
+    "used_review_verify": false,
+    "applied_gates_md": false,
+    "required_seats": [],
+    "held": ["onboard-summary"],
+    "used_held_primer": true,
+    "findings": [
+      {
+        "title": "Remove unused helper",
+        "path": "fixtures/review-sample/src/pricing.js:3",
+        "severity": "P3",
+        "preexisting": true
+      }
+    ],
+    "has_follow_ups_leftovers": false,
+    "text": "used parent-held onboard-summary; no orient seat"
+  }
+}

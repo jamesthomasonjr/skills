@@ -1,0 +1,20 @@
+{
+  "id": "codebase-scope-green",
+  "letter": "GREEN codebase is a scope",
+  "expected": "GREEN",
+  "score": "scope",
+  "dump": {
+    "role": "audit",
+    "scope": "the codebase",
+    "scope_kind": "codebase",
+    "comparison": null,
+    "used_review_scope": false,
+    "used_review_regression": false,
+    "used_review_verify": false,
+    "applied_gates_md": false,
+    "required_seats": [],
+    "findings": [],
+    "has_follow_ups_leftovers": false,
+    "text": "scope: the codebase\nkind: codebase\nno comparison"
+  }
+}

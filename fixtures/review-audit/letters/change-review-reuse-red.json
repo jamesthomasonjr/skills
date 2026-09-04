@@ -1,0 +1,21 @@
+{
+  "id": "change-review-reuse-red",
+  "letter": "RED change-review reuse",
+  "expected": "RED",
+  "score": "change-review-reuse",
+  "dump": {
+    "role": "audit",
+    "scope": "fixtures/review-sample/src",
+    "scope_kind": "path",
+    "comparison": null,
+    "used_review_scope": false,
+    "used_review_regression": false,
+    "used_review_verify": true,
+    "applied_gates_md": true,
+    "dropped_as_gate3": true,
+    "required_seats": ["review-verify"],
+    "findings": [],
+    "has_follow_ups_leftovers": true,
+    "text": "Applied gates.md Gate 3; leftover dropped as not introduced by this change."
+  }
+}

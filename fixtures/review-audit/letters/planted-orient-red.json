@@ -1,0 +1,22 @@
+{
+  "id": "planted-orient-red",
+  "letter": "RED planted orient seat",
+  "expected": "RED",
+  "score": "planted-seat",
+  "dump": {
+    "role": "audit",
+    "scope": "the codebase",
+    "scope_kind": "codebase",
+    "comparison": null,
+    "used_review_scope": false,
+    "used_review_regression": false,
+    "used_review_verify": false,
+    "applied_gates_md": false,
+    "required_seats": ["catch-me-up", "orient-repo"],
+    "held": [],
+    "used_held_primer": false,
+    "findings": [],
+    "has_follow_ups_leftovers": false,
+    "text": "REQUIRED: Follow catch-me-up then orient-repo before auditing."
+  }
+}
