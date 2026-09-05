@@ -33,7 +33,7 @@ lighter “Medium” pack to advertise.
 - Do not open a fresh child for `review-scope`. Scope stays Follow-in-parent.
 - After announce, run each gatherer in a fresh context unless the parent already holds that gatherer’s **product** (PR body / design excerpt). Onboard always fans — a held onboard summary is not that skip. Primer dump ≠ product. Do not follow a gatherer in this turn. If a gatherer cannot start (no nested Task tool and no CloudAgent launch, or its launch was rejected), write a brief HARNESS-STOP naming the slot and the primitive and stop. No Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline as one agent.
 - Run each announced seat in a fresh context that contains only what this router passed. Do not follow a seat in this turn. If an announced seat cannot start (no nested Task tool and no CloudAgent launch, or its launch was rejected), write a brief HARNESS-STOP naming the slot and the primitive and stop. No Findings / Assessment / Follow-ups. Do not write `No findings.` Do not review inline as one agent. Withhold is not isolation.
-- Start gatherers and announced seats through [../review-spawn-seats/SKILL.md](../review-spawn-seats/SKILL.md). That helper picks nested Task vs CloudAgent from **harness facts** (the tool list, a launch primitive) — never from “Grok,” “quick,” “light,” “Medium,” “small,” or “cloud.” It returns the **whole** set of slots handed in that call or one named HARNESS-STOP (announced set = this call’s slots; gatherers, parallel seats, and intent are separate calls). A subset back from one call is that HARNESS-STOP: stop, do not merge the seats that did return, do not re-announce `core`.
+- Start gatherers and announced seats through [../review-spawn-seats/SKILL.md](../review-spawn-seats/SKILL.md). That helper picks nested Task vs CloudAgent from **harness facts** (the tool list, a launch primitive, whether a Task child can load the slot’s `SKILL.md`) — never from “Grok,” “quick,” “light,” “Medium,” “small,” or “cloud.” A Task tool whose children cannot load the slot skill is not a Task nest: the helper fans CloudAgents when that launch is present, else HARNESS-STOP. It returns the **whole** set of slots handed in that call or one named HARNESS-STOP (announced set = this call’s slots; gatherers, parallel seats, and intent are separate calls). A subset back from one call is that HARNESS-STOP: stop, do not merge the seats that did return, do not re-announce `core`.
 - Build seeds here, not in the helper. **comparison-seed** = comparison, comparison command, file list (plus mixed-turn fix request and optional focus phrase) — every gatherer and every parallel seat. **intent-seed** = comparison-seed + PR-body and design-excerpt products + procedure context + the reconstruct blob — intent only, built after blind returns. There is no third “shared brief.”
 - After gatherers, fan that pack’s **announced** parallel seats. Intent waits on the reconstructed-intent blob, then runs. Do not fan intent with them — on a Task nest or a CloudAgent fan. Do not pass the blind candidate list (`title — path:line` entries) into intent. Do not pass the blob to security or the other announced specialists.
 - Choose the pack **once** from the caller (named `full` / `core`, or default `full`). Do not infer `core` from “quick,” “light,” or “small.” Do not infer `core` from a missing Task tool or a failed launch. Do not invent a pack from the diff. Do not add or drop a seat mid-run.
@@ -86,8 +86,8 @@ Blind stays comparison-only: it receives the comparison-seed and nothing else, o
 
 The same router runs on two kinds of host. `review-spawn-seats` picks between them from harness facts; this router does not.
 
-- **Task nest** — this host has a nested Task / subagent tool. Each gatherer and seat is a fresh context (Task child).
-- **cloud-seat** — this host has no nested Task tool but launches CloudAgents. Each gatherer and seat is one CloudAgent whose window starts with its seed and its own `SKILL.md`. Same packs. Same seeds. Intent still waits on the blob. `review-verify` still Follows here in the parent. Same HARNESS-STOP when a launch fails.
+- **Task nest** — this host has a nested Task / subagent tool **and** its children can load the slot’s `SKILL.md` (the Task-nest fact). Each gatherer and seat is a fresh context (Task child).
+- **cloud-seat** — the Task-nest fact is false (no nested Task tool, or Task children cannot load the slot skill) and this host launches CloudAgents. Each gatherer and seat is one CloudAgent whose window starts with its seed and its own `SKILL.md`. Same packs. Same seeds. Intent still waits on the blob. `review-verify` still Follows here in the parent. Same HARNESS-STOP when a launch fails.
 
 Neither mode is a separate skill. Do not announce a mode from the request wording; the helper reads the host.
 
@@ -176,7 +176,8 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 | “No Task tool — announce `core` so there are fewer seats to launch” | Pack is chosen once from the caller. A harness miss changes the back end or stops the run; it never thins the pack. Synonym-`core` from a harness fact is RED. |
 | “Regression’s CloudAgent never came back — verify the six that did” | Thinner merge is RED. An announced list that never existed is never-seen (#31). HARNESS-STOP naming that slot. |
 | “The helper returned five of seven — good enough” | Partial return is the HARNESS-STOP. Do not hand a subset to verify. |
-| “Grok Bot asked, so this is the CloudAgent path” / “quick review, so nest” | The helper picks from harness facts (tool list, launch primitive). Names and tier words never pick a primitive. |
+| “Grok Bot asked, so this is the CloudAgent path” / “quick review, so nest” | The helper picks from harness facts (tool list, launch primitive, child can load the slot skill). Names and tier words never pick a primitive. |
+| “The Task tool exists, so nest — even though its children cannot load this family” | Unloadable children make the Task-nest fact false. CloudAgent launch present → cloud-seat mode, same pack. Absent → HARNESS-STOP. Probe that (plugin catalog, child Read); do not infer it from “Grok” / “Medium” / “cloud.” |
 | “CloudAgents run in parallel anyway — launch intent with blind” | Intent waits on the blob on every host. Build the intent-seed after blind returns. |
 | “Spawn `review-verify` as a CloudAgent too” | Verify Follows in the parent. Not a spawned slot in either mode. |
 | “Cloud-seat needs its own router / a lighter Medium pack” | One family. `cloud-seat` is an invocation mode of this router. No sibling skill, no extra pack. |
@@ -249,6 +250,7 @@ Then fan in: Read [../review-verify/SKILL.md](../review-verify/SKILL.md) and fol
 - Re-announcing `core` because the host lacks a Task tool or a launch failed
 - Handing a partial helper return to `review-verify`
 - Picking Task vs CloudAgent from “Grok,” “quick,” “light,” “Medium,” “small,” or “cloud” instead of harness facts
+- Nesting Task children that cannot load the slot `SKILL.md` instead of cloud-seat mode or HARNESS-STOP
 - Launching intent with blind on a CloudAgent host
 - Spawning `review-verify` instead of Following it in the parent
 - Advertising a `review-changes-cloud` sibling or a lighter cloud pack

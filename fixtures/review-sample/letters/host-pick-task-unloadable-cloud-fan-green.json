@@ -1,0 +1,19 @@
+{
+  "id": "host-pick-task-unloadable-cloud-fan-green",
+  "letter": "GREEN unloadable Task nest falls to cloud-fan",
+  "expected": "GREEN",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": true,
+      "skills_loadable": false,
+      "skills_probe": "plugin-catalog",
+      "cloud_agent_launch": true
+    },
+    "picked": "cloud-fan",
+    "pick_basis": "harness-facts",
+    "inferred_from": null,
+    "text": "harness facts: nested Task / subagent tool present; probe: Task child plugin catalog is empty, jamesthomasonjr/skills not loadable in a child; CloudAgent launch primitive present\nTask-nest fact: false (Task tool exists, child cannot load the slot SKILL.md)\npicked: cloud-fan (one CloudAgent per announced slot; each agent Reads its own SKILL.md from the install it is given)\nsame pack, same seeds, same HARNESS-STOP; intent still waits on the reconstruct blob"
+  }
+}
