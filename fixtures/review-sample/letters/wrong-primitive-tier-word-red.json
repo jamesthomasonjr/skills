@@ -1,0 +1,17 @@
+{
+  "id": "wrong-primitive-tier-word-red",
+  "letter": "RED wrong-primitive",
+  "expected": "RED",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": false,
+      "cloud_agent_launch": true
+    },
+    "picked": "task-nest",
+    "pick_basis": "synonym",
+    "inferred_from": "quick",
+    "text": "caller said quick / Medium review, so nest with Task\npicked: task-nest (inferred from quick)\nharness facts: no nested Task tool in this host"
+  }
+}

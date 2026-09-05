@@ -218,6 +218,179 @@ fail_scorer "HARNESS-STOP inline" "${SCORER}" --sample-dir "${tmp}/review-sample
 cp "${ROOT_DIR}/fixtures/review-sample/letters/harness-stop-green.json" \
   "${tmp}/review-sample/letters/harness-stop-green.json"
 
+echo "== HARNESS-STOP GREEN on a CloudAgent host must still name the stop =="
+python3 - "${tmp}/review-sample/letters/harness-stop-cloud-launch-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["text"] = "announced: git diff ...\nHARNESS-STOP: the CloudAgent for review-blind did not come back."
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "HARNESS-STOP cloud launch without a named cannot-launch" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/harness-stop-cloud-launch-green.json" \
+  "${tmp}/review-sample/letters/harness-stop-cloud-launch-green.json"
+
+echo "== spawn-fail GREEN must not merge the seats that did start =="
+python3 - "${tmp}/review-sample/letters/spawn-fail-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["verify_lists"] = [
+    "review-blind",
+    "review-security",
+    "review-performance",
+    "review-logic",
+    "review-checklist",
+    "review-intent",
+]
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "spawn-fail thinner merge" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-fail-green.json" \
+  "${tmp}/review-sample/letters/spawn-fail-green.json"
+
+echo "== spawn-fail GREEN must not re-announce core =="
+python3 - "${tmp}/review-sample/letters/spawn-fail-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["reannounced_pack"] = "core"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "spawn-fail synonym-core" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-fail-green.json" \
+  "${tmp}/review-sample/letters/spawn-fail-green.json"
+
+echo "== spawn-fail GREEN must name the failed slot =="
+python3 - "${tmp}/review-sample/letters/spawn-fail-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["text"] = "announced: git diff ...\nHARNESS-STOP: cannot fan. Stopping."
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "spawn-fail unnamed slot" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-fail-green.json" \
+  "${tmp}/review-sample/letters/spawn-fail-green.json"
+
+echo "== host pick GREEN must not come from a synonym =="
+python3 - "${tmp}/review-sample/letters/host-pick-harness-facts-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["pick_basis"] = "synonym"
+case["dump"]["inferred_from"] = "Medium"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "wrong-primitive from Medium" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-harness-facts-green.json" \
+  "${tmp}/review-sample/letters/host-pick-harness-facts-green.json"
+
+echo "== host pick GREEN must follow the facts (Task present means nest) =="
+python3 - "${tmp}/review-sample/letters/host-pick-harness-facts-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["harness_facts"]["task_tool"] = True
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "wrong-primitive against facts" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-harness-facts-green.json" \
+  "${tmp}/review-sample/letters/host-pick-harness-facts-green.json"
+
+echo "== full return GREEN must not drop an announced dump =="
+python3 - "${tmp}/review-sample/letters/spawn-return-full-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["returned_dumps"].remove("review-checklist")
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "partial-return" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-full-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-full-green.json"
+
+echo "== per-call full return GREEN must still fail on a partial within the call =="
+python3 - "${tmp}/review-sample/letters/spawn-return-per-call-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["returned_dumps"].remove("review-regression")
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "partial-return within this call" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-per-call-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-per-call-green.json"
+
+echo "== per-call GREEN must not hand a slot the run never announced =="
+python3 - "${tmp}/review-sample/letters/spawn-return-per-call-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["run_announced_slots"].remove("review-checklist")
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "call slot outside the run's announced set" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-per-call-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-per-call-green.json"
+
+echo "== full return GREEN must not launch intent with blind =="
+python3 - "${tmp}/review-sample/letters/spawn-return-full-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["intent_waited_on_blob"] = False
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "cloud intent fanned with blind" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-full-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-full-green.json"
+
+echo "== named stop GREEN must not return dumps alongside the stop =="
+python3 - "${tmp}/review-sample/letters/spawn-return-named-stop-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["returned_dumps"] = ["review-blind", "review-intent"]
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "dumps alongside HARNESS-STOP" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/spawn-return-named-stop-green.json" \
+  "${tmp}/review-sample/letters/spawn-return-named-stop-green.json"
+
 echo "== parent-held scope GREEN must not open a fresh child =="
 python3 - "${tmp}/review-sample/letters/scope-parent-held-green.json" <<'PY'
 import json, sys

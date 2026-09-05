@@ -1,0 +1,17 @@
+{
+  "id": "host-pick-harness-facts-green",
+  "letter": "GREEN host pick from harness facts",
+  "expected": "GREEN",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": false,
+      "cloud_agent_launch": true
+    },
+    "picked": "cloud-fan",
+    "pick_basis": "harness-facts",
+    "inferred_from": null,
+    "text": "harness facts: no nested Task / subagent tool in this host; CloudAgent launch primitive present\npicked: cloud-fan (one CloudAgent per announced slot)\nsame pack, same seeds, same HARNESS-STOP; intent still waits on the reconstruct blob"
+  }
+}

@@ -16,7 +16,10 @@ and does **not** write Findings / Assessment / Close. Do **not**
 fold the blob into the candidate list.
 
 This seat must start in a fresh context that contains only the
-router-passed comparison, not the parent's window. The router does
+router-passed comparison, not the parent's window. The router calls
+that seed the **comparison-seed** — the same bytes on a nested Task
+child and on a CloudAgent. This seat never receives the intent-seed.
+The router does
 **not** pass the PR body, commit message, onboard dumps, orient dumps,
 gatherer products, gatherer follow transcripts, a reconstructed-intent
 blob as extra briefing, GREEN tables / fixture protocol / scoring

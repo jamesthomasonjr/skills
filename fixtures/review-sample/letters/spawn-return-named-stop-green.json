@@ -1,0 +1,20 @@
+{
+  "id": "spawn-return-named-stop-green",
+  "letter": "GREEN full return for the announced set",
+  "expected": "GREEN",
+  "score": "spawn-return",
+  "dump": {
+    "role": "spawn-helper",
+    "back_end": "task-nest",
+    "announced_slots": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "returned_dumps": [],
+    "intent_waited_on_blob": true,
+    "stop": "harness",
+    "stop_slot": "review-security",
+    "text": "back end: task-nest\nannounced: review-blind, review-security (parallel); review-intent (after blob)\nHARNESS-STOP: announced seat review-security cannot start (nested Task tool unavailable). No dumps returned."
+  }
+}

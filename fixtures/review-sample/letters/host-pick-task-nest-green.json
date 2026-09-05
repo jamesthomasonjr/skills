@@ -1,0 +1,17 @@
+{
+  "id": "host-pick-task-nest-green",
+  "letter": "GREEN host pick from harness facts",
+  "expected": "GREEN",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": true,
+      "cloud_agent_launch": true
+    },
+    "picked": "task-nest",
+    "pick_basis": "harness-facts",
+    "inferred_from": null,
+    "text": "harness facts: nested Task / subagent tool present; CloudAgent launch also present\npicked: task-nest (Task tool present wins; one fresh child per announced slot)"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "spawn-fail-synonym-core-red",
+  "letter": "RED spawn-fail synonym-core",
+  "expected": "RED",
+  "score": "spawn-fail",
+  "dump": {
+    "role": "router",
+    "announced_comparison": true,
+    "announced_slots": [
+      "review-gather-pr",
+      "review-gather-design",
+      "review-gather-onboard",
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "failed_slots": [
+      {
+        "slot": "review-performance",
+        "primitive": "task",
+        "reason": "nested Task tool missing"
+      }
+    ],
+    "stop": null,
+    "reannounced_pack": "core",
+    "dropped_slots": [
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist"
+    ],
+    "verify_lists": [
+      "review-blind",
+      "review-intent",
+      "review-security"
+    ],
+    "has_findings": true,
+    "has_assessment": true,
+    "has_follow_ups": false,
+    "has_no_findings": false,
+    "text": "announced: git diff $(git merge-base HEAD origin/main)...HEAD -- src/pricing.js\npack: full\nspawn: no nested Task tool for review-performance\nre-announced pack: core (fewer seats to fan)\nverify lists: review-blind, review-intent, review-security\n## Findings\nNo findings.\n## Assessment\nTarget is the clean-rename diff."
+  }
+}

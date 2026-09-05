@@ -1,0 +1,42 @@
+{
+  "id": "spawn-return-per-call-green",
+  "letter": "GREEN full return for the announced set",
+  "expected": "GREEN",
+  "score": "spawn-return",
+  "dump": {
+    "role": "spawn-helper",
+    "back_end": "cloud-fan",
+    "call": 2,
+    "run_announced_slots": [
+      "review-gather-pr",
+      "review-gather-design",
+      "review-gather-onboard",
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "announced_slots": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist"
+    ],
+    "returned_dumps": [
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist"
+    ],
+    "intent_waited_on_blob": true,
+    "stop": null,
+    "text": "back end: cloud-fan\ncall 2 of 3 (parallel seats); gatherers returned in call 1; review-intent will be handed in call 3 after the reconstruct blob\nannounced for this call: review-blind, review-security, review-performance, review-logic, review-regression, review-checklist\nreturned: 6 of 6"
+  }
+}

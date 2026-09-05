@@ -36,6 +36,11 @@ UNANNOUNCED_ON_CORE = [
 PRODUCT_GATHERERS = {"review-gather-pr", "review-gather-design"}
 PRODUCT_HELD = {"pr-body", "design-excerpt"}
 PACK_SYNONYMS = {"quick", "light", "small"}
+HOST_PICKS = {"task-nest", "cloud-fan", "harness-stop"}
+STOP_PHRASE = re.compile(
+    r"cannot open a fresh context|cannot fan|cannot launch|cannot start|launch (?:rejected|failed)",
+    re.I,
+)
 PLANTED_SEAT_NAMES = (
     "catch-me-up",
     "orient-repo",
@@ -161,14 +166,9 @@ def score_harness_stop(dump: dict[str, Any]) -> tuple[str, str]:
         return "RED", "not a HARNESS-STOP"
     if "HARNESS-STOP" not in text:
         return "RED", "router dump missing HARNESS-STOP"
-    if not re.search(r"cannot open a fresh context|cannot fan", text, re.I):
-        return "RED", "stop does not name cannot fan / cannot open a fresh context"
-    envelope = (
-        dump.get("has_findings")
-        or dump.get("has_assessment")
-        or dump.get("has_follow_ups")
-        or re.search(r"^## (Findings|Assessment|Follow-ups)\s*$", text, re.M)
-    )
+    if not STOP_PHRASE.search(text):
+        return "RED", "stop does not name cannot fan / cannot open a fresh context / cannot launch"
+    envelope = _envelope_present(dump, text)
     empty_pass = dump.get("has_no_findings") or "No findings." in text
     inline = bool(dump.get("inline_review"))
     seats = list(dump.get("seat_dumps") or [])
@@ -181,6 +181,102 @@ def score_harness_stop(dump: dict[str, Any]) -> tuple[str, str]:
     if seats:
         return "RED", "seat dumps present after HARNESS-STOP"
     return "GREEN", "brief stop, no envelope"
+
+
+def _envelope_present(dump: dict[str, Any], text: str) -> bool:
+    return bool(
+        dump.get("has_findings")
+        or dump.get("has_assessment")
+        or dump.get("has_follow_ups")
+        or re.search(r"^## (Findings|Assessment|Follow-ups)\s*$", text, re.M)
+    )
+
+
+def score_spawn_fail(dump: dict[str, Any]) -> tuple[str, str]:
+    text = dump.get("text") or ""
+    announced = list(dump.get("announced_slots") or [])
+    failed = list(dump.get("failed_slots") or [])
+    verify = list(dump.get("verify_lists") or [])
+    dropped = list(dump.get("dropped_slots") or [])
+    reannounced = dump.get("reannounced_pack")
+    if not dump.get("announced_comparison"):
+        return "RED", "spawn-fail is after announce"
+    if not failed:
+        return "RED", "no failed slot recorded"
+    failed_names = [item.get("slot") for item in failed if isinstance(item, dict)]
+    unknown = [name for name in failed_names if name not in announced]
+    if unknown:
+        return "RED", "failed slot was not announced: " + ", ".join(map(str, unknown))
+    if reannounced or dropped:
+        return "RED", "spawn-fail synonym-core (re-announced pack or dropped slot)"
+    if verify:
+        return "RED", "spawn-fail thinner merge (verify took lists after a slot failed)"
+    if dump.get("stop") != "harness":
+        return "RED", "spawn-fail without HARNESS-STOP"
+    if "HARNESS-STOP" not in text:
+        return "RED", "router dump missing HARNESS-STOP"
+    if not all(name and name in text for name in failed_names):
+        return "RED", "HARNESS-STOP does not name the failed slot"
+    if _envelope_present(dump, text):
+        return "RED", "HARNESS-STOP envelope"
+    if dump.get("has_no_findings") or "No findings." in text:
+        return "RED", "HARNESS-STOP empty pass"
+    return "GREEN", "named HARNESS-STOP, no merge, pack unchanged"
+
+
+def score_host_pick(dump: dict[str, Any]) -> tuple[str, str]:
+    facts = dump.get("harness_facts")
+    picked = dump.get("picked")
+    basis = dump.get("pick_basis")
+    inferred = dump.get("inferred_from")
+    if not isinstance(facts, dict):
+        return "RED", "no harness facts probed"
+    if picked not in HOST_PICKS:
+        return "RED", f"unknown back end: {picked}"
+    if basis != "harness-facts" or inferred:
+        return "RED", f"wrong-primitive (picked from {inferred or basis})"
+    task = bool(facts.get("task_tool"))
+    cloud = bool(facts.get("cloud_agent_launch"))
+    expected = "task-nest" if task else "cloud-fan" if cloud else "harness-stop"
+    if picked != expected:
+        return "RED", f"wrong-primitive (facts say {expected}, picked {picked})"
+    return "GREEN", f"{picked} from harness facts"
+
+
+def score_spawn_return(dump: dict[str, Any]) -> tuple[str, str]:
+    text = dump.get("text") or ""
+    # announced_slots is the set handed in this helper call only; the router
+    # makes separate calls for gatherers, parallel seats, and intent.
+    announced = list(dump.get("announced_slots") or [])
+    returned = list(dump.get("returned_dumps") or [])
+    run_announced = dump.get("run_announced_slots")
+    stop = dump.get("stop")
+    if not announced:
+        return "RED", "no announced set for this call"
+    if run_announced is not None:
+        outside = [slot for slot in announced if slot not in run_announced]
+        if outside:
+            return "RED", "call slot not announced for the run: " + ", ".join(outside)
+    if dump.get("intent_waited_on_blob") is False:
+        return "RED", "cloud intent fanned with blind"
+    if stop == "harness":
+        if returned:
+            return "RED", "partial-return (dumps alongside HARNESS-STOP)"
+        if "HARNESS-STOP" not in text:
+            return "RED", "stop dump missing HARNESS-STOP"
+        slot = dump.get("stop_slot")
+        if not slot or slot not in announced or slot not in text:
+            return "RED", "HARNESS-STOP does not name an announced slot"
+        return "GREEN", "named stop, no dumps"
+    if stop:
+        return "RED", f"wrong stop path: {stop}"
+    missing = [slot for slot in announced if slot not in returned]
+    if missing:
+        return "RED", "partial-return: missing " + ", ".join(missing)
+    extra = [slot for slot in returned if slot not in announced]
+    if extra:
+        return "RED", "returned unannounced dump: " + ", ".join(extra)
+    return "GREEN", "one dump per announced slot"
 
 
 def score_gatherer_skip(dump: dict[str, Any]) -> tuple[str, str]:
@@ -346,6 +442,9 @@ SCORERS = {
     "isolation": score_isolation,
     "pack": score_pack,
     "harness-stop": score_harness_stop,
+    "spawn-fail": score_spawn_fail,
+    "host-pick": score_host_pick,
+    "spawn-return": score_spawn_return,
     "gatherer-skip": score_gatherer_skip,
     "playbook-child-read": score_playbook_child_read,
     "playbook-leak": score_playbook_leak,

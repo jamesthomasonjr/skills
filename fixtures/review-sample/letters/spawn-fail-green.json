@@ -1,0 +1,38 @@
+{
+  "id": "spawn-fail-green",
+  "letter": "GREEN spawn-fail HARNESS-STOP",
+  "expected": "GREEN",
+  "score": "spawn-fail",
+  "dump": {
+    "role": "router",
+    "announced_comparison": true,
+    "announced_slots": [
+      "review-gather-pr",
+      "review-gather-design",
+      "review-gather-onboard",
+      "review-blind",
+      "review-security",
+      "review-performance",
+      "review-logic",
+      "review-regression",
+      "review-checklist",
+      "review-intent"
+    ],
+    "failed_slots": [
+      {
+        "slot": "review-regression",
+        "primitive": "cloud-agent",
+        "reason": "launch rejected"
+      }
+    ],
+    "stop": "harness",
+    "reannounced_pack": null,
+    "dropped_slots": [],
+    "verify_lists": [],
+    "has_findings": false,
+    "has_assessment": false,
+    "has_follow_ups": false,
+    "has_no_findings": false,
+    "text": "announced: git diff $(git merge-base HEAD origin/main)...HEAD -- src/pricing.js\npack: full\nharness facts: no nested Task tool; CloudAgent launch present\nspawn: CloudAgent launch for review-regression rejected\nHARNESS-STOP: announced seat review-regression cannot start (CloudAgent launch rejected). Cannot fan the announced set. Stopping."
+  }
+}
