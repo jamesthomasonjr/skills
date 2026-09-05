@@ -316,6 +316,82 @@ fail_scorer "wrong-primitive against facts" "${SCORER}" --sample-dir "${tmp}/rev
 cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-harness-facts-green.json" \
   "${tmp}/review-sample/letters/host-pick-harness-facts-green.json"
 
+echo "== Task nest GREEN must have loadable skills in the child =="
+python3 - "${tmp}/review-sample/letters/host-pick-task-nest-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["harness_facts"]["skills_loadable"] = False
+case["dump"]["harness_facts"]["skills_probe"] = "plugin-catalog"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "nest into unloadable children" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-task-nest-green.json" \
+  "${tmp}/review-sample/letters/host-pick-task-nest-green.json"
+
+echo "== unloadable cloud-fan GREEN must not nest anyway =="
+python3 - "${tmp}/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["picked"] = "task-nest"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "unloadable Task nested anyway" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json" \
+  "${tmp}/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json"
+
+echo "== unloadable cloud-fan GREEN flips to wrong-primitive once skills are loadable =="
+python3 - "${tmp}/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["harness_facts"]["skills_loadable"] = True
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "cloud-fan with skills loadable and Task present" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json" \
+  "${tmp}/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json"
+
+echo "== unloadable cloud-fan GREEN must show a probe, not a word =="
+python3 - "${tmp}/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["harness_facts"]["skills_probe"] = "Medium"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "unloadable inferred from Medium" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json" \
+  "${tmp}/review-sample/letters/host-pick-task-unloadable-cloud-fan-green.json"
+
+echo "== unloadable stop GREEN must not claim a nest =="
+python3 - "${tmp}/review-sample/letters/host-pick-task-unloadable-stop-green.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    case = json.load(f)
+case["dump"]["picked"] = "task-nest"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(case, f, indent=2)
+    f.write("\n")
+PY
+fail_scorer "unloadable Task nested instead of stopping" "${SCORER}" --sample-dir "${tmp}/review-sample"
+cp "${ROOT_DIR}/fixtures/review-sample/letters/host-pick-task-unloadable-stop-green.json" \
+  "${tmp}/review-sample/letters/host-pick-task-unloadable-stop-green.json"
+
 echo "== full return GREEN must not drop an announced dump =="
 python3 - "${tmp}/review-sample/letters/spawn-return-full-green.json" <<'PY'
 import json, sys

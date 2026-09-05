@@ -1,0 +1,19 @@
+{
+  "id": "wrong-primitive-unloadable-inferred-red",
+  "letter": "RED wrong-primitive",
+  "expected": "RED",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": true,
+      "skills_loadable": false,
+      "skills_probe": "Grok",
+      "cloud_agent_launch": true
+    },
+    "picked": "cloud-fan",
+    "pick_basis": "harness-facts",
+    "inferred_from": null,
+    "text": "harness facts: nested Task tool present; CloudAgent launch present\nthis is Grok Bot on Medium, so the children probably cannot load skills — marking skills unloadable\npicked: cloud-fan\nno plugin catalog check, no child Read of a seat SKILL.md path"
+  }
+}

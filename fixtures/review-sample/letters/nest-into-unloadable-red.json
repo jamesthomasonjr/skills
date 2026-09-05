@@ -1,0 +1,19 @@
+{
+  "id": "nest-into-unloadable-red",
+  "letter": "RED nest into unloadable children",
+  "expected": "RED",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": true,
+      "skills_loadable": false,
+      "skills_probe": "plugin-catalog",
+      "cloud_agent_launch": true
+    },
+    "picked": "task-nest",
+    "pick_basis": "harness-facts",
+    "inferred_from": null,
+    "text": "harness facts: nested Task tool present; Task child plugin catalog is empty (jamesthomasonjr/skills not loadable in a child); CloudAgent launch present\npicked: task-nest (Task tool present, so nest)\nevery child: HARNESS-STOP cannot Read review-blind SKILL.md — the cloud-seat path was never exercised"
+  }
+}

@@ -34,18 +34,21 @@ Each child window is that slot’s seed bytes plus that slot’s own `SKILL.md` 
 
 | Harness fact | Back end |
 |---|---|
-| This host exposes a nested Task / subagent tool that opens a fresh context | **A: Task nest** — one fresh child per slot |
-| No nested Task tool; this host exposes a CloudAgent launch primitive | **B: CloudAgent fan** — one CloudAgent per slot |
-| Neither primitive is present | **HARNESS-STOP** — name that, return no dumps |
+| **Task-nest fact true**: this host exposes a nested Task / subagent tool that opens a fresh context **and** the child can load that slot’s `SKILL.md` | **A: Task nest** — one fresh child per slot |
+| Task-nest fact false (no nested Task tool, or the Task child cannot load the slot skill); this host exposes a CloudAgent launch primitive | **B: CloudAgent fan** — one CloudAgent per slot |
+| Task-nest fact false and no CloudAgent launch primitive | **HARNESS-STOP** — name that, return no dumps |
 
-Facts are what the host advertises in this session: a tool in the tool list, a launch primitive that accepts a prompt and returns a handle. Probe them. Do not infer them.
+**Task-nest fact** = a nested Task / subagent tool that opens a fresh context **and** the child can load that slot’s `SKILL.md` (plugin install or an equivalent readable install path). If the Task tool exists but the child cannot load the slot skill (unloadable install), the Task-nest fact is **false** → use CloudAgent fan when that launch primitive is present, else HARNESS-STOP. Do not nest into unloadable children. Do not infer unloadable from the words “Grok”, “Medium”, or “cloud” — probe (e.g. the plugin catalog missing the family, or a probe Read of the seat `SKILL.md` path failing for a child).
 
-Not a fact: a product, bot, model, or tier word in the request — “Grok”, “Grok Bot”, “quick”, “light”, “Medium”, “small”, “cloud”, “local”. Picking Task or CloudAgent from any of those is **wrong-primitive**. A host that mentions Grok may have a Task tool; a host that says nothing may lack one. Check the tool list, not the wording.
+Facts are what the host advertises in this session: a tool in the tool list, a launch primitive that accepts a prompt and returns a handle, a child that can Read the slot skill. Probe them. Do not infer them.
 
-When the Task tool is present, nest. Do not prefer CloudAgent because it “runs in parallel anyway”. When it is absent and the launch primitive is present, fan. Do not review inline on either miss.
+Not a fact: a product, bot, model, or tier word in the request — “Grok”, “Grok Bot”, “quick”, “light”, “Medium”, “small”, “cloud”, “local”. Picking Task or CloudAgent from any of those is **wrong-primitive**. A host that mentions Grok may have a Task tool whose children load the skill; a host that says nothing may lack one. Check the tool list and the child’s install, not the wording.
+
+When the Task-nest fact is true, nest. Do not prefer CloudAgent because it “runs in parallel anyway”. When the fact is false and the launch primitive is present, fan. A Task tool whose children cannot load the skill is not a nest — it HARNESS-STOPs on every slot and never exercises the CloudAgent path. Do not review inline on either miss.
 
 ## Back end A: Task nest
 
+- Only when the Task-nest fact is true: the child can load the slot’s `SKILL.md`. A child that cannot Read it is an unloadable install, not a nest.
 - One fresh child per slot. Child prompt = that slot’s seed bytes + the instruction to Read its own `SKILL.md`.
 - Parallel slots (gatherers together; then blind + announced specialists together) dispatch in one batch. Take every child’s dump back.
 - `review-intent` dispatches only after the blind dump is back and the router has handed over the intent-seed. Do not dispatch it earlier with a placeholder.
@@ -71,7 +74,7 @@ Never a subset. Never “five of six, checklist did not come back.” If any slo
 
 1. **Own pack policy.** It does not add, drop, or re-order announced slots. It does not re-announce `core` because a seat failed, because the host lacks Task, or because CloudAgents are expensive. It does not read the caller’s words at all. The router chose the pack once; the helper spawns what it was handed.
 2. **Return partially.** All dumps for this call’s slots or a named stop. A partial list is RED even when the missing slot “would have been `No candidates.`”. Intent absent from the parallel-seat call is not partial — it belongs to the next call.
-3. **Pick from synonyms.** Back end comes from harness facts only. “Grok” / “quick” / “Medium” / “cloud” never choose a primitive.
+3. **Pick from synonyms.** Back end comes from harness facts only. “Grok” / “quick” / “Medium” / “cloud” never choose a primitive, and never decide that a child can or cannot load the skill.
 4. **Build seeds.** It receives comparison-seed and intent-seed bytes already built. It does not fetch the PR body, design excerpt, blob, or file list itself. It does not add “helpful context” to a seed. It does not copy a playbook into blind or a blob into a specialist.
 5. **Run verify.** `review-verify` Follows in the parent on the returned dumps. The helper never spawns a verify child, never applies `gates.md`, never writes Findings / Assessment / Follow-ups, never writes `No findings.`
 
@@ -81,8 +84,10 @@ Never a subset. Never “five of six, checklist did not come back.” If any slo
 |---|---|
 | “No Task tool here — review inline so seats still ran” | Check for a CloudAgent launch primitive. Present → fan. Absent → HARNESS-STOP. Inline is never a back end. |
 | “No Task tool — announce `core` so there are fewer seats to fan” | Pack policy is the router’s, chosen once. A harness miss changes the back end or stops the run. It never thins the pack. |
-| “Caller mentioned Grok Bot, so this must be the CloudAgent path” | Probe the tool list. A Task tool present is a Task nest, whatever the bot is called. |
-| “They said quick / Medium — nest with Task, it is lighter” | Tier words are not harness facts. Absent Task tool → fan or stop. |
+| “Caller mentioned Grok Bot, so this must be the CloudAgent path” | Probe the tool list and the child’s install. A Task tool whose children load the skill is a Task nest, whatever the bot is called. |
+| “They said quick / Medium — nest with Task, it is lighter” | Tier words are not harness facts. Task-nest fact false → fan or stop. |
+| “The Task tool is right there — nest, even if the child’s plugin catalog is empty” | A child that cannot load the slot `SKILL.md` is an unloadable install. Task-nest fact is false. CloudAgent launch present → fan. Absent → HARNESS-STOP. Never nest into unloadable children. |
+| “It is Grok / Medium / cloud, so the children probably cannot load skills — fan” | Unloadable is probed, not inferred. Check the plugin catalog or Read the seat `SKILL.md` path from a child. Skills loadable + Task present → nest; fanning from the word is wrong-primitive. |
 | “CloudAgents run in parallel anyway — launch intent with blind” | Intent waits on the reconstruct blob on every back end. Launch it after blind returns. |
 | “Regression’s CloudAgent never came back — hand verify the six that did” | Partial return is RED. Named HARNESS-STOP, no dumps. |
 | “The missing seat would have been `No candidates.` anyway” | An announced list that never existed is never-seen (#31). Stop. |
@@ -95,6 +100,8 @@ Never a subset. Never “five of six, checklist did not come back.” If any slo
 ## Red flags
 
 - Choosing Task vs CloudAgent from “Grok”, “quick”, “light”, “Medium”, “small”, “cloud”, or the model name
+- Nesting Task children that cannot load the slot `SKILL.md` (unloadable install) instead of fanning CloudAgents or stopping
+- Declaring the install unloadable from a product or tier word instead of probing the plugin catalog or a child Read
 - Reviewing inline when neither primitive is present, or when one launch fails
 - Returning fewer dumps than the slots handed in this call without a HARNESS-STOP
 - Returning dumps alongside a HARNESS-STOP

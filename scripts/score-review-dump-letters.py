@@ -37,6 +37,9 @@ PRODUCT_GATHERERS = {"review-gather-pr", "review-gather-design"}
 PRODUCT_HELD = {"pr-body", "design-excerpt"}
 PACK_SYNONYMS = {"quick", "light", "small"}
 HOST_PICKS = {"task-nest", "cloud-fan", "harness-stop"}
+# How the helper learned a Task child cannot load the slot SKILL.md. A word
+# ("Grok", "Medium", "cloud") is never a probe.
+SKILL_LOAD_PROBES = {"plugin-catalog", "child-read"}
 STOP_PHRASE = re.compile(
     r"cannot open a fresh context|cannot fan|cannot launch|cannot start|launch (?:rejected|failed)",
     re.I,
@@ -237,9 +240,27 @@ def score_host_pick(dump: dict[str, Any]) -> tuple[str, str]:
         return "RED", f"wrong-primitive (picked from {inferred or basis})"
     task = bool(facts.get("task_tool"))
     cloud = bool(facts.get("cloud_agent_launch"))
-    expected = "task-nest" if task else "cloud-fan" if cloud else "harness-stop"
+    # Task-nest fact = Task tool present AND the child can load the slot
+    # SKILL.md. Absent skills_loadable means nothing said it was unloadable.
+    loadable = facts.get("skills_loadable")
+    if loadable is None:
+        loadable = True
+    loadable = bool(loadable)
+    if not loadable:
+        probe = facts.get("skills_probe")
+        if probe not in SKILL_LOAD_PROBES:
+            return "RED", (
+                "wrong-primitive (unloadable skills not probed: "
+                f"{probe or 'no probe'})"
+            )
+    task_nest = task and loadable
+    expected = "task-nest" if task_nest else "cloud-fan" if cloud else "harness-stop"
+    if picked == "task-nest" and task and not loadable:
+        return "RED", "nest into unloadable children (Task-nest fact false)"
     if picked != expected:
         return "RED", f"wrong-primitive (facts say {expected}, picked {picked})"
+    if task and not loadable:
+        return "GREEN", f"{picked} from harness facts (Task present, skills unloadable)"
     return "GREEN", f"{picked} from harness facts"
 
 

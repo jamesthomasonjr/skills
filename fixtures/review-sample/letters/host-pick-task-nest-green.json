@@ -7,11 +7,12 @@
     "role": "spawn-helper",
     "harness_facts": {
       "task_tool": true,
+      "skills_loadable": true,
       "cloud_agent_launch": true
     },
     "picked": "task-nest",
     "pick_basis": "harness-facts",
     "inferred_from": null,
-    "text": "harness facts: nested Task / subagent tool present; CloudAgent launch also present\npicked: task-nest (Task tool present wins; one fresh child per announced slot)"
+    "text": "harness facts: nested Task / subagent tool present; child Read of review-blind SKILL.md succeeds (skills loadable); CloudAgent launch also present\npicked: task-nest (Task-nest fact true wins; one fresh child per announced slot)"
   }
 }

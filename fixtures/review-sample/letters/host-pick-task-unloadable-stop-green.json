@@ -1,0 +1,19 @@
+{
+  "id": "host-pick-task-unloadable-stop-green",
+  "letter": "GREEN unloadable Task nest falls to cloud-fan",
+  "expected": "GREEN",
+  "score": "host-pick",
+  "dump": {
+    "role": "spawn-helper",
+    "harness_facts": {
+      "task_tool": true,
+      "skills_loadable": false,
+      "skills_probe": "child-read",
+      "cloud_agent_launch": false
+    },
+    "picked": "harness-stop",
+    "pick_basis": "harness-facts",
+    "inferred_from": null,
+    "text": "harness facts: nested Task / subagent tool present; probe: child Read of the review-blind SKILL.md path failed (unloadable install); no CloudAgent launch primitive\nTask-nest fact: false\npicked: harness-stop\nHARNESS-STOP: cannot start review-blind — Task children cannot load the slot skill and there is no CloudAgent launch on this host."
+  }
+}
