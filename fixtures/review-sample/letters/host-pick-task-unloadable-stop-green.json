@@ -1,6 +1,6 @@
 {
   "id": "host-pick-task-unloadable-stop-green",
-  "letter": "GREEN unloadable Task nest falls to cloud-fan",
+  "letter": "GREEN unloadable Task nest falls to HARNESS-STOP",
   "expected": "GREEN",
   "score": "host-pick",
   "dump": {
