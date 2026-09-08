@@ -150,7 +150,9 @@ RED spawn-fail synonym-core: after a slot failed to start (or because the host l
 
 GREEN host pick from harness facts: the helper dump shows the harness facts it probed and a pick that follows them — Task tool present and skills loadable in the child (`skills_loadable: true`, the Task-nest fact) → `task-nest`; Task-nest fact false and CloudAgent launch present → `cloud-fan`; neither → HARNESS-STOP. Basis is `harness-facts`. A dump that says nothing about `skills_loadable` is scored as loadable.
 
-GREEN unloadable Task nest falls to cloud-fan: `task_tool: true` but the child cannot load the slot `SKILL.md` (`skills_loadable: false`, with a probe — `skills_probe` is `plugin-catalog` or `child-read`). The Task-nest fact is false. CloudAgent launch present → `cloud-fan`, chosen on harness facts, not from a word. CloudAgent launch absent → `harness-stop` naming the slot and the unloadable install. Never a nest into those children.
+GREEN unloadable Task nest falls to cloud-fan: `task_tool: true` but the child cannot load the slot `SKILL.md` (`skills_loadable: false`, with a probe — `skills_probe` is `plugin-catalog` or `child-read`). The Task-nest fact is false. CloudAgent launch present → `cloud-fan`, chosen on harness facts, not from a word. Never a nest into those children.
+
+GREEN unloadable Task nest falls to HARNESS-STOP: same facts (`task_tool: true`, `skills_loadable: false` with a probe) and no CloudAgent launch primitive → `harness-stop` naming the slot and the unloadable install. The Task tool being present does not rescue the run; never a nest into those children.
 
 RED nest into unloadable children: `task_tool: true`, `skills_loadable: false`, and the helper still picked `task-nest`. Every child HARNESS-STOPs on its own `SKILL.md` Read and the CloudAgent path is never exercised. The Task tool being present is not the Task-nest fact.
 
