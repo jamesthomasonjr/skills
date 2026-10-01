@@ -1,0 +1,47 @@
+{
+  "name": "jamesthomasonjr-skills",
+  "version": "0.25.0",
+  "description": "James Thomason Jr's personal agent skills for Cursor, Claude Code, Hermes, and other coding agents.",
+  "author": {
+    "name": "James Thomason Jr",
+    "url": "https://github.com/jamesthomasonjr"
+  },
+  "homepage": "https://github.com/jamesthomasonjr/skills",
+  "repository": "https://github.com/jamesthomasonjr/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "cursor",
+    "hermes",
+    "claude-code",
+    "engineering",
+    "productivity"
+  ],
+  "skills": [
+    "./skills/engineering/catch-me-up",
+    "./skills/engineering/orient-repo",
+    "./skills/engineering/orient-module",
+    "./skills/engineering/orient-function",
+    "./skills/engineering/debug",
+    "./skills/engineering/debug-root-cause",
+    "./skills/engineering/debug-feedback-loop",
+    "./skills/engineering/review-changes",
+    "./skills/engineering/review-scope",
+    "./skills/engineering/review-gather-pr",
+    "./skills/engineering/review-gather-design",
+    "./skills/engineering/review-gather-onboard",
+    "./skills/engineering/review-spawn-seats",
+    "./skills/engineering/review-intent",
+    "./skills/engineering/review-blind",
+    "./skills/engineering/review-security",
+    "./skills/engineering/review-performance",
+    "./skills/engineering/review-logic",
+    "./skills/engineering/review-regression",
+    "./skills/engineering/review-checklist",
+    "./skills/engineering/review-verify",
+    "./skills/engineering/review-audit",
+    "./skills/engineering/next-work",
+    "./skills/engineering/prioritize-work",
+    "./skills/engineering/handoff-work"
+  ]
+}

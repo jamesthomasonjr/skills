@@ -20,9 +20,9 @@ Every skill in a promoted bucket must have:
 1. A `SKILL.md` with YAML frontmatter (`name`, `description`)
 2. An entry in the top-level `README.md` that links the skill name to its `SKILL.md`
 3. An entry in that bucket's `README.md`
-4. A path in `.claude-plugin/plugin.json`'s `skills` array
+4. A path in the `skills` array of both `.claude-plugin/plugin.json` and `.hermes-plugin/plugin.json`
 
-Skills in `personal/` and `in-progress/` must not appear in the top-level README or the plugin manifest.
+Skills in `personal/` and `in-progress/` must not appear in the top-level README or the plugin manifests.
 
 ## Skill shape
 
@@ -42,4 +42,4 @@ skill-name/
 
 ## Catalog sync
 
-When you add, rename, remove, or change how a promoted skill is used, update the top-level README, the bucket README, and `.claude-plugin/plugin.json` in the same change.
+When you add, rename, remove, or change how a promoted skill is used, update the top-level README, the bucket README, `.claude-plugin/plugin.json`, and `.hermes-plugin/plugin.json` in the same change.
