@@ -27,7 +27,11 @@ Claude Code can also load this repo as a plugin via [`.claude-plugin/plugin.json
 
 See [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
-Hermes can load this repo as a plugin via [`.hermes-plugin/plugin.json`](.hermes-plugin/plugin.json), which lists the same promoted skills as the Claude Code manifest.
+Hermes can load this repo as a plugin via [`.hermes-plugin/`](.hermes-plugin/) (`plugin.yaml` plus an `__init__.py` whose `register(ctx)` registers every skill in `skills/engineering/` and `skills/productivity/`):
+
+```
+hermes plugins install jamesthomasonjr/skills
+```
 
 Promoted skills live in `skills/engineering/` and `skills/productivity/`. Skills in `personal/` and `in-progress/` stay local to this repo.
 
@@ -108,7 +112,7 @@ When adding a promoted skill:
 1. Create `skills/<bucket>/<skill-name>/SKILL.md` with `name` and `description` frontmatter.
 2. List it in this README under the matching User-invoked or Model-invoked subsection, linked to its `SKILL.md`.
 3. List it in the matching bucket `README.md`.
-4. Add its path to `.claude-plugin/plugin.json` and `.hermes-plugin/plugin.json`.
+4. Add its path to `.claude-plugin/plugin.json`. The Hermes plugin picks up promoted-bucket skills automatically.
 
 See [CLAUDE.md](CLAUDE.md) for the full conventions.
 
