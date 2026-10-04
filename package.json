@@ -1,0 +1,9 @@
+{
+  "name": "jamesthomasonjr-skills",
+  "version": "0.25.0",
+  "description": "James Thomason Jr's personal agent skills",
+  "type": "module",
+  "main": ".opencode/plugins/jamesthomasonjr-skills.js",
+  "license": "MIT",
+  "repository": "https://github.com/jamesthomasonjr/skills"
+}
